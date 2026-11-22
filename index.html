@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
-<script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))==='cream')document.documentElement.dataset.theme='cream'}catch(e){}</script>
-<script>window.__BGR_VER='2026-11-22-11';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
+<script>window.__BGR_VER='2026-11-22-12';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -57,6 +57,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .link{display:block;margin:6px auto 0;padding:10px 14px;font-size:14px;font-weight:700;color:var(--g1);text-decoration:underline;text-underline-offset:4px}
 /* 頂部 */
 .top{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.ib.icon{width:40px;padding:0;justify-content:center}
+.ib.icon .ic{width:20px;height:20px}
+.hbar{display:flex;justify-content:flex-end;margin-bottom:-34px;position:relative;z-index:2}
 .ib{display:flex;align-items:center;gap:5px;height:40px;padding:0 12px 0 9px;border-radius:12px;background:rgba(var(--ink),.04);box-shadow:inset 0 0 0 1px var(--e1);font-size:14px;font-weight:700;color:var(--tx2);flex:none}
 .ib .ic{width:18px;height:18px}
 .ib:active{transform:scale(.95)}
@@ -401,6 +404,41 @@ button.wcd.can:active{transform:rotateX(0) translateY(-10px) scale(1.12);animati
 .rbanner{text-align:center;color:#f6f2e9;animation:stamp .5s cubic-bezier(.2,1.6,.4,1) both;padding:22px 28px;border-radius:22px;background:rgba(19,14,30,.94);box-shadow:inset 0 0 0 2px var(--g2),0 24px 60px rgba(0,0,0,.6)}
 .rbanner b{display:block;font-family:var(--serif);font-size:40px;letter-spacing:6px;color:#f2d892}
 .rbanner span{font-size:16px;font-weight:700}
+/* 邊個偷咗蛋撻 */
+.dice{width:64px;height:64px;border-radius:14px;background:linear-gradient(160deg,#fffdf7,#e9dcc0);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12),0 8px 18px rgba(0,0,0,.35);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:9px;gap:2px;flex:none;transform:rotate(-6deg)}
+.dice i{width:11px;height:11px;border-radius:50%;background:#2a1c05;align-self:center;justify-self:center;opacity:0}
+.dice i.on{opacity:1}
+.dice.d1 i.on,.dice.d4 i.on:nth-child(1){background:#c3203d}
+.dice.sm{width:34px;height:34px;padding:5px;border-radius:8px;transform:none}
+.dice.sm i{width:6px;height:6px}
+.dice.lg{width:92px;height:92px;padding:13px;border-radius:18px}
+.dice.lg i{width:15px;height:15px}
+.tray{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;height:96px;margin:0 0 14px;border-radius:24px;background:radial-gradient(100% 120% at 50% 0%,rgba(255,200,90,.22),transparent 70%),var(--s1);box-shadow:inset 0 0 0 1px var(--e1)}
+.tray .plate{position:absolute;width:210px;height:44px;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#fff,#d9dde6);bottom:16px;box-shadow:0 6px 14px rgba(0,0,0,.25)}
+.tart{position:relative;width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 50% 45%,#ffe27a 0 46%,#f2b53a 47% 56%,#d58a2a 57% 72%,#b8691c 73%);box-shadow:0 4px 8px rgba(0,0,0,.3);margin-bottom:22px;transition:transform .4s,opacity .4s}
+.tart.gone{opacity:0;transform:translateY(-30px) scale(.6)}
+.tray .gonetxt{position:absolute;font-family:var(--serif);font-size:20px;font-weight:900;color:var(--badtx);top:10px}
+.clock{display:flex;align-items:center;gap:14px;padding:14px;border-radius:22px;margin:0 0 14px;background:linear-gradient(160deg,#151a38,#090b1c);box-shadow:inset 0 0 0 1px rgba(156,194,255,.3),0 14px 30px rgba(0,0,0,.35);color:#e9eeff}
+.clock .moon{width:46px;height:46px;border-radius:50%;box-shadow:inset -12px -4px 0 0 #f2e7b8;transform:rotate(-20deg);flex:none}
+.clock b{font-family:var(--serif);font-size:34px;font-weight:900;letter-spacing:2px}
+.clock small{display:block;font-size:13px;color:#b8c3ea;margin-top:2px}
+.sleep{text-align:center;padding:40px 14px 30px;border-radius:24px;background:linear-gradient(170deg,#0d1028,#05060f);color:#cdd5f6;box-shadow:inset 0 0 0 1px rgba(156,194,255,.2);margin:0 0 14px}
+.sleep .z{font-family:var(--serif);font-size:44px;font-weight:900;letter-spacing:6px;color:#8fa4e8;animation:zz 2.4s ease-in-out infinite}
+@keyframes zz{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-6px)}}
+.sleep .s1{font-size:18px;font-weight:800;margin-top:8px}
+.sleep .s2{font-size:14px;margin-top:6px;color:#9fa9d0}
+.awake{padding:16px;border-radius:24px;margin:0 0 14px;background:radial-gradient(120% 100% at 50% 0%,rgba(255,200,90,.25),transparent 70%),var(--s1);box-shadow:inset 0 0 0 2px var(--g2)}
+.awake .a1{font-family:var(--serif);font-size:26px;font-weight:900;text-align:center}
+.awake .a2{font-size:15px;text-align:center;color:var(--tx2);margin:6px 0 10px;line-height:1.6}
+.awake .seen{font-size:17px;font-weight:800;text-align:center;color:var(--badtx);margin:8px 0}
+.memo{text-align:left;font-size:14px;line-height:1.7;margin-top:8px;padding:0 6px}
+.memo li{margin:0}
+.rc-b.tS{background:radial-gradient(120% 90% at 50% 0%,#2a5f8f,#122a45);box-shadow:inset 0 0 0 1px rgba(156,194,255,.7),inset 0 0 0 8px rgba(0,0,0,.18),0 16px 36px rgba(0,0,0,.45);color:#f6f2e9}
+.rc-b.tT,.rc-b.tA{background:radial-gradient(120% 90% at 50% 0%,#7a3a12,#3a1606);box-shadow:inset 0 0 0 1px rgba(255,180,90,.7),inset 0 0 0 8px rgba(0,0,0,.18),0 16px 36px rgba(0,0,0,.45);color:#f6f2e9}
+.rc-b.tS .rl{color:#cfe6ff}
+.rc-b.tT .rl,.rc-b.tA .rl{color:#ffd9a8}
+.rc.tall{height:300px}
+.rc-b .dice{margin:6px auto 2px}
 .pendw .btn.gold,.pendw .sb,.pendw .seg button,.pendw .pr .go,.pendw [data-act=skip]{opacity:.5;pointer-events:none}
 /* 深色卡（身份卡、判官卡、封住嘅題目卡）入面嘅字固定淺色 */
 .rc-f,.rc-b.h,.rc-b.l,.rc-b.o,.idc{color:#f6f2e9}
@@ -474,7 +512,7 @@ function toast(msg, ms = 2600) {
 }
 
 /* 系統顏色：深夜金（預設）或者奶油色（Bill 2026-11-22） */
-const THEME = { cur: LS.get('bgr_theme', 'dark') === 'cream' ? 'cream' : 'dark' };
+const THEME = { cur: LS.get('bgr_theme', 'cream') === 'dark' ? 'dark' : 'cream' };   // Bill 2026-11-22：預設奶油色
 function applyTheme() {
   const cream = THEME.cur === 'cream';
   if (cream) document.documentElement.dataset.theme = 'cream'; else delete document.documentElement.dataset.theme;
@@ -995,35 +1033,42 @@ function hAct(id, t, x) {
   const isJ = id === st.jd, isH = id === st.host;
   switch (t) {
     case 'leave': hRemove(id, false); break;
-    case 'ok': if (st.ph === 'role' && (isJ || st.rl[id])) { st.ok[id] = 1; if (st.g === 'wd') wCheckRole(); else if (st.g === 'cd') cCheckRole(); else hCheckRole(); } break;
+    case 'ok': if (st.ph === 'role' && (isJ || st.rl[id])) { st.ok[id] = 1; if (st.g === 'wd') wCheckRole(); else if (st.g === 'cd') cCheckRole(); else if (st.g === 'tt') tCheckRole(); else hCheckRole(); } break;
+    // 邊個偷咗蛋撻
+    case 'steal': if (st.g === 'tt' && st.ph === 'night' && st.rl[id] === 'T' && st.dice[id] === st.hr) tSteal(); break;
+    case 'peek': if (st.g === 'tt' && st.ph === 'night' && st.rl[id] === 'S' && st.dice[id] === st.hr && tAwake().length === 1 && !st.pk[id] && x !== id && st.dice[x]) st.pk[id] = { t: x, d: st.dice[x] }; break;
+    case 'tdone': if (st.g === 'tt' && st.ph === 'night' && st.dice[id] === st.hr && (st.rl[id] !== 'T' || st.stolen)) st.hd[id] = 1; break;
+    case 'tacc': if (st.g === 'tt' && st.ph === 'acc' && st.rl[id] === 'T' && x !== id && st.rl[x] === 'S' && !st.acc.includes(x) && st.acc.length < st.accN) st.acc.push(x); break;
     // 拆彈危機
     case 'cut': if (st.g === 'cd' && st.ph === 'play' && id === st.hold && Array.isArray(x) && x[0] !== id && st.hd[x[0]] && hOn(x[0])) cCut(id, x[0], +x[1]); break;
     // 誰是臥底
     // Bill 2026-11-22：描述中途任何人可以發起投票，過半數同意就入投票
-    case 'prop': if (st.g === 'wd' && st.ph === 'desc' && !st.pr && wVoters().includes(id)) { st.pk2 = (st.pk2 || 0) + 1; st.pr = { by: id, y: [id], n: [], dl: Date.now() + PROP_MS, k: st.pk2 }; wPropCheck(); } break;
-    case 'pv': if (st.g === 'wd' && st.ph === 'desc' && st.pr && wVoters().includes(id) && !st.pr.y.includes(id) && !st.pr.n.includes(id)) { (x ? st.pr.y : st.pr.n).push(id); wPropCheck(); } break;
+    case 'prop': if (((st.g === 'wd' && st.ph === 'desc') || (st.g === 'tt' && st.ph === 'day')) && !st.pr && wVoters().includes(id)) { st.pk2 = (st.pk2 || 0) + 1; st.pr = { by: id, y: [id], n: [], dl: Date.now() + PROP_MS, k: st.pk2 }; wPropCheck(); } break;
+    case 'pv': if (((st.g === 'wd' && st.ph === 'desc') || (st.g === 'tt' && st.ph === 'day')) && st.pr && wVoters().includes(id) && !st.pr.y.includes(id) && !st.pr.n.includes(id)) { (x ? st.pr.y : st.pr.n).push(id); wPropCheck(); } break;
     // Bill 2026-11-22：臥底講出估嘅詞語，平民判斷啱唔啱
     case 'gj': if (st.g === 'wd' && st.ph === 'guess' && st.rl[id] === 'C') wGuess(x ? 1 : 0, id); break;
-    case 'vote': if (st.g === 'wd' && st.ph === 'vote' && wVoters().includes(id) && !st.vt[id] && st.cand.includes(x) && x !== id) { st.vt[id] = x; wCheckVote(); } break;
+    case 'vote': if ((st.g === 'wd' || st.g === 'tt') && st.ph === 'vote' && wVoters().includes(id) && !st.vt[id] && st.cand.includes(x) && x !== id) { st.vt[id] = x; if (st.g === 'tt') tCheckVote(); else wCheckVote(); } break;
     case 'cont': if (isH && st.g === 'wd' && st.ph === 'out') wCont(); break;
     case 'tolobby': if (isH && st.ph === 'end') hLobby(); break;
     case 'game': if (isH && st.ph === 'lobby' && GAMES[x]) { st.g = x; st.cfg = { ...GAMES[x].cfg }; } break;
     case 'skip': if (isJ && st.ph === 'think') { hNewWord(); st.dl = Date.now() + THINK_MS; st.sk++; } break;
     case 'spk': if (isJ && st.ph === 'speak' && !st.sp && st.rl[x] && !st.done.includes(x)) { st.sp = x; st.sdl = Date.now() + SPEAK_MS; } break;
+    // Bill 2026-11-22：發言人可以隨時提早結束
+    case 'spkend': if (st.g === 'zdz' && st.ph === 'speak' && st.sp === id) { st.done.push(id); st.sp = null; } break;
     case 'burst': if (isJ && st.ph === 'judge' && st.rl[x] && !st.ex.includes(x)) hBurst(x); break;
     case 'pick': if (isJ && st.ph === 'judge' && st.rl[x] && !st.ex.includes(x)) hPick(x); break;
     case 'next': if ((isJ || isH) && st.ph === 'reveal' && hCanNext()) hNext(); break;
     // 房主專用
-    case 'start': if (isH && st.ph === 'lobby') { if (st.g === 'wd') wStart(false); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(false); else hStart(); } break;
+    case 'start': if (isH && st.ph === 'lobby') { if (st.g === 'wd') wStart(false); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(false); else if (st.g === 'tt') tStart(false); else hStart(); } break;
     // 心水數字
     case 'xplay': if (st.g === 'xs' && st.ph === 'play' && st.hd && st.hd[id]) xPlay(id); break;
     case 'xnext': if (isH && st.g === 'xs' && st.ph === 'clear') { st.lv++; xDeal(); } break;
     case 'xtheme': if (isH && st.g === 'xs' && st.ph === 'play' && !st.pile.length) xTheme(); break;
     case 'cfg': if (isH && st.ph === 'lobby' && Array.isArray(x) && CFG_OPTS[x[0]] && (x[0] in GAMES[st.g].cfg) && CFG_OPTS[x[0]].some((o) => o[0] === x[1])) st.cfg[x[0]] = x[1]; break;
     case 'kick': if (isH && x !== st.host) hRemove(x, true); break;
-    case 'again': if (isH && st.ph === 'end') { if (st.g === 'wd') wStart(true); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(true); else hLobby(); } break;
-    case 'force': if (isH && st.ph === 'role') { if (st.g === 'wd') wDesc(null); else if (st.g === 'cd') st.ph = 'play'; else hThink(); } break;
-    case 'redeal': if (isH && st.g === 'cd' && CD_PH.includes(st.ph)) cStart(true); else if (isH && st.g === 'xs' && XS_PH.includes(st.ph)) xDeal(); else if (isH && st.g === 'wd' && WD_PH.includes(st.ph)) wStart(true); else if (isH && st.g === 'zdz' && PLAY_PH.includes(st.ph)) hRedeal(); break;
+    case 'again': if (isH && st.ph === 'end') { if (st.g === 'wd') wStart(true); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(true); else if (st.g === 'tt') tStart(true); else hLobby(); } break;
+    case 'force': if (isH && st.ph === 'role') { if (st.g === 'wd') wDesc(null); else if (st.g === 'cd') st.ph = 'play'; else if (st.g === 'tt') tNight(); else hThink(); } break;
+    case 'redeal': if (isH && st.g === 'tt' && TT_PH.includes(st.ph)) tStart(true); else if (isH && st.g === 'cd' && CD_PH.includes(st.ph)) cStart(true); else if (isH && st.g === 'xs' && XS_PH.includes(st.ph)) xDeal(); else if (isH && st.g === 'wd' && WD_PH.includes(st.ph)) wStart(true); else if (isH && st.g === 'zdz' && PLAY_PH.includes(st.ph)) hRedeal(); break;
     case 'end': if (isH && st.ph !== 'lobby' && st.ph !== 'end') st.ph = 'end'; break;
     case 'close': if (isH) st.ph = 'closed'; break;
     default: break;
@@ -1226,7 +1271,7 @@ function wPropCheck() {
   const st = HS; if (!st.pr) return;
   const vs = wVoters(), n = vs.length;
   const y = st.pr.y.filter((id) => vs.includes(id)).length, no = st.pr.n.filter((id) => vs.includes(id)).length;
-  if (y * 2 > n) { st.prr = { k: st.pr.k, ok: 1 }; st.pr = null; wVote(); }
+  if (y * 2 > n) { st.prr = { k: st.pr.k, ok: 1 }; st.pr = null; if (st.g === 'tt') tVote(); else wVote(); }
   else if ((n - no) * 2 <= n) wPropFail();
 }
 function wPropFail() { const st = HS; st.prr = { k: st.pr.k, ok: 0, by: st.pr.by }; st.pr = null; }
@@ -1375,14 +1420,100 @@ function cCut(by, to, i) {
     st.cr++; cDeal();
   }
 }
+/* ============================================================
+ * 4e. 邊個偷咗蛋撻（房主計算；Cheese Thief 玩法，名、角色同外觀自己整）
+ *    Bill 2026-11-22 定：茶餐廳深夜，伙記 vs 偷撻賊；共犯 6 點之後賊直接揀（5–6 人 1 個、7–8 人 2 個）；
+ *    天光討論同誰是臥底一樣（唔限時／5／10 分鐘，任何人發起投票過半數同意）
+ *    role 睇身份同骰 → night 凌晨 1–6 點逐個鐘醒 → acc 賊揀共犯（5 人以上）→ day 討論 → vote 投票 → end
+ * ============================================================ */
+const TT_MAX = 8, HOUR_MIN = 5000 / SPEED, HOUR_MAX = 14000 / SPEED, ACC_MS = 25000 / SPEED;
+const TT_PH = ['role', 'night', 'acc', 'day', 'vote'];
+function tStart(keep) {
+  const st = HS;
+  st.pl = st.pl.filter((p) => (p.on || p.id === st.host) && !p.gone);
+  for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
+  st.wt = [];
+  while (st.pl.length > TT_MAX) { const p = st.pl.pop(); st.wt.unshift({ id: p.id, n: p.n, c: p.c, on: p.on }); }
+  if (st.pl.length < GAMES.tt.min) { hLobby(); return; }
+  st.pl.forEach((p) => { p.gone = 0; if (!keep) p.sc = 0; });
+  st.gid++;
+  const ids = st.pl.map((p) => p.id), thief = ids[Math.floor(Math.random() * ids.length)];
+  st.rl = {}; ids.forEach((id) => { st.rl[id] = id === thief ? 'T' : 'S'; });
+  st.dice = {}; ids.forEach((id) => { st.dice[id] = 1 + Math.floor(Math.random() * 6); });
+  st.al = ids.slice();
+  st.ok = {}; st.ph = 'role'; st.hr = 0; st.hd = {}; st.stolen = 0; st.pk = {}; st.acc = []; st.accN = ids.length >= 7 ? 2 : ids.length >= 5 ? 1 : 0;
+  st.vt = {}; st.cand = []; st.tie = 0; st.pr = null; st.prr = null; st.dl = 0; st.dt0 = 0; st.win = null; st.tv = null; st.top = []; st.dt = {};
+  st.jd = null; st.w = null;
+}
+function tCheckRole() {
+  const st = HS; if (st.ph !== 'role') return;
+  if (st.al.filter((id) => hOn(id)).every((id) => st.ok[id])) tNight();
+}
+function tNight() { const st = HS; st.ph = 'night'; st.hr = 0; tHour(); }
+function tHour() {
+  const st = HS;
+  st.hr++; st.hd = {};
+  if (st.hr > 6) {
+    if (!st.stolen) st.stolen = 7;   // 保險：賊冇醒過（唔會發生）
+    if (st.accN) { st.ph = 'acc'; st.dl = Date.now() + ACC_MS; } else tDay();
+    return;
+  }
+  const now = Date.now(); st.hmin = now + HOUR_MIN; st.dl = now + HOUR_MAX;
+}
+const tAwake = () => HS.al.filter((id) => HS.dice[id] === HS.hr);
+const tThief = () => Object.keys(HS.rl).find((id) => HS.rl[id] === 'T');
+function tSteal() { const st = HS; if (!st.stolen) st.stolen = st.hr; }
+function tAccDone() {
+  const st = HS;
+  const pool = shuffle(st.al.filter((id) => st.rl[id] === 'S' && !st.acc.includes(id)));
+  while (st.acc.length < st.accN && pool.length) st.acc.push(pool.shift());
+  st.acc.forEach((id) => { st.rl[id] = 'A'; });
+  tDay();
+}
+function tDay() {
+  const st = HS;
+  st.ph = 'day'; st.vt = {}; st.pr = null; st.prr = null;
+  st.dt0 = st.cfg.t ? st.cfg.t * 1000 / SPEED : 0;
+  st.dl = st.dt0 ? Date.now() + st.dt0 : 0;
+}
+function tVote() { const st = HS; st.ph = 'vote'; st.vt = {}; st.pr = null; st.cand = st.al.slice(); st.dl = Date.now() + VOTE_MS; }
+function tCheckVote() { const st = HS; if (st.ph === 'vote' && st.al.filter((id) => hOn(id)).every((id) => st.vt[id])) tTally(); }
+/* 計票：最高票（平票就全部）翻身份；賊喺最高票入面 → 伙記贏，否則賊同共犯贏 */
+function tTally() {
+  const st = HS, c = {};
+  Object.keys(st.vt).forEach((v) => { const t = st.vt[v]; c[t] = (c[t] || 0) + 1; });
+  const max = Math.max(0, ...Object.values(c));
+  st.top = max ? Object.keys(c).filter((id) => c[id] === max) : [];
+  st.tv = c;
+  st.win = st.top.includes(tThief()) ? 'S' : 'T';
+  st.dt = {};
+  Object.keys(st.rl).forEach((id) => { const side = st.rl[id] === 'S' ? 'S' : 'T'; if (side === st.win) hAdd(id, 1); });
+  st.ph = 'end'; st.dl = 0;
+}
+function tTick(now) {
+  const st = HS;
+  if (st.ph === 'role') tCheckRole();
+  else if (st.ph === 'night') {
+    const aw = tAwake().filter((id) => hOn(id)), th = tThief();
+    const thiefUp = aw.includes(th);
+    if (thiefUp && !st.stolen && now >= st.dl) tSteal();
+    const done = aw.every((id) => st.hd[id] && (id !== th || st.stolen));
+    if ((now >= st.hmin && done) || now >= st.dl) { if (tAwake().includes(th)) tSteal(); tHour(); }
+  } else if (st.ph === 'acc') { if (st.acc.length >= st.accN || now >= st.dl || !hOn(tThief())) tAccDone(); }
+  else if (st.ph === 'day') {
+    if (st.dl && now >= st.dl) tVote();
+    else if (st.pr) { if (now >= st.pr.dl) wPropFail(); else wPropCheck(); }
+  } else if (st.ph === 'vote') { if (now >= st.dl) tTally(); else tCheckVote(); }
+}
 /* 房主計時：準備完自動入發言、每人 30 秒、全部講完入判決、4 分鐘到就完 */
 setInterval(() => {
   if (!HS || !S.isHost || S.screen !== 'room') return;
   const st = HS, now = Date.now();
-  const sig = () => [st.ph, st.sp, st.ci, st.al ? st.al.length : 0, st.lk, st.win].join('|'), s0 = sig();
+  const sig = () => [st.ph, st.sp, st.ci, st.al ? st.al.length : 0, st.lk, st.win, st.hr, st.stolen, st.acc ? st.acc.length : 0, st.pr ? st.pr.k : 0, st.prr ? st.prr.k : 0].join('|'), s0 = sig();
   if (st.g === 'wd') wTick(now);
   else if (st.g === 'xs') { /* 心水數字冇計時 */ }
   else if (st.g === 'cd') { if (st.ph === 'role') cCheckRole(); }
+  else if (st.g === 'tt') tTick(now);
   else if (st.ph === 'role') hCheckRole();
   else if (st.ph === 'think' && now >= st.dl) hSpeak();
   else if (st.ph === 'speak') {
@@ -1565,6 +1696,7 @@ const ICP = {
   users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M17.5 14a6 6 0 0 1 4 6"/>',
   bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
   chev: '<path d="M9 6l6 6-6 6"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
   scis: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/>',
   bomb: '<circle cx="11" cy="15" r="6.5"/><rect x="9" y="6.3" width="4" height="2.4" rx=".6"/><path d="M11 6.3c0-2.6 2.2-3.6 4.4-3.1"/><path d="M17.6 1.6l.4 1.4M20 4l-1.4.3M19.6 1.6l-.9 1.1"/>',
   cutw: '<path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>',
@@ -1577,6 +1709,7 @@ const GAMEART = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xM
 const GAMEART_WD = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gwB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d2a48"/><stop offset="1" stop-color="#14121f"/></linearGradient><radialGradient id="gwL" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#9cc2ff" stop-opacity=".3"/><stop offset="1" stop-color="#9cc2ff" stop-opacity="0"/></radialGradient><linearGradient id="gwG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".45" stop-color="#e4bb60"/><stop offset=".6" stop-color="#c3913a"/><stop offset="1" stop-color="#f2d892"/></linearGradient></defs><rect width="400" height="150" fill="url(#gwB)"/><rect width="400" height="150" fill="url(#gwL)"/><g font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif" font-weight="900" text-anchor="middle"><g transform="translate(86 26) rotate(-12 36 50)"><rect width="72" height="100" rx="9" fill="url(#gwG)"/><rect x="4" y="4" width="64" height="92" rx="6" fill="#fff8ea"/><text x="36" y="62" font-size="24" fill="#2a1c05">奶茶</text></g><g transform="translate(164 18)"><rect width="72" height="100" rx="9" fill="url(#gwG)"/><rect x="4" y="4" width="64" height="92" rx="6" fill="#fff8ea"/><text x="36" y="62" font-size="24" fill="#2a1c05">奶茶</text></g><g transform="translate(242 26) rotate(12 36 50)"><rect width="72" height="100" rx="9" fill="#86283f" stroke="#ff8a9a" stroke-opacity=".6"/><rect x="4" y="4" width="64" height="92" rx="6" fill="#fff0f2"/><text x="36" y="62" font-size="24" fill="#5a0f22">咖啡</text></g></g><g transform="translate(350 112)"><circle r="18" fill="none" stroke="#f2d892" stroke-width="6"/><path d="M14 14l18 18" stroke="#f2d892" stroke-width="8" stroke-linecap="round"/></g></svg>`;
 const GAMEART_XS = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gxB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a1d3a"/><stop offset="1" stop-color="#14121f"/></linearGradient><radialGradient id="gxL" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#ff8fb0" stop-opacity=".25"/><stop offset="1" stop-color="#ff8fb0" stop-opacity="0"/></radialGradient><linearGradient id="gxG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".45" stop-color="#e4bb60"/><stop offset=".6" stop-color="#c3913a"/><stop offset="1" stop-color="#f2d892"/></linearGradient></defs><rect width="400" height="150" fill="url(#gxB)"/><rect width="400" height="150" fill="url(#gxL)"/><path d="M60 120 C140 60, 260 60, 340 30" stroke="#e0b65c" stroke-opacity=".5" stroke-width="2" fill="none" stroke-dasharray="4 6"/><g font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif" font-weight="900" text-anchor="middle"><g transform="translate(78 52)"><rect width="62" height="86" rx="9" fill="url(#gxG)"/><rect x="4" y="4" width="54" height="78" rx="6" fill="#fff8ea"/><text x="31" y="56" font-size="30" fill="#2a1c05">7</text></g><g transform="translate(168 36)"><rect width="62" height="86" rx="9" fill="url(#gxG)"/><rect x="4" y="4" width="54" height="78" rx="6" fill="#fff8ea"/><text x="31" y="56" font-size="30" fill="#2a1c05">42</text></g><g transform="translate(258 20)"><rect width="62" height="86" rx="9" fill="url(#gxG)"/><rect x="4" y="4" width="54" height="78" rx="6" fill="#fff8ea"/><text x="31" y="56" font-size="30" fill="#2a1c05">88</text></g></g><g fill="#ff7083" transform="translate(340 108)"><path d="M0 6 C0 -2 10 -2 10 6 C10 -2 20 -2 20 6 C20 14 10 20 10 22 C10 20 0 14 0 6Z"/></g></svg>`;
 const GAMEART_CD = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gcB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a1418"/><stop offset="1" stop-color="#14121f"/></linearGradient><radialGradient id="gcL" cx=".55" cy=".45" r=".6"><stop offset="0" stop-color="#ff7a3c" stop-opacity=".35"/><stop offset="1" stop-color="#ff7a3c" stop-opacity="0"/></radialGradient></defs><rect width="400" height="150" fill="url(#gcB)"/><rect width="400" height="150" fill="url(#gcL)"/><path d="M20 120 C90 40 150 140 220 70 S330 30 390 90" stroke="#5fd6a3" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M20 135 C100 70 170 150 240 95 S340 60 390 120" stroke="#ff7083" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M20 105 C80 20 160 110 230 45 S320 10 390 60" stroke="#9cc2ff" stroke-width="5" fill="none" stroke-linecap="round"/><g transform="translate(200 78)"><circle r="34" fill="#1b1424" stroke="#e0b65c" stroke-width="3"/><rect x="-8" y="-46" width="16" height="14" rx="3" fill="#e0b65c"/><path d="M2 -46 C10 -60 24 -58 28 -66" stroke="#e0b65c" stroke-width="3" fill="none"/><circle cx="29" cy="-67" r="6" fill="#ffd28a"/><circle cx="29" cy="-67" r="11" fill="#ff7a3c" opacity=".35"/><text y="10" text-anchor="middle" font-size="26" font-weight="900" fill="#f2d892" font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif">4</text></g><g transform="translate(300 38) rotate(30)" fill="#e0b65c"><circle cx="-10" cy="16" r="7" fill="none" stroke="#e0b65c" stroke-width="3"/><circle cx="10" cy="16" r="7" fill="none" stroke="#e0b65c" stroke-width="3"/><path d="M-6 10 L8 -18 L11 -16 L-2 12Z"/><path d="M6 10 L-8 -18 L-11 -16 L2 12Z"/></g></svg>`;
+const GAMEART_TT = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gtB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101536"/><stop offset="1" stop-color="#14121f"/></linearGradient><radialGradient id="gtT" cx=".5" cy=".45" r=".5"><stop offset="0" stop-color="#ffe27a"/><stop offset=".46" stop-color="#ffd34f"/><stop offset=".56" stop-color="#f2b53a"/><stop offset=".72" stop-color="#d58a2a"/><stop offset="1" stop-color="#9a5210"/></radialGradient></defs><rect width="400" height="150" fill="url(#gtB)"/><circle cx="330" cy="36" r="18" fill="#f2e7b8"/><circle cx="338" cy="30" r="16" fill="#101536"/><g fill="#f7e4a8" opacity=".7"><circle cx="60" cy="30" r="1.6"/><circle cx="120" cy="18" r="1.2"/><circle cx="250" cy="24" r="1.4"/><circle cx="290" cy="70" r="1.1"/></g><ellipse cx="200" cy="118" rx="110" ry="20" fill="#e4e8f0"/><ellipse cx="200" cy="114" rx="96" ry="14" fill="#fff"/><circle cx="150" cy="96" r="22" fill="url(#gtT)"/><circle cx="200" cy="92" r="22" fill="url(#gtT)"/><circle cx="250" cy="96" r="22" fill="url(#gtT)" opacity=".35"/><path d="M262 60 C280 50 300 54 312 62 L300 72 C290 66 278 66 268 72Z" fill="#2a2348" stroke="#e0b65c" stroke-width="2"/><g font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif" font-weight="900" fill="#f2d892" font-size="22"><text x="40" y="132">?</text><text x="352" y="128">?</text></g><g transform="translate(70 62)"><rect width="34" height="34" rx="7" fill="#fffdf7" transform="rotate(-10)"/><circle cx="9" cy="10" r="3.2" fill="#2a1c05"/><circle cx="23" cy="20" r="3.2" fill="#2a1c05"/><circle cx="16" cy="15" r="3.2" fill="#2a1c05"/></g></svg>`;
 const GAMES = {
   zdz: { name: '真定作', min: 3, art: GAMEART, cfg: { r: 1, d: 0 }, tags: ['3–10 人', '一局 15–30 分鐘', '派對・講大話'],
     desc: '每輪一個冷門題目：怪字、古怪習俗、奇特食物、傳說人物…得一個人知道真正意思，其他人要作一個。判官聽完大家發言，要估邊個講真話。' },
@@ -1586,6 +1719,8 @@ const GAMES = {
     desc: '每人暗中拎到 1–100 嘅數字，用題目（例如「動物有幾強」）形容自己個數字，大家合作由細到大出晒所有牌。3 條命，過 3 關。' },
   cd: { name: '拆彈危機', min: 4, max: 8, art: GAMEART_CD, cfg: {}, tags: ['4–8 人', '一局 10–15 分鐘', '陣營・推理'],
     desc: '拆彈組同炸彈客暗中對決。輪流拎剪刀剪其他人嘅線，4 輪內剪晒拆除線就拆彈組贏，剪到炸彈或者拖過 4 輪就炸彈客贏。' },
+  tt: { name: '邊個偷咗蛋撻', min: 4, max: 8, art: GAMEART_TT, cfg: { t: 0 }, tags: ['4–8 人', '一局 10–15 分鐘', '天黑閉眼・推理'],
+    desc: '茶餐廳深夜，蛋撻唔見咗！每人擲骰決定凌晨幾點醒，偷撻賊醒嗰陣偷蛋撻，單獨醒嘅伙記可以偷睇人粒骰。天光之後大家討論，投票揪出偷撻賊。' },
 };
 const CROWN = `<svg viewBox="0 0 84 60" class="crown"><defs><linearGradient id="crG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".5" stop-color="#e0b65c"/><stop offset="1" stop-color="#b8862f"/></linearGradient></defs><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="url(#crG)" stroke="#8a5f1c" stroke-width="1.5" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#c3913a"/><circle cx="42" cy="34" r="5" fill="#ff7083"/><circle cx="22" cy="40" r="4" fill="#9cc2ff"/><circle cx="62" cy="40" r="4" fill="#5fd6a3"/></svg>`;
 
@@ -1598,6 +1733,8 @@ function render() {
     const v = S.view;
     h = vTop(v) + '<div id="banner"></div>';
     if (v.ph === 'lobby') h += vLobby(v);
+    else if (v.g === 'tt' && v.ph === 'end') h += vEndTt(v);
+    else if (v.g === 'tt' && TT_PH.includes(v.ph)) h += vPlayTt(v);
     else if (v.g === 'cd' && v.ph === 'end' && Date.now() < (S.cdHold || 0)) h += vPlayCd(v);
     else if (v.g === 'cd' && v.ph === 'end') h += vEndCd(v);
     else if (v.g === 'cd' && CD_PH.includes(v.ph)) h += vPlayCd(v);
@@ -1643,10 +1780,9 @@ function renderBanner() {
   b.classList.toggle('show', !!msg);
 }
 function vHome() {
-  return `<div class="hero"><div class="logo">${LOGO}</div><h1 class="ttl gtx">桌遊房</h1><div class="by">由 Bill Chiu 開發</div></div>
+  return `<div class="hbar"><button class="ib icon" data-act="settings" aria-label="設定">${ic('gear')}</button></div><div class="hero"><div class="logo">${LOGO}</div><h1 class="ttl gtx">桌遊房</h1><div class="by">由 Bill Chiu 開發</div></div>
     <div class="fld"><label for="nm">你嘅名（其他人會見到）</label>
     <input id="nm" class="inp" maxlength="8" value="${esc(ME.name)}" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done"></div>
-    <div class="fld" style="margin-top:14px"><label>系統顏色</label><div class="seg">${[['dark', '深夜金'], ['cream', '奶油色']].map((o) => `<button class="${THEME.cur === o[0] ? 'on' : ''}" data-act="theme" data-x="${o[0]}">${o[1]}</button>`).join('')}</div></div>
     <button class="btn gold big" data-act="joinpad">輸入房號加入</button>
     <div class="sec-t">開房玩</div>
     ${Object.keys(GAMES).map((g) => { const G = GAMES[g]; return `<div class="gcard">${G.art}
@@ -1664,7 +1800,7 @@ function vConnecting() {
 }
 function vTop(v) {
   const right = v.ph === 'lobby' ? `<button class="ib" data-act="rules" data-x="${v.g}">${ic('book')}玩法</button>` : `<button class="ib" data-act="scores">${ic('chart')}分數</button>`;
-  return `<div class="top"><button class="ib" data-act="leave">${ic('back')}離開</button><div class="tt"><small>房號</small><b>${esc(v.code)}</b></div>${right}</div>`;
+  return `<div class="top"><button class="ib" data-act="leave">${ic('back')}離開</button><div class="tt"><small>房號</small><b>${esc(v.code)}</b></div>${right}<button class="ib icon" data-act="settings" aria-label="設定">${ic('gear')}</button></div>`;
 }
 function seg(key, cur, edit) {
   return `<div class="seg${edit ? '' : ' ro'}">` + CFG_OPTS[key].map((o) => `<button class="${o[0] === cur ? 'on' : ''}" data-act="cfg" data-k="${key}" data-v="${o[0]}">${o[1]}</button>`).join('') + '</div>';
@@ -1689,7 +1825,11 @@ function vLobby(v) {
   const gsel = `<div class="seg${host ? '' : ' ro'}">` + Object.keys(GAMES).map((g) => `<button class="${g === v.g ? 'on' : ''}" data-act="game" data-x="${g}">${GAMES[g].name}</button>`).join('') + '</div>';
   const nU = onN >= 7 ? 2 : 1;
   const cdN = CD_ROLES[Math.min(8, Math.max(4, onN))];
-  const opts = v.g === 'cd'
+  const opts = v.g === 'tt'
+    ? `<div class="cl">天光討論時間</div>${seg('t', v.cfg.t, host)}
+      <div class="cl">每局流程</div><div class="flow"><span>擲骰</span><i>›</i><span>凌晨 1–6 點逐個醒</span><i>›</i><span>賊揀共犯</span><i>›</i><span>天光討論（${v.cfg.t ? v.cfg.t / 60 + ' 分鐘' : '唔限時'}）</span><i>›</i><span>投票</span></div>
+      <div class="cl">${onN < 4 ? '要 4–8 人' : onN > 8 ? '最多 8 人' : `而家 ${onN} 人：偷撻賊 1・共犯 ${onN >= 7 ? 2 : onN >= 5 ? 1 : 0}`}</div>`
+    : v.g === 'cd'
     ? `<div class="cl">每輪流程</div><div class="flow"><span>暗中身份</span><i>›</i><span>每人 5／4／3／2 條線</span><i>›</i><span>輪流剪線</span><i>›</i><span>4 輪</span></div>
       <div class="cl">${onN < 4 ? '要 4–8 人' : onN > 8 ? '最多 8 人' : `而家 ${onN} 人：拆彈組 ${onN === 4 || onN === 7 ? (cdN[0] - 1) + '–' + cdN[0] : cdN[0]}・炸彈客 ${onN === 4 || onN === 7 ? (cdN[1] - 1) + '–' + cdN[1] : cdN[1]}`}</div>`
     : v.g === 'xs'
@@ -1787,9 +1927,9 @@ function vPlay(v) {
     const total = v.ord.length, doneN = v.done.length;
     if (v.sp) {
       const p = pOf(v, v.sp), me = v.sp === ME.id;
-      h += `<div class="spot${me ? ' me' : ''}">${ring('sdl', SPEAK_MS, 'big', av(p, 'lg'))}<div class="spot-n">${me ? '輪到你發言！' : esc(p ? p.n : '') + ' 發言中'}</div><div class="spot-s"><b data-cd="sdl"></b> 秒${me ? '・講你嘅解釋' : ''}</div></div>`;
-    } else if (isJ) h += `<div class="spot idle">${ic('mic')}<div class="spot-n">揀下一個發言嘅人</div><div class="spot-s">撳下面個名，佢就要即刻講 30 秒</div></div>`;
-    else h += `<div class="spot idle">${ic('mic')}<div class="spot-n">等判官揀人發言…</div><div class="spot-s">判官撳到你個名，你就要講 30 秒</div></div>`;
+      h += `<div class="spot${me ? ' me' : ''}">${ring('sdl', SPEAK_MS, 'big', av(p, 'lg'))}<div class="spot-n">${me ? '輪到你發言！' : esc(p ? p.n : '') + ' 發言中'}</div><div class="spot-s"><b data-cd="sdl"></b> 秒${me ? '・講你嘅解釋' : ''}</div>${me ? '<button class="btn gold" data-act="spkend">講完，結束發言</button>' : ''}</div>`;
+    } else if (isJ) h += `<div class="spot idle">${ic('mic')}<div class="spot-n">揀下一個發言嘅人</div><div class="spot-s">撳下面個名，佢就要即刻講（最多 30 秒）</div></div>`;
+    else h += `<div class="spot idle">${ic('mic')}<div class="spot-n">等判官揀人發言…</div><div class="spot-s">判官撳到你個名，你就要講（最多 30 秒，講完可以提早結束）</div></div>`;
     const dots = v.ord.map((id) => `<i class="${v.done.includes(id) ? 'on' : ''}"></i>`).join('');
     h += `<div class="prog"><span>已發言 ${doneN}／${total}</span><span class="dots">${dots}</span></div>`;
     const rows = v.ord.map((id) => {
@@ -1902,6 +2042,13 @@ function fx(prevPh, had, v) {
         sfx(isL ? 'good' : 'bad');
       }
     }
+  }
+  if (v.g === 'tt') {
+    if (v.ph === 'role' && !S.seen['tr' + v.gid]) { S.seen['tr' + v.gid] = 1; S.hold = false; }
+    if (v.ph === 'night' && !S.seen['th' + v.gid + '-' + v.hr]) { S.seen['th' + v.gid + '-' + v.hr] = 1; if (had) sfx('tick'); }
+    if (v.ph === 'day' && !S.seen['td' + v.gid]) { S.seen['td' + v.gid] = 1; S.hold = false; if (had) sfx('good'); }
+    if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
+    return;
   }
   if (v.g === 'cd') {
     if (v.ph === 'role' && !S.seen['cr0' + v.gid]) { S.seen['cr0' + v.gid] = 1; S.hold = false; if (had) sfx('tick'); }
@@ -2264,13 +2411,152 @@ const RULES_CD = `<div class="rules">
     <li>剪到炸彈，或者 4 輪完都未剪晒：<b>炸彈客贏</b>。</li>
     <li>贏嗰隊每人 +1 分，一局一局累計。</li></ul>
 </div>`;
+/* ---------- 邊個偷咗蛋撻：畫面 ---------- */
+const TT_ROLE = { S: '夜更伙記', T: '偷撻賊', A: '共犯' };
+const PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
+const diceHtml = (n, cls = '') => `<span class="dice d${n} ${cls}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[n] && PIPS[n].includes(i) ? 'on' : ''}"></i>`).join('')}</span>`;
+const TT_STEPS = [['role', '身份'], ['night', '夜晚'], ['day', '天光'], ['vote', '投票']];
+function vHeadTt(v) {
+  const ph = v.ph === 'acc' ? 'night' : v.ph;
+  return `<div class="rh"><div class="rn">${v.ph === 'night' ? `凌晨 <b>${v.hr}</b> 點` : v.ph === 'acc' ? '6 點之後' : v.ph === 'role' ? '收工前' : '天光'}</div><div class="ichip">${v.al.length} 人・共犯 ${v.accN} 個</div></div>${stepsHtml(TT_STEPS, ph)}`;
+}
+function tMemo(v) {
+  const me = ME.id, r = v.rl[me], d = v.dice[me]; if (!r) return '';
+  const out = [];
+  if (v.ph !== 'role') {
+    const same = v.al.filter((id) => id !== me && v.dice[id] === d);
+    out.push(`凌晨 ${d} 點醒：${same.length ? '同 ' + same.map((id) => esc(nameOf(v, id))).join('、') + ' 一齊醒' : '得你一個醒'}`);
+    const th = Object.keys(v.rl).find((id) => v.rl[id] === 'T');
+    if (r !== 'T' && v.dice[th] === d && v.stolen) out.push(`你見到 <b>${esc(nameOf(v, th))}</b> 偷咗蛋撻！`);
+    if (r === 'T') out.push('你偷咗蛋撻');
+    if (v.pk[me]) out.push(`你偷睇咗 ${esc(nameOf(v, v.pk[me].t))} 粒骰：<b>${v.pk[me].d} 點</b>`);
+    if (r === 'T' && v.acc.length) out.push(`你揀咗共犯：${v.acc.map((id) => esc(nameOf(v, id))).join('、')}`);
+    if (r === 'A') out.push(`偷撻賊係 <b>${esc(nameOf(v, th))}</b>${v.acc.length > 1 ? '，另一個共犯係 ' + v.acc.filter((id) => id !== me).map((id) => esc(nameOf(v, id))).join('、') : ''}`);
+  }
+  return out.length ? `<ul class="memo">${out.map((t) => `<li>${t}</li>`).join('')}</ul>` : '';
+}
+function vTtCard(v) {
+  const r = v.rl[ME.id]; if (!r) return '';
+  const tip = r === 'S' ? '揪出偷撻賊就贏' : r === 'T' ? '唔好俾人投中你就贏' : '幫偷撻賊唔俾人投中';
+  const back = `<div class="rc-b t${r}"><div class="rl">你係${TT_ROLE[r]}</div><div class="tp">${tip}・你粒骰：</div>${diceHtml(v.dice[ME.id])}${tMemo(v)}</div>`;
+  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇身份同骰</div><div class="rc-s">放手就收埋，唔好俾人見到</div></div>`;
+  return `<div class="rc tall${S.hold ? ' show' : ''}" data-hold><div class="rc-i">${front}${back}</div></div>`;
+}
+function vTray(v) {
+  const gone = v.stolen && v.ph !== 'role' && v.ph !== 'night' ? 1 : 0;
+  return `<div class="tray"><span class="plate"></span>${[0, 1, 2].map(() => `<span class="tart${gone ? ' gone' : ''}"></span>`).join('')}${gone ? '<span class="gonetxt">蛋撻唔見咗！</span>' : ''}</div>`;
+}
+function vPlayTt(v) {
+  const me = ME.id, meIn = !!v.rl[me], r = v.rl[me], host = v.host === me;
+  let h = vHeadTt(v);
+  if (v.ph === 'role') {
+    h += vTray(v);
+    const need = v.al.filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
+    const chips = need.map((id) => { const p = pOf(v, id), y = !!v.ok[id]; return `<span class="okc${y ? ' y' : ''}">${av(p, 'sm')}${esc(p.n)}${y ? ic('check') : ''}</span>`; }).join('');
+    if (meIn) {
+      h += vTtCard(v);
+      const seen = S.seenRole[roleKey(v)], mine = !!v.ok[me];
+      h += mine ? '<div class="wait">已記住，等其他人…</div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '記住咗，瞓覺' : '先撳住上面張卡睇身份同骰'}</button>`;
+    } else h += '<div class="wait">遊戲進行緊，下一局先可以加入。</div>';
+    h += `<div class="sh"><span>準備瞓覺</span><small>${need.filter((id) => v.ok[id]).length}／${need.length}</small></div><div class="okl">${chips}</div>`;
+    if (host) h += '<button class="link" data-act="force">唔等，即刻天黑</button>';
+    return h;
+  }
+  if (v.ph === 'night') {
+    const awake = meIn && v.dice[me] === v.hr;
+    h += `<div class="clock"><span class="moon"></span><div><b>凌晨 ${v.hr} 點</b><small>${awake ? '你醒咗！' : '大家瞓緊覺…'}</small></div><span style="margin-left:auto">${ring('dl', HOUR_MAX)}</span></div>`;
+    if (!awake) return h + '<div class="sleep"><div class="z">zZz</div><div class="s1">你瞓緊覺</div><div class="s2">閉埋眼，等主持叫你嘅鐘數</div></div>';
+    const others = v.al.filter((id) => id !== me && v.dice[id] === v.hr);
+    const th = Object.keys(v.rl).find((id) => v.rl[id] === 'T');
+    let body = `<div class="a1">你醒咗！</div><div class="a2">${others.length ? '同你一齊醒：' + others.map((id) => esc(nameOf(v, id))).join('、') : '得你一個醒'}</div>`;
+    if (r === 'T') {
+      body += v.stolen ? '<div class="seen">你偷咗蛋撻！</div>' : '<button class="btn red big" data-act="steal">偷蛋撻</button>';
+    } else if (others.includes(th)) {
+      body += v.stolen ? `<div class="seen">你見到 ${esc(nameOf(v, th))} 偷咗蛋撻！</div>` : `<div class="a2">${esc(nameOf(v, th))} 鬼鬼祟祟咁…</div>`;
+    } else if (!others.length) {
+      if (v.pk[me]) body += `<div class="a2">${esc(nameOf(v, v.pk[me].t))} 粒骰係</div><div style="display:flex;justify-content:center">${diceHtml(v.pk[me].d, 'lg')}</div>`;
+      else body += '<div class="a2">得你一個醒，可以偷睇一個人粒骰：</div><div class="plist">' + v.al.filter((id) => id !== me).map((id) => `<button class="pr" data-act="peek" data-x="${id}">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="go">${ic('eye')}睇佢粒骰</span></button>`).join('') + '</div>';
+    }
+    const can = r !== 'T' || v.stolen;
+    body += v.hd[me] ? '<div class="wait">瞓返喇，等其他人…</div>' : `<button class="btn ghost" data-act="tdone" ${can ? '' : 'disabled'}>瞓返</button>`;
+    return h + `<div class="awake">${body}</div>`;
+  }
+  if (v.ph === 'acc') {
+    h += '<div class="clock"><span class="moon"></span><div><b>6 點之後</b><small>偷撻賊揀共犯</small></div></div>';
+    if (r !== 'T') return h + '<div class="sleep"><div class="z">zZz</div><div class="s1">你瞓緊覺</div><div class="s2">偷撻賊揀緊共犯…</div></div>';
+    const rows = v.al.filter((id) => id !== me).map((id) => {
+      const on = v.acc.includes(id);
+      return on ? `<div class="pr">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="tag bad">共犯</span></div>` : `<button class="pr" data-act="tacc" data-x="${id}">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="go">揀佢</span></button>`;
+    }).join('');
+    return h + `<div class="awake"><div class="a1">揀 ${v.accN} 個共犯</div><div class="a2">共犯會知道你係偷撻賊，幫你唔俾人投中（已揀 ${v.acc.length}／${v.accN}）</div><div class="plist">${rows}</div></div>`;
+  }
+  if (v.ph === 'day') {
+    h += vTray(v);
+    const vs = v.al.filter((id) => { const q = pOf(v, id); return q && q.on && !q.gone; });
+    const voter = vs.includes(me);
+    const lim = v.dl ? ring('dl', v.dt0 || 1) : `<div class="ring"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/></svg><b>∞</b></div>`;
+    h += `<div class="tmr">${lim}<div><div class="tl">天光討論</div><div class="ts">${v.dl ? '時間到自動投票；' : '唔限時；'}任何人都可以發起投票，過半數同意就開始投票</div></div></div>`;
+    if (v.pr) {
+      const by = pOf(v, v.pr.by), need = Math.floor(vs.length / 2) + 1, mineV = v.pr.y.includes(me) ? 1 : v.pr.n.includes(me) ? 0 : -1;
+      const btns = voter && mineV < 0 ? '<div class="row"><button class="btn ghost" data-act="pv" data-x="0">唔同意</button><button class="btn gold" data-act="pv" data-x="1">同意</button></div>' : `<div class="wait">${mineV === 1 ? '你同意咗，' : mineV === 0 ? '你唔同意，' : ''}等其他人…</div>`;
+      h += `<div class="tmr">${ring('prdl', PROP_MS)}<div><div class="tl">${esc(by ? by.n : '')} 發起投票</div><div class="ts">而家就開始投票？同意 ${v.pr.y.length}・唔同意 ${v.pr.n.length}（要 ${need} 個同意）</div></div></div>${btns}`;
+    } else if (voter) h += '<button class="btn gold big" data-act="prop">發起投票</button>';
+    if (!v.pr && v.prr && v.prr.ok === 0) h += '<div class="tip">上一次發起投票唔夠半數同意，繼續討論</div>';
+    h += '<div class="tip">講吓你幾點醒、見到咩、偷睇到咩（可以講大話）</div>';
+    if (meIn) h += '<div class="sh"><span>你嘅身份、骰同夜晚記錄</span></div>' + vTtCard(v);
+    return h;
+  }
+  // vote
+  const voters = v.al.filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
+  const mine = v.vt[me], canVote = voters.includes(me) && !mine;
+  h += `<div class="tmr">${ring('dl', VOTE_MS)}<div><div class="tl">投票揪出偷撻賊</div><div class="ts">${mine ? `你投咗 ${esc(nameOf(v, mine))}，等其他人…` : '揀你覺得係偷撻賊嘅人，投咗唔改得'}</div></div></div>`;
+  const rows = v.cand.map((id) => {
+    const q = pOf(v, id), me2 = id === me;
+    let right = '';
+    if (mine === id) right = `<span class="tag gold">${ic('check')}你投咗佢</span>`;
+    else if (canVote && !me2) right = `<button class="sb gold" data-act="vote" data-x="${id}">投佢</button>`;
+    return `<div class="pr${me2 ? ' me' : ''}${q && !q.on ? ' off' : ''}">${av(q)}<span class="nm">${esc(q ? q.n : '?')}${me2 ? '（你）' : ''}</span>${right}</div>`;
+  }).join('');
+  const chips = voters.map((id) => { const q = pOf(v, id), y = !!v.vt[id]; return `<span class="okc${y ? ' y' : ''}">${av(q, 'sm')}${esc(q.n)}${y ? ic('check') : ''}</span>`; }).join('');
+  h += `<div class="plist">${rows}</div><div class="sh"><span>已投票</span><small>${voters.filter((id) => v.vt[id]).length}／${voters.length}</small></div><div class="okl">${chips}</div>`;
+  if (meIn) h += '<div class="sh"><span>你嘅身份、骰同夜晚記錄</span></div>' + vTtCard(v);
+  return h;
+}
+function vEndTt(v) {
+  const host = v.host === ME.id, th = Object.keys(v.rl).find((id) => v.rl[id] === 'T');
+  const big = v.win === 'S' ? ['伙記贏！', 'ok', `捉到偷撻賊 ${esc(nameOf(v, th))}`] : v.win === 'T' ? ['偷撻賊贏！', 'bad', `偷撻賊係 ${esc(nameOf(v, th))}，冇俾人投中`] : ['提早完場', '', `偷撻賊係 ${esc(nameOf(v, th))}`];
+  const tv = v.tv || {};
+  const rows = ranked(v).map(({ p, rank }) => {
+    const r = v.rl[p.id], d = v.dt[p.id], n = tv[p.id] || 0, top = (v.top || []).includes(p.id);
+    const tag = r ? `<span class="rtag sm ${r === 'S' ? 'C' : 'U'}">${TT_ROLE[r]}</span>` : '';
+    return `<div class="pr${p.id === ME.id ? ' me' : ''}">${r ? diceHtml(v.dice[p.id], 'sm') : ''}${av(p)}<span class="nm">${esc(p.n)}${n ? `<small class="outs">${n} 票${top ? '・最高' : ''}</small>` : ''}</span>${tag}${d ? `<span class="dl p">+${d}</span>` : ''}<span class="sc">${p.sc} 分</span></div>`;
+  }).join('');
+  return `<div class="res"><div class="big ${big[1]}" style="font-size:36px">${big[0]}</div><div class="tip">${big[2]}・蛋撻喺凌晨 ${v.stolen && v.stolen < 7 ? v.stolen : '?'} 點唔見咗</div></div>
+    <div class="sh"><span>身份、骰同票數</span><small>贏嗰邊每人 +1</small></div><div class="plist">${rows}</div>
+    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局…</div>'}
+    <button class="btn ghost" data-act="leave">離開房間</button>`;
+}
+const RULES_TT = `<div class="rules">
+  <h4>故事</h4><p>茶餐廳深夜，一盤蛋撻放喺檯面。大家係瞓緊覺嘅夜更伙記，但其中一個係偷撻賊。</p>
+  <h4>人數同身份</h4><p>4 至 8 人：1 個<b>偷撻賊</b>，其餘係<b>夜更伙記</b>。5–6 人時賊會揀 1 個<b>共犯</b>，7–8 人揀 2 個。</p>
+  <h4>夜晚</h4><ol>
+    <li>每人暗中擲一粒骰，點數就係你凌晨幾點醒（1–6 點）。</li>
+    <li>主持（App）由凌晨 1 點叫到 6 點。到你嘅鐘數你就醒，見到同你一齊醒嘅人。</li>
+    <li>偷撻賊醒嗰陣一定要偷蛋撻；同佢一齊醒嘅人會見到佢偷。</li>
+    <li>伙記如果得自己一個醒，可以偷睇一個人粒骰。</li>
+    <li>6 點之後（5 人以上），偷撻賊揀共犯；共犯會知道邊個係賊。</li></ol>
+  <h4>天光</h4><p>大家講自己幾點醒、見到咩（可以講大話）。任何人可以發起投票，過半數同意就投；房主有設時間就時間到自動投。</p>
+  <h4>勝負</h4><ul>
+    <li>最多票嘅人（平票就全部）翻身份。偷撻賊喺入面：<b>伙記贏</b>，每個伙記 +1 分。</li>
+    <li>偷撻賊冇俾人投中：<b>偷撻賊同共犯贏</b>，每人 +1 分。</li></ul>
+</div>`;
 const RULES = `<div class="rules">
   <h4>人數</h4><p>3 至 10 人，每人一部手機入同一間房。</p>
   <h4>身份</h4><ul><li><b>判官</b>：每輪一個，輪流做。</li><li><b>老實人</b>：其他人入面得一個，會見到題目嘅真正意思。</li><li><b>大話精</b>：其餘全部人，要自己作一個解釋。</li></ul>
   <h4>每輪流程</h4><ol>
     <li><b>確認身份</b>：撳住身份卡睇自己係咩身份（唔好俾人見到），撳「確定身份」。全部人確定咗先出題。</li>
     <li><b>諗 15 秒</b>：出題。老實人只可以喺呢 15 秒睇答案，之後就收埋。判官如果本身識呢個題目，撳「我識，換題」。</li>
-    <li><b>發言</b>：判官撳一個人嘅名，嗰個人就要講 30 秒。講完判官再揀下一個，直到每人講過一次。</li>
+    <li><b>發言</b>：判官撳一個人嘅名，嗰個人就要講，最多 30 秒；講完可以撳「講完，結束發言」提早完。之後判官再揀下一個，直到每人講過一次。</li>
     <li><b>判決 4 分鐘</b>：判官揀邊個係老實人，或者不停拆穿人。</li></ol>
   <h4>計分（題目 1–3 粒星 ＝ 1–3 分）</h4><ul>
     <li>判官揀中老實人：判官同老實人各得題目分。</li>
@@ -2285,9 +2571,9 @@ function closeModal() { S.modal = null; renderModal(); }
 function confirmBox(text, ok, fn, opts = {}) { openModal({ type: 'confirm', text, ok, fn, bad: !!opts.bad, ph: S.view ? S.view.ph : null }); }
 function renderModal() {
   const el = $('#modal'), m = S.modal;
-  if (!m) { el.classList.remove('show'); el.innerHTML = ''; return; }
+  if (!m) { el.classList.remove('show'); el.innerHTML = ''; el.dataset.mt = ''; return; }
   let h = '';
-  if (m.type === 'rules') h = m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
+  if (m.type === 'rules') h = m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
   else if (m.type === 'confirm') h = `<div class="cfm">${m.text}</div><div class="row"><button class="btn ghost" data-act="mclose">取消</button><button class="btn ${m.bad ? 'red' : 'gold'}" data-act="mok">${m.ok}</button></div>`;
   else if (m.type === 'join') {
     const c = S.kp;
@@ -2295,20 +2581,28 @@ function renderModal() {
     const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'c', '0', 'b'].map((k) => `<button class="${k === 'c' || k === 'b' ? 's' : ''}" data-act="kp" data-x="${k}">${k === 'c' ? '清除' : k === 'b' ? '⌫' : k}</button>`).join('');
     h = `<h3>輸入房號</h3><div class="kpd">${boxes}</div><div class="keys">${keys}</div>
       <div class="row" style="margin-top:6px"><button class="btn ghost" data-act="mclose">取消</button><button class="btn gold" data-act="dojoin" ${c.length === 4 ? '' : 'disabled'}>加入</button></div>`;
+  } else if (m.type === 'settings') {
+    h = `<h3>設定</h3>
+      <div class="cl">系統顏色</div><div class="seg">${[['cream', '奶油色'], ['dark', '深夜金']].map((o) => `<button class="${THEME.cur === o[0] ? 'on' : ''}" data-act="theme" data-x="${o[0]}">${o[1]}</button>`).join('')}</div>
+      <div class="cl">聲音</div><div class="seg">${[[true, '開'], [false, '閂']].map((o) => `<button class="${SND.on === o[0] ? 'on' : ''}" data-act="snd" data-x="${o[0] ? 1 : 0}">${o[1]}</button>`).join('')}</div>
+      <div class="ver" style="margin:4px 0 10px">版本 ${esc(VER)}</div>
+      <button class="btn gold" data-act="mclose">完成</button>`;
   } else if (m.type === 'scores' && S.view) {
     const v = S.view, host = v.host === ME.id;
     const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}${p.gone ? '<span class="tag">走咗</span>' : !p.on ? '<span class="tag">離線</span>' : ''}<span class="sc">${p.sc} 分</span></div>`).join('');
     const wt = v.wt.length ? `<div class="sh"><span>等緊下一局</span><small>${v.wt.length} 人</small></div><div class="plist">${v.wt.map((p) => `<div class="pr">${av(p)}<span class="nm">${esc(p.n)}</span></div>`).join('')}</div>` : '';
     let hb = '';
-    const wd = v.g === 'wd';
-    if (host && v.ph === 'role') hb += `<button class="btn ghost" data-act="force">${cd ? '唔等，即刻開始' : wd ? '唔等，即刻開始描述' : '唔等，即刻出題'}</button>`;
-    const xs = v.g === 'xs', cd = v.g === 'cd';
-    if (host && (cd ? CD_PH : xs ? XS_PH : wd ? WD_PH : PLAY_PH).includes(v.ph)) hb += `<button class="btn ghost" data-act="redeal">${cd ? '重新開始呢局（重新派身份同線）' : xs ? '重新派呢關（換數字同題目）' : wd ? '重新派詞語（呢局重新開始）' : '重新派呢輪（換題同身份）'}</button>`;
+    const wd = v.g === 'wd', xs = v.g === 'xs', cd = v.g === 'cd', tt = v.g === 'tt';
+    if (host && v.ph === 'role') hb += `<button class="btn ghost" data-act="force">${tt ? '唔等，即刻天黑' : cd ? '唔等，即刻開始' : wd ? '唔等，即刻開始描述' : '唔等，即刻出題'}</button>`;
+    if (host && (tt ? TT_PH : cd ? CD_PH : xs ? XS_PH : wd ? WD_PH : PLAY_PH).includes(v.ph)) hb += `<button class="btn ghost" data-act="redeal">${tt ? '重新開始呢局（重新派身份同骰）' : cd ? '重新開始呢局（重新派身份同線）' : xs ? '重新派呢關（換數字同題目）' : wd ? '重新派詞語（呢局重新開始）' : '重新派呢輪（換題同身份）'}</button>`;
     if (host && v.ph !== 'lobby' && v.ph !== 'end') hb += '<button class="btn ghost" data-act="endgame">即刻完場</button>';
-    h = `<h3>${v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
-      <div class="row"><button class="btn ghost" data-act="snd">聲音：${SND.on ? '開' : '閂'}</button><button class="btn ghost" data-act="theme" data-x="${THEME.cur === 'cream' ? 'dark' : 'cream'}">顏色：${THEME.cur === 'cream' ? '奶油色' : '深夜金'}</button></div>${hb}<button class="btn gold" data-act="mclose">返去</button>`;
+    h = `<h3>${v.g === 'tt' ? '邊個偷咗蛋撻・分數' : v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
+${hb}<button class="btn gold" data-act="mclose">返去</button>`;
   } else { S.modal = null; el.classList.remove('show'); return; }
-  el.innerHTML = `<div class="mb">${h}</div>`;
+  const mb = el.querySelector('.mb');
+  if (mb && el.classList.contains('show') && el.dataset.mt === m.type) { const st0 = mb.scrollTop; mb.innerHTML = h; mb.scrollTop = st0; }
+  else el.innerHTML = `<div class="mb">${h}</div>`;
+  el.dataset.mt = m.type;
   el.classList.add('show');
 }
 
@@ -2344,14 +2638,19 @@ document.addEventListener('click', (e) => {
     case 'game': act('game', x); break;
     case 'xplay': { const mine = v && v.hd ? v.hd[ME.id] : null; if (mine && mine.length) confirmBox(`出 ${S.xsHide ? '最細嗰張' : mine[0]}？`, '出牌', () => act('xplay')); break; }
     case 'xnext': act('xnext'); break;
+    case 'spkend': act('spkend'); break;
+    case 'steal': act('steal'); break;
+    case 'peek': if (v) confirmBox(`偷睇 ${esc(nameOf(v, x))} 粒骰？<small>只可以睇一個人。</small>`, '睇', () => act('peek', x)); break;
+    case 'tdone': act('tdone'); break;
+    case 'tacc': act('tacc', x); break;
     case 'cut': if (v) confirmBox(`剪 ${esc(nameOf(v, x))} 嘅第 ${+b.dataset.i + 1} 條線？`, '剪', () => act('cut', [x, +b.dataset.i])); break;
     case 'xtheme': act('xtheme'); break;
-    case 'theme': setTheme(x); break;
+    case 'theme': setTheme(x); renderModal(); break;
     case 'xhide': S.xsHide = !S.xsHide; render(); break;
     case 'prop': confirmBox('發起投票？<small>大家過半數同意就即刻開始投票。</small>', '發起', () => act('prop')); break;
     case 'pv': act('pv', x === '1' ? 1 : 0); break;
     case 'gj': confirmBox(x === '1' ? '臥底估中咗？<small>臥底會贏。</small>' : '臥底估錯咗？', x === '1' ? '估中' : '估錯', () => act('gj', x === '1' ? 1 : 0), { bad: x === '1' }); break;
-    case 'vote': if (v) confirmBox(`投 ${esc(nameOf(v, x))} 係臥底？<small>投咗唔改得。</small>`, '投佢', () => act('vote', x)); break;
+    case 'vote': if (v) confirmBox(`投 ${esc(nameOf(v, x))} 係${v.g === 'tt' ? '偷撻賊' : '臥底'}？<small>投咗唔改得。</small>`, '投佢', () => act('vote', x)); break;
     case 'cont': act('cont'); break;
     case 'tolobby': act('tolobby'); break;
     case 'ok': act('ok'); break;
@@ -2362,9 +2661,10 @@ document.addEventListener('click', (e) => {
     case 'pick': if (v) confirmBox(`確定 ${esc(nameOf(v, x))} 係老實人？`, '確定', () => act('pick', x)); break;
     case 'next': act('next'); break;
     case 'again': act('again'); break;
-    case 'redeal': closeModal(); if (v && v.g === 'cd') confirmBox('重新開始呢局？<small>會重新派身份同線。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'xs') confirmBox('重新派呢關？<small>會換過數字同題目，命唔變。</small>', '重新派', () => act('redeal')); else if (v && v.g === 'wd') confirmBox('重新派詞語？<small>呢局重新開始，會換過詞語同身份。</small>', '重新派', () => act('redeal')); else confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal')); break;
+    case 'redeal': closeModal(); if (v && v.g === 'tt') confirmBox('重新開始呢局？<small>會重新派身份同骰。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'cd') confirmBox('重新開始呢局？<small>會重新派身份同線。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'xs') confirmBox('重新派呢關？<small>會換過數字同題目，命唔變。</small>', '重新派', () => act('redeal')); else if (v && v.g === 'wd') confirmBox('重新派詞語？<small>呢局重新開始，會換過詞語同身份。</small>', '重新派', () => act('redeal')); else confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal')); break;
     case 'endgame': closeModal(); confirmBox('即刻完場？<small>會用而家嘅分數排名。</small>', '完場', () => act('end'), { bad: true }); break;
-    case 'snd': SND.on = !SND.on; LS.set('bgr_snd', SND.on); if (!SND.on) closeAudio(); renderModal(); break;
+    case 'snd': SND.on = x == null ? !SND.on : x === '1'; LS.set('bgr_snd', SND.on); if (!SND.on) closeAudio(); renderModal(); break;
+    case 'settings': openModal({ type: 'settings' }); break;
     default: break;
   }
 });
