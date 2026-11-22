@@ -1,0 +1,17 @@
+{
+  "name": "桌遊房",
+  "short_name": "桌遊房",
+  "description": "同朋友用房號連線玩桌遊（由 Bill Chiu 開發）",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14121f",
+  "theme_color": "#14121f",
+  "lang": "zh-Hant-HK",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

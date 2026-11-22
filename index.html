@@ -1,0 +1,1292 @@
+<!doctype html>
+<html lang="zh-Hant-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="桌遊房">
+<meta name="theme-color" content="#14121f">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<title>桌遊房</title>
+<script>window.__BGR_VER='2026-11-22-1';/* 上載前一定要改版本號（日期-次數） */</script>
+<style>
+:root{--bg:#14121f;--bg2:#1c1930;--card:#252140;--card2:#302a52;--line:#433c70;--tx:#f6f3ff;--tx2:#d8d1f7;--gold:#ffd166;--gold2:#ffb534;--ok:#4fe0a0;--bad:#ff6b81;--jd:#86bcff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input{-webkit-user-select:text;user-select:text}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"PingFang HK","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;overscroll-behavior:none}
+body{position:fixed;inset:0;overflow:hidden;background:radial-gradient(120% 80% at 50% -10%,#2b2152 0%,var(--bg) 60%)}
+#app{height:var(--app-h,100vh);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top) + 10px) 16px calc(env(safe-area-inset-bottom) + 28px)}
+.scr{max-width:520px;margin:0 auto}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+.btn{display:block;width:100%;padding:15px 14px;border-radius:14px;background:var(--card2);font-size:17px;font-weight:700;margin:10px 0;transition:transform .08s;text-align:center}
+.btn:active{transform:scale(.97)}
+.btn.pri{background:linear-gradient(180deg,var(--gold),var(--gold2));color:#2b1b00}
+.btn.ok{background:var(--ok);color:#052a1a}
+.btn.bad{background:var(--bad);color:#2e0710}
+.btn.line{background:transparent;box-shadow:inset 0 0 0 2px var(--line)}
+.btn.big{font-size:19px;padding:17px 14px}
+.btn[disabled]{opacity:.42;pointer-events:none}
+.row{display:flex;gap:10px}
+.row>.btn{flex:1;min-width:0}
+/* 主頁 */
+.home{text-align:center;padding-top:14px}
+.logo{width:92px;height:92px;margin:6px auto 4px}
+.home h1{margin:4px 0 2px;font-size:34px;letter-spacing:4px}
+.by{font-size:14px;color:var(--tx2);margin-bottom:22px}
+.lbl{display:block;text-align:left;font-size:15px;font-weight:700;margin:6px 2px}
+.inp{width:100%;font:inherit;font-size:19px;padding:13px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg2);color:var(--tx);outline:none}
+.inp:focus{border-color:var(--gold)}
+.sec{text-align:left;font-size:15px;font-weight:700;margin:24px 2px 6px}
+.game{background:linear-gradient(160deg,#2c2552,#211d3b);border-radius:20px;padding:16px;text-align:left;box-shadow:0 8px 24px #0006,inset 0 0 0 1px #ffffff10}
+.gh{display:flex;align-items:center;gap:12px}
+.gi{width:52px;height:52px;border-radius:14px;background:linear-gradient(150deg,var(--gold),#ff8a5b);color:#2b1400;font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);flex:none}
+.gn{font-size:22px;font-weight:800}
+.gm{font-size:14px;color:var(--tx2);margin-top:2px}
+.gd{font-size:15px;line-height:1.55;margin:12px 0 4px;color:var(--tx)}
+.more{margin-top:14px;font-size:14px;color:var(--tx2)}
+.ver{margin-top:26px;font-size:12px;color:#a59dd0}
+/* 頂部 */
+.top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ib{padding:9px 13px;border-radius:12px;background:var(--card);font-size:15px;font-weight:700;flex:none}
+.ib:active{transform:scale(.95)}
+.tt{flex:1;text-align:center;font-size:15px;color:var(--tx2)}
+.tt b{color:var(--gold);font-size:19px;letter-spacing:2px}
+#banner{display:none;margin:-2px 0 10px;padding:10px 12px;border-radius:12px;background:#5a2333;color:#ffd9e0;font-size:14px;font-weight:700;line-height:1.4}
+#banner.show{display:block}
+/* 房間 */
+.code{background:var(--card);border-radius:20px;padding:16px;text-align:center;box-shadow:inset 0 0 0 1px #ffffff12}
+.code .k{font-size:15px;color:var(--tx2)}
+.code .n{font-size:56px;font-weight:900;letter-spacing:12px;color:var(--gold);margin:2px 0 4px 12px;font-variant-numeric:tabular-nums}
+.code .h{font-size:14px;color:var(--tx2);margin-bottom:2px;line-height:1.45}
+.code .row .btn{margin:10px 0 0;padding:11px;font-size:15px}
+.h2{display:flex;align-items:center;justify-content:space-between;font-size:16px;font-weight:800;margin:20px 2px 8px}
+.h2 small{font-size:14px;font-weight:700;color:var(--tx2)}
+.list{background:var(--card);border-radius:18px;padding:4px 10px}
+.pr{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid #ffffff10;min-height:56px}
+.pr:last-child{border-bottom:0}
+.pr.me .nm{color:var(--gold)}
+.pr.off{opacity:.5}
+.av{width:36px;height:36px;border-radius:50%;background:var(--c,#888);color:#1a1530;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:inset 0 -3px 0 #0003}
+.nm{flex:1;min-width:0;font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.no{width:22px;text-align:center;font-weight:900;color:var(--tx2);flex:none}
+.tag{font-size:13px;font-weight:800;padding:4px 8px;border-radius:999px;background:#ffffff14;flex:none}
+.tag.host{background:#ffd16626;color:var(--gold)}
+.tag.bad{background:#ff6b8126;color:var(--bad)}
+.tag.ok{background:#4fe0a026;color:var(--ok)}
+.tag.jd{background:#86bcff26;color:var(--jd)}
+.x{width:36px;height:36px;border-radius:50%;background:#ffffff10;font-size:18px;font-weight:800;flex:none}
+.sb{padding:9px 12px;border-radius:11px;font-size:15px;font-weight:800;flex:none}
+.sb.bad{background:#ff6b8126;color:var(--bad)}
+.sb.pri{background:var(--gold);color:#2b1b00}
+.sb:active{transform:scale(.95)}
+.seg{display:flex;gap:6px;background:var(--bg2);border-radius:14px;padding:5px;margin:4px 0 12px}
+.seg button{flex:1;padding:10px 2px;border-radius:10px;font-size:15px;font-weight:700;min-width:0}
+.seg button.on{background:var(--gold);color:#2b1b00}
+.seg.ro button{pointer-events:none}
+.seg.ro button:not(.on){opacity:.55}
+.cl{font-size:15px;font-weight:700;margin:4px 2px}
+.box{background:var(--card);border-radius:18px;padding:14px 14px 4px}
+.wait{text-align:center;font-size:16px;font-weight:700;color:var(--tx2);padding:16px 8px}
+/* 遊戲 */
+.rdl{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:var(--tx2);margin:2px 2px 8px}
+.jl{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700}
+.jl .av{width:28px;height:28px;font-size:14px}
+.wc{position:relative;background:linear-gradient(160deg,#fff8e6,#ffe7b3);color:#2b1b00;border-radius:22px;padding:18px 16px 22px;text-align:center;box-shadow:0 10px 30px #0008,inset 0 0 0 3px #fff6;margin:6px 0 12px}
+.wc .wcat{font-size:14px;font-weight:800;color:#8a5a00;letter-spacing:1px}
+.wc .ww{font-size:40px;font-weight:900;line-height:1.15;margin-top:8px;word-break:break-word}
+.wc .ww.lat{font-size:34px;letter-spacing:.5px}
+.st{color:#e08a00}
+.ph{display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:800;margin:6px 0 4px}
+.ph .cd{font-size:26px;color:var(--gold);font-variant-numeric:tabular-nums;min-width:48px;text-align:center}
+.ph.up .cd{color:var(--bad)}
+.bar{height:6px;border-radius:3px;background:#ffffff14;overflow:hidden;margin:0 0 12px}
+.bar i{display:block;height:100%;width:100%;background:var(--gold);transform-origin:left;transform:scaleX(var(--p,1));transition:transform .25s linear}
+.tip{font-size:15px;line-height:1.55;color:var(--tx2);text-align:center;margin:8px 4px}
+.me-role{font-size:22px;font-weight:900;text-align:center;margin:6px 0}
+.me-role.jd{color:var(--jd)}
+/* 身份卡：撳住睇 */
+.rc{position:relative;height:210px;border-radius:22px;margin:4px 0 12px;touch-action:none;cursor:pointer}
+.rc>div{position:absolute;inset:0;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;transition:opacity .12s}
+.rc-f{background:repeating-linear-gradient(45deg,#2f2858 0 14px,#29234d 14px 28px);box-shadow:inset 0 0 0 3px #ffffff1c;font-size:20px;font-weight:900}
+.rc-f small{display:block;font-size:14px;font-weight:700;color:var(--tx2);margin-top:6px}
+.rc-f .hand{width:54px;height:54px;border-radius:50%;border:3px solid var(--gold);margin-bottom:10px;position:relative}
+.rc-f .hand:after{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--gold);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.7);opacity:.6}50%{transform:scale(1);opacity:1}}
+.rc-b{opacity:0;pointer-events:none}
+.rc.show .rc-b{opacity:1}
+.rc.show .rc-f{opacity:0}
+.rc-b.h{background:linear-gradient(160deg,#1f5a45,#173f33);box-shadow:inset 0 0 0 3px var(--ok)}
+.rc-b.l{background:linear-gradient(160deg,#5c2134,#3e1623);box-shadow:inset 0 0 0 3px var(--bad)}
+.rc-b.o{background:#2a2540;box-shadow:inset 0 0 0 3px var(--line)}
+.rc-b .rl{font-size:26px;font-weight:900;margin-bottom:8px}
+.rc-b.h .rl{color:var(--ok)}
+.rc-b.l .rl{color:var(--bad)}
+.rc-b .ex{font-size:17px;line-height:1.55;font-weight:700;overflow:auto;max-height:118px}
+.rc-b .tp{font-size:14px;color:#f0eaff;margin-top:8px;opacity:.9}
+/* 結果 */
+.res{text-align:center;margin:6px 0 10px}
+.res .big{font-size:30px;font-weight:900}
+.res .big.ok{color:var(--ok)}
+.res .big.bad{color:var(--bad)}
+.res .who{display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px;font-weight:800;margin-top:8px}
+.exb{background:var(--card);border-radius:18px;padding:14px 16px;margin:10px 0;box-shadow:inset 0 0 0 2px #4fe0a055}
+.exb .k{font-size:14px;font-weight:800;color:var(--ok);margin-bottom:6px}
+.exb .v{font-size:17px;line-height:1.6;font-weight:600}
+.dl{font-size:20px;font-weight:900;font-variant-numeric:tabular-nums;flex:none;min-width:52px;text-align:right}
+.dl.p{color:var(--ok)}
+.dl.m{color:var(--bad)}
+.sc{font-size:17px;font-weight:800;flex:none;color:var(--tx2);min-width:56px;text-align:right;font-variant-numeric:tabular-nums}
+.anim .res,.anim .exb{animation:pop .55s cubic-bezier(.2,1.4,.4,1) both}
+.anim .exb{animation-delay:.15s}
+@keyframes pop{from{opacity:0;transform:scale(.8) translateY(10px)}to{opacity:1;transform:none}}
+/* 完場 */
+.win{text-align:center;margin:10px 0 6px}
+.crown{width:84px;height:60px;margin:0 auto}
+.win .wn{font-size:30px;font-weight:900;color:var(--gold);margin-top:4px}
+.win .ws{font-size:16px;color:var(--tx2);margin-top:2px}
+.rk{width:30px;height:30px;border-radius:50%;background:#ffffff14;font-weight:900;display:flex;align-items:center;justify-content:center;flex:none;font-size:15px}
+.rk.r1{background:var(--gold);color:#2b1b00}
+.rk.r2{background:#d9dff0;color:#20263a}
+.rk.r3{background:#e0a36e;color:#3a1d05}
+/* 彈出 */
+#modal{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;background:#07051099;visibility:hidden;opacity:0;transition:opacity .15s}
+#modal.show{visibility:visible;opacity:1}
+.mb{width:100%;max-width:520px;max-height:calc(var(--app-h,100vh) - 40px);overflow-y:auto;background:var(--bg2);border-radius:24px 24px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom) + 16px);box-shadow:0 -10px 40px #0009}
+.mb h3{margin:2px 0 12px;font-size:21px;text-align:center}
+.mb p{font-size:16px;line-height:1.6;margin:8px 2px}
+.rules h4{font-size:17px;margin:16px 0 6px;color:var(--gold)}
+.rules p,.rules li{font-size:16px;line-height:1.6}
+.rules ul{margin:4px 0;padding-left:22px}
+.kpd{display:flex;justify-content:center;gap:10px;margin:6px 0 16px}
+.kpd span{width:58px;height:70px;border-radius:14px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:var(--gold);box-shadow:inset 0 0 0 2px var(--line)}
+.kpd span.cur{box-shadow:inset 0 0 0 2px var(--gold)}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.keys button{padding:15px 0;border-radius:14px;background:var(--card2);font-size:24px;font-weight:800}
+.keys button:active{transform:scale(.95);background:var(--line)}
+.keys button.s{font-size:17px}
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 30px);transform:translateX(-50%) translateY(10px);z-index:40;background:#fff;color:#1b1530;font-weight:800;font-size:16px;padding:12px 18px;border-radius:14px;box-shadow:0 8px 30px #000a;visibility:hidden;opacity:0;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);text-align:center}
+#toast.show{visibility:visible;opacity:1;transform:translateX(-50%)}
+#fx{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;pointer-events:none;visibility:hidden}
+#fx.show{visibility:visible}
+.fxc{background:var(--bg2);border-radius:26px;padding:26px 28px;text-align:center;box-shadow:0 0 0 4px var(--bad),0 20px 60px #000c;animation:slam .5s cubic-bezier(.2,1.6,.4,1) both;max-width:86%}
+.fxc.ok{box-shadow:0 0 0 4px var(--ok),0 20px 60px #000c}
+.fxc .t1{font-size:44px;font-weight:900;color:var(--bad);letter-spacing:4px}
+.fxc .t2{font-size:20px;font-weight:800;margin-top:6px}
+.fxc .t3{font-size:18px;font-weight:800;margin-top:8px}
+@keyframes slam{from{opacity:0;transform:scale(2.2) rotate(-8deg)}to{opacity:1;transform:none}}
+.cf{position:fixed;top:-20px;width:10px;height:16px;border-radius:3px;z-index:25;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(calc(var(--app-h,100vh) + 40px)) rotate(var(--r))}}
+.spin{width:38px;height:38px;border-radius:50%;border:4px solid #ffffff22;border-top-color:var(--gold);margin:30px auto 14px;animation:sp 0.9s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.pendw .btn.pri,.pendw .sb,.pendw .seg button,.pendw .btn.line[data-act=skip]{opacity:.5;pointer-events:none}
+html{touch-action:manipulation}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"></div>
+<div id="fx"></div>
+<div id="toast"></div>
+<script>
+(() => {
+'use strict';
+const VER = window.__BGR_VER || 'dev';
+
+/* ============================================================
+ * 1. 工具
+ * ============================================================ */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const LS = {
+  get(k, d = null) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 略過 */ } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { /* 略過 */ } },
+};
+const rid = (n) => { let s = ''; while (s.length < n) s += Math.random().toString(36).slice(2); return s.slice(0, n); };
+const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const cleanName = (n) => String(n || '').replace(/[\u0000-\u001f<>"'&]/g, '').trim().slice(0, 8);
+const COLORS = ['#ffd166', '#86bcff', '#ff8fb0', '#8ef0a8', '#c9a0ff', '#ffa56b', '#6be3e0', '#f4ee7a', '#ff8080', '#b8c8ff'];
+
+const ME = (() => {
+  let id = LS.get('bgr_pid');
+  if (typeof id !== 'string' || !/^[a-z0-9]{10}$/.test(id)) { id = rid(10); LS.set('bgr_pid', id); }
+  let name = cleanName(LS.get('bgr_name'));
+  if (!name) { name = '玩家' + (100 + Math.floor(Math.random() * 900)); LS.set('bgr_name', name); }
+  return { id, name };
+})();
+
+let toastT = null;
+function toast(msg, ms = 2600) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), ms);
+}
+
+/* ============================================================
+ * 2. 連線：免費公共 MQTT 伺服器（WebSocket），自己寫嘅細客戶端
+ *    （改自星翼浮島協力模式）。房號除 3 嘅餘數 ＝ 用邊個伺服器，
+ *    所以入房唔使揀伺服器。網址加 ?mqtt=ws://localhost:xxxx/ 用本機測試伺服器。
+ * ============================================================ */
+const MQ_PREFIX = 'bgroom-q7m2/v1';
+const BROKERS = (() => {
+  try {
+    const q = new URLSearchParams(location.search).get('mqtt');
+    if (q && /^wss?:\/\/(127\.0\.0\.1|localhost)(:\d+)?\//.test(q)) return [{ name: '本機測試', url: q }];
+  } catch (e) { /* 略過 */ }
+  return [
+    { name: '伺服器 1', url: 'wss://broker.hivemq.com:8884/mqtt' },
+    { name: '伺服器 2', url: 'wss://broker.emqx.io:8084/mqtt' },
+    { name: '伺服器 3', url: 'wss://test.mosquitto.org:8081/mqtt' },
+  ];
+})();
+const _enc = new TextEncoder(), _dec = new TextDecoder();
+const u8cat = (...parts) => { const n = parts.reduce((s, p) => s + p.length, 0), out = new Uint8Array(n); let o = 0; for (const p of parts) { out.set(p, o); o += p.length; } return out; };
+const mqStr = (s) => { const b = typeof s === 'string' ? _enc.encode(s) : s; return u8cat(Uint8Array.of(b.length >> 8, b.length & 255), b); };
+const mqLen = (n) => { const out = []; do { let d = n % 128; n = Math.floor(n / 128); if (n > 0) d |= 128; out.push(d); } while (n > 0); return Uint8Array.from(out); };
+const mqPacket = (first, body) => u8cat(Uint8Array.of(first), mqLen(body.length), body);
+
+function createHub(url, prefix) {
+  const PEER = rid(10);
+  const raf = (f) => (typeof requestAnimationFrame === 'function' && !document.hidden ? requestAnimationFrame(f) : setTimeout(f, 30));
+  let ws = null, conn = false, closed = false, buf = new Uint8Array(0), pid = 1, retry = 0, pingT = null, retryT = null, lastRx = 0;
+  const rooms = new Map(), connL = new Set();
+  const setConn = (v) => { if (conn === v) return; conn = v; connL.forEach((fn) => { try { fn(v); } catch (e) { console.error(e); } }); };
+  const send = (bytes) => { if (ws && ws.readyState === 1) { try { ws.send(bytes); } catch (e) { /* 略過 */ } } };
+  const publish = (topic, obj) => send(mqPacket(0x30, u8cat(mqStr(topic), _enc.encode(JSON.stringify(obj)))));
+  const nextId = () => { pid = (pid % 65000) + 1; return Uint8Array.of(pid >> 8, pid & 255); };
+  const subscribe = (filter) => send(mqPacket(0x82, u8cat(nextId(), mqStr(filter), Uint8Array.of(0))));
+  const unsubscribe = (filter) => send(mqPacket(0xa2, u8cat(nextId(), mqStr(filter))));
+  const byeTopic = `${prefix}/_bye/${PEER}`;
+
+  function connect() {
+    if (closed) return;
+    let sock;
+    try { sock = new WebSocket(url, ['mqtt']); } catch (e) { schedule(); return; }
+    ws = sock; ws.binaryType = 'arraybuffer';
+    sock.onopen = () => {
+      const flags = 0x02 | 0x04; // 清除連線 + 斷線遺言
+      send(mqPacket(0x10, u8cat(mqStr('MQTT'), Uint8Array.of(4, flags, 0, 30), mqStr('bg' + PEER), mqStr(byeTopic), mqStr('{"bye":1}'))));
+    };
+    sock.onmessage = (ev) => { if (ws === sock) { lastRx = Date.now(); onData(ev.data); } };
+    sock.onclose = () => { if (ws !== sock) return; setConn(false); clearInterval(pingT); pingT = null; ws = null; buf = new Uint8Array(0); schedule(); };
+    sock.onerror = () => { /* onclose 會處理 */ };
+  }
+  function schedule() { if (closed || retryT) return; const wait = Math.min(8000, 800 * Math.pow(2, retry++)); retryT = setTimeout(() => { retryT = null; connect(); }, wait); }
+  function onData(ab) {
+    buf = buf.length ? u8cat(buf, new Uint8Array(ab)) : new Uint8Array(ab);
+    while (buf.length >= 2) {
+      let mul = 1, len = 0, i = 1, b;
+      do { if (i >= buf.length) return; b = buf[i++]; len += (b & 127) * mul; mul *= 128; } while (b & 128);
+      if (buf.length < i + len) return;
+      const type = buf[0] >> 4, fl = buf[0] & 15, body = buf.slice(i, i + len);
+      buf = buf.slice(i + len);
+      if (type === 2) {
+        if (body[1] === 0) {
+          retry = 0; setConn(true);
+          subscribe(`${prefix}/_bye/+`);
+          rooms.forEach((r) => { subscribe(r.filter); r.dirty = true; });
+          clearInterval(pingT); pingT = setInterval(() => send(Uint8Array.of(0xc0, 0)), 15000);
+        } else { try { ws.close(); } catch (e) { /* 略過 */ } }
+      } else if (type === 3) {
+        const tl = (body[0] << 8) | body[1], qos = (fl >> 1) & 3;
+        const topic = _dec.decode(body.subarray(2, 2 + tl));
+        const payload = body.subarray(2 + tl + (qos ? 2 : 0));
+        if (payload.length <= 24000) route(topic, payload);
+      }
+    }
+  }
+  function route(topic, payload) {
+    if (!topic.startsWith(prefix + '/')) return;
+    const rest = topic.slice(prefix.length + 1), cut = rest.lastIndexOf('/');
+    if (cut < 0) return;
+    const roomName = rest.slice(0, cut), peer = rest.slice(cut + 1);
+    if (peer === PEER || !/^[a-z0-9]{1,16}$/.test(peer)) return;
+    if (roomName === '_bye') { rooms.forEach((r) => r.remove(peer)); return; }
+    const r = rooms.get(roomName); if (!r) return;
+    let obj; try { obj = JSON.parse(_dec.decode(payload)); } catch (e) { return; }
+    if (obj && typeof obj === 'object') r.receive(peer, obj);
+  }
+  function makeRoom(name) {
+    const topic = `${prefix}/${name}/${PEER}`;
+    const r = { name, filter: `${prefix}/${name}/+`, mine: {}, others: new Map(), peerL: new Set(), snapshot: Object.freeze([]), dirty: true, lastPub: 0, queued: false, emptySent: true };
+    const build = () => {
+      const arr = [Object.freeze({ peer: PEER, isMe: true, presence: r.mine, updatedAt: Date.now() })];
+      for (const [peer, o] of r.others) arr.push(Object.freeze({ peer, isMe: false, presence: o.presence, updatedAt: o.updatedAt }));
+      r.snapshot = Object.freeze(arr);
+    };
+    r.notify = () => {
+      if (r.queued) return; r.queued = true;
+      raf(() => { r.queued = false; build(); r.peerL.forEach((fn) => { try { fn(r.snapshot); } catch (e) { console.error(e); } }); });
+    };
+    r.pub = (now) => {
+      if (!conn) return;
+      if (!Object.keys(r.mine).length) { if (!r.emptySent) { publish(topic, { bye: 1 }); r.emptySent = true; } r.dirty = false; return; }
+      publish(topic, { p: r.mine }); r.emptySent = false; r.lastPub = now; r.dirty = false;
+    };
+    r.tick = (now) => {
+      if ((r.dirty && now - r.lastPub >= 60) || (Object.keys(r.mine).length && now - r.lastPub >= 1500)) r.pub(now);
+      let changed = false;
+      for (const [peer, o] of r.others) if (now - o.lastSeen > 6000) { r.others.delete(peer); changed = true; }
+      if (changed) r.notify();
+    };
+    r.receive = (peer, obj) => {
+      const now = Date.now();
+      if (obj.bye) { if (r.others.delete(peer)) r.notify(); return; }
+      if (!obj.p || typeof obj.p !== 'object' || Array.isArray(obj.p)) return;
+      const raw = JSON.stringify(obj.p), o = r.others.get(peer);
+      if (!o) { r.others.set(peer, { presence: obj.p, raw, updatedAt: now, lastSeen: now }); r.dirty = true; r.notify(); }
+      else { o.lastSeen = now; if (o.raw !== raw) { o.raw = raw; o.presence = obj.p; o.updatedAt = now; r.notify(); } }
+    };
+    r.remove = (peer) => { if (r.others.delete(peer)) r.notify(); };
+    r.api = Object.freeze({
+      name,
+      presence(patch) {
+        const next = { ...r.mine };
+        for (const k of Object.keys(patch || {})) { if (patch[k] === null) delete next[k]; else next[k] = patch[k]; }
+        r.mine = next; r.dirty = true; r.notify();
+      },
+      peers: () => r.snapshot,
+      onPeers(fn) { r.peerL.add(fn); setTimeout(() => { build(); try { fn(r.snapshot); } catch (e) { console.error(e); } }, 0); return () => { r.peerL.delete(fn); }; },
+      leave() {
+        if (rooms.get(name) !== r) return;
+        if (conn) { publish(topic, { bye: 1 }); unsubscribe(r.filter); }
+        rooms.delete(name); r.peerL.clear();
+      },
+    });
+    build();
+    return r;
+  }
+  const tickT = setInterval(() => { const now = Date.now(); rooms.forEach((r) => r.tick(now)); }, 33);
+  const onHide = () => { if (conn) rooms.forEach((r) => { if (Object.keys(r.mine).length) publish(`${prefix}/${r.name}/${PEER}`, { bye: 1 }); }); };
+  window.addEventListener('pagehide', onHide);
+  const hub = {
+    url, peer: PEER,
+    connected: () => conn,
+    onConnection(fn) { connL.add(fn); setTimeout(() => fn(conn), 0); return () => connL.delete(fn); },
+    join(name) {
+      let r = rooms.get(name);
+      if (!r) { r = makeRoom(name); rooms.set(name, r); if (conn) subscribe(r.filter); }
+      return r.api;
+    },
+    /* 由背景返嚟：好耐冇收到嘢就即刻重新連線 */
+    kick() {
+      if (closed) return;
+      if (ws && conn && Date.now() - lastRx < 5000) return;
+      retry = 0;
+      if (ws) { try { ws.close(); } catch (e) { /* 略過 */ } const old = ws; ws = null; if (old) { old.onclose = null; old.onmessage = null; } setConn(false); clearInterval(pingT); pingT = null; buf = new Uint8Array(0); }
+      clearTimeout(retryT); retryT = null; connect();
+    },
+    close() {
+      closed = true; onHide(); clearInterval(tickT); clearInterval(pingT); clearTimeout(retryT);
+      window.removeEventListener('pagehide', onHide);
+      if (ws) { try { send(Uint8Array.of(0xe0, 0)); ws.close(); } catch (e) { /* 略過 */ } }
+      rooms.clear(); connL.clear(); conn = false;
+    },
+  };
+  connect();
+  return hub;
+}
+let _hub = null;
+function getHub(i) {
+  const b = BROKERS[i] || BROKERS[0];
+  if (_hub && _hub.url === b.url) return _hub;
+  if (_hub) _hub.close();
+  _hub = createHub(b.url, MQ_PREFIX);
+  return _hub;
+}
+const brokerOf = (code) => (+code) % BROKERS.length;
+function genCode(i) { const n = BROKERS.length; let c; do { c = 1000 + Math.floor(Math.random() * 9000); } while (c % n !== i); return String(c); }
+function waitConn(hub, ms) {
+  return new Promise((res) => {
+    if (hub.connected()) { res(true); return; }
+    let done = false, off = null;
+    const t = setTimeout(() => { if (done) return; done = true; if (off) off(); res(false); }, ms);
+    off = hub.onConnection((c) => { if (c && !done) { done = true; clearTimeout(t); off(); res(true); } });
+  });
+}
+
+/* ============================================================
+ * 3. 題目庫（真定作）：[詞語, 類別, 難度 1-3, 真正解釋]
+ *    加新題目：照格式加一行；難度 ＝ 揀中／呃到人得幾多分
+ * ============================================================ */
+const WORDS = [
+  ['犰狳', '動物', 1, '南美洲一種哺乳類動物，身上有一塊塊骨質鱗甲，好似著咗盔甲。其中三帶犰狳遇到危險會捲成一個波。'],
+  ['饕餮', '詞語', 1, '古代傳說入面一隻好貪食嘅凶獸，商周青銅器上面成日見到佢嘅花紋。而家用嚟形容好貪食嘅人。'],
+  ['鴟吻', '建築', 2, '中國古建築屋脊兩頭嘅裝飾，似龍頭魚尾，張大口咬住條屋脊。傳說可以防火。'],
+  ['囹圄', '詞語', 1, '即係監獄、監倉。「身陷囹圄」就係坐緊監。'],
+  ['耄耋', '詞語', 1, '指好老嘅人，大約八、九十歲。'],
+  ['齟齬', '詞語', 2, '本來指上下牙齒對唔齊，引申做意見唔合、有磨擦。'],
+  ['鸊鷉', '動物', 3, '一種好識潛水嘅水鳥，腳趾唔係成塊蹼，而係一瓣一瓣。香港濕地都見到小鸊鷉。'],
+  ['鼯鼠', '動物', 2, '會滑翔嘅松鼠類動物，前後腳之間有一塊皮膜，打開就可以由一棵樹滑去另一棵，俗稱飛鼠。'],
+  ['儺', '詞語', 3, '古代驅鬼、趕走瘟疫嘅祭祀儀式，人會戴住面具跳舞，後來發展成「儺戲」。'],
+  ['罍', '詞語', 3, '古代用嚟裝酒嘅大型容器，多數係青銅或者陶製，有蓋有耳。'],
+  ['觥籌交錯', '詞語', 2, '酒杯同行酒令用嘅籌碼交錯擺放，形容飲宴好熱鬧。'],
+  ['蹀躞', '詞語', 3, '形容細步細步行路嘅樣子；亦係古代（例如唐朝）腰帶上面用嚟吊住小物件嘅帶，叫「蹀躞帶」。'],
+  ['鱟', '動物', 2, '即係馬蹄蟹，一種好古老嘅海洋節肢動物，比恐龍更早出現，佢啲血係藍色。'],
+  ['樗櫟', '詞語', 3, '樗同櫟係兩種唔成材嘅樹，出自《莊子》，用嚟比喻冇用嘅人，多數係謙虛講自己。'],
+  ['桄榔', '食物', 3, '一種棕櫚科植物，樹幹入面嘅髓可以整澱粉（桄榔粉），花序流出嚟嘅汁可以整糖。'],
+  ['蚍蜉撼樹', '詞語', 1, '大螞蟻想搖郁一棵大樹，比喻不自量力。'],
+  ['罘罳', '建築', 3, '古代設喺宮門外面嘅屏風；亦指屋簷下面用嚟擋雀鳥嘅網。'],
+  ['Defenestration', '英文', 2, '將人（或者物件）由窗口掟出去嘅行為。歷史上有名嘅「布拉格擲窗事件」就係咁。'],
+  ['Petrichor', '英文', 2, '落完雨之後，泥土同地面散發出嚟嗰陣特別嘅氣味。'],
+  ['Borborygmus', '英文', 3, '肚餓或者消化嗰陣，肚入面「咕嚕咕嚕」響嘅聲音。'],
+  ['Callipygian', '英文', 3, '形容一個人有好靚嘅屁股。'],
+  ['Absquatulate', '英文', 3, '美國俚語，意思係唔講聲就偷偷走人、不辭而別。'],
+  ['Snollygoster', '英文', 3, '形容一個精明但冇原則、只顧自己利益嘅人，特別係政客。'],
+  ['Gobbledygook', '英文', 2, '又長又難明、充滿術語嘅官腔或者文件語言。'],
+  ['Lollygag', '英文', 2, '遊手好閒、拖拖拉拉、浪費時間。'],
+  ['Phosphene', '英文', 3, '閉埋眼揉眼或者撳住眼皮嗰陣，見到嘅光點同光斑。'],
+  ['Aglet', '英文', 2, '鞋帶兩頭嗰段膠或者金屬套，等鞋帶容易穿入窿。'],
+  ['Tittle', '英文', 3, '細階 i 同 j 上面嗰一點。'],
+  ['Zarf', '英文', 3, '用嚟承托冇柄咖啡杯嘅杯托，多數係金屬做，等手唔會辣親。'],
+  ['Muntin', '建築', 3, '窗框入面將一塊塊玻璃分開嘅細窗條。'],
+  ['Griffonage', '英文', 3, '潦草到好難睇得明嘅字跡。'],
+  ['Crapulence', '英文', 3, '食太多或者飲太多酒之後成身唔舒服嘅感覺。'],
+  ['Philtrum', '英文', 2, '人中：鼻同上唇之間嗰條凹位。'],
+  ['Lunula', '英文', 2, '指甲根部嗰個白色半月形。'],
+  ['Glabella', '英文', 3, '兩條眉毛中間、鼻樑上面嗰個位置（即係印堂）。'],
+  ['Purlicue', '英文', 3, '手指公同食指之間嗰塊位置，張開手嗰陣最明顯。'],
+  ['Kerning', '英文', 2, '排版用語：調整兩個字母之間嘅距離，等啲字睇落平均啲。'],
+  ['Pareidolia', '心理', 2, '空想性錯視：喺死物（例如插座、雲、樹皮）睇到好似人面或者熟悉嘅形狀。'],
+  ['Zugzwang', '外語', 3, '德語，國際象棋用語：輪到你行，但無論點行都會令自己形勢變差。'],
+  ['Ultracrepidarian', '英文', 3, '對自己唔識嘅嘢都要亂發意見嘅人。'],
+  ['Bumbershoot', '英文', 3, '雨遮（雨傘）嘅美式口語講法。'],
+  ['Collywobbles', '英文', 3, '肚痛，或者好緊張嗰陣肚入面翻滾唔舒服嘅感覺。'],
+  ['Hygge', '外語', 2, '丹麥語，指同親友一齊、溫暖舒服、放鬆嘅感覺同氣氛。'],
+  ['Schadenfreude', '外語', 2, '德語，見到人哋唔好彩而覺得開心，即係幸災樂禍。'],
+  ['Kummerspeck', '外語', 3, '德語，直譯「傷心煙肉」：因為心情差狂食而肥咗嘅肉。'],
+  ['Mamihlapinatapai', '外語', 3, '南美火地島雅甘語：兩個人互相望住，都想對方先做一件大家都想做、但冇人想主動嘅事。'],
+  ['金繼', '日本', 2, '日本修補陶瓷嘅方法：用漆將爛咗嘅碗黏返，再喺裂縫上面撒金粉，令裂痕變成裝飾。'],
+  ['侘寂', '日本', 2, '日本美學，欣賞唔完美、會變舊、樸素嘅美，例如生鏽、有裂紋嘅器物。'],
+  ['積讀', '日本', 2, '日文「積ん読」：買咗書返嚟但一直堆住唔睇。'],
+  ['生剝', '日本', 3, '日本秋田縣男鹿半島嘅民俗「なまはげ」：除夕夜有人扮鬼、戴面具上門，嚇啲小朋友要乖。'],
+  ['生き甲斐', '日本', 1, '日文 Ikigai：令人覺得活得有意思、每朝起身有動力嘅嘢。'],
+  ['水熊蟲', '動物', 1, '學名緩步動物，細過一毫米，八隻腳。遇到極冷、極乾嘅環境會縮成一粒休眠，好難死。'],
+  ['墨西哥鈍口螈', '動物', 1, '即係「六角恐龍」，一種一世都保持幼體樣、頭兩邊有鰓嘅蠑螈，斷咗手腳都可以再生。'],
+  ['指猴', '動物', 2, '馬達加斯加嘅一種狐猴，中指特別長特別幼，會用嚟敲樹聽聲，再挖啲蟲出嚟食。'],
+  ['翻車魚', '動物', 1, '世界上最重嘅硬骨魚之一，身形扁圓，好似後半截俾人切走咗。'],
+  ['鴞鸚鵡', '動物', 3, '新西蘭一種唔識飛、夜晚先出嚟嘅鸚鵡，係世界上最重嘅鸚鵡，數量好少。'],
+  ['儒艮', '動物', 2, '一種食海草嘅海洋哺乳類，同海牛係近親，傳說係美人魚嘅原型之一。'],
+  ['盲鰻', '動物', 2, '一種好原始嘅海魚，似鰻魚但冇顎，受驚會噴出大量黏液。'],
+  ['霍加狓', '動物', 2, '非洲剛果森林嘅動物，身體似馬、腳上有斑馬紋，其實係長頸鹿嘅近親。'],
+  ['象鼩', '動物', 3, '非洲一種長鼻嘅細隻哺乳類，樣似老鼠，但同大象嘅親緣仲近過同鼩鼱。'],
+  ['藠頭', '食物', 2, '一種似細粒蒜頭嘅蔬菜，多數用嚟醃，酸酸甜甜，又叫薤。'],
+  ['Haggis', '食物', 2, '蘇格蘭傳統菜：將羊心、肝、肺切碎，加燕麥同香料，塞入羊胃煮熟。'],
+  ['鹽醃鯡魚罐頭', '食物', 1, '瑞典嘅發酵鯡魚罐頭（Surströmming），出名極之臭，通常喺室外先開。'],
+  ['Casu marzu', '食物', 3, '意大利薩丁尼亞島嘅羊奶芝士，故意等蒼蠅產卵，入面有生嘅蟲。'],
+  ['竹笙', '食物', 2, '一種菌類，頂部有一條白色網狀嘅「裙」，曬乾之後成日用嚟煲湯。'],
+  ['雪蛤', '食物', 2, '中國林蛙雌蛙輸卵管周圍嘅脂肪，浸發之後用嚟做甜品同補品。'],
+  ['莫比烏斯帶', '科學', 1, '將一條紙帶扭半個圈再頭尾黏埋，就變成只有一個面、一條邊嘅環。'],
+  ['克萊因瓶', '科學', 2, '一個冇內外之分嘅「瓶」，瓶頸穿過瓶身接返去底部，真正要喺四維空間先做到。'],
+  ['洛希極限', '科學', 3, '衛星同行星距離近過呢條線，就會俾行星嘅潮汐力扯散，土星環可能就係咁嚟。'],
+  ['奧爾特雲', '科學', 2, '包圍住成個太陽系最外圍、由冰質天體組成嘅雲，相信係長週期彗星嘅來源。'],
+  ['鄧寧－克魯格效應', '心理', 2, '能力越差嘅人，越容易高估自己嘅能力。'],
+  ['巴德爾－邁因霍夫現象', '心理', 3, '又叫頻率錯覺：啱啱識咗一樣嘢之後，突然覺得周圍成日都見到佢。'],
+  ['史翠珊效應', '心理', 2, '越想收埋或者刪走一樣資訊，反而令越多人知道。'],
+  ['孟喬森症候群', '心理', 2, '一種心理病：病人扮病或者自己整出病徵，想得到關心同照顧。'],
+  ['冒名頂替症候群', '心理', 1, '明明有成就，但覺得自己唔配，成日驚俾人發現自己係「假」嘅。'],
+  ['錨定效應', '心理', 1, '做決定嗰陣太依賴最先聽到嘅資訊，例如第一個開價會影響你覺得幾錢先抵。'],
+  ['斗拱', '建築', 2, '中國傳統木建築喺柱頂同橫樑之間，一層層疊上去嘅承重木構件。'],
+  ['藻井', '建築', 3, '中國古建築天花中間向上凹入去、有彩畫同雕刻嘅部分，多數喺宮殿同廟宇。'],
+  ['榫卯', '建築', 1, '木件凸出嘅「榫頭」插入另一件凹入嘅「卯眼」，唔使釘都可以接實。'],
+  ['Parapet', '建築', 2, '女兒牆：天台或者橋邊緣嗰幅矮牆，防止人跌落去。'],
+];
+
+/* ============================================================
+ * 4. 房主：計算成個房間（其他人只送操控）
+ * ============================================================ */
+const PREP_MS = 10000;      // 準備時間
+const MAX_SEATS = 10, MIN_PLAYERS = 3;
+let HS = null;              // 房主狀態（會廣播俾所有人）
+
+function newHostState(code) {
+  return {
+    v: 1, code, g: 'zdz', host: ME.id, rev: 0, now: Date.now(), ph: 'lobby', gid: 0,
+    pl: [{ id: ME.id, n: ME.name, c: 0, sc: 0, on: 1 }], wt: [], ban: [],
+    cfg: { r: 1, t: 90, d: 0 }, rd: 0, tot: 0, jd: null, rl: {}, w: null, ord: [], dl: 0,
+    bu: null, pk: null, why: '', dt: {}, ack: {}, u: (LS.get('bgr_used', []) || []).slice(-60), sk: 0,
+  };
+}
+const hFind = (id) => HS.pl.find((p) => p.id === id) || HS.wt.find((p) => p.id === id);
+const hActive = () => HS.pl.filter((p) => p.on && !p.gone);
+function hFreeColor() { const used = new Set([...HS.pl, ...HS.wt].map((p) => p.c)); for (let i = 0; i < COLORS.length; i++) if (!used.has(i)) return i; return Math.floor(Math.random() * COLORS.length); }
+function hCommit() {
+  if (!HS) return;
+  HS.rev++; HS.now = Date.now();
+  LS.set('bgr_hs', HS);
+  if (S.room) S.room.presence({ k: 'h', s: HS });
+  onView(HS);
+}
+function hOnPeers(peers) {
+  if (!HS || !S.isHost) return;
+  let ch = false; const seen = new Set();
+  for (const p of peers) {
+    if (p.isMe) continue;
+    const pr = p.presence || {};
+    if (pr.k !== 'p' || typeof pr.id !== 'string' || !/^[a-z0-9]{4,16}$/.test(pr.id) || pr.id === ME.id) continue;
+    if (HS.ban.includes(pr.id)) continue;
+    if (pr.bye) { const m = hFind(pr.id); if (m && !m.gone) { hRemove(pr.id, false); ch = true; } continue; }
+    seen.add(pr.id);
+    let me = hFind(pr.id);
+    if (!me) {
+      const nm = cleanName(pr.n) || '玩家';
+      if (HS.ph === 'lobby') { if (HS.pl.length >= MAX_SEATS) continue; HS.pl.push({ id: pr.id, n: nm, c: hFreeColor(), sc: 0, on: 1 }); }
+      else { if (HS.wt.length >= MAX_SEATS) continue; HS.wt.push({ id: pr.id, n: nm, c: hFreeColor(), on: 1 }); }
+      ch = true; me = hFind(pr.id);
+    }
+    const nm = cleanName(pr.n);
+    if (nm && me.n !== nm) { me.n = nm; ch = true; }
+    if (me.gone) { me.gone = 0; ch = true; }
+    if (Array.isArray(pr.a) && typeof pr.a[0] === 'number' && pr.a[0] > (HS.ack[pr.id] || 0)) {
+      HS.ack[pr.id] = pr.a[0]; hAct(pr.id, pr.a[1], pr.a[2]); ch = true;
+    }
+  }
+  for (const p of [...HS.pl, ...HS.wt]) {
+    if (p.id === ME.id) continue;
+    const on = seen.has(p.id) ? 1 : 0;
+    if (p.on !== on) { p.on = on; ch = true; }
+  }
+  if (ch) hCommit();
+}
+function hAct(id, t, x) {
+  const st = HS; if (!st) return;
+  const isJ = id === st.jd, isH = id === st.host;
+  switch (t) {
+    case 'leave': hRemove(id, false); break;
+    case 'skip': if (isJ && st.ph === 'prep') { hNewWord(); st.dl = Date.now() + PREP_MS; st.sk++; } break;
+    case 'go': if (isJ && st.ph === 'prep') hTalk(); break;
+    case 'burst': if (isJ && st.ph === 'talk' && !st.bu && st.rl[x]) hBurst(x); break;
+    case 'pick': if (isJ && st.ph === 'talk' && st.rl[x] && !(st.bu && st.bu.id === x)) hPick(x); break;
+    case 'next': if ((isJ || isH) && st.ph === 'reveal' && hCanNext()) hNext(); break;
+    // 房主專用
+    case 'start': if (isH && st.ph === 'lobby') hStart(); break;
+    case 'cfg': if (isH && st.ph === 'lobby' && Array.isArray(x) && CFG_OPTS[x[0]] && CFG_OPTS[x[0]].some((o) => o[0] === x[1])) st.cfg[x[0]] = x[1]; break;
+    case 'kick': if (isH && x !== st.host) hRemove(x, true); break;
+    case 'again': if (isH && st.ph === 'end') hLobby(); break;
+    case 'redeal': if (isH && (st.ph === 'prep' || st.ph === 'talk')) hRedeal(); break;
+    case 'end': if (isH && st.ph !== 'lobby' && st.ph !== 'end') st.ph = 'end'; break;
+    case 'close': if (isH) st.ph = 'closed'; break;
+    default: break;
+  }
+}
+function hRemove(id, ban) {
+  const st = HS;
+  if (ban && !st.ban.includes(id)) st.ban.push(id);
+  st.wt = st.wt.filter((p) => p.id !== id);
+  if (st.ph === 'lobby' || st.ph === 'end') st.pl = st.pl.filter((p) => p.id !== id);
+  else { const p = st.pl.find((q) => q.id === id); if (p) { p.gone = 1; p.on = 0; } }
+}
+function hStart() {
+  const st = HS;
+  st.pl = st.pl.filter((p) => p.on || p.id === st.host);
+  for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
+  st.wt = [];
+  if (st.pl.length < MIN_PLAYERS) return;
+  st.pl.forEach((p) => { p.sc = 0; p.gone = 0; });
+  st.gid++; st.rd = 0; st.tot = st.pl.length * st.cfg.r;
+  hRound();
+}
+function hRound() {
+  const st = HS, n = st.pl.length;
+  let j = null;
+  for (let k = 0; k < n; k++) { const p = st.pl[(st.rd + k) % n]; if (p.on && !p.gone) { j = p; break; } }
+  if (!j) j = st.pl[0];
+  st.jd = j.id;
+  const others = hActive().filter((p) => p.id !== j.id).map((p) => p.id);
+  const h = others[Math.floor(Math.random() * others.length)];
+  st.rl = {}; others.forEach((id) => { st.rl[id] = id === h ? 'H' : 'L'; });
+  st.ord = shuffle(others);
+  hNewWord();
+  st.ph = 'prep'; st.dl = Date.now() + PREP_MS; st.bu = null; st.pk = null; st.why = ''; st.dt = {}; st.sk = 0;
+}
+function hNewWord() {
+  const st = HS, d = st.cfg.d;
+  const fits = (i) => !d || WORDS[i][2] === d;
+  let pool = WORDS.map((w, i) => i).filter((i) => fits(i) && !st.u.includes(i));
+  if (!pool.length) {
+    const cur = st.w ? WORDS.findIndex((w) => w[0] === st.w.w) : -1;
+    st.u = st.u.filter((i) => !fits(i));
+    pool = WORDS.map((w, i) => i).filter((i) => fits(i) && i !== cur);
+  }
+  const i = pool[Math.floor(Math.random() * pool.length)];
+  st.u.push(i); if (st.u.length > 120) st.u = st.u.slice(-120);
+  LS.set('bgr_used', st.u.slice(-60));
+  const w = WORDS[i];
+  st.w = { w: w[0], c: w[1], d: w[2], x: w[3] };
+}
+function hTalk() { const st = HS; st.ph = 'talk'; st.dl = st.cfg.t ? Date.now() + st.cfg.t * 1000 : 0; }
+function hAdd(id, d) { const p = HS.pl.find((q) => q.id === id); if (!p) return; p.sc += d; HS.dt[id] = (HS.dt[id] || 0) + d; }
+function hBurst(x) {
+  const st = HS, r = st.rl[x];
+  st.bu = { id: x, r };
+  if (r === 'L') { hAdd(x, -1); hAdd(st.jd, 1); }
+  else {
+    hAdd(st.jd, -2);
+    Object.keys(st.rl).forEach((id) => { if (st.rl[id] === 'L') hAdd(id, 1); });
+    st.pk = null; st.why = 'bh'; st.ph = 'reveal';
+  }
+}
+function hPick(x) {
+  const st = HS, d = st.w.d;
+  st.pk = x;
+  if (st.rl[x] === 'H') { hAdd(st.jd, d); hAdd(x, d); st.why = 'ok'; }
+  else { hAdd(x, d); st.why = 'no'; }
+  st.ph = 'reveal';
+}
+const hCanNext = () => HS.rd + 1 >= HS.tot || hActive().length >= MIN_PLAYERS;
+function hNext() { const st = HS; st.rd++; if (st.rd >= st.tot) st.ph = 'end'; else hRound(); }
+function hRedeal() {
+  const st = HS;
+  Object.keys(st.dt).forEach((id) => { const p = st.pl.find((q) => q.id === id); if (p) p.sc -= st.dt[id]; });
+  hRound();
+}
+function hLobby() {
+  const st = HS;
+  st.pl = st.pl.filter((p) => !p.gone);
+  for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
+  st.wt = [];
+  st.ph = 'lobby'; st.jd = null; st.rl = {}; st.w = null; st.ord = []; st.dl = 0; st.bu = null; st.pk = null; st.why = ''; st.dt = {};
+}
+setInterval(() => {
+  if (!HS || !S.isHost || S.screen !== 'room') return;
+  if (HS.ph === 'prep' && Date.now() >= HS.dl) { hTalk(); hCommit(); }
+}, 300);
+/* 房主每秒送一次時間，等其他手機對準倒數 */
+setInterval(() => { if (HS && S.isHost && S.room) S.room.presence({ t: Date.now() }); }, 1000);
+
+/* ============================================================
+ * 5. 本機狀態、入房、離房
+ * ============================================================ */
+const S = {
+  screen: 'home', code: null, isHost: false, hub: null, room: null,
+  view: null, rev: -1, off: 0, conn: false, joinAt: 0, connAt: 0, hostGone: false, hostGoneAt: 0, notInAt: 0,
+  pend: 0, pendAt: 0, lastSeq: 0, hold: false, creating: false,
+  modal: null, seen: {}, kp: '', offConn: null, offPeers: null,
+};
+const CFG_OPTS = {
+  r: [[1, '1 次'], [2, '2 次'], [3, '3 次']],
+  t: [[0, '唔計時'], [60, '1 分鐘'], [90, '90 秒'], [120, '2 分鐘'], [180, '3 分鐘']],
+  d: [[0, '全部'], [1, '★'], [2, '★★'], [3, '★★★']],
+};
+
+async function enterRoom(code, host) {
+  const hub = getHub(brokerOf(code));
+  S.hub = hub; S.code = code; S.isHost = host; S.hadView = false; S.lastPh = null; S.offOk = false; S.off = 0; S.hostGone = false;
+  const room = hub.join('r' + code); S.room = room;
+  if (S.offConn) S.offConn();
+  S.offConn = hub.onConnection((c) => { S.conn = c; if (c) S.connAt = Date.now(); renderBanner(); });
+  if (S.offPeers) S.offPeers();
+  S.offPeers = room.onPeers((peers) => (S.isHost ? hOnPeers(peers) : gOnPeers(peers)));
+  if (!host) room.presence({ k: 'p', id: ME.id, n: ME.name, a: null });
+  LS.set('bgr_sess', { code, host, t: Date.now() });
+  wakeOn();
+}
+async function createRoom() {
+  S.screen = 'room'; S.view = null; S.isHost = true; S.joinAt = Date.now(); S.code = null; S.creating = true; S.rev = -1;
+  render();
+  for (let i = 0; i < BROKERS.length; i++) {
+    const hub = getHub(i);
+    const ok = await waitConn(hub, 6000);
+    if (S.screen !== 'room' || !S.creating) return;
+    if (ok) {
+      S.creating = false;
+      HS = newHostState(genCode(i));
+      await enterRoom(HS.code, true);
+      hCommit();
+      return;
+    }
+  }
+  S.creating = false;
+  fail('連唔到伺服器，請檢查網絡再試');
+}
+async function joinRoom(code, resume) {
+  S.screen = 'room'; S.view = null; S.isHost = false; S.joinAt = Date.now(); S.connAt = 0; S.conn = false; S.rev = -1; S.notInAt = 0; S.resume = !!resume;
+  HS = null; render();
+  await enterRoom(code, false);
+}
+async function resume() {
+  const s = LS.get('bgr_sess');
+  if (!s || !/^\d{4}$/.test(s.code || '') || Date.now() - (s.t || 0) > 6 * 3600e3) { LS.del('bgr_sess'); return false; }
+  if (s.host) {
+    const hs = LS.get('bgr_hs');
+    if (!hs || hs.code !== s.code || hs.host !== ME.id || hs.ph === 'closed') { LS.del('bgr_sess'); LS.del('bgr_hs'); return false; }
+    HS = hs; S.screen = 'room'; S.view = null; S.isHost = true; S.joinAt = Date.now(); S.rev = -1;
+    render();
+    await enterRoom(s.code, true);
+    hCommit();
+    return true;
+  }
+  joinRoom(s.code, true);
+  return true;
+}
+function leaveRoom() {
+  if (S.offPeers) { S.offPeers(); S.offPeers = null; }
+  if (S.offConn) { S.offConn(); S.offConn = null; }
+  if (S.room) { try { S.room.leave(); } catch (e) { /* 略過 */ } }
+  if (S.isHost) LS.del('bgr_hs');
+  LS.del('bgr_sess');
+  S.room = null; S.view = null; S.rev = -1; S.code = null; S.creating = false; S.pend = 0; S.hold = false;
+  HS = null; S.isHost = false; S.modal = null; S.screen = 'home';
+  wakeOff(); closeAudio();
+  render();
+  setTimeout(tryReload, 400);
+}
+function fail(msg) { leaveRoom(); toast(msg, 3600); }
+function leaveNow() {
+  if (S.isHost) {
+    if (HS) { hAct(ME.id, 'close'); hCommit(); }
+    setTimeout(leaveRoom, 700);
+  } else {
+    if (S.room) { S.lastSeq = Math.max(Date.now(), S.lastSeq + 1); S.room.presence({ bye: 1, a: [S.lastSeq, 'leave', null] }); }
+    setTimeout(leaveRoom, 600);
+  }
+}
+
+/* 客人收到房主狀態 */
+function gOnPeers(peers) {
+  if (S.isHost) return;
+  let hs = null;
+  for (const p of peers) { if (p.isMe) continue; const pr = p.presence; if (pr && pr.k === 'h' && pr.s && pr.s.code === S.code) { hs = pr.s; break; } }
+  if (hs) {
+    if (S.hostGone) { S.hostGone = false; renderBanner(); }
+    const hp = peers.find((p) => !p.isMe && p.presence && p.presence.s === hs).presence;
+    if (typeof hp.t === 'number') { const o = hp.t - Date.now(); if (!S.offOk || o > S.off) { S.off = o; S.offOk = true; } }
+    if (hs.rev !== S.rev) { S.rev = hs.rev; onView(hs); }
+  } else if (S.view && !S.hostGone) { S.hostGone = true; S.hostGoneAt = Date.now(); renderBanner(); }
+}
+function onView(v) {
+  const prevPh = S.lastPh, had = S.hadView;
+  S.view = v; S.lastPh = v.ph; S.hadView = true;
+  if (!S.isHost) {
+    if (v.ph === 'closed') { fail('房主已經解散咗房間'); return; }
+    if (v.ban.includes(ME.id)) { fail('你已經俾房主請咗出房'); return; }
+    if (S.pend && (v.ack[ME.id] || 0) >= S.pend) S.pend = 0;
+    LS.set('bgr_sess', { code: S.code, host: false, t: Date.now() });
+  }
+  if (S.modal && S.modal.type === 'confirm' && S.modal.ph && S.modal.ph !== v.ph) S.modal = null;
+  fx(prevPh, had, v);
+  render();
+}
+/* 送操控俾房主 */
+function act(t, x) {
+  if (!S.view) return;
+  if (S.isHost) { hAct(ME.id, t, x); hCommit(); return; }
+  if (S.pend && Date.now() - S.pendAt < 5000) return;
+  const seq = Math.max(Date.now(), S.lastSeq + 1); S.lastSeq = seq;
+  S.pend = seq; S.pendAt = Date.now();
+  S.room.presence({ a: [seq, t, x === undefined ? null : x] });
+  render();
+}
+
+/* 每半秒檢查：入唔到房、房主斷線、等回應太耐 */
+setInterval(() => {
+  if (S.screen !== 'room') return;
+  const now = Date.now();
+  if (!S.view && !S.creating) {
+    if (!S.conn && now - S.joinAt > 12000) { fail('連唔到伺服器，請檢查網絡再試'); return; }
+    if (S.conn && S.connAt && now - S.connAt > 7000 && !S.isHost) { fail(S.resume ? `房間 ${S.code} 已經冇咗` : `搵唔到房間 ${S.code}，請檢查房號`); return; }
+  }
+  const v = S.view;
+  if (v && !S.isHost) {
+    const inRoom = v.pl.some((p) => p.id === ME.id) || v.wt.some((p) => p.id === ME.id);
+    if (inRoom) S.notInAt = 0;
+    else if (!S.notInAt) S.notInAt = now;
+    else if (now - S.notInAt > 5000 && !S.hostGone) { fail(v.ph === 'lobby' ? `房間已滿（最多 ${MAX_SEATS} 人）` : '房間已滿'); return; }
+  }
+  if (S.pend && now - S.pendAt > 5000) { S.pend = 0; toast('房主未收到，請再撳一次'); render(); }
+  if (S.hostGone) renderBanner();
+}, 500);
+
+/* ============================================================
+ * 6. 畫面
+ * ============================================================ */
+const pOf = (v, id) => v.pl.find((p) => p.id === id) || v.wt.find((p) => p.id === id);
+const first = (n) => Array.from(String(n || '?'))[0] || '?';
+const av = (p) => `<span class="av" style="--c:${COLORS[(p && p.c) % COLORS.length] || '#888'}">${esc(first(p && p.n))}</span>`;
+const stars = (d) => '<span class="st">' + '★'.repeat(d) + '</span>' + '☆'.repeat(3 - d);
+const isLat = (w) => /^[\x20-\x7eÀ-ɏ]+$/.test(w);
+const fmt = (s) => (s >= 60 ? Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') : String(s));
+const nameOf = (v, id) => { const p = pOf(v, id); return p ? p.n : '？'; };
+
+const LOGO = `<svg viewBox="0 0 100 100" width="92" height="92"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd166"/><stop offset="1" stop-color="#ff8a5b"/></linearGradient></defs><rect x="14" y="20" width="44" height="62" rx="9" fill="#86bcff" transform="rotate(-14 36 51)"/><rect x="40" y="16" width="46" height="66" rx="9" fill="url(#lg1)" transform="rotate(10 63 49)"/><text x="64" y="64" text-anchor="middle" font-size="40" font-weight="900" fill="#2b1400" transform="rotate(10 63 49)" font-family="-apple-system,Arial">?</text></svg>`;
+const CROWN = `<svg viewBox="0 0 84 60" class="crown"><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="#ffd166" stroke="#ffb534" stroke-width="3" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#ffb534"/><circle cx="42" cy="34" r="5" fill="#ff6b81"/><circle cx="22" cy="40" r="4" fill="#86bcff"/><circle cx="62" cy="40" r="4" fill="#4fe0a0"/></svg>`;
+
+function render() {
+  const app = $('#app');
+  let h;
+  if (S.screen === 'home') h = vHome();
+  else if (!S.view) h = vConnecting();
+  else {
+    const v = S.view;
+    h = vTop(v) + '<div id="banner"></div>';
+    if (v.ph === 'lobby') h += vLobby(v);
+    else if (v.ph === 'end') h += vEnd(v);
+    else if (v.ph === 'reveal') h += vReveal(v);
+    else if (v.ph === 'prep' || v.ph === 'talk') h += vPlay(v);
+    else h += '<div class="wait">等緊…</div>';
+  }
+  const scrollTop = app.scrollTop;
+  app.innerHTML = '<div class="scr' + (S.pend ? ' pendw' : '') + '">' + h + '</div>';
+  app.scrollTop = scrollTop;
+  if (S.screen === 'home') {
+    const nm = $('#nm');
+    if (nm) nm.addEventListener('input', () => { const n = cleanName(nm.value); if (n) { ME.name = n; LS.set('bgr_name', n); } });
+  }
+  renderBanner();
+  renderModal();
+  tickCd();
+}
+function renderBanner() {
+  const b = $('#banner'); if (!b) return;
+  let msg = '';
+  if (S.screen === 'room' && S.view) {
+    if (!S.conn) msg = '連線中斷，重新連線中…';
+    else if (!S.isHost && S.hostGone) {
+      msg = '房主暫時斷咗線，等緊佢返嚟…（房主要開住呢個畫面，唔好鎖機）';
+      if (Date.now() - S.hostGoneAt > 90000) msg = '房主斷咗線好耐，可以撳「離開」先走。';
+    }
+  }
+  if (b.textContent !== msg) b.textContent = msg;
+  b.classList.toggle('show', !!msg);
+}
+function vHome() {
+  return `<div class="home">
+    <div class="logo">${LOGO}</div>
+    <h1>桌遊房</h1>
+    <div class="by">由 Bill Chiu 開發</div>
+    <label class="lbl" for="nm">你嘅名（其他人會見到）</label>
+    <input id="nm" class="inp" maxlength="8" value="${esc(ME.name)}" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done">
+    <button class="btn pri big" data-act="joinpad">輸入房號加入</button>
+    <div class="sec">開房玩</div>
+    <div class="game">
+      <div class="gh"><div class="gi">?</div><div><div class="gn">真定作</div><div class="gm">3–10 人 · 一局大約 15–30 分鐘</div></div></div>
+      <div class="gd">每輪出一個冷門詞語。得一個人知道真正意思，其他人要作一個。判官聽完要估邊個講真話。</div>
+      <div class="row"><button class="btn line" data-act="rules">玩法</button><button class="btn pri" data-act="create">開房</button></div>
+    </div>
+    <div class="more">更多遊戲陸續加入</div>
+    <div class="ver">版本 ${esc(VER)}</div>
+  </div>`;
+}
+function vConnecting() {
+  const t = S.creating || (S.isHost && !S.code) ? '開緊房間…' : `連緊房間 ${esc(S.code || '')}…`;
+  return `<div class="wait"><div class="spin"></div>${t}</div><button class="btn line" data-act="cancel">取消</button>`;
+}
+function vTop(v) {
+  const right = v.ph === 'lobby' ? '<button class="ib" data-act="rules">玩法</button>' : '<button class="ib" data-act="scores">分數</button>';
+  return `<div class="top"><button class="ib" data-act="leave">離開</button><div class="tt">房號 <b>${esc(v.code)}</b></div>${right}</div>`;
+}
+function seg(key, cur, edit) {
+  return `<div class="seg${edit ? '' : ' ro'}">` + CFG_OPTS[key].map((o) => `<button class="${o[0] === cur ? 'on' : ''}" data-act="cfg" data-k="${key}" data-v="${o[0]}">${o[1]}</button>`).join('') + '</div>';
+}
+function vLobby(v) {
+  const host = v.host === ME.id;
+  const n = v.pl.length, onN = v.pl.filter((p) => p.on).length;
+  const rows = v.pl.map((p) => {
+    const me = p.id === ME.id;
+    let tags = '';
+    if (p.id === v.host) tags += '<span class="tag host">房主</span>';
+    if (!p.on) tags += '<span class="tag">離線</span>';
+    const x = host && !me ? `<button class="x" data-act="kick" data-x="${p.id}" aria-label="請出房">✕</button>` : '';
+    return `<div class="pr${me ? ' me' : ''}${p.on ? '' : ' off'}">${av(p)}<span class="nm">${esc(p.n)}${me ? '（你）' : ''}</span>${tags}${x}</div>`;
+  }).join('');
+  let btn;
+  if (host) btn = onN >= MIN_PLAYERS ? `<button class="btn pri big" data-act="start">開始遊戲（${onN} 人）</button>` : `<button class="btn pri big" disabled>最少 ${MIN_PLAYERS} 人先開始到</button>`;
+  else btn = '<div class="wait">等房主開始遊戲…</div>';
+  return `<div class="code"><div class="k">房號（話俾朋友知）</div><div class="n">${esc(v.code)}</div>
+      <div class="h">朋友打開呢個網址，撳「輸入房號加入」</div>
+      <div class="row"><button class="btn line" data-act="share">分享入房連結</button><button class="btn line" data-act="copy">複製房號</button></div></div>
+    <div class="h2">玩家 <small>${n}／${MAX_SEATS}</small></div>
+    <div class="list">${rows}</div>
+    <div class="h2">設定${host ? '' : ' <small>房主先改到</small>'}</div>
+    <div class="box">
+      <div class="cl">每人做判官幾多次</div>${seg('r', v.cfg.r, host)}
+      <div class="cl">講解時間</div>${seg('t', v.cfg.t, host)}
+      <div class="cl">題目難度</div>${seg('d', v.cfg.d, host)}
+    </div>
+    ${btn}`;
+}
+function vWord(v) {
+  const w = v.w; if (!w) return '';
+  return `<div class="wc"><div class="wcat">${esc(w.c)} · ${stars(w.d)}（${w.d} 分）</div><div class="ww${isLat(w.w) ? ' lat' : ''}">${esc(w.w)}</div></div>`;
+}
+function vCd(v) {
+  if (v.ph === 'prep') return `<div class="ph">準備時間 <span class="cd" data-cd>10</span> 秒</div><div class="bar"><i data-bar></i></div>`;
+  if (v.dl) return `<div class="ph" data-cdw><span data-cdl>講解時間</span> <span class="cd" data-cd></span></div><div class="bar"><i data-bar></i></div>`;
+  return '<div class="ph">講解中（唔計時）</div>';
+}
+function vRound(v) {
+  const j = pOf(v, v.jd);
+  return `<div class="rdl"><span>第 ${v.rd + 1}／${v.tot} 輪</span><span class="jl">判官 ${av(j)}${esc(j ? j.n : '')}</span></div>`;
+}
+function vCands(v, isJ) {
+  return v.ord.map((id, i) => {
+    const p = pOf(v, id), me = id === ME.id, out = v.bu && v.bu.id === id;
+    let right = '';
+    if (out) right = '<span class="tag bad">已拆穿・大話精</span>';
+    else if (isJ && v.ph === 'talk') right = (!v.bu ? `<button class="sb bad" data-act="burst" data-x="${id}">拆穿</button>` : '') + `<button class="sb pri" data-act="pick" data-x="${id}">揀佢</button>`;
+    return `<div class="pr${me ? ' me' : ''}${p && !p.on ? ' off' : ''}"><span class="no">${i + 1}</span>${av(p)}<span class="nm">${esc(p ? p.n : '?')}${me ? '（你）' : ''}</span>${right}</div>`;
+  }).join('');
+}
+function vRoleCard(v) {
+  const r = v.rl[ME.id], out = v.bu && v.bu.id === ME.id;
+  let back;
+  if (r === 'H') back = `<div class="rc-b h"><div class="rl">你係老實人</div><div class="ex">${esc(v.w.x)}</div><div class="tp">用自己嘅講法講出呢個解釋</div></div>`;
+  else if (out) back = '<div class="rc-b o"><div class="rl">你俾判官拆穿咗</div><div class="tp">呢輪坐定定睇，唔使再講</div></div>';
+  else back = '<div class="rc-b l"><div class="rl">你係大話精</div><div class="tp">作一個似真嘅解釋，呃判官揀你！<br>判官揀中你，你就得分</div></div>';
+  return `<div class="rc${S.hold ? ' show' : ''}" data-hold><div class="rc-f"><div class="hand"></div>撳住呢度睇身份<small>放手就收埋，唔好俾人見到</small></div>${back}</div>`;
+}
+function vPlay(v) {
+  const isJ = v.jd === ME.id, inR = !!v.rl[ME.id];
+  let h = vRound(v) + vWord(v) + vCd(v);
+  if (isJ) {
+    if (v.ph === 'prep') {
+      h += `<div class="me-role jd">你係判官</div>
+        <div class="tip">如果你識呢個詞，撳「我識，換題」。其他人睇緊自己身份，準備好就可以開始。</div>
+        <div class="row"><button class="btn line" data-act="skip">我識，換題</button><button class="btn pri" data-act="go">開始講解</button></div>
+        <div class="h2">講解次序</div><div class="list">${vCands(v, false)}</div>`;
+    } else {
+      h += `<div class="me-role jd">你係判官</div>
+        <div class="tip">叫大家照次序講解，可以隨便問問題。估到邊個係老實人就撳「揀佢」。${v.bu ? '' : '肯定某人作嘢可以「拆穿」（每輪一次）。'}</div>
+        <div class="list">${vCands(v, true)}</div>`;
+    }
+  } else if (inR) {
+    h += vRoleCard(v);
+    h += `<div class="tip">${v.ph === 'prep' ? '睇清楚身份，諗定點講。' : '照次序講解，判官問你就答。'}</div>
+      <div class="h2">講解次序</div><div class="list">${vCands(v, false)}</div>`;
+  } else {
+    const wt = v.wt.some((p) => p.id === ME.id);
+    h += `<div class="wait">${wt ? '遊戲進行緊，下一局先可以加入。可以先睇住。' : '你今輪冇身份，坐定定睇住。'}</div>
+      <div class="h2">講解次序</div><div class="list">${vCands(v, false)}</div>`;
+  }
+  return h;
+}
+function vReveal(v) {
+  const hid = Object.keys(v.rl).find((id) => v.rl[id] === 'H');
+  const hp = pOf(v, hid), isJ = v.jd === ME.id, host = v.host === ME.id;
+  let big, cls;
+  if (v.why === 'ok') { big = '判官估中咗！'; cls = 'ok'; }
+  else if (v.why === 'no') { big = '判官俾人呃咗！'; cls = 'bad'; }
+  else { big = '判官拆穿錯人！'; cls = 'bad'; }
+  let sub = '';
+  if (v.why === 'no') sub = `<div class="who">判官揀咗 ${av(pOf(v, v.pk))}${esc(nameOf(v, v.pk))}（大話精）</div>`;
+  const deltas = v.pl.filter((p) => v.dt[p.id]).sort((a, b) => v.dt[b.id] - v.dt[a.id]).map((p) => {
+    const d = v.dt[p.id];
+    return `<div class="pr${p.id === ME.id ? ' me' : ''}">${av(p)}<span class="nm">${esc(p.n)}${p.id === v.jd ? ' <span class="tag jd">判官</span>' : ''}</span><span class="dl ${d > 0 ? 'p' : 'm'}">${d > 0 ? '+' : ''}${d}</span><span class="sc">${p.sc} 分</span></div>`;
+  }).join('') || '<div class="wait">今輪冇人得分</div>';
+  const last = v.rd + 1 >= v.tot;
+  let btn;
+  if (isJ || host) {
+    const can = last || v.pl.filter((p) => p.on && !p.gone).length >= MIN_PLAYERS;
+    btn = can ? `<button class="btn pri big" data-act="next">${last ? '睇最後結果' : '下一輪'}</button>` : `<button class="btn pri big" disabled>等人返嚟（最少 ${MIN_PLAYERS} 人）</button>`;
+  } else btn = `<div class="wait">等判官撳「${last ? '睇最後結果' : '下一輪'}」…</div>`;
+  const key = 'r' + v.gid + '-' + v.rd, anim = !S.seen[key + 'a'];
+  S.seen[key + 'a'] = 1;
+  return `<div class="${anim ? 'anim' : ''}">${vRound(v)}
+    <div class="res"><div class="big ${cls}">${big}</div><div class="who">${av(hp)}<b>${esc(hp ? hp.n : '？')}</b> 先係老實人</div>${sub}</div>
+    <div class="exb"><div class="k">「${esc(v.w.w)}」真正意思</div><div class="v">${esc(v.w.x)}</div></div>
+    <div class="h2">今輪分數</div><div class="list">${deltas}</div>
+    ${btn}</div>`;
+}
+function ranked(v) {
+  const arr = v.pl.slice().sort((a, b) => b.sc - a.sc);
+  let rank = 0, prev = null;
+  return arr.map((p, i) => { if (p.sc !== prev) { rank = i + 1; prev = p.sc; } return { p, rank }; });
+}
+function vEnd(v) {
+  const rk = ranked(v), host = v.host === ME.id;
+  const tops = rk.filter((r) => r.rank === 1).map((r) => r.p.n);
+  const rows = rk.map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}"><span class="rk r${rank}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}${p.id === ME.id ? '（你）' : ''}</span><span class="sc">${p.sc} 分</span></div>`).join('');
+  return `<div class="win">${CROWN}<div class="wn">${esc(tops.join('、'))}</div><div class="ws">${tops.length > 1 ? '並列第一！' : '係最強真定作王！'}</div></div>
+    <div class="h2">排名</div><div class="list">${rows}</div>
+    ${host ? '<button class="btn pri big" data-act="again">再嚟一局</button>' : '<div class="wait">等房主開新一局…</div>'}
+    <button class="btn line" data-act="leave">離開房間</button>`;
+}
+
+/* 倒數：另外更新數字，唔好成個畫面重畫（WEB-27） */
+function tickCd() {
+  const v = S.view; if (!v || S.screen !== 'room' || !(v.ph === 'prep' || v.ph === 'talk') || !v.dl) return;
+  const now = Date.now() + (S.isHost ? 0 : S.off);
+  const ms = Math.max(0, v.dl - now), left = Math.ceil(ms / 1000);
+  const total = v.ph === 'prep' ? PREP_MS : (v.cfg.t || 1) * 1000;
+  $$('[data-cd]').forEach((e) => { const s = fmt(left); if (e.textContent !== s) e.textContent = s; });
+  $$('[data-bar]').forEach((e) => e.style.setProperty('--p', Math.min(1, ms / total).toFixed(3)));
+  if (v.ph === 'talk') {
+    const up = ms <= 0;
+    const w = $('[data-cdw]'); if (w) w.classList.toggle('up', up);
+    const l = $('[data-cdl]'); if (l) { const s = up ? '時間到！判官要揀' : '講解時間'; if (l.textContent !== s) l.textContent = s; }
+    const c = $('[data-cd]'); if (c && up) c.textContent = '';
+    const key = 't' + v.gid + '-' + v.rd;
+    if (up && !S.seen[key]) { S.seen[key] = 1; sfx('end'); }
+  }
+}
+setInterval(tickCd, 250);
+
+/* 特效：拆穿彈出、結果音效、完場彩紙；用「第幾局-第幾輪」做 key（GAME-19、GAME-20） */
+let fxT = null;
+function fx(prevPh, had, v) {
+  if (v.bu) {
+    const key = 'b' + v.gid + '-' + v.rd;
+    if (!S.seen[key]) {
+      S.seen[key] = 1;
+      if (had) {
+        const n = esc(nameOf(v, v.bu.id));
+        const isL = v.bu.r === 'L';
+        const html = `<div class="fxc${isL ? ' ok' : ''}"><div class="t1">拆穿！</div><div class="t2">判官拆穿 ${n}</div><div class="t3" style="color:${isL ? 'var(--ok)' : 'var(--bad)'}">${isL ? `佢真係大話精！${n} −1，判官 +1` : '原來佢係老實人！判官 −2'}</div></div>`;
+        const f = $('#fx'); f.innerHTML = html; f.classList.add('show');
+        clearTimeout(fxT); fxT = setTimeout(() => f.classList.remove('show'), 2600);
+        sfx(isL ? 'good' : 'bad');
+      }
+    }
+  }
+  if (v.ph === 'reveal') {
+    const key = 'v' + v.gid + '-' + v.rd;
+    if (!S.seen[key]) { S.seen[key] = 1; if (had && prevPh !== 'reveal' && v.why !== 'bh') sfx(v.why === 'ok' ? 'good' : 'bad'); }
+  }
+  if (v.ph === 'end') {
+    const key = 'e' + v.gid;
+    if (!S.seen[key]) { S.seen[key] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
+  }
+  if (v.ph === 'prep') {
+    const key = 'p' + v.gid + '-' + v.rd + '-' + v.sk;
+    if (!S.seen[key]) { S.seen[key] = 1; S.hold = false; if (had && prevPh !== 'prep') sfx('tick'); }
+  }
+}
+function confetti() {
+  const cols = ['#ffd166', '#ff6b81', '#86bcff', '#4fe0a0', '#c9a0ff'];
+  for (let i = 0; i < 60; i++) {
+    const d = document.createElement('div');
+    d.className = 'cf';
+    d.style.left = Math.random() * 100 + 'vw';
+    d.style.background = cols[i % cols.length];
+    d.style.setProperty('--r', (Math.random() * 720 - 360) + 'deg');
+    d.style.animationDuration = (2.2 + Math.random() * 1.8) + 's';
+    d.style.animationDelay = (Math.random() * 0.6) + 's';
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 5000);
+  }
+}
+
+/* ============================================================
+ * 7. 彈出視窗
+ * ============================================================ */
+const RULES = `<div class="rules">
+  <h4>人數</h4><p>3 至 10 人，每人一部手機入同一間房。</p>
+  <h4>身份</h4><ul><li><b>判官</b>：每輪一個，輪流做。</li><li><b>老實人</b>：其他人入面得一個，手機會見到詞語嘅真正意思。</li><li><b>大話精</b>：其餘全部人，只見到詞語，要自己作一個解釋。</li></ul>
+  <h4>每輪點玩</h4><ul>
+    <li>大家見到同一個冷門詞語。撳住身份卡睇自己係咩身份（唔好俾人見到）。</li>
+    <li>判官如果本身識呢個詞，撳「我識，換題」。</li>
+    <li>準備 10 秒之後，照「講解次序」逐個講。老實人用自己嘅講法講真解釋，大話精作一個似真嘅。</li>
+    <li>判官可以隨便問問題，最後撳「揀佢」揀邊個係老實人。</li></ul>
+  <h4>計分（題目有 1–3 粒星 ＝ 1–3 分）</h4><ul>
+    <li>判官揀中老實人：判官同老實人各得題目分。</li>
+    <li>判官揀咗大話精：嗰個大話精得題目分。</li></ul>
+  <h4>拆穿（每輪一次）</h4><ul>
+    <li>判官肯定某人作嘢，可以「拆穿」佢。</li>
+    <li>真係大話精：佢 −1 分、判官 +1 分，佢唔可以再被揀。</li>
+    <li>原來係老實人：判官 −2 分，每個大話精 +1 分，呢輪即刻完。</li></ul>
+  <h4>完場</h4><p>每人做完設定次數嘅判官就完場，分數最高係贏家。</p>
+</div>`;
+function openModal(m) { S.modal = m; renderModal(); }
+function closeModal() { S.modal = null; renderModal(); }
+function confirmBox(text, ok, fn, opts = {}) { openModal({ type: 'confirm', text, ok, fn, bad: !!opts.bad, ph: S.view ? S.view.ph : null }); }
+function renderModal() {
+  const el = $('#modal'), m = S.modal;
+  if (!m) { el.classList.remove('show'); el.innerHTML = ''; return; }
+  let h = '';
+  if (m.type === 'rules') h = `<h3>真定作 玩法</h3>${RULES}<button class="btn pri" data-act="mclose">知道</button>`;
+  else if (m.type === 'confirm') h = `<p style="text-align:center;font-size:18px;font-weight:700">${m.text}</p><div class="row"><button class="btn line" data-act="mclose">取消</button><button class="btn ${m.bad ? 'bad' : 'pri'}" data-act="mok">${m.ok}</button></div>`;
+  else if (m.type === 'join') {
+    const c = S.kp;
+    const boxes = [0, 1, 2, 3].map((i) => `<span class="${i === c.length ? 'cur' : ''}">${esc(c[i] || '')}</span>`).join('');
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'c', '0', 'b'].map((k) => `<button class="${k === 'c' || k === 'b' ? 's' : ''}" data-act="kp" data-x="${k}">${k === 'c' ? '清除' : k === 'b' ? '⌫' : k}</button>`).join('');
+    h = `<h3>輸入房號</h3><div class="kpd">${boxes}</div><div class="keys">${keys}</div>
+      <div class="row" style="margin-top:8px"><button class="btn line" data-act="mclose">取消</button><button class="btn pri" data-act="dojoin" ${c.length === 4 ? '' : 'disabled'}>加入</button></div>`;
+  } else if (m.type === 'scores' && S.view) {
+    const v = S.view, host = v.host === ME.id;
+    const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk r${rank}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}${p.id === v.jd ? ' <span class="tag jd">判官</span>' : ''}${p.gone ? ' <span class="tag">走咗</span>' : !p.on ? ' <span class="tag">離線</span>' : ''}</span><span class="sc">${p.sc} 分</span></div>`).join('');
+    const wt = v.wt.length ? `<div class="h2">等緊下一局 <small>${v.wt.length} 人</small></div><div class="list">${v.wt.map((p) => `<div class="pr">${av(p)}<span class="nm">${esc(p.n)}</span></div>`).join('')}</div>` : '';
+    let hb = '';
+    if (host && (v.ph === 'prep' || v.ph === 'talk')) hb += '<button class="btn line" data-act="redeal">重新派呢輪（換題同身份）</button>';
+    if (host && v.ph !== 'lobby' && v.ph !== 'end') hb += '<button class="btn line" data-act="endgame">即刻完場</button>';
+    h = `<h3>分數 · 第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪</h3><div class="list">${rows}</div>${wt}
+      <button class="btn line" data-act="snd">聲音：${SND.on ? '開' : '閂'}</button>${hb}<button class="btn pri" data-act="mclose">返去</button>`;
+  } else { S.modal = null; el.classList.remove('show'); return; }
+  el.innerHTML = `<div class="mb">${h}</div>`;
+  el.classList.add('show');
+}
+
+/* ============================================================
+ * 8. 撳掣
+ * ============================================================ */
+document.addEventListener('click', (e) => {
+  if (e.target.id === 'modal') { closeModal(); return; }
+  const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+  const a = b.dataset.act, x = b.dataset.x, v = S.view;
+  switch (a) {
+    case 'create': createRoom(); break;
+    case 'joinpad': S.kp = ''; openModal({ type: 'join' }); break;
+    case 'kp':
+      if (x === 'c') S.kp = ''; else if (x === 'b') S.kp = S.kp.slice(0, -1); else if (S.kp.length < 4) S.kp += x;
+      renderModal(); break;
+    case 'dojoin': if (/^\d{4}$/.test(S.kp)) { closeModal(); joinRoom(S.kp); } break;
+    case 'rules': openModal({ type: 'rules' }); break;
+    case 'scores': openModal({ type: 'scores' }); break;
+    case 'mclose': closeModal(); break;
+    case 'mok': { const m = S.modal; closeModal(); if (m && m.fn) m.fn(); break; }
+    case 'cancel': leaveRoom(); break;
+    case 'leave':
+      if (!v) { leaveRoom(); break; }
+      if (S.isHost) confirmBox('你係房主，離開會解散成個房間。', '解散房間', leaveNow, { bad: true });
+      else confirmBox(v.ph === 'lobby' || v.ph === 'end' ? '離開房間？' : '遊戲進行緊，確定離開？', '離開', leaveNow, { bad: true });
+      break;
+    case 'share': shareLink(); break;
+    case 'copy': copyText(S.code, '已複製房號'); break;
+    case 'cfg': act('cfg', [b.dataset.k, +b.dataset.v]); break;
+    case 'kick': if (v) confirmBox(`請 ${esc(nameOf(v, x))} 出房？佢之後入唔返呢間房。`, '請出房', () => act('kick', x), { bad: true }); break;
+    case 'start': act('start'); break;
+    case 'skip': act('skip'); break;
+    case 'go': act('go'); break;
+    case 'burst': if (v) confirmBox(`拆穿 ${esc(nameOf(v, x))}？<br><small style="font-size:15px">每輪得一次。如果佢係老實人，你會扣 2 分，呢輪即刻完。</small>`, '拆穿', () => act('burst', x), { bad: true }); break;
+    case 'pick': if (v) confirmBox(`確定 ${esc(nameOf(v, x))} 係老實人？`, '確定', () => act('pick', x)); break;
+    case 'next': act('next'); break;
+    case 'again': act('again'); break;
+    case 'redeal': closeModal(); confirmBox('重新派呢輪？會換過題目同身份，呢輪嘅分數取消。', '重新派', () => act('redeal')); break;
+    case 'endgame': closeModal(); confirmBox('即刻完場？會用而家嘅分數排名。', '完場', () => act('end'), { bad: true }); break;
+    case 'snd': SND.on = !SND.on; LS.set('bgr_snd', SND.on); if (!SND.on) closeAudio(); renderModal(); break;
+    default: break;
+  }
+});
+/* 身份卡：撳住先見到 */
+document.addEventListener('pointerdown', (e) => {
+  const c = e.target.closest('[data-hold]'); if (!c) return;
+  S.hold = true; c.classList.add('show');
+});
+const unhold = () => { if (!S.hold) return; S.hold = false; $$('[data-hold]').forEach((c) => c.classList.remove('show')); };
+window.addEventListener('pointerup', unhold);
+window.addEventListener('pointercancel', unhold);
+window.addEventListener('blur', unhold);
+
+function shareUrl() {
+  const u = new URL(location.href);
+  u.search = ''; u.hash = '';
+  const mq = new URLSearchParams(location.search).get('mqtt');
+  if (mq) u.searchParams.set('mqtt', mq);
+  u.searchParams.set('room', S.code);
+  return u.toString();
+}
+async function shareLink() {
+  const url = shareUrl();
+  if (navigator.share) { try { await navigator.share({ title: '桌遊房', text: `嚟玩真定作！房號 ${S.code}`, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+  copyText(url, '已複製入房連結');
+}
+async function copyText(t, msg) {
+  try { await navigator.clipboard.writeText(t); toast(msg); }
+  catch (e) { toast('房號：' + S.code); }
+}
+
+/* ============================================================
+ * 9. 聲音（只係短音效；撳過畫面先開，離開房間就閂：WEB-01、WEB-37）
+ * ============================================================ */
+const SND = { ctx: null, on: LS.get('bgr_snd', true) !== false };
+function unlockAudio() {
+  if (!SND.on || S.screen !== 'room') return;
+  try {
+    if (!SND.ctx || SND.ctx.state === 'closed') SND.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (SND.ctx.state === 'suspended') SND.ctx.resume();
+  } catch (e) { SND.ctx = null; }
+}
+function closeAudio() { if (SND.ctx) { try { SND.ctx.close(); } catch (e) { /* 略過 */ } SND.ctx = null; } }
+document.addEventListener('pointerdown', unlockAudio, true);
+function tone(f, t0, dur, type = 'sine', vol = 0.16) {
+  const c = SND.ctx, o = c.createOscillator(), g = c.createGain(), t = c.currentTime + t0;
+  o.type = type; o.frequency.setValueAtTime(f, t);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + 0.05);
+}
+function sfx(k) {
+  if (!SND.on || !SND.ctx || SND.ctx.state !== 'running') return;
+  try {
+    if (k === 'tick') { tone(660, 0, 0.12); tone(880, 0.12, 0.18); }
+    else if (k === 'good') { tone(523, 0, 0.16); tone(659, 0.12, 0.16); tone(784, 0.24, 0.3); }
+    else if (k === 'bad') { tone(220, 0, 0.35, 'sawtooth', 0.09); tone(165, 0.18, 0.45, 'sawtooth', 0.09); }
+    else if (k === 'end') { tone(880, 0, 0.18, 'square', 0.08); tone(880, 0.25, 0.18, 'square', 0.08); tone(880, 0.5, 0.35, 'square', 0.08); }
+    else if (k === 'win') { [523, 659, 784, 1046].forEach((f, i) => tone(f, i * 0.13, 0.35)); }
+  } catch (e) { /* 略過 */ }
+}
+
+/* ============================================================
+ * 10. 手機：畫面高度、唔好熄螢幕、擋放大、返前景
+ * ============================================================ */
+function setAppH() { document.documentElement.style.setProperty('--app-h', window.innerHeight + 'px'); }
+function fixView() { setAppH(); [60, 250, 600, 1200].forEach((t) => setTimeout(() => { setAppH(); window.scrollTo(0, 0); }, t)); }
+window.addEventListener('resize', setAppH);
+window.addEventListener('orientationchange', fixView);
+let wl = null;
+async function wakeOn() {
+  try { if ('wakeLock' in navigator && !wl && document.visibilityState === 'visible' && S.screen === 'room') { wl = await navigator.wakeLock.request('screen'); wl.addEventListener('release', () => { wl = null; }); } } catch (e) { wl = null; }
+}
+function wakeOff() { try { if (wl) wl.release(); } catch (e) { /* 略過 */ } wl = null; }
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible') { unhold(); return; }
+  fixView();
+  if (S.screen === 'room') { wakeOn(); if (S.hub) S.hub.kick(); }
+  else checkUpdate();
+});
+document.addEventListener('gesturestart', (e) => e.preventDefault());
+document.addEventListener('touchmove', (e) => { if (e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
+document.addEventListener('dblclick', (e) => e.preventDefault());
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+document.addEventListener('selectstart', (e) => { if (!e.target.closest || !e.target.closest('input')) e.preventDefault(); });
+document.addEventListener('wheel', (e) => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
+document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault(); });
+
+/* ============================================================
+ * 11. 自動更新：比對網上版本號，喺主頁先重新載入（WEB-07、GAME-09）
+ * ============================================================ */
+let newVer = null;
+function checkUpdate() {
+  if (location.protocol === 'file:') return;
+  fetch(location.pathname + '?vcheck=' + Date.now(), { cache: 'no-store' }).then((r) => (r.ok ? r.text() : '')).then((t) => {
+    const m = t.match(new RegExp('__BGR' + "_VER='([0-9A-Za-z-]+)'"));
+    if (m && m[1] !== VER) { newVer = m[1]; tryReload(); }
+  }).catch(() => {});
+}
+function tryReload() {
+  if (!newVer || S.screen !== 'home' || S.modal) return;
+  const k = 'bgr_reload_' + newVer;
+  try { const t = +sessionStorage.getItem(k); if (t && Date.now() - t < 120000) return; sessionStorage.setItem(k, Date.now()); } catch (e) { /* 略過 */ }
+  const u = new URL(location.href); u.searchParams.set('v', newVer); u.searchParams.delete('vcheck');
+  location.replace(u.toString());
+}
+
+/* ============================================================
+ * 12. 開始
+ * ============================================================ */
+fixView();
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const code = q.get('room');
+  if (q.has('room') || q.has('v')) {
+    const u = new URL(location.href); u.searchParams.delete('room'); u.searchParams.delete('v');
+    try { history.replaceState(null, '', u.toString()); } catch (e) { /* 略過 */ }
+  }
+  if (code && /^\d{4}$/.test(code)) {
+    const s = LS.get('bgr_sess');
+    if (s && s.code === code && s.host) { if (await resume()) return; }
+    joinRoom(code); return;
+  }
+  if (await resume()) return;
+  render();
+  checkUpdate();
+})();
+
+/* 測試用（Playwright）：睇到而家狀態 */
+window.__bgr = { S, get HS() { return HS; }, ME, WORDS };
+})();
+</script>
+</body>
+</html>
