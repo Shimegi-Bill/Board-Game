@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-22-13';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-22-14';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -535,6 +535,30 @@ button.pr:active{transform:scale(.985)}
 #sw .ln i:nth-child(1){top:24%}#sw .ln i:nth-child(2){top:33%;width:30vw;animation-delay:.06s}#sw .ln i:nth-child(3){top:41%;animation-delay:.12s}#sw .ln i:nth-child(4){top:60%;width:34vw;animation-delay:.04s}#sw .ln i:nth-child(5){top:68%;animation-delay:.1s}#sw .ln i:nth-child(6){top:77%;width:26vw;animation-delay:.16s}
 @keyframes swL{0%{transform:translate3d(-60vw,0,0);opacity:0}25%{opacity:1}100%{transform:translate3d(130vw,0,0);opacity:0}}
 html[data-theme="cream"] #sw .ln i{background:linear-gradient(90deg,rgba(160,110,30,0),rgba(160,110,30,.75))}
+/* 揀遊戲：App 風格彈出選單（唔用 iPhone 內置 select） */
+.gdd{display:flex;align-items:center;gap:12px;width:100%;padding:8px 12px 8px 8px;border-radius:16px;background:rgba(var(--ink),.04);box-shadow:inset 0 0 0 1px var(--e2);margin:0 0 14px;text-align:left;transition:transform .14s ease}
+button.gdd:active{transform:scale(.98)}
+.gdd-a,.gli-a{width:76px;height:46px;border-radius:10px;overflow:hidden;flex:none;box-shadow:0 4px 10px rgba(0,0,0,.25)}
+.gdd-a .gart,.gli-a .gart{width:100%;height:100%}
+.gdd-t,.gli-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.gdd-t b,.gli-t b{font-family:var(--serif);font-size:19px;font-weight:900;letter-spacing:1px}
+.gdd-t small,.gli-t small{font-size:12px;font-weight:700;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gdd>.ic{width:22px;height:22px;color:var(--g2)}
+.glist{display:flex;flex-direction:column;gap:8px;margin:0 0 6px}
+.gli{display:flex;align-items:center;gap:12px;width:100%;padding:8px 12px 8px 8px;border-radius:16px;background:rgba(var(--ink),.035);box-shadow:inset 0 0 0 1px var(--e1);text-align:left;transition:transform .14s ease}
+.gli:active{transform:scale(.98)}
+.gli.on{background:rgba(224,182,92,.14);box-shadow:inset 0 0 0 2px var(--g2)}
+.gli>.ic{width:22px;height:22px;color:var(--g2)}
+.gli.dim .gli-t{opacity:.55}
+.mb .glist .gli{animation:rIn .36s cubic-bezier(.16,1,.3,1) backwards}
+.mb .glist .gli:nth-child(2){animation-delay:40ms}.mb .glist .gli:nth-child(3){animation-delay:80ms}.mb .glist .gli:nth-child(4){animation-delay:120ms}.mb .glist .gli:nth-child(5){animation-delay:160ms}
+/* 測試模式 */
+.testb{display:flex;align-items:center;justify-content:center;gap:6px;margin:0 0 12px;padding:8px 12px;border-radius:14px;font-size:13px;font-weight:800;color:var(--jdtx);background:rgba(156,194,255,.12);box-shadow:inset 0 0 0 1px rgba(156,194,255,.35)}
+.testb .ic{width:16px;height:16px}
+.apw{display:flex;gap:8px;margin:0 0 14px}
+.apw .inp{flex:1;min-width:0;padding:11px 14px}
+.apw .btn{flex:0 0 92px;margin:0}
+.teston{display:flex;align-items:center;gap:8px;margin:0 2px 8px;font-size:14px;font-weight:700;color:var(--tx2)}
 /* 深色卡（身份卡、判官卡、封住嘅題目卡）入面嘅字固定淺色 */
 .rc-f,.rc-b.h,.rc-b.l,.rc-b.o,.idc{color:#f6f2e9}
 .rc-f .rc-s{color:#cdc6de}
@@ -1064,6 +1088,12 @@ const XS_THEMES = [
 const SPEED = (() => { try { const q = new URLSearchParams(location.search); return BROKERS[0].name === '本機測試' && +q.get('speed') > 0 ? +q.get('speed') : 1; } catch (e) { return 1; } })();
 const THINK_MS = 15000 / SPEED, SPEAK_MS = 30000 / SPEED, JUDGE_MS = 240000 / SPEED;
 const MAX_SEATS = 10, MIN_PLAYERS = 3;
+/* 測試模式（Bill 2026-11-22）：設定輸入管理密碼開；單人都開到房、唔限遊戲人數。代碼只存密碼嘅雜湊，唔存原文 */
+const TEST = { on: LS.get('bgr_test', false) === true };
+const TEST_H = 'x4l02c4xbx';
+const hh = (t) => { let h1 = 0xdeadbeef, h2 = 0x41c6ce57; for (let i = 0; i < t.length; i++) { const c = t.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); } h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909); h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909); return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36); };
+const gMin = (g) => (HS && HS.test ? 1 : GAMES[g].min);
+const gMax = (g) => (HS && HS.test ? MAX_SEATS : GAMES[g].max || MAX_SEATS);
 let HS = null;              // 房主狀態（會廣播俾所有人）
 
 function newHostState(code, g = 'zdz') {
@@ -1072,7 +1102,7 @@ function newHostState(code, g = 'zdz') {
     pl: [{ id: ME.id, n: ME.name, c: 0, sc: 0, on: 1 }], wt: [], ban: [],
     cfg: { ...GAMES[g].cfg }, rd: 0, tot: 0, jd: null, rl: {}, w: null, ord: [], ok: {}, dl: 0,
     sp: null, sdl: 0, done: [], ex: [], bu: null, bn: 0, pk: null, why: '', dt: {}, ack: {},
-    u: (LS.get('bgr_used', []) || []).slice(-60), sk: 0,
+    u: (LS.get('bgr_used', []) || []).slice(-60), sk: 0, test: TEST.on ? 1 : 0,
   };
 }
 const hFind = (id) => HS.pl.find((p) => p.id === id) || HS.wt.find((p) => p.id === id);
@@ -1136,17 +1166,18 @@ function hAct(id, t, x) {
     case 'tdone': if (st.g === 'tt' && st.ph === 'night' && st.dice[id] === st.hr && (st.rl[id] !== 'T' || st.stolen)) st.hd[id] = 1; break;
     case 'tacc': if (st.g === 'tt' && st.ph === 'acc' && st.rl[id] === 'T' && x !== id && st.rl[x] === 'S' && !st.acc.includes(x) && st.acc.length < st.accN) st.acc.push(x); break;
     // 拆彈危機
-    case 'cut': if (st.g === 'cd' && st.ph === 'play' && id === st.hold && Array.isArray(x) && x[0] !== id && st.hd[x[0]] && hOn(x[0])) cCut(id, x[0], +x[1]); break;
+    case 'cut': if (st.g === 'cd' && st.ph === 'play' && id === st.hold && Array.isArray(x) && (x[0] !== id || (st.test && Object.keys(st.rl).filter(hOn).length === 1)) && st.hd[x[0]] && hOn(x[0])) cCut(id, x[0], +x[1]); break;
     // 誰是臥底
     // Bill 2026-11-22：描述中途任何人可以發起投票，過半數同意就入投票
     case 'prop': if (((st.g === 'wd' && st.ph === 'desc') || (st.g === 'tt' && st.ph === 'day')) && !st.pr && wVoters().includes(id)) { st.pk2 = (st.pk2 || 0) + 1; st.pr = { by: id, y: [id], n: [], dl: Date.now() + PROP_MS, k: st.pk2 }; wPropCheck(); } break;
     case 'pv': if (((st.g === 'wd' && st.ph === 'desc') || (st.g === 'tt' && st.ph === 'day')) && st.pr && wVoters().includes(id) && !st.pr.y.includes(id) && !st.pr.n.includes(id)) { (x ? st.pr.y : st.pr.n).push(id); wPropCheck(); } break;
     // Bill 2026-11-22：臥底講出估嘅詞語，平民判斷啱唔啱
     case 'gj': if (st.g === 'wd' && st.ph === 'guess' && st.rl[id] === 'C') wGuess(x ? 1 : 0, id); break;
-    case 'vote': if ((st.g === 'wd' || st.g === 'tt') && st.ph === 'vote' && wVoters().includes(id) && !st.vt[id] && st.cand.includes(x) && x !== id) { st.vt[id] = x; if (st.g === 'tt') tCheckVote(); else wCheckVote(); } break;
+    case 'vote': if ((st.g === 'wd' || st.g === 'tt') && st.ph === 'vote' && wVoters().includes(id) && !st.vt[id] && st.cand.includes(x) && (x !== id || (st.test && wVoters().length === 1))) { st.vt[id] = x; if (st.g === 'tt') tCheckVote(); else wCheckVote(); } break;
     case 'cont': if (isH && st.g === 'wd' && st.ph === 'out') wCont(); break;
     case 'tolobby': if (isH && st.ph === 'end') hLobby(); break;
     case 'game': if (isH && st.ph === 'lobby' && GAMES[x]) { st.g = x; st.cfg = { ...GAMES[x].cfg }; } break;
+    case 'test': if (isH) st.test = x ? 1 : 0; break;
     case 'skip': if (isJ && st.ph === 'think') { hNewWord(); st.dl = Date.now() + THINK_MS; st.sk++; } break;
     case 'spk': if (isJ && st.ph === 'speak' && !st.sp && st.rl[x] && !st.done.includes(x)) { st.sp = x; st.sdl = Date.now() + SPEAK_MS; } break;
     // Bill 2026-11-22：發言人可以隨時提早結束
@@ -1183,7 +1214,7 @@ function hStart() {
   st.pl = st.pl.filter((p) => p.on || p.id === st.host);
   for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
   st.wt = [];
-  if (st.pl.length < GAMES.zdz.min) return;
+  if (st.pl.length < gMin('zdz')) return;
   st.pl.forEach((p) => { p.sc = 0; p.gone = 0; });
   st.gid++; st.rd = 0; st.tot = st.pl.length * st.cfg.r;
   hRound();
@@ -1247,7 +1278,7 @@ function hPick(x) {
   else { hAdd(x, d); st.why = 'no'; }
   st.ph = 'reveal';
 }
-const hCanNext = () => HS.rd + 1 >= HS.tot || hActive().length >= MIN_PLAYERS;
+const hCanNext = () => HS.rd + 1 >= HS.tot || hActive().length >= MIN_PLAYERS || !!HS.test;
 function hNext() { const st = HS; st.rd++; if (st.rd >= st.tot) st.ph = 'end'; else hRound(); }
 function hRedeal() {
   const st = HS;
@@ -1288,7 +1319,7 @@ function wStart(keep) {
   st.pl = st.pl.filter((p) => (p.on || p.id === st.host) && !p.gone);
   for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
   st.wt = [];
-  if (st.pl.length < GAMES.wd.min) { hLobby(); return; }
+  if (st.pl.length < gMin('wd')) { hLobby(); return; }
   st.pl.forEach((p) => { p.gone = 0; if (!keep) p.sc = 0; });
   st.gid++;
   const ids = shuffle(st.pl.map((p) => p.id)), n = ids.length;
@@ -1409,7 +1440,7 @@ function xStart() {
   st.pl = st.pl.filter((p) => (p.on || p.id === st.host) && !p.gone);
   for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
   st.wt = [];
-  if (st.pl.length < GAMES.xs.min) { hLobby(); return; }
+  if (st.pl.length < gMin('xs')) { hLobby(); return; }
   st.pl.forEach((p) => { p.gone = 0; });
   st.gid++; st.lv = 1; st.lives = XS_LIVES; st.res = null;
   st.jd = null; st.w = null; st.rl = {}; st.dt = {};
@@ -1463,17 +1494,18 @@ function xPlay(id) {
  * ============================================================ */
 const CD_MAX = 8, CD_ROUNDS = 4;
 const CD_ROLES = { 4: [3, 2], 5: [3, 2], 6: [4, 2], 7: [5, 3], 8: [5, 3] };   // [拆彈組, 炸彈客] 卡數（4、7 人會多一張唔用）
+const cdRoles = (n) => CD_ROLES[n] || (n < 4 ? [n, 1] : [6, 4]);   // 測試模式先會少過 4 或者多過 8 人
 function cStart(keep) {
   const st = HS;
   st.pl = st.pl.filter((p) => (p.on || p.id === st.host) && !p.gone);
   for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
   st.wt = [];
   // 多過 8 人：後面嘅人等下一局
-  while (st.pl.length > CD_MAX) { const p = st.pl.pop(); st.wt.unshift({ id: p.id, n: p.n, c: p.c, on: p.on }); }
-  if (st.pl.length < GAMES.cd.min) { hLobby(); return; }
+  while (st.pl.length > gMax('cd')) { const p = st.pl.pop(); st.wt.unshift({ id: p.id, n: p.n, c: p.c, on: p.on }); }
+  if (st.pl.length < gMin('cd')) { hLobby(); return; }
   st.pl.forEach((p) => { p.gone = 0; if (!keep) p.sc = 0; });
   st.gid++;
-  const n = st.pl.length, cfg = CD_ROLES[n];
+  const n = st.pl.length, cfg = cdRoles(n);
   const pool = shuffle([...Array(cfg[0]).fill('B'), ...Array(cfg[1]).fill('R')]).slice(0, n);
   st.rl = {}; st.pl.forEach((p, i) => { st.rl[p.id] = pool[i]; });
   const deck = shuffle([...Array(n).fill('D'), 'X', ...Array(4 * n - 1).fill('S')]);
@@ -1529,8 +1561,8 @@ function tStart(keep) {
   st.pl = st.pl.filter((p) => (p.on || p.id === st.host) && !p.gone);
   for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
   st.wt = [];
-  while (st.pl.length > TT_MAX) { const p = st.pl.pop(); st.wt.unshift({ id: p.id, n: p.n, c: p.c, on: p.on }); }
-  if (st.pl.length < GAMES.tt.min) { hLobby(); return; }
+  while (st.pl.length > gMax('tt')) { const p = st.pl.pop(); st.wt.unshift({ id: p.id, n: p.n, c: p.c, on: p.on }); }
+  if (st.pl.length < gMin('tt')) { hLobby(); return; }
   st.pl.forEach((p) => { p.gone = 0; if (!keep) p.sc = 0; });
   st.gid++;
   const ids = st.pl.map((p) => p.id), thief = ids[Math.floor(Math.random() * ids.length)];
@@ -1799,6 +1831,8 @@ const ICP = {
   users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M17.5 14a6 6 0 0 1 4 6"/>',
   bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
   chev: '<path d="M9 6l6 6-6 6"/>',
+  down: '<path d="M6 9l6 6 6-6"/>',
+  flask: '<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/>',
   gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
   scis: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/>',
   bomb: '<circle cx="11" cy="15" r="6.5"/><rect x="9" y="6.3" width="4" height="2.4" rx=".6"/><path d="M11 6.3c0-2.6 2.2-3.6 4.4-3.1"/><path d="M17.6 1.6l.4 1.4M20 4l-1.4.3M19.6 1.6l-.9 1.1"/>',
@@ -1934,11 +1968,13 @@ function vLobby(v) {
   }).join('');
   let btn;
   const G = GAMES[v.g] || GAMES.zdz;
-  if (host && G.max && onN > G.max) btn = `<button class="btn gold big" disabled>${G.name}最多 ${G.max} 人</button>`;
-  else if (host) btn = onN >= G.min ? `<button class="btn gold big" data-act="start">開始${G.name}（${onN} 人）</button>` : `<button class="btn gold big" disabled>${G.name}最少 ${G.min} 人先開始到</button>`;
+  const tmin = v.test ? 1 : G.min, tmax = v.test ? 0 : G.max;
+  if (host && tmax && onN > tmax) btn = `<button class="btn gold big" disabled>${G.name}最多 ${G.max} 人</button>`;
+  else if (host) btn = onN >= tmin ? `<button class="btn gold big" data-act="start">開始${G.name}（${onN} 人）</button>` : `<button class="btn gold big" disabled>${G.name}最少 ${G.min} 人先開始到</button>`;
   else btn = '<div class="wait">等房主開始遊戲<span class="ld"><i></i><i></i><i></i></span></div>';
   const digits = String(v.code).split('').map((d, i) => `<span style="--k:${i}">${esc(d)}</span>`).join('');
-  const gsel = `<div class="seg${host ? '' : ' ro'}">` + Object.keys(GAMES).map((g) => `<button class="${g === v.g ? 'on' : ''}" data-act="game" data-x="${g}">${GAMES[g].name}</button>`).join('') + '</div>';
+  const ginner = `<span class="gdd-a">${G.art}</span><span class="gdd-t"><b>${G.name}</b><small>${G.tags.join('・')}</small></span>`;
+  const gsel = host ? `<button class="gdd" data-act="gpick">${ginner}${ic('down')}</button>` : `<div class="gdd">${ginner}</div>`;
   const nU = onN >= 7 ? 2 : 1;
   const cdN = CD_ROLES[Math.min(8, Math.max(4, onN))];
   const opts = v.g === 'tt'
@@ -1962,7 +1998,7 @@ function vLobby(v) {
       <div class="cl">每輪流程</div>
       <div class="flow"><span>確認身份</span><i>›</i><span>諗 15 秒</span><i>›</i><span>每人發言 30 秒</span><i>›</i><span>判官 4 分鐘</span></div>`;
   const gq = anA('lg:' + v.code, 450, 'swap', v.g);
-  return `<div class="ticket"><div class="tk-l">房號</div><div class="tk-code">${digits}</div>
+  return `${v.test ? `<div class="testb">${ic('flask')}測試模式・唔限人數</div>` : ''}<div class="ticket"><div class="tk-l">房號</div><div class="tk-code">${digits}</div>
       <div class="row"><button class="btn ghost sm" data-act="share">${ic('share')}分享入房連結</button><button class="btn ghost sm" data-act="copy">${ic('copy')}複製房號</button></div></div>
     <div class="sh"><span>玩家</span><small>${n}／${MAX_SEATS}</small></div>
     <div class="plist">${rows}</div>
@@ -2091,7 +2127,7 @@ function vReveal(v) {
   const last = v.rd + 1 >= v.tot;
   let btn;
   if (isJ || host) {
-    const can = last || v.pl.filter((p) => p.on && !p.gone).length >= MIN_PLAYERS;
+    const can = last || v.test || v.pl.filter((p) => p.on && !p.gone).length >= MIN_PLAYERS;
     btn = can ? `<button class="btn gold big" data-act="next">${last ? '睇最後結果' : '下一輪'}</button>` : `<button class="btn gold big" disabled>等人返嚟（最少 ${MIN_PLAYERS} 人）</button>`;
   } else btn = `<div class="wait">等判官撳「${last ? '睇最後結果' : '下一輪'}」<span class="ld"><i></i><i></i><i></i></span></div>`;
   const key = 'r' + v.gid + '-' + v.rd, anim = !S.seen[key + 'a'];
@@ -2313,7 +2349,7 @@ function vPlayWd(v) {
       const q = pOf(v, id), me2 = id === ME.id;
       let right = '';
       if (mine === id) { const q = anA('mv:' + S.scrK, 600, 'pp'); right = `<span class="tag gold${q.c}"${q.s}>${ic('check')}你投咗佢</span>`; }
-      else if (canVote && !me2) right = `<button class="sb gold" data-act="vote" data-x="${id}">投佢</button>`;
+      else if (canVote && (!me2 || (v.test && voters.length === 1))) right = `<button class="sb gold" data-act="vote" data-x="${id}">投佢</button>`;
       return `<div class="pr${me2 ? ' me' : ''}${q && !q.on ? ' off' : ''}">${av(q)}<span class="nm">${esc(q ? q.n : '?')}${me2 ? '（你）' : ''}</span>${right}</div>`;
     }).join('');
     h += `<div class="plist">${rows}</div>`;
@@ -2459,7 +2495,7 @@ function vCdCard(v) {
 function vPlayCd(v) {
   const n = Object.keys(v.rl).length, meIn = !!v.rl[ME.id];
   let h = `<div class="rh"><div class="rn">第 <b>${v.cr}</b> ／ ${CD_ROUNDS} 輪</div><div class="ichip">拆除 ${v.dfx}／${n}・剪咗 ${v.cut}／${n}</div></div>`;
-  const cfg = CD_ROLES[n] || [0, 0];
+  const cfg = cdRoles(n);
   if (v.ph === 'role') {
     h += `<div class="cdteam"><span class="b">拆彈組 ${n === 4 || n === 7 ? (cfg[0] - 1) + '–' + cfg[0] : cfg[0]} 人</span><span class="r">炸彈客 ${n === 4 || n === 7 ? (cfg[1] - 1) + '–' + cfg[1] : cfg[1]} 人</span></div>`;
     const need = Object.keys(v.rl).filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
@@ -2478,7 +2514,7 @@ function vPlayCd(v) {
   h += `<div class="holdbar${myTurn ? ' me' : ''}${pulse}"><span class="sc2">${ic('scis')}</span><div><div class="t1">${myTurn ? '輪到你剪！' : esc(hp ? hp.n : '') + ' 拎住剪刀'}</div></div></div>`;
   const rows = v.pl.filter((p) => v.rl[p.id]).map((p) => {
     const me = p.id === ME.id, hand = v.hd[p.id] || [], rev = v.rv[p.id] || [];
-    const can = myTurn && !me && p.on;
+    const can = myTurn && p.on && (!me || (v.test && Object.keys(v.rl).filter((id) => { const q = pOf(v, id); return q && q.on && !q.gone; }).length === 1));
     const backs = hand.map((_, i) => can ? `<button class="wcd can" data-act="cut" data-x="${p.id}" data-i="${i}" aria-label="剪"><span class="f3 bk"></span></button>` : wireCard(null)).join('');
     const revs = rev.map((t, i) => {
       const last = v.ev && v.ev.to === p.id && i === rev.length - 1 && !S.seen['cf' + v.gid + '-' + v.ev.k];
@@ -2644,7 +2680,7 @@ function vPlayTt(v) {
     const q = pOf(v, id), me2 = id === me;
     let right = '';
     if (mine === id) { const q = anA('mv:' + S.scrK, 600, 'pp'); right = `<span class="tag gold${q.c}"${q.s}>${ic('check')}你投咗佢</span>`; }
-    else if (canVote && !me2) right = `<button class="sb gold" data-act="vote" data-x="${id}">投佢</button>`;
+    else if (canVote && (!me2 || (v.test && voters.length === 1))) right = `<button class="sb gold" data-act="vote" data-x="${id}">投佢</button>`;
     return `<div class="pr${me2 ? ' me' : ''}${q && !q.on ? ' off' : ''}">${av(q)}<span class="nm">${esc(q ? q.n : '?')}${me2 ? '（你）' : ''}</span>${right}</div>`;
   }).join('');
   const chips = okChips(v, voters, v.vt);
@@ -2701,7 +2737,7 @@ function closeModal() { S.modal = null; renderModal(); }
 function confirmBox(text, ok, fn, opts = {}) { openModal({ type: 'confirm', text, ok, fn, bad: !!opts.bad, ph: S.view ? S.view.ph : null }); }
 function renderModal() {
   const el = $('#modal'), m = S.modal;
-  if (!m) { el.classList.remove('show'); el.innerHTML = ''; el.dataset.mt = ''; return; }
+  if (!m) { el.classList.remove('show'); el.innerHTML = ''; el.dataset.mt = ''; S.mh = ''; return; }
   let h = '';
   if (m.type === 'rules') h = m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
   else if (m.type === 'confirm') h = `<div class="cfm">${m.text}</div><div class="row"><button class="btn ghost" data-act="mclose">取消</button><button class="btn ${m.bad ? 'red' : 'gold'}" data-act="mok">${m.ok}</button></div>`;
@@ -2711,10 +2747,20 @@ function renderModal() {
     const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'c', '0', 'b'].map((k) => `<button class="${k === 'c' || k === 'b' ? 's' : ''}" data-act="kp" data-x="${k}">${k === 'c' ? '清除' : k === 'b' ? '⌫' : k}</button>`).join('');
     h = `<h3>輸入房號</h3><div class="kpd">${boxes}</div><div class="keys">${keys}</div>
       <div class="row" style="margin-top:6px"><button class="btn ghost" data-act="mclose">取消</button><button class="btn gold" data-act="dojoin" ${c.length === 4 ? '' : 'disabled'}>加入</button></div>`;
+  } else if (m.type === 'gpick' && S.view) {
+    const v = S.view, onN = v.pl.filter((p) => p.on).length;
+    h = '<h3>揀遊戲</h3><div class="glist">' + Object.keys(GAMES).map((g) => {
+      const G = GAMES[g], on = g === v.g, ok = v.test || (onN >= G.min && (!G.max || onN <= G.max));
+      return `<button class="gli${on ? ' on' : ''}${ok ? '' : ' dim'}" data-act="gsel" data-x="${g}"><span class="gli-a">${G.art}</span><span class="gli-t"><b>${G.name}</b><small>${G.tags[0]}${ok ? '' : `・而家 ${onN} 人`}</small></span>${on ? ic('check') : ''}</button>`;
+    }).join('') + '</div><button class="btn ghost" data-act="mclose">取消</button>';
   } else if (m.type === 'settings') {
+    const tst = TEST.on
+      ? `<div class="teston"><span class="tag jd">${ic('flask')}已開啟</span>單人都開到房、唔限人數</div><button class="btn ghost sm" data-act="testoff" style="margin:0 0 14px">關閉測試模式</button>`
+      : '<div class="apw"><input id="apw" class="inp" type="password" placeholder="管理密碼" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"><button class="btn gold sm" data-act="apw">確定</button></div>';
     h = `<h3>設定</h3>
       <div class="cl">系統顏色</div><div class="seg">${[['cream', '奶油色'], ['dark', '深夜金']].map((o) => `<button class="${THEME.cur === o[0] ? 'on' : ''}" data-act="theme" data-x="${o[0]}">${o[1]}</button>`).join('')}</div>
       <div class="cl">聲音</div><div class="seg">${[[true, '開'], [false, '閂']].map((o) => `<button class="${SND.on === o[0] ? 'on' : ''}" data-act="snd" data-x="${o[0] ? 1 : 0}">${o[1]}</button>`).join('')}</div>
+      <div class="cl">測試模式</div>${tst}
       <div class="ver" style="margin:4px 0 10px">版本 ${esc(VER)}</div>
       ${S.screen === 'room' && S.view ? `<button class="btn ghost" data-act="rules">${ic('book')}玩法</button>` : ''}<button class="btn gold" data-act="mclose">完成</button>`;
   } else if (m.type === 'scores' && S.view) {
@@ -2730,9 +2776,9 @@ function renderModal() {
 ${hb}<button class="btn gold" data-act="mclose">返去</button>`;
   } else { S.modal = null; el.classList.remove('show'); return; }
   const mb = el.querySelector('.mb');
-  if (mb && el.classList.contains('show') && el.dataset.mt === m.type) { const st0 = mb.scrollTop; mb.innerHTML = h; mb.scrollTop = st0; }
+  if (mb && el.classList.contains('show') && el.dataset.mt === m.type) { if (S.mh === h) return; const st0 = mb.scrollTop; mb.innerHTML = h; mb.scrollTop = st0; }
   else el.innerHTML = `<div class="mb">${h}</div>`;
-  el.dataset.mt = m.type;
+  el.dataset.mt = m.type; S.mh = h;
   el.classList.add('show');
 }
 
@@ -2795,6 +2841,17 @@ document.addEventListener('click', (e) => {
     case 'endgame': closeModal(); confirmBox('即刻完場？<small>會用而家嘅分數排名。</small>', '完場', () => act('end'), { bad: true }); break;
     case 'snd': SND.on = x == null ? !SND.on : x === '1'; LS.set('bgr_snd', SND.on); if (!SND.on) closeAudio(); renderModal(); break;
     case 'settings': openModal({ type: 'settings' }); break;
+    case 'gpick': if (v && v.host === ME.id && v.ph === 'lobby') openModal({ type: 'gpick' }); break;
+    case 'gsel': closeModal(); if (v && v.g !== x) act('game', x); break;
+    case 'apw': {
+      const inp = $('#apw'), t = inp ? inp.value.trim().toLowerCase() : '';
+      if (t && hh(t) === TEST_H) {
+        TEST.on = true; LS.set('bgr_test', true); toast('已開啟測試模式');
+        if (S.isHost && HS) act('test', 1);
+      } else { toast('密碼唔啱'); if (inp) inp.value = ''; }
+      renderModal(); break;
+    }
+    case 'testoff': TEST.on = false; LS.set('bgr_test', false); toast('已關閉測試模式'); if (S.isHost && HS) act('test', 0); renderModal(); break;
     default: break;
   }
 });
@@ -2897,6 +2954,7 @@ document.addEventListener('contextmenu', (e) => e.preventDefault());
 document.addEventListener('selectstart', (e) => { if (!e.target.closest || !e.target.closest('input')) e.preventDefault(); });
 document.addEventListener('wheel', (e) => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
 document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target && e.target.id === 'apw') { e.preventDefault(); const b = $('#modal [data-act=apw]'); if (b) b.click(); } });
 
 /* ============================================================
  * 11. 自動更新：比對網上版本號，喺主頁先重新載入（WEB-07、GAME-09）
