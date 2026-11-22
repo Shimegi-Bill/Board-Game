@@ -7,183 +7,290 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="桌遊房">
-<meta name="theme-color" content="#14121f">
+<meta name="theme-color" content="#0b0a12">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
-<script>window.__BGR_VER='2026-11-22-1';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-22-2';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
-:root{--bg:#14121f;--bg2:#1c1930;--card:#252140;--card2:#302a52;--line:#433c70;--tx:#f6f3ff;--tx2:#d8d1f7;--gold:#ffd166;--gold2:#ffb534;--ok:#4fe0a0;--bad:#ff6b81;--jd:#86bcff}
+:root{
+  --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
+  --e1:rgba(255,255,255,.07);--e2:rgba(255,255,255,.12);
+  --tx:#f6f2e9;--tx2:#cdc6de;--tx3:#a39cb9;
+  --g1:#f7e4a8;--g2:#e0b65c;--g3:#b8862f;
+  --gold:linear-gradient(135deg,#f9e9b6 0%,#e4bb60 40%,#c3913a 60%,#f2d892 100%);
+  --ok:#5fd6a3;--bad:#ff7083;--jd:#9cc2ff;
+  --serif:"Noto Serif TC","Songti TC","Hiragino Mincho ProN","PMingLiU",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang HK","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 input{-webkit-user-select:text;user-select:text}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"PingFang HK","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;overscroll-behavior:none}
-body{position:fixed;inset:0;overflow:hidden;background:radial-gradient(120% 80% at 50% -10%,#2b2152 0%,var(--bg) 60%)}
-#app{height:var(--app-h,100vh);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top) + 10px) 16px calc(env(safe-area-inset-bottom) + 28px)}
+html{touch-action:manipulation}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:var(--sans);overscroll-behavior:none;-webkit-font-smoothing:antialiased}
+body{position:fixed;inset:0;overflow:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(900px 520px at 50% -200px,rgba(224,182,92,.20),transparent 65%),radial-gradient(700px 520px at 115% 105%,rgba(118,88,220,.16),transparent 60%),radial-gradient(600px 420px at -15% 65%,rgba(60,120,210,.09),transparent 60%)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+#app{position:relative;z-index:1;height:var(--app-h,100vh);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top) + 10px) 16px calc(env(safe-area-inset-bottom) + 28px)}
 .scr{max-width:520px;margin:0 auto}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
-.btn{display:block;width:100%;padding:15px 14px;border-radius:14px;background:var(--card2);font-size:17px;font-weight:700;margin:10px 0;transition:transform .08s;text-align:center}
-.btn:active{transform:scale(.97)}
-.btn.pri{background:linear-gradient(180deg,var(--gold),var(--gold2));color:#2b1b00}
-.btn.ok{background:var(--ok);color:#052a1a}
-.btn.bad{background:var(--bad);color:#2e0710}
-.btn.line{background:transparent;box-shadow:inset 0 0 0 2px var(--line)}
-.btn.big{font-size:19px;padding:17px 14px}
-.btn[disabled]{opacity:.42;pointer-events:none}
+.ic{width:20px;height:20px;flex:none}
+.serif{font-family:var(--serif)}
+/* 掣 */
+.btn{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:54px;padding:13px 16px;border-radius:16px;font-size:17px;font-weight:700;letter-spacing:.5px;margin:10px 0;background:var(--s2);box-shadow:inset 0 0 0 1px var(--e2),0 6px 18px rgba(0,0,0,.25);transition:transform .12s ease,filter .12s ease}
+.btn:active{transform:scale(.975);filter:brightness(1.1)}
+.btn.gold{background:var(--gold);color:#2a1c05;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 0 rgba(120,80,10,.35),0 8px 24px rgba(224,182,92,.28)}
+.btn.ghost{background:rgba(255,255,255,.035);box-shadow:inset 0 0 0 1px var(--e2)}
+.btn.red{background:linear-gradient(180deg,#ff8796,#e24a61);color:#2b0610;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 8px 22px rgba(226,74,97,.3)}
+.btn.big{min-height:60px;font-size:18px}
+.btn.sm{min-height:44px;font-size:15px;padding:9px 10px;margin:0}
+.btn[disabled]{opacity:.38;pointer-events:none;filter:saturate(.5)}
 .row{display:flex;gap:10px}
 .row>.btn{flex:1;min-width:0}
-/* 主頁 */
-.home{text-align:center;padding-top:14px}
-.logo{width:92px;height:92px;margin:6px auto 4px}
-.home h1{margin:4px 0 2px;font-size:34px;letter-spacing:4px}
-.by{font-size:14px;color:var(--tx2);margin-bottom:22px}
-.lbl{display:block;text-align:left;font-size:15px;font-weight:700;margin:6px 2px}
-.inp{width:100%;font:inherit;font-size:19px;padding:13px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg2);color:var(--tx);outline:none}
-.inp:focus{border-color:var(--gold)}
-.sec{text-align:left;font-size:15px;font-weight:700;margin:24px 2px 6px}
-.game{background:linear-gradient(160deg,#2c2552,#211d3b);border-radius:20px;padding:16px;text-align:left;box-shadow:0 8px 24px #0006,inset 0 0 0 1px #ffffff10}
-.gh{display:flex;align-items:center;gap:12px}
-.gi{width:52px;height:52px;border-radius:14px;background:linear-gradient(150deg,var(--gold),#ff8a5b);color:#2b1400;font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center;transform:rotate(-6deg);flex:none}
-.gn{font-size:22px;font-weight:800}
-.gm{font-size:14px;color:var(--tx2);margin-top:2px}
-.gd{font-size:15px;line-height:1.55;margin:12px 0 4px;color:var(--tx)}
-.more{margin-top:14px;font-size:14px;color:var(--tx2)}
-.ver{margin-top:26px;font-size:12px;color:#a59dd0}
+.link{display:block;margin:6px auto 0;padding:10px 14px;font-size:14px;font-weight:700;color:var(--g1);text-decoration:underline;text-underline-offset:4px}
 /* 頂部 */
-.top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.ib{padding:9px 13px;border-radius:12px;background:var(--card);font-size:15px;font-weight:700;flex:none}
+.top{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.ib{display:flex;align-items:center;gap:5px;height:40px;padding:0 12px 0 9px;border-radius:12px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--e1);font-size:14px;font-weight:700;color:var(--tx2);flex:none}
+.ib .ic{width:18px;height:18px}
 .ib:active{transform:scale(.95)}
-.tt{flex:1;text-align:center;font-size:15px;color:var(--tx2)}
-.tt b{color:var(--gold);font-size:19px;letter-spacing:2px}
-#banner{display:none;margin:-2px 0 10px;padding:10px 12px;border-radius:12px;background:#5a2333;color:#ffd9e0;font-size:14px;font-weight:700;line-height:1.4}
+.tt{flex:1;text-align:center;line-height:1.05}
+.tt small{display:block;font-size:11px;color:var(--tx3);letter-spacing:3px;margin-bottom:2px}
+.tt b,.gtx{font-family:var(--serif);background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tt b{font-size:22px;letter-spacing:5px;font-weight:900}
+#banner{display:none;margin:-4px 0 12px;padding:11px 13px;border-radius:14px;background:rgba(255,112,131,.12);box-shadow:inset 0 0 0 1px rgba(255,112,131,.35);color:#ffd2d9;font-size:14px;font-weight:700;line-height:1.45}
 #banner.show{display:block}
+/* 主頁 */
+.hero{text-align:center;padding:18px 0 6px}
+.logo{width:108px;height:108px;margin:0 auto;filter:drop-shadow(0 14px 30px rgba(224,182,92,.28))}
+.ttl{font-family:var(--serif);font-weight:900;font-size:46px;letter-spacing:10px;margin:8px 0 0 10px}
+.by{font-size:13px;color:var(--tx2);letter-spacing:3px;margin-top:2px}
+.fld{margin:24px 0 4px}
+.fld label{display:block;font-size:13px;letter-spacing:2px;color:var(--g1);font-weight:700;margin:0 4px 8px}
+.inp{width:100%;font:inherit;font-size:19px;font-weight:600;padding:14px 16px;border-radius:16px;border:1px solid var(--e2);background:rgba(255,255,255,.04);color:var(--tx);outline:none;transition:border-color .15s,box-shadow .15s}
+.inp:focus{border-color:var(--g2);box-shadow:0 0 0 4px rgba(224,182,92,.15)}
+.sec-t{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:3px;color:var(--g1);font-weight:700;margin:26px 4px 12px}
+.sec-t:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(224,182,92,.5),transparent)}
+.gcard{border-radius:24px;overflow:hidden;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e2),0 20px 44px rgba(0,0,0,.45)}
+.gart{display:block;width:100%;height:auto}
+.gbody{padding:14px 16px 16px}
+.gname{font-family:var(--serif);font-size:30px;font-weight:900;letter-spacing:4px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.tags span{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(224,182,92,.12);color:var(--g1);box-shadow:inset 0 0 0 1px rgba(224,182,92,.25)}
+.gdesc{font-size:15px;line-height:1.7;color:var(--tx2);margin:10px 0 4px}
+.soon{text-align:center;margin-top:18px;font-size:14px;color:var(--tx2)}
+.ver{text-align:center;margin-top:20px;font-size:12px;color:var(--tx3);letter-spacing:1px}
 /* 房間 */
-.code{background:var(--card);border-radius:20px;padding:16px;text-align:center;box-shadow:inset 0 0 0 1px #ffffff12}
-.code .k{font-size:15px;color:var(--tx2)}
-.code .n{font-size:56px;font-weight:900;letter-spacing:12px;color:var(--gold);margin:2px 0 4px 12px;font-variant-numeric:tabular-nums}
-.code .h{font-size:14px;color:var(--tx2);margin-bottom:2px;line-height:1.45}
-.code .row .btn{margin:10px 0 0;padding:11px;font-size:15px}
-.h2{display:flex;align-items:center;justify-content:space-between;font-size:16px;font-weight:800;margin:20px 2px 8px}
-.h2 small{font-size:14px;font-weight:700;color:var(--tx2)}
-.list{background:var(--card);border-radius:18px;padding:4px 10px}
-.pr{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid #ffffff10;min-height:56px}
-.pr:last-child{border-bottom:0}
-.pr.me .nm{color:var(--gold)}
-.pr.off{opacity:.5}
-.av{width:36px;height:36px;border-radius:50%;background:var(--c,#888);color:#1a1530;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:inset 0 -3px 0 #0003}
+.ticket{position:relative;border-radius:24px;padding:16px 16px 16px;background:linear-gradient(160deg,#241f39,#151322);box-shadow:inset 0 0 0 1px rgba(224,182,92,.4),0 18px 40px rgba(0,0,0,.45);text-align:center;overflow:hidden}
+.ticket:before{content:"";position:absolute;inset:7px;border-radius:18px;border:1px dashed rgba(224,182,92,.28);pointer-events:none}
+.tk-l{font-size:12px;letter-spacing:4px;color:var(--g1);font-weight:700}
+.tk-code{display:flex;justify-content:center;gap:10px;margin:10px 0 10px}
+.tk-code span{width:60px;height:74px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:900;font-size:42px;color:#2a1c05;background:var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.65),inset 0 -3px 0 rgba(120,80,10,.35),0 8px 18px rgba(0,0,0,.35)}
+.tk-h{font-size:14px;color:var(--tx2);margin-bottom:12px;line-height:1.5}
+.sh{display:flex;justify-content:space-between;align-items:baseline;margin:24px 4px 10px}
+.sh span{font-size:13px;letter-spacing:3px;color:var(--g1);font-weight:700}
+.sh small{font-size:13px;color:var(--tx2);font-weight:700}
+.plist{border-radius:20px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1);padding:2px 12px}
+.pr{display:flex;align-items:center;gap:11px;min-height:62px;padding:10px 2px;width:100%;text-align:left}
+.pr+.pr{border-top:1px solid var(--e1)}
+.pr.me .nm{color:var(--g1)}
+.pr.off{opacity:.45}
+button.pr:active{background:rgba(255,255,255,.04)}
+.pr .go{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:800;color:#2a1c05;background:var(--gold);padding:8px 12px;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55);flex:none}
+.av{width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 32% 25%,rgba(255,255,255,.6),transparent 46%),var(--c,#888);color:#15111f;font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 0 2px rgba(0,0,0,.35),0 0 0 3px rgba(255,255,255,.14)}
+.av.sm{width:26px;height:26px;font-size:12px;box-shadow:0 0 0 1.5px rgba(0,0,0,.35)}
+.av.lg{width:86px;height:86px;font-size:36px;box-shadow:0 0 0 3px rgba(0,0,0,.35),0 0 0 4px rgba(255,255,255,.18)}
 .nm{flex:1;min-width:0;font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.no{width:22px;text-align:center;font-weight:900;color:var(--tx2);flex:none}
-.tag{font-size:13px;font-weight:800;padding:4px 8px;border-radius:999px;background:#ffffff14;flex:none}
-.tag.host{background:#ffd16626;color:var(--gold)}
-.tag.bad{background:#ff6b8126;color:var(--bad)}
-.tag.ok{background:#4fe0a026;color:var(--ok)}
-.tag.jd{background:#86bcff26;color:var(--jd)}
-.x{width:36px;height:36px;border-radius:50%;background:#ffffff10;font-size:18px;font-weight:800;flex:none}
-.sb{padding:9px 12px;border-radius:11px;font-size:15px;font-weight:800;flex:none}
-.sb.bad{background:#ff6b8126;color:var(--bad)}
-.sb.pri{background:var(--gold);color:#2b1b00}
+.no{width:20px;text-align:center;font-family:var(--serif);font-weight:900;color:var(--tx3);flex:none}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--tx2);flex:none;white-space:nowrap}
+.tag .ic{width:14px;height:14px}
+.tag.gold{color:var(--g1);background:rgba(224,182,92,.14)}
+.tag.ok{color:#a6f0cd;background:rgba(95,214,163,.14)}
+.tag.bad{color:#ffb7c1;background:rgba(255,112,131,.14)}
+.tag.jd{color:var(--jd);background:rgba(156,194,255,.14)}
+.tag.live{color:#2a1c05;background:var(--gold)}
+.x{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;flex:none;color:var(--tx2)}
+.x .ic{width:16px;height:16px}
+.sb{display:flex;align-items:center;gap:4px;height:38px;padding:0 12px;border-radius:12px;font-size:14px;font-weight:800;flex:none}
+.sb.red{background:rgba(255,112,131,.14);color:#ffb7c1;box-shadow:inset 0 0 0 1px rgba(255,112,131,.35)}
+.sb.gold{background:var(--gold);color:#2a1c05;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
 .sb:active{transform:scale(.95)}
-.seg{display:flex;gap:6px;background:var(--bg2);border-radius:14px;padding:5px;margin:4px 0 12px}
-.seg button{flex:1;padding:10px 2px;border-radius:10px;font-size:15px;font-weight:700;min-width:0}
-.seg button.on{background:var(--gold);color:#2b1b00}
+.panel{background:var(--s1);border-radius:20px;padding:16px 14px 6px;box-shadow:inset 0 0 0 1px var(--e1)}
+.cl{font-size:14px;font-weight:700;margin:0 2px 8px}
+.seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.28);box-shadow:inset 0 0 0 1px var(--e1);margin:0 0 14px}
+.seg button{flex:1;min-width:0;height:42px;border-radius:10px;font-size:15px;font-weight:700;color:var(--tx2)}
+.seg button.on{background:var(--gold);color:#2a1c05;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 3px 10px rgba(0,0,0,.3)}
 .seg.ro button{pointer-events:none}
-.seg.ro button:not(.on){opacity:.55}
-.cl{font-size:15px;font-weight:700;margin:4px 2px}
-.box{background:var(--card);border-radius:18px;padding:14px 14px 4px}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 12px;font-size:13px;font-weight:700;color:var(--tx2)}
+.flow span{padding:5px 9px;border-radius:10px;background:rgba(255,255,255,.05)}
+.flow i{font-style:normal;color:var(--g3)}
 .wait{text-align:center;font-size:16px;font-weight:700;color:var(--tx2);padding:16px 8px}
-/* 遊戲 */
-.rdl{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:var(--tx2);margin:2px 2px 8px}
-.jl{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700}
-.jl .av{width:28px;height:28px;font-size:14px}
-.wc{position:relative;background:linear-gradient(160deg,#fff8e6,#ffe7b3);color:#2b1b00;border-radius:22px;padding:18px 16px 22px;text-align:center;box-shadow:0 10px 30px #0008,inset 0 0 0 3px #fff6;margin:6px 0 12px}
-.wc .wcat{font-size:14px;font-weight:800;color:#8a5a00;letter-spacing:1px}
-.wc .ww{font-size:40px;font-weight:900;line-height:1.15;margin-top:8px;word-break:break-word}
-.wc .ww.lat{font-size:34px;letter-spacing:.5px}
-.st{color:#e08a00}
-.ph{display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:800;margin:6px 0 4px}
-.ph .cd{font-size:26px;color:var(--gold);font-variant-numeric:tabular-nums;min-width:48px;text-align:center}
-.ph.up .cd{color:var(--bad)}
-.bar{height:6px;border-radius:3px;background:#ffffff14;overflow:hidden;margin:0 0 12px}
-.bar i{display:block;height:100%;width:100%;background:var(--gold);transform-origin:left;transform:scaleX(var(--p,1));transition:transform .25s linear}
-.tip{font-size:15px;line-height:1.55;color:var(--tx2);text-align:center;margin:8px 4px}
-.me-role{font-size:22px;font-weight:900;text-align:center;margin:6px 0}
-.me-role.jd{color:var(--jd)}
-/* 身份卡：撳住睇 */
-.rc{position:relative;height:210px;border-radius:22px;margin:4px 0 12px;touch-action:none;cursor:pointer}
-.rc>div{position:absolute;inset:0;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;transition:opacity .12s}
-.rc-f{background:repeating-linear-gradient(45deg,#2f2858 0 14px,#29234d 14px 28px);box-shadow:inset 0 0 0 3px #ffffff1c;font-size:20px;font-weight:900}
-.rc-f small{display:block;font-size:14px;font-weight:700;color:var(--tx2);margin-top:6px}
-.rc-f .hand{width:54px;height:54px;border-radius:50%;border:3px solid var(--gold);margin-bottom:10px;position:relative}
-.rc-f .hand:after{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--gold);animation:pulse 1.4s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(.7);opacity:.6}50%{transform:scale(1);opacity:1}}
-.rc-b{opacity:0;pointer-events:none}
-.rc.show .rc-b{opacity:1}
-.rc.show .rc-f{opacity:0}
-.rc-b.h{background:linear-gradient(160deg,#1f5a45,#173f33);box-shadow:inset 0 0 0 3px var(--ok)}
-.rc-b.l{background:linear-gradient(160deg,#5c2134,#3e1623);box-shadow:inset 0 0 0 3px var(--bad)}
-.rc-b.o{background:#2a2540;box-shadow:inset 0 0 0 3px var(--line)}
-.rc-b .rl{font-size:26px;font-weight:900;margin-bottom:8px}
-.rc-b.h .rl{color:var(--ok)}
-.rc-b.l .rl{color:var(--bad)}
-.rc-b .ex{font-size:17px;line-height:1.55;font-weight:700;overflow:auto;max-height:118px}
-.rc-b .tp{font-size:14px;color:#f0eaff;margin-top:8px;opacity:.9}
+.tip{font-size:15px;line-height:1.6;color:var(--tx2);text-align:center;margin:4px 6px 12px}
+/* 遊戲頂 */
+.rh{display:flex;align-items:center;justify-content:space-between;margin:0 2px 12px}
+.rn{font-family:var(--serif);font-size:18px;font-weight:900;letter-spacing:1px}
+.rn b{color:var(--g1);font-size:22px}
+.jchip{display:flex;align-items:center;gap:6px;padding:3px 11px 3px 3px;border-radius:999px;background:rgba(156,194,255,.1);box-shadow:inset 0 0 0 1px rgba(156,194,255,.28);font-size:14px;font-weight:700;color:var(--jd);max-width:60%}
+.jchip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.steps{display:flex;align-items:flex-start;margin:0 0 16px}
+.stp{display:flex;flex-direction:column;align-items:center;gap:5px;width:50px;flex:none}
+.stp i{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;font-weight:800;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--e2);color:var(--tx3)}
+.stp span{font-size:12px;color:var(--tx3);font-weight:700}
+.stp.on i{background:var(--gold);color:#2a1c05;box-shadow:0 0 0 4px rgba(224,182,92,.18)}
+.stp.on span{color:var(--g1)}
+.stp.done i{background:rgba(224,182,92,.16);color:var(--g1);box-shadow:inset 0 0 0 1px rgba(224,182,92,.35)}
+.sl{flex:1;height:2px;margin-top:13px;background:var(--e1);border-radius:1px}
+.sl.done{background:linear-gradient(90deg,var(--g3),var(--g2))}
+/* 詞語卡：字典卡 */
+.wc{position:relative;border-radius:22px;padding:5px;background:var(--gold);box-shadow:0 18px 40px rgba(0,0,0,.45);margin:0 0 14px}
+.wc-in{position:relative;border-radius:18px;padding:14px 16px 16px;text-align:center;background:radial-gradient(130% 100% at 50% 0%,#fffbf2,#f3e5c6);color:#2a1c05}
+.wc-in:before{content:"";position:absolute;inset:6px;border-radius:13px;border:1px solid rgba(160,110,30,.35);pointer-events:none}
+.wc-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:800;letter-spacing:2px;color:#8a5f1c}
+.ww{font-family:var(--serif);font-weight:900;font-size:42px;line-height:1.15;margin:10px 0 6px;word-break:break-word;color:#1d1405}
+.ww.lat{font-size:34px;letter-spacing:.5px}
+.wc-pts{font-size:13px;color:#8a5f1c;font-weight:700}
+.sts i{font-style:normal;color:rgba(138,95,28,.28);font-size:14px}
+.sts i.on{color:#c48a22}
+.wc.sm .wc-in{padding:10px 14px 10px}
+.wc.sm .ww{font-size:30px;margin:6px 0 2px}
+.wc.sm .ww.lat{font-size:26px}
+.wc.sm .wc-pts{display:none}
+.wc.seal .wc-in{background:repeating-linear-gradient(45deg,rgba(224,182,92,.08) 0 1px,transparent 1px 12px),linear-gradient(160deg,#221e36,#151322);color:var(--g1);padding:26px 16px}
+.wc.seal .wc-in:before{border-color:rgba(224,182,92,.3)}
+.wc.seal .ic{width:30px;height:30px;color:var(--g2)}
+.wc.seal .sl1{font-family:var(--serif);font-size:22px;font-weight:900;margin-top:6px}
+.wc.seal .sl2{font-size:13px;color:var(--tx2);margin-top:4px}
+.deal{animation:deal .6s cubic-bezier(.2,.9,.25,1.15) both}
+@keyframes deal{from{opacity:0;transform:translateY(-16px) scale(.92)}to{opacity:1;transform:none}}
+/* 倒數圓圈 */
+.tmr{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1);margin:0 0 14px}
+.tmr .tl{font-size:17px;font-weight:800}
+.tmr .ts{font-size:14px;color:var(--tx2);margin-top:3px;line-height:1.45}
+.ring{position:relative;width:62px;height:62px;flex:none}
+.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .rt{stroke:rgba(255,255,255,.08)}
+.ring .rp{stroke:var(--g2);stroke-linecap:round;stroke-dasharray:100;transition:stroke-dashoffset .25s linear,stroke .3s}
+.ring.low .rp{stroke:var(--bad)}
+.ring>b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;font-variant-numeric:tabular-nums}
+.ring.low>b{color:#ffb7c1}
+.ring.big{width:136px;height:136px}
+.ring.big circle{stroke-width:4}
+.ring .av{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+/* 身份卡：撳住翻轉 */
+.rc{position:relative;height:228px;margin:0 0 12px;perspective:1100px;touch-action:none;cursor:pointer}
+.rc-i{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .42s cubic-bezier(.2,.8,.2,1)}
+.rc.show .rc-i{transform:rotateY(180deg)}
+.rc-f,.rc-b,.idc{position:absolute;inset:0;border-radius:22px;-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;overflow:hidden}
+.rc-b{transform:rotateY(180deg)}
+.rc-f{background:radial-gradient(circle at 50% 46%,rgba(224,182,92,.2),transparent 52%),repeating-linear-gradient(45deg,rgba(224,182,92,.1) 0 1px,transparent 1px 14px),repeating-linear-gradient(-45deg,rgba(224,182,92,.1) 0 1px,transparent 1px 14px),linear-gradient(160deg,#1f1b36,#121022);box-shadow:inset 0 0 0 1px rgba(224,182,92,.5),inset 0 0 0 7px rgba(0,0,0,.25),inset 0 0 0 8px rgba(224,182,92,.25),0 16px 36px rgba(0,0,0,.45)}
+.emb{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:32px;font-weight:900;color:#2a1c05;background:var(--gold);box-shadow:0 0 0 6px rgba(224,182,92,.14),0 0 34px rgba(224,182,92,.35);margin-bottom:12px}
+.emb .ic{width:30px;height:30px}
+.rc-f .emb{animation:breathe 2.4s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.rc-t{font-size:18px;font-weight:800}
+.rc-s{font-size:13px;color:var(--tx2);margin-top:4px}
+.rc-b.h{background:radial-gradient(120% 90% at 50% 0%,#237559,#0f3a2c);box-shadow:inset 0 0 0 1px rgba(95,214,163,.65),inset 0 0 0 8px rgba(0,0,0,.18),0 16px 36px rgba(0,0,0,.45)}
+.rc-b.l{background:radial-gradient(120% 90% at 50% 0%,#86283f,#3d0f1e);box-shadow:inset 0 0 0 1px rgba(255,112,131,.65),inset 0 0 0 8px rgba(0,0,0,.18),0 16px 36px rgba(0,0,0,.45)}
+.rc-b.o{background:linear-gradient(160deg,#2b2840,#1a1828);box-shadow:inset 0 0 0 1px var(--e2)}
+.idc{position:relative;height:200px;margin:0 0 12px;background:radial-gradient(120% 90% at 50% 0%,#2c4a86,#141f3d);box-shadow:inset 0 0 0 1px rgba(156,194,255,.6),inset 0 0 0 8px rgba(0,0,0,.18),0 16px 36px rgba(0,0,0,.45)}
+.idc .emb{background:linear-gradient(135deg,#d9e7ff,#8fb4f5);color:#0f1d3d;box-shadow:0 0 0 6px rgba(156,194,255,.14),0 0 34px rgba(156,194,255,.35)}
+.rl{font-family:var(--serif);font-size:28px;font-weight:900;letter-spacing:3px;margin-bottom:6px}
+.rc-b.h .rl{color:#a9f3d0}
+.rc-b.l .rl{color:#ffbdc8}
+.idc .rl{color:#d3e3ff}
+.ex{font-family:var(--serif);font-size:17px;line-height:1.65;font-weight:600;max-height:118px;overflow:auto;padding:0 4px}
+.tp{font-size:13px;margin-top:8px;color:rgba(255,255,255,.82);line-height:1.5}
+/* 確認身份 */
+.okl{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:2px 0 6px}
+.okc{display:flex;align-items:center;gap:6px;padding:3px 11px 3px 3px;border-radius:999px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--e1);font-size:14px;font-weight:700;color:var(--tx2)}
+.okc.y{box-shadow:inset 0 0 0 1px rgba(95,214,163,.55);color:#bff3da}
+.okc .ic{width:15px;height:15px}
+/* 發言 */
+.spot{display:flex;flex-direction:column;align-items:center;padding:18px 14px 16px;border-radius:24px;background:radial-gradient(100% 80% at 50% 0%,rgba(224,182,92,.14),transparent 70%),var(--s1);box-shadow:inset 0 0 0 1px rgba(224,182,92,.3);margin:0 0 14px;text-align:center}
+.spot.me{box-shadow:inset 0 0 0 2px var(--g2),0 0 44px rgba(224,182,92,.25)}
+.spot-n{font-family:var(--serif);font-size:24px;font-weight:900;margin-top:10px;letter-spacing:1px}
+.spot.me .spot-n{color:var(--g1)}
+.spot-s{font-size:14px;color:var(--tx2);margin-top:4px;line-height:1.5}
+.spot.idle{padding:22px 14px}
+.spot.idle .ic{width:34px;height:34px;color:var(--g2)}
+.prog{display:flex;align-items:center;justify-content:space-between;margin:0 4px 10px;font-size:13px;font-weight:700;color:var(--tx2)}
+.dots{display:flex;gap:5px}
+.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.12)}
+.dots i.on{background:var(--g2)}
 /* 結果 */
-.res{text-align:center;margin:6px 0 10px}
-.res .big{font-size:30px;font-weight:900}
-.res .big.ok{color:var(--ok)}
-.res .big.bad{color:var(--bad)}
-.res .who{display:flex;align-items:center;justify-content:center;gap:8px;font-size:18px;font-weight:800;margin-top:8px}
-.exb{background:var(--card);border-radius:18px;padding:14px 16px;margin:10px 0;box-shadow:inset 0 0 0 2px #4fe0a055}
-.exb .k{font-size:14px;font-weight:800;color:var(--ok);margin-bottom:6px}
-.exb .v{font-size:17px;line-height:1.6;font-weight:600}
-.dl{font-size:20px;font-weight:900;font-variant-numeric:tabular-nums;flex:none;min-width:52px;text-align:right}
-.dl.p{color:var(--ok)}
-.dl.m{color:var(--bad)}
-.sc{font-size:17px;font-weight:800;flex:none;color:var(--tx2);min-width:56px;text-align:right;font-variant-numeric:tabular-nums}
-.anim .res,.anim .exb{animation:pop .55s cubic-bezier(.2,1.4,.4,1) both}
-.anim .exb{animation-delay:.15s}
-@keyframes pop{from{opacity:0;transform:scale(.8) translateY(10px)}to{opacity:1;transform:none}}
+.res{text-align:center;padding:4px 0 2px}
+.res .big{font-family:var(--serif);font-size:32px;font-weight:900;letter-spacing:2px}
+.res .big.ok{color:#a9f3d0;text-shadow:0 0 30px rgba(95,214,163,.35)}
+.res .big.bad{color:#ffbdc8;text-shadow:0 0 30px rgba(255,112,131,.3)}
+.who{display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:700;margin-top:10px}
+.defn{position:relative;margin:16px 0 6px;padding:16px 18px;border-radius:20px;background:radial-gradient(130% 100% at 50% 0%,#fffbf2,#f1e2c0);color:#2a1c05;box-shadow:0 14px 32px rgba(0,0,0,.4)}
+.defn .k{font-size:12px;letter-spacing:3px;color:#8a5f1c;font-weight:800}
+.defn .w{font-family:var(--serif);font-size:24px;font-weight:900;margin:4px 0 6px}
+.defn .v{font-family:var(--serif);font-size:17px;line-height:1.75;font-weight:600}
+.dl{font-family:var(--serif);font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;flex:none;min-width:46px;text-align:right}
+.dl.p{color:#a9f3d0}
+.dl.m{color:#ffbdc8}
+.sc{font-size:15px;font-weight:800;flex:none;color:var(--tx2);min-width:54px;text-align:right;font-variant-numeric:tabular-nums}
+.anim .res{animation:pop .55s cubic-bezier(.2,1.4,.4,1) both}
+.anim .defn{animation:pop .55s .15s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes pop{from{opacity:0;transform:scale(.85) translateY(10px)}to{opacity:1;transform:none}}
 /* 完場 */
-.win{text-align:center;margin:10px 0 6px}
-.crown{width:84px;height:60px;margin:0 auto}
-.win .wn{font-size:30px;font-weight:900;color:var(--gold);margin-top:4px}
-.win .ws{font-size:16px;color:var(--tx2);margin-top:2px}
-.rk{width:30px;height:30px;border-radius:50%;background:#ffffff14;font-weight:900;display:flex;align-items:center;justify-content:center;flex:none;font-size:15px}
-.rk.r1{background:var(--gold);color:#2b1b00}
-.rk.r2{background:#d9dff0;color:#20263a}
-.rk.r3{background:#e0a36e;color:#3a1d05}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin:6px 0 4px}
+.pd{width:31%;display:flex;flex-direction:column;align-items:center;min-width:0}
+.pd .n2{font-size:15px;font-weight:800;margin:8px 0 1px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pd .s2{font-size:13px;color:var(--tx2);margin-bottom:8px;font-weight:700}
+.pd .blk{width:100%;border-radius:14px 14px 6px 6px;display:flex;justify-content:center;padding-top:8px;font-family:var(--serif);font-size:26px;font-weight:900;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 24px rgba(0,0,0,.35)}
+.pd.p1 .blk{height:104px;background:var(--gold);color:#2a1c05}
+.pd.p2 .blk{height:76px;background:linear-gradient(135deg,#f3f5fb,#aab3c8);color:#1e2433}
+.pd.p3 .blk{height:58px;background:linear-gradient(135deg,#f2c8a0,#b77845);color:#3a1d05}
+.pd.p1 .av{width:66px;height:66px;font-size:28px}
+.crown{width:54px;height:38px;margin-bottom:2px;filter:drop-shadow(0 6px 14px rgba(224,182,92,.45))}
+.wtl{text-align:center;font-family:var(--serif);font-size:20px;font-weight:900;margin:2px 0 8px;letter-spacing:2px}
+.rk{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.06);font-family:var(--serif);font-weight:900;display:flex;align-items:center;justify-content:center;flex:none;font-size:14px;color:var(--tx2)}
+.rk.r1{background:var(--gold);color:#2a1c05}
+.rk.r2{background:linear-gradient(135deg,#f3f5fb,#aab3c8);color:#1e2433}
+.rk.r3{background:linear-gradient(135deg,#f2c8a0,#b77845);color:#3a1d05}
 /* 彈出 */
-#modal{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;background:#07051099;visibility:hidden;opacity:0;transition:opacity .15s}
+#modal{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;background:rgba(5,4,10,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);visibility:hidden;opacity:0;transition:opacity .18s}
 #modal.show{visibility:visible;opacity:1}
-.mb{width:100%;max-width:520px;max-height:calc(var(--app-h,100vh) - 40px);overflow-y:auto;background:var(--bg2);border-radius:24px 24px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom) + 16px);box-shadow:0 -10px 40px #0009}
-.mb h3{margin:2px 0 12px;font-size:21px;text-align:center}
+.mb{position:relative;width:100%;max-width:520px;max-height:calc(var(--app-h,100vh) - 40px);overflow-y:auto;background:linear-gradient(180deg,#1c1a2b,#13121d);border-radius:26px 26px 0 0;padding:22px 16px calc(env(safe-area-inset-bottom) + 16px);box-shadow:0 -1px 0 rgba(224,182,92,.45),0 -20px 50px rgba(0,0,0,.6);transform:translateY(0);animation:up .25s cubic-bezier(.2,.9,.3,1)}
+@keyframes up{from{transform:translateY(40px)}to{transform:none}}
+.mb:before{content:"";position:absolute;top:8px;left:50%;width:38px;height:4px;margin-left:-19px;border-radius:2px;background:rgba(255,255,255,.18)}
+.mb h3{margin:4px 0 14px;font-family:var(--serif);font-size:22px;font-weight:900;text-align:center;letter-spacing:2px}
 .mb p{font-size:16px;line-height:1.6;margin:8px 2px}
-.rules h4{font-size:17px;margin:16px 0 6px;color:var(--gold)}
-.rules p,.rules li{font-size:16px;line-height:1.6}
-.rules ul{margin:4px 0;padding-left:22px}
+.cfm{text-align:center;font-size:18px;font-weight:700;line-height:1.55;margin:6px 4px 10px}
+.cfm small{display:block;font-size:14px;color:var(--tx2);font-weight:600;margin-top:6px}
+.rules h4{display:flex;align-items:center;gap:8px;font-size:15px;letter-spacing:2px;margin:18px 0 6px;color:var(--g1)}
+.rules p,.rules li{font-size:15px;line-height:1.7;color:var(--tx)}
+.rules ul,.rules ol{margin:4px 0;padding-left:22px}
+.rules b{color:var(--g1)}
 .kpd{display:flex;justify-content:center;gap:10px;margin:6px 0 16px}
-.kpd span{width:58px;height:70px;border-radius:14px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:var(--gold);box-shadow:inset 0 0 0 2px var(--line)}
-.kpd span.cur{box-shadow:inset 0 0 0 2px var(--gold)}
+.kpd span{width:60px;height:74px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:40px;font-weight:900;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px var(--e2)}
+.kpd span.f{background:var(--gold);color:#2a1c05;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 14px rgba(0,0,0,.3)}
+.kpd span.cur{box-shadow:inset 0 0 0 2px var(--g2),0 0 0 4px rgba(224,182,92,.14)}
 .keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.keys button{padding:15px 0;border-radius:14px;background:var(--card2);font-size:24px;font-weight:800}
-.keys button:active{transform:scale(.95);background:var(--line)}
-.keys button.s{font-size:17px}
-#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 30px);transform:translateX(-50%) translateY(10px);z-index:40;background:#fff;color:#1b1530;font-weight:800;font-size:16px;padding:12px 18px;border-radius:14px;box-shadow:0 8px 30px #000a;visibility:hidden;opacity:0;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);text-align:center}
+.keys button{height:56px;border-radius:14px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--e1);font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.keys button:active{transform:scale(.95);background:rgba(224,182,92,.18)}
+.keys button.s{font-size:16px;color:var(--tx2)}
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 30px);transform:translateX(-50%) translateY(10px);z-index:40;background:rgba(28,26,43,.96);color:var(--tx);font-weight:700;font-size:15px;padding:12px 18px;border-radius:16px;box-shadow:inset 0 0 0 1px rgba(224,182,92,.45),0 12px 34px rgba(0,0,0,.6);visibility:hidden;opacity:0;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px);text-align:center}
 #toast.show{visibility:visible;opacity:1;transform:translateX(-50%)}
-#fx{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;pointer-events:none;visibility:hidden}
+#fx{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;pointer-events:none;visibility:hidden;background:radial-gradient(circle,rgba(5,4,10,.55),rgba(5,4,10,.2) 70%)}
 #fx.show{visibility:visible}
-.fxc{background:var(--bg2);border-radius:26px;padding:26px 28px;text-align:center;box-shadow:0 0 0 4px var(--bad),0 20px 60px #000c;animation:slam .5s cubic-bezier(.2,1.6,.4,1) both;max-width:86%}
-.fxc.ok{box-shadow:0 0 0 4px var(--ok),0 20px 60px #000c}
-.fxc .t1{font-size:44px;font-weight:900;color:var(--bad);letter-spacing:4px}
-.fxc .t2{font-size:20px;font-weight:800;margin-top:6px}
-.fxc .t3{font-size:18px;font-weight:800;margin-top:8px}
-@keyframes slam{from{opacity:0;transform:scale(2.2) rotate(-8deg)}to{opacity:1;transform:none}}
-.cf{position:fixed;top:-20px;width:10px;height:16px;border-radius:3px;z-index:25;pointer-events:none;animation:fall linear forwards}
+.stamp{text-align:center;padding:18px 26px 20px;border-radius:18px;background:rgba(19,14,24,.94);box-shadow:inset 0 0 0 3px var(--bad),0 24px 60px rgba(0,0,0,.6);animation:stamp .45s cubic-bezier(.2,1.6,.4,1) both;max-width:86%}
+.stamp.ok{box-shadow:inset 0 0 0 3px var(--ok),0 24px 60px rgba(0,0,0,.6)}
+.stamp .t1{display:inline-block;font-family:var(--serif);font-size:46px;font-weight:900;letter-spacing:10px;color:var(--bad);border:3px solid currentColor;border-radius:10px;padding:0 6px 0 16px;transform:rotate(-6deg)}
+.stamp.ok .t1{color:var(--ok)}
+.stamp .t2{font-size:19px;font-weight:800;margin-top:14px}
+.stamp .t3{font-size:16px;font-weight:700;margin-top:6px}
+@keyframes stamp{from{opacity:0;transform:scale(2) rotate(-6deg)}to{opacity:1;transform:none}}
+.cf{position:fixed;top:-20px;width:9px;height:15px;border-radius:2px;z-index:25;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(calc(var(--app-h,100vh) + 40px)) rotate(var(--r))}}
-.spin{width:38px;height:38px;border-radius:50%;border:4px solid #ffffff22;border-top-color:var(--gold);margin:30px auto 14px;animation:sp 0.9s linear infinite}
+.spin{width:40px;height:40px;border-radius:50%;border:3px solid rgba(255,255,255,.1);border-top-color:var(--g2);margin:40px auto 16px;animation:sp .9s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.pendw .btn.pri,.pendw .sb,.pendw .seg button,.pendw .btn.line[data-act=skip]{opacity:.5;pointer-events:none}
-html{touch-action:manipulation}
+.pendw .btn.gold,.pendw .sb,.pendw .seg button,.pendw .pr .go,.pendw [data-act=skip]{opacity:.5;pointer-events:none}
 </style>
 </head>
 <body>
@@ -498,28 +605,45 @@ const WORDS = [
 
 /* ============================================================
  * 4. 房主：計算成個房間（其他人只送操控）
+ *    每輪（Bill 2026-11-22 定）：
+ *    role  大家確認身份（未出題）
+ *    think 出題，15 秒諗；老實人淨係呢段時間睇到答案
+ *    speak 判官撳人名揀人發言，每人一次、每次 30 秒，直到全部講完
+ *    judge 判官 4 分鐘內揀老實人，或者不停拆穿人
+ *    reveal 結果
  * ============================================================ */
-const PREP_MS = 10000;      // 準備時間
+/* 本機測試先用到：網址有 ?mqtt=（localhost）再加 ?speed=N，所有時間除 N */
+const SPEED = (() => { try { const q = new URLSearchParams(location.search); return BROKERS[0].name === '本機測試' && +q.get('speed') > 0 ? +q.get('speed') : 1; } catch (e) { return 1; } })();
+const THINK_MS = 15000 / SPEED, SPEAK_MS = 30000 / SPEED, JUDGE_MS = 240000 / SPEED;
 const MAX_SEATS = 10, MIN_PLAYERS = 3;
 let HS = null;              // 房主狀態（會廣播俾所有人）
 
 function newHostState(code) {
   return {
-    v: 1, code, g: 'zdz', host: ME.id, rev: 0, now: Date.now(), ph: 'lobby', gid: 0,
+    v: 2, code, g: 'zdz', host: ME.id, rev: 0, now: Date.now(), ph: 'lobby', gid: 0,
     pl: [{ id: ME.id, n: ME.name, c: 0, sc: 0, on: 1 }], wt: [], ban: [],
-    cfg: { r: 1, t: 90, d: 0 }, rd: 0, tot: 0, jd: null, rl: {}, w: null, ord: [], dl: 0,
-    bu: null, pk: null, why: '', dt: {}, ack: {}, u: (LS.get('bgr_used', []) || []).slice(-60), sk: 0,
+    cfg: { r: 1, d: 0 }, rd: 0, tot: 0, jd: null, rl: {}, w: null, ord: [], ok: {}, dl: 0,
+    sp: null, sdl: 0, done: [], ex: [], bu: null, bn: 0, pk: null, why: '', dt: {}, ack: {},
+    u: (LS.get('bgr_used', []) || []).slice(-60), sk: 0,
   };
 }
 const hFind = (id) => HS.pl.find((p) => p.id === id) || HS.wt.find((p) => p.id === id);
+const hOn = (id) => { const p = HS.pl.find((q) => q.id === id); return !!(p && p.on && !p.gone); };
 const hActive = () => HS.pl.filter((p) => p.on && !p.gone);
 function hFreeColor() { const used = new Set([...HS.pl, ...HS.wt].map((p) => p.c)); for (let i = 0; i < COLORS.length; i++) if (!used.has(i)) return i; return Math.floor(Math.random() * COLORS.length); }
+/* 廣播版本：老實人過咗 15 秒就唔再見到答案，所以 speak、judge 階段唔送答案 */
+function hPublic() {
+  const s = { ...HS };
+  if (s.w && s.ph !== 'think' && s.ph !== 'reveal') s.w = { ...s.w, x: null };
+  return s;
+}
 function hCommit() {
   if (!HS) return;
   HS.rev++; HS.now = Date.now();
   LS.set('bgr_hs', HS);
-  if (S.room) S.room.presence({ k: 'h', s: HS });
-  onView(HS);
+  const pub = hPublic();
+  if (S.room) S.room.presence({ k: 'h', s: pub });
+  onView(pub);
 }
 function hOnPeers(peers) {
   if (!HS || !S.isHost) return;
@@ -557,22 +681,25 @@ function hAct(id, t, x) {
   const isJ = id === st.jd, isH = id === st.host;
   switch (t) {
     case 'leave': hRemove(id, false); break;
-    case 'skip': if (isJ && st.ph === 'prep') { hNewWord(); st.dl = Date.now() + PREP_MS; st.sk++; } break;
-    case 'go': if (isJ && st.ph === 'prep') hTalk(); break;
-    case 'burst': if (isJ && st.ph === 'talk' && !st.bu && st.rl[x]) hBurst(x); break;
-    case 'pick': if (isJ && st.ph === 'talk' && st.rl[x] && !(st.bu && st.bu.id === x)) hPick(x); break;
+    case 'ok': if (st.ph === 'role' && (isJ || st.rl[id])) { st.ok[id] = 1; hCheckRole(); } break;
+    case 'skip': if (isJ && st.ph === 'think') { hNewWord(); st.dl = Date.now() + THINK_MS; st.sk++; } break;
+    case 'spk': if (isJ && st.ph === 'speak' && !st.sp && st.rl[x] && !st.done.includes(x)) { st.sp = x; st.sdl = Date.now() + SPEAK_MS; } break;
+    case 'burst': if (isJ && st.ph === 'judge' && st.rl[x] && !st.ex.includes(x)) hBurst(x); break;
+    case 'pick': if (isJ && st.ph === 'judge' && st.rl[x] && !st.ex.includes(x)) hPick(x); break;
     case 'next': if ((isJ || isH) && st.ph === 'reveal' && hCanNext()) hNext(); break;
     // 房主專用
     case 'start': if (isH && st.ph === 'lobby') hStart(); break;
     case 'cfg': if (isH && st.ph === 'lobby' && Array.isArray(x) && CFG_OPTS[x[0]] && CFG_OPTS[x[0]].some((o) => o[0] === x[1])) st.cfg[x[0]] = x[1]; break;
     case 'kick': if (isH && x !== st.host) hRemove(x, true); break;
     case 'again': if (isH && st.ph === 'end') hLobby(); break;
-    case 'redeal': if (isH && (st.ph === 'prep' || st.ph === 'talk')) hRedeal(); break;
+    case 'force': if (isH && st.ph === 'role') hThink(); break;
+    case 'redeal': if (isH && PLAY_PH.includes(st.ph)) hRedeal(); break;
     case 'end': if (isH && st.ph !== 'lobby' && st.ph !== 'end') st.ph = 'end'; break;
     case 'close': if (isH) st.ph = 'closed'; break;
     default: break;
   }
 }
+const PLAY_PH = ['role', 'think', 'speak', 'judge'];
 function hRemove(id, ban) {
   const st = HS;
   if (ban && !st.ban.includes(id)) st.ban.push(id);
@@ -600,9 +727,16 @@ function hRound() {
   const h = others[Math.floor(Math.random() * others.length)];
   st.rl = {}; others.forEach((id) => { st.rl[id] = id === h ? 'H' : 'L'; });
   st.ord = shuffle(others);
-  hNewWord();
-  st.ph = 'prep'; st.dl = Date.now() + PREP_MS; st.bu = null; st.pk = null; st.why = ''; st.dt = {}; st.sk = 0;
+  st.w = null; st.ok = {}; st.ph = 'role'; st.dl = 0; st.sp = null; st.sdl = 0; st.done = []; st.ex = [];
+  st.bu = null; st.bn = 0; st.pk = null; st.why = ''; st.dt = {}; st.sk = 0;
 }
+/* 全部在線（判官＋有身份）嘅人確認咗就出題 */
+function hCheckRole() {
+  const st = HS; if (st.ph !== 'role') return;
+  const need = [st.jd, ...Object.keys(st.rl)].filter((id) => hOn(id));
+  if (need.every((id) => st.ok[id])) hThink();
+}
+function hThink() { HS.ph = 'think'; hNewWord(); HS.dl = Date.now() + THINK_MS; }
 function hNewWord() {
   const st = HS, d = st.cfg.d;
   const fits = (i) => !d || WORDS[i][2] === d;
@@ -618,15 +752,20 @@ function hNewWord() {
   const w = WORDS[i];
   st.w = { w: w[0], c: w[1], d: w[2], x: w[3] };
 }
-function hTalk() { const st = HS; st.ph = 'talk'; st.dl = st.cfg.t ? Date.now() + st.cfg.t * 1000 : 0; }
+const hLeft = () => Object.keys(HS.rl).filter((id) => !HS.done.includes(id) && hOn(id));
+function hSpeak() { const st = HS; st.ph = 'speak'; st.sp = null; st.sdl = 0; st.done = []; st.dl = 0; }
+function hJudge() { const st = HS; st.ph = 'judge'; st.sp = null; st.dl = Date.now() + JUDGE_MS; }
 function hAdd(id, d) { const p = HS.pl.find((q) => q.id === id); if (!p) return; p.sc += d; HS.dt[id] = (HS.dt[id] || 0) + d; }
 function hBurst(x) {
   const st = HS, r = st.rl[x];
-  st.bu = { id: x, r };
-  if (r === 'L') { hAdd(x, -1); hAdd(st.jd, 1); }
-  else {
+  st.bn++; st.bu = { id: x, r, k: st.bn };
+  if (r === 'L') {
+    st.ex.push(x); hAdd(x, -1); hAdd(st.jd, 1);
+    const left = Object.keys(st.rl).filter((id) => !st.ex.includes(id));
+    if (left.length === 1) { hPick(left[0]); if (st.why === 'ok') st.why = 'el'; }
+  } else {
     hAdd(st.jd, -2);
-    Object.keys(st.rl).forEach((id) => { if (st.rl[id] === 'L') hAdd(id, 1); });
+    Object.keys(st.rl).forEach((id) => { if (st.rl[id] === 'L' && !st.ex.includes(id)) hAdd(id, 1); });
     st.pk = null; st.why = 'bh'; st.ph = 'reveal';
   }
 }
@@ -649,12 +788,21 @@ function hLobby() {
   st.pl = st.pl.filter((p) => !p.gone);
   for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
   st.wt = [];
-  st.ph = 'lobby'; st.jd = null; st.rl = {}; st.w = null; st.ord = []; st.dl = 0; st.bu = null; st.pk = null; st.why = ''; st.dt = {};
+  st.ph = 'lobby'; st.jd = null; st.rl = {}; st.w = null; st.ord = []; st.ok = {}; st.dl = 0; st.sp = null; st.sdl = 0;
+  st.done = []; st.ex = []; st.bu = null; st.pk = null; st.why = ''; st.dt = {};
 }
+/* 房主計時：準備完自動入發言、每人 30 秒、全部講完入判決、4 分鐘到就完 */
 setInterval(() => {
   if (!HS || !S.isHost || S.screen !== 'room') return;
-  if (HS.ph === 'prep' && Date.now() >= HS.dl) { hTalk(); hCommit(); }
-}, 300);
+  const st = HS, now = Date.now(), ph0 = st.ph, sp0 = st.sp;
+  if (st.ph === 'role') hCheckRole();
+  else if (st.ph === 'think' && now >= st.dl) hSpeak();
+  else if (st.ph === 'speak') {
+    if (st.sp && now >= st.sdl) { st.done.push(st.sp); st.sp = null; }
+    if (!st.sp && !hLeft().length) hJudge();
+  } else if (st.ph === 'judge' && now >= st.dl) { st.pk = null; st.why = 'to'; st.ph = 'reveal'; }
+  if (st.ph !== ph0 || st.sp !== sp0) hCommit();
+}, 250);
 /* 房主每秒送一次時間，等其他手機對準倒數 */
 setInterval(() => { if (HS && S.isHost && S.room) S.room.presence({ t: Date.now() }); }, 1000);
 
@@ -665,11 +813,10 @@ const S = {
   screen: 'home', code: null, isHost: false, hub: null, room: null,
   view: null, rev: -1, off: 0, conn: false, joinAt: 0, connAt: 0, hostGone: false, hostGoneAt: 0, notInAt: 0,
   pend: 0, pendAt: 0, lastSeq: 0, hold: false, creating: false,
-  modal: null, seen: {}, kp: '', offConn: null, offPeers: null,
+  modal: null, seen: {}, seenRole: {}, needRender: false, kp: '', offConn: null, offPeers: null,
 };
 const CFG_OPTS = {
   r: [[1, '1 次'], [2, '2 次'], [3, '3 次']],
-  t: [[0, '唔計時'], [60, '1 分鐘'], [90, '90 秒'], [120, '2 分鐘'], [180, '3 分鐘']],
   d: [[0, '全部'], [1, '★'], [2, '★★'], [3, '★★★']],
 };
 
@@ -806,14 +953,34 @@ setInterval(() => {
  * ============================================================ */
 const pOf = (v, id) => v.pl.find((p) => p.id === id) || v.wt.find((p) => p.id === id);
 const first = (n) => Array.from(String(n || '?'))[0] || '?';
-const av = (p) => `<span class="av" style="--c:${COLORS[(p && p.c) % COLORS.length] || '#888'}">${esc(first(p && p.n))}</span>`;
-const stars = (d) => '<span class="st">' + '★'.repeat(d) + '</span>' + '☆'.repeat(3 - d);
+const av = (p, cls = '') => `<span class="av ${cls}" style="--c:${COLORS[(p && p.c) % COLORS.length] || '#888'}">${esc(first(p && p.n))}</span>`;
+const stars = (d) => '<span class="sts">' + '<i class="on">★</i>'.repeat(d) + '<i>★</i>'.repeat(3 - d) + '</span>';
 const isLat = (w) => /^[\x20-\x7eÀ-ɏ]+$/.test(w);
 const fmt = (s) => (s >= 60 ? Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') : String(s));
 const nameOf = (v, id) => { const p = pOf(v, id); return p ? p.n : '？'; };
+const ICP = {
+  back: '<path d="M15 5l-7 7 7 7"/>',
+  chart: '<path d="M5 20V11M12 20V4M19 20v-6"/>',
+  book: '<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19"/>',
+  share: '<path d="M12 3v12M7.5 7.5L12 3l4.5 4.5"/><path d="M5 13v5.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V13"/>',
+  copy: '<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  x: '<path d="M6 6l12 12M18 6L6 18"/>',
+  mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>',
+  gavel: '<path d="M13.5 3.5l7 7-3 3-7-7z"/><path d="M12 9L4 17l3 3 8-8"/><path d="M14 21h7"/>',
+  lock: '<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M17.5 14a6 6 0 0 1 4 6"/>',
+  bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+  chev: '<path d="M9 6l6 6-6 6"/>',
+};
+const ic = (n) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICP[n] || ''}</svg>`;
+const ring = (key, tot, cls = '', inner = '') => `<div class="ring ${cls}" data-ring="${key}" data-tot="${tot}"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/><circle class="rp" cx="32" cy="32" r="29" pathLength="100"/></svg>${inner || `<b data-cd="${key}"></b>`}</div>`;
 
-const LOGO = `<svg viewBox="0 0 100 100" width="92" height="92"><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd166"/><stop offset="1" stop-color="#ff8a5b"/></linearGradient></defs><rect x="14" y="20" width="44" height="62" rx="9" fill="#86bcff" transform="rotate(-14 36 51)"/><rect x="40" y="16" width="46" height="66" rx="9" fill="url(#lg1)" transform="rotate(10 63 49)"/><text x="64" y="64" text-anchor="middle" font-size="40" font-weight="900" fill="#2b1400" transform="rotate(10 63 49)" font-family="-apple-system,Arial">?</text></svg>`;
-const CROWN = `<svg viewBox="0 0 84 60" class="crown"><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="#ffd166" stroke="#ffb534" stroke-width="3" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#ffb534"/><circle cx="42" cy="34" r="5" fill="#ff6b81"/><circle cx="22" cy="40" r="4" fill="#86bcff"/><circle cx="62" cy="40" r="4" fill="#4fe0a0"/></svg>`;
+const LOGO = `<svg viewBox="0 0 120 120" width="108" height="108"><defs><linearGradient id="lgG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".45" stop-color="#e4bb60"/><stop offset=".6" stop-color="#c3913a"/><stop offset="1" stop-color="#f2d892"/></linearGradient><linearGradient id="lgP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffbf2"/><stop offset="1" stop-color="#efdfbb"/></linearGradient></defs><g transform="rotate(-12 42 62)"><rect x="16" y="24" width="52" height="74" rx="9" fill="#1f1b36" stroke="url(#lgG)" stroke-width="2.5"/><rect x="22" y="30" width="40" height="62" rx="5" fill="none" stroke="#e0b65c" stroke-opacity=".35"/><path d="M31 51l7 10-7 10-7-10z" fill="url(#lgG)"/></g><g transform="rotate(9 76 58)"><rect x="47" y="18" width="56" height="80" rx="10" fill="url(#lgG)"/><rect x="51" y="22" width="48" height="72" rx="7" fill="url(#lgP)"/><rect x="55" y="26" width="40" height="64" rx="4" fill="none" stroke="#a0701e" stroke-opacity=".35"/><text x="75" y="70" text-anchor="middle" font-size="36" font-weight="900" fill="#2a1c05" font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif">真</text></g></svg>`;
+const GAMEART = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gaB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2348"/><stop offset="1" stop-color="#14121f"/></linearGradient><linearGradient id="gaG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".45" stop-color="#e4bb60"/><stop offset=".6" stop-color="#c3913a"/><stop offset="1" stop-color="#f2d892"/></linearGradient><radialGradient id="gaL" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#e0b65c" stop-opacity=".35"/><stop offset="1" stop-color="#e0b65c" stop-opacity="0"/></radialGradient></defs><rect width="400" height="150" fill="url(#gaB)"/><rect width="400" height="150" fill="url(#gaL)"/><g opacity=".22" stroke="#e0b65c"><path d="M0 120 L400 40" /><path d="M0 140 L400 60"/></g><g transform="translate(118 18) rotate(-10 40 58)"><rect width="80" height="112" rx="10" fill="#7a2238" stroke="#ff8a9a" stroke-opacity=".6"/><text x="40" y="70" text-anchor="middle" font-size="40" font-weight="900" fill="#ffd0d8" font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif">作</text></g><g transform="translate(202 16) rotate(8 40 58)"><rect width="82" height="114" rx="10" fill="url(#gaG)"/><rect x="4" y="4" width="74" height="106" rx="7" fill="#fff8ea"/><text x="41" y="72" text-anchor="middle" font-size="40" font-weight="900" fill="#2a1c05" font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif">真</text></g><g transform="translate(40 40)" fill="#e0b65c" opacity=".7"><circle r="2"/><circle cx="300" cy="-14" r="1.6"/><circle cx="330" cy="70" r="2.4"/><circle cx="20" cy="80" r="1.4"/></g></svg>`;
+const CROWN = `<svg viewBox="0 0 84 60" class="crown"><defs><linearGradient id="crG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".5" stop-color="#e0b65c"/><stop offset="1" stop-color="#b8862f"/></linearGradient></defs><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="url(#crG)" stroke="#8a5f1c" stroke-width="1.5" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#c3913a"/><circle cx="42" cy="34" r="5" fill="#ff7083"/><circle cx="22" cy="40" r="4" fill="#9cc2ff"/><circle cx="62" cy="40" r="4" fill="#5fd6a3"/></svg>`;
 
 function render() {
   const app = $('#app');
@@ -826,7 +993,7 @@ function render() {
     if (v.ph === 'lobby') h += vLobby(v);
     else if (v.ph === 'end') h += vEnd(v);
     else if (v.ph === 'reveal') h += vReveal(v);
-    else if (v.ph === 'prep' || v.ph === 'talk') h += vPlay(v);
+    else if (PLAY_PH.includes(v.ph)) h += vPlay(v);
     else h += '<div class="wait">等緊…</div>';
   }
   const scrollTop = app.scrollTop;
@@ -854,30 +1021,27 @@ function renderBanner() {
   b.classList.toggle('show', !!msg);
 }
 function vHome() {
-  return `<div class="home">
-    <div class="logo">${LOGO}</div>
-    <h1>桌遊房</h1>
-    <div class="by">由 Bill Chiu 開發</div>
-    <label class="lbl" for="nm">你嘅名（其他人會見到）</label>
-    <input id="nm" class="inp" maxlength="8" value="${esc(ME.name)}" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done">
-    <button class="btn pri big" data-act="joinpad">輸入房號加入</button>
-    <div class="sec">開房玩</div>
-    <div class="game">
-      <div class="gh"><div class="gi">?</div><div><div class="gn">真定作</div><div class="gm">3–10 人 · 一局大約 15–30 分鐘</div></div></div>
-      <div class="gd">每輪出一個冷門詞語。得一個人知道真正意思，其他人要作一個。判官聽完要估邊個講真話。</div>
-      <div class="row"><button class="btn line" data-act="rules">玩法</button><button class="btn pri" data-act="create">開房</button></div>
-    </div>
-    <div class="more">更多遊戲陸續加入</div>
-    <div class="ver">版本 ${esc(VER)}</div>
-  </div>`;
+  return `<div class="hero"><div class="logo">${LOGO}</div><h1 class="ttl gtx">桌遊房</h1><div class="by">由 Bill Chiu 開發</div></div>
+    <div class="fld"><label for="nm">你嘅名（其他人會見到）</label>
+    <input id="nm" class="inp" maxlength="8" value="${esc(ME.name)}" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done"></div>
+    <button class="btn gold big" data-act="joinpad">輸入房號加入</button>
+    <div class="sec-t">開房玩</div>
+    <div class="gcard">${GAMEART}
+      <div class="gbody"><div class="gname gtx">真定作</div>
+        <div class="tags"><span>3–10 人</span><span>一局 15–30 分鐘</span><span>派對・講大話</span></div>
+        <p class="gdesc">每輪一個冷門詞語。得一個人知道真正意思，其他人要作一個。判官聽完大家發言，要估邊個講真話。</p>
+        <div class="row"><button class="btn ghost" data-act="rules">${ic('book')}玩法</button><button class="btn gold" data-act="create">開房</button></div>
+      </div></div>
+    <div class="soon">更多遊戲陸續加入</div>
+    <div class="ver">版本 ${esc(VER)}</div>`;
 }
 function vConnecting() {
   const t = S.creating || (S.isHost && !S.code) ? '開緊房間…' : `連緊房間 ${esc(S.code || '')}…`;
-  return `<div class="wait"><div class="spin"></div>${t}</div><button class="btn line" data-act="cancel">取消</button>`;
+  return `<div class="wait"><div class="spin"></div>${t}</div><button class="btn ghost" data-act="cancel">取消</button>`;
 }
 function vTop(v) {
-  const right = v.ph === 'lobby' ? '<button class="ib" data-act="rules">玩法</button>' : '<button class="ib" data-act="scores">分數</button>';
-  return `<div class="top"><button class="ib" data-act="leave">離開</button><div class="tt">房號 <b>${esc(v.code)}</b></div>${right}</div>`;
+  const right = v.ph === 'lobby' ? `<button class="ib" data-act="rules">${ic('book')}玩法</button>` : `<button class="ib" data-act="scores">${ic('chart')}分數</button>`;
+  return `<div class="top"><button class="ib" data-act="leave">${ic('back')}離開</button><div class="tt"><small>房號</small><b>${esc(v.code)}</b></div>${right}</div>`;
 }
 function seg(key, cur, edit) {
   return `<div class="seg${edit ? '' : ' ro'}">` + CFG_OPTS[key].map((o) => `<button class="${o[0] === cur ? 'on' : ''}" data-act="cfg" data-k="${key}" data-v="${o[0]}">${o[1]}</button>`).join('') + '</div>';
@@ -888,107 +1052,156 @@ function vLobby(v) {
   const rows = v.pl.map((p) => {
     const me = p.id === ME.id;
     let tags = '';
-    if (p.id === v.host) tags += '<span class="tag host">房主</span>';
+    if (p.id === v.host) tags += '<span class="tag gold">房主</span>';
     if (!p.on) tags += '<span class="tag">離線</span>';
-    const x = host && !me ? `<button class="x" data-act="kick" data-x="${p.id}" aria-label="請出房">✕</button>` : '';
+    const x = host && !me ? `<button class="x" data-act="kick" data-x="${p.id}" aria-label="請出房">${ic('x')}</button>` : '';
     return `<div class="pr${me ? ' me' : ''}${p.on ? '' : ' off'}">${av(p)}<span class="nm">${esc(p.n)}${me ? '（你）' : ''}</span>${tags}${x}</div>`;
   }).join('');
   let btn;
-  if (host) btn = onN >= MIN_PLAYERS ? `<button class="btn pri big" data-act="start">開始遊戲（${onN} 人）</button>` : `<button class="btn pri big" disabled>最少 ${MIN_PLAYERS} 人先開始到</button>`;
+  if (host) btn = onN >= MIN_PLAYERS ? `<button class="btn gold big" data-act="start">開始遊戲（${onN} 人）</button>` : `<button class="btn gold big" disabled>最少 ${MIN_PLAYERS} 人先開始到</button>`;
   else btn = '<div class="wait">等房主開始遊戲…</div>';
-  return `<div class="code"><div class="k">房號（話俾朋友知）</div><div class="n">${esc(v.code)}</div>
-      <div class="h">朋友打開呢個網址，撳「輸入房號加入」</div>
-      <div class="row"><button class="btn line" data-act="share">分享入房連結</button><button class="btn line" data-act="copy">複製房號</button></div></div>
-    <div class="h2">玩家 <small>${n}／${MAX_SEATS}</small></div>
-    <div class="list">${rows}</div>
-    <div class="h2">設定${host ? '' : ' <small>房主先改到</small>'}</div>
-    <div class="box">
+  const digits = String(v.code).split('').map((d) => `<span>${esc(d)}</span>`).join('');
+  return `<div class="ticket"><div class="tk-l">房號・話俾朋友知</div><div class="tk-code">${digits}</div>
+      <div class="tk-h">朋友打開呢個網址，撳「輸入房號加入」</div>
+      <div class="row"><button class="btn ghost sm" data-act="share">${ic('share')}分享入房連結</button><button class="btn ghost sm" data-act="copy">${ic('copy')}複製房號</button></div></div>
+    <div class="sh"><span>玩家</span><small>${n}／${MAX_SEATS}</small></div>
+    <div class="plist">${rows}</div>
+    <div class="sh"><span>設定</span>${host ? '' : '<small>房主先改到</small>'}</div>
+    <div class="panel">
       <div class="cl">每人做判官幾多次</div>${seg('r', v.cfg.r, host)}
-      <div class="cl">講解時間</div>${seg('t', v.cfg.t, host)}
       <div class="cl">題目難度</div>${seg('d', v.cfg.d, host)}
+      <div class="cl">每輪流程</div>
+      <div class="flow"><span>確認身份</span><i>›</i><span>諗 15 秒</span><i>›</i><span>每人發言 30 秒</span><i>›</i><span>判官 4 分鐘</span></div>
     </div>
     ${btn}`;
 }
-function vWord(v) {
-  const w = v.w; if (!w) return '';
-  return `<div class="wc"><div class="wcat">${esc(w.c)} · ${stars(w.d)}（${w.d} 分）</div><div class="ww${isLat(w.w) ? ' lat' : ''}">${esc(w.w)}</div></div>`;
+function vWord(v, sm) {
+  const w = v.w;
+  if (!w) return `<div class="wc seal"><div class="wc-in">${ic('lock')}<div class="sl1">題目未開</div><div class="sl2">大家確認身份之後先出題</div></div></div>`;
+  const key = 'w' + v.gid + '-' + v.rd + '-' + v.sk, deal = !S.seen[key];
+  S.seen[key] = 1;
+  return `<div class="wc${sm ? ' sm' : ''}${deal ? ' deal' : ''}"><div class="wc-in"><div class="wc-top"><span>${esc(w.c)}</span>${stars(w.d)}</div><div class="ww${isLat(w.w) ? ' lat' : ''}">${esc(w.w)}</div><div class="wc-pts">呢題 ${w.d} 分</div></div></div>`;
 }
-function vCd(v) {
-  if (v.ph === 'prep') return `<div class="ph">準備時間 <span class="cd" data-cd>10</span> 秒</div><div class="bar"><i data-bar></i></div>`;
-  if (v.dl) return `<div class="ph" data-cdw><span data-cdl>講解時間</span> <span class="cd" data-cd></span></div><div class="bar"><i data-bar></i></div>`;
-  return '<div class="ph">講解中（唔計時）</div>';
-}
-function vRound(v) {
+const STEPS = [['role', '身份'], ['think', '諗'], ['speak', '發言'], ['judge', '判決']];
+function vHead(v) {
   const j = pOf(v, v.jd);
-  return `<div class="rdl"><span>第 ${v.rd + 1}／${v.tot} 輪</span><span class="jl">判官 ${av(j)}${esc(j ? j.n : '')}</span></div>`;
+  const cur = STEPS.findIndex((s) => s[0] === v.ph);
+  const steps = STEPS.map((s, i) => (i ? `<div class="sl${i <= cur ? ' done' : ''}"></div>` : '') + `<div class="stp${i === cur ? ' on' : i < cur ? ' done' : ''}"><i>${i < cur ? '✓' : i + 1}</i><span>${s[1]}</span></div>`).join('');
+  return `<div class="rh"><div class="rn">第 <b>${v.rd + 1}</b> ／ ${v.tot} 輪</div><div class="jchip">${av(j, 'sm')}<span>判官 ${esc(j ? j.n : '')}</span></div></div>
+    <div class="steps">${steps}</div>`;
 }
-function vCands(v, isJ) {
-  return v.ord.map((id, i) => {
-    const p = pOf(v, id), me = id === ME.id, out = v.bu && v.bu.id === id;
-    let right = '';
-    if (out) right = '<span class="tag bad">已拆穿・大話精</span>';
-    else if (isJ && v.ph === 'talk') right = (!v.bu ? `<button class="sb bad" data-act="burst" data-x="${id}">拆穿</button>` : '') + `<button class="sb pri" data-act="pick" data-x="${id}">揀佢</button>`;
-    return `<div class="pr${me ? ' me' : ''}${p && !p.on ? ' off' : ''}"><span class="no">${i + 1}</span>${av(p)}<span class="nm">${esc(p ? p.n : '?')}${me ? '（你）' : ''}</span>${right}</div>`;
-  }).join('');
-}
+function roleKey(v) { return v.gid + '-' + v.rd; }
 function vRoleCard(v) {
-  const r = v.rl[ME.id], out = v.bu && v.bu.id === ME.id;
+  const r = v.rl[ME.id], out = v.ex.includes(ME.id);
   let back;
-  if (r === 'H') back = `<div class="rc-b h"><div class="rl">你係老實人</div><div class="ex">${esc(v.w.x)}</div><div class="tp">用自己嘅講法講出呢個解釋</div></div>`;
-  else if (out) back = '<div class="rc-b o"><div class="rl">你俾判官拆穿咗</div><div class="tp">呢輪坐定定睇，唔使再講</div></div>';
-  else back = '<div class="rc-b l"><div class="rl">你係大話精</div><div class="tp">作一個似真嘅解釋，呃判官揀你！<br>判官揀中你，你就得分</div></div>';
-  return `<div class="rc${S.hold ? ' show' : ''}" data-hold><div class="rc-f"><div class="hand"></div>撳住呢度睇身份<small>放手就收埋，唔好俾人見到</small></div>${back}</div>`;
+  if (out) back = '<div class="rc-b o"><div class="rl">已被拆穿</div><div class="tp">判官拆穿咗你係大話精，呢輪坐定定睇</div></div>';
+  else if (r === 'H') {
+    let body;
+    if (v.ph === 'role') body = '<div class="tp">出題之後有 15 秒睇答案，之後就會收埋</div>';
+    else if (v.ph === 'think' && v.w && v.w.x) body = `<div class="ex">${esc(v.w.x)}</div><div class="tp">記住佢！15 秒後答案會收埋，用自己嘅講法講</div>`;
+    else body = '<div class="tp">答案已經收埋。照你記得嘅意思講</div>';
+    back = `<div class="rc-b h"><div class="rl">你係老實人</div>${body}</div>`;
+  } else {
+    const t = v.ph === 'role' ? '出題之後要作一個似真嘅解釋' : '作一個似真嘅解釋，呃判官揀你！<br>判官揀中你，你就得分';
+    back = `<div class="rc-b l"><div class="rl">你係大話精</div><div class="tp">${t}</div></div>`;
+  }
+  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇身份</div><div class="rc-s">放手就收埋，唔好俾人見到</div></div>`;
+  return `<div class="rc${S.hold ? ' show' : ''}" data-hold><div class="rc-i">${front}${back}</div></div>`;
+}
+function vJudgeCard(sub) {
+  return `<div class="idc"><div class="emb">${ic('gavel')}</div><div class="rl">你係判官</div><div class="tp">${sub}</div></div>`;
 }
 function vPlay(v) {
   const isJ = v.jd === ME.id, inR = !!v.rl[ME.id];
-  let h = vRound(v) + vWord(v) + vCd(v);
-  if (isJ) {
-    if (v.ph === 'prep') {
-      h += `<div class="me-role jd">你係判官</div>
-        <div class="tip">如果你識呢個詞，撳「我識，換題」。其他人睇緊自己身份，準備好就可以開始。</div>
-        <div class="row"><button class="btn line" data-act="skip">我識，換題</button><button class="btn pri" data-act="go">開始講解</button></div>
-        <div class="h2">講解次序</div><div class="list">${vCands(v, false)}</div>`;
-    } else {
-      h += `<div class="me-role jd">你係判官</div>
-        <div class="tip">叫大家照次序講解，可以隨便問問題。估到邊個係老實人就撳「揀佢」。${v.bu ? '' : '肯定某人作嘢可以「拆穿」（每輪一次）。'}</div>
-        <div class="list">${vCands(v, true)}</div>`;
-    }
-  } else if (inR) {
-    h += vRoleCard(v);
-    h += `<div class="tip">${v.ph === 'prep' ? '睇清楚身份，諗定點講。' : '照次序講解，判官問你就答。'}</div>
-      <div class="h2">講解次序</div><div class="list">${vCands(v, false)}</div>`;
-  } else {
-    const wt = v.wt.some((p) => p.id === ME.id);
-    h += `<div class="wait">${wt ? '遊戲進行緊，下一局先可以加入。可以先睇住。' : '你今輪冇身份，坐定定睇住。'}</div>
-      <div class="h2">講解次序</div><div class="list">${vCands(v, false)}</div>`;
+  const wt = v.wt.some((p) => p.id === ME.id);
+  let h = vHead(v);
+  if (v.ph === 'role') {
+    h += vWord(v);
+    const need = [v.jd, ...v.ord].filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
+    const chips = need.map((id) => { const p = pOf(v, id), y = !!v.ok[id]; return `<span class="okc${y ? ' y' : ''}">${av(p, 'sm')}${esc(p.n)}${y ? ic('check') : ''}</span>`; }).join('');
+    const mine = !!v.ok[ME.id];
+    if (isJ) {
+      h += vJudgeCard('聽晒大家發言，揀出邊個係老實人');
+      h += mine ? '<div class="wait">已確定，等其他人…</div>' : '<button class="btn gold big" data-act="ok">確定</button>';
+    } else if (inR) {
+      h += vRoleCard(v);
+      const seen = S.seenRole[roleKey(v)];
+      h += mine ? '<div class="wait">已確定，等其他人…</div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '確定身份' : '先撳住上面張卡睇身份'}</button>`;
+    } else h += `<div class="wait">${wt ? '遊戲進行緊，下一局先可以加入。可以先睇住。' : '你今輪冇身份，坐定定睇住。'}</div>`;
+    h += `<div class="sh"><span>確認身份</span><small>${need.filter((id) => v.ok[id]).length}／${need.length}</small></div><div class="okl">${chips}</div>`;
+    if (v.host === ME.id) h += '<button class="link" data-act="force">唔等，即刻出題</button>';
+    return h;
   }
+  if (v.ph === 'think') {
+    h += vWord(v);
+    h += `<div class="tmr">${ring('dl', THINK_MS)}<div><div class="tl">諗定點講</div><div class="ts">${isJ ? '15 秒後開始發言' : v.rl[ME.id] === 'H' ? '撳住身份卡睇答案，15 秒後收埋' : '15 秒後開始發言'}</div></div></div>`;
+    if (isJ) h += vJudgeCard('如果你本身識呢個詞，換一個') + '<button class="btn ghost" data-act="skip">我識，換題</button>';
+    else if (inR) h += vRoleCard(v);
+    else h += `<div class="wait">${wt ? '遊戲進行緊，下一局先可以加入。' : '你今輪冇身份，坐定定睇住。'}</div>`;
+    return h;
+  }
+  if (v.ph === 'speak') {
+    h += vWord(v, true);
+    const total = v.ord.length, doneN = v.done.length;
+    if (v.sp) {
+      const p = pOf(v, v.sp), me = v.sp === ME.id;
+      h += `<div class="spot${me ? ' me' : ''}">${ring('sdl', SPEAK_MS, 'big', av(p, 'lg'))}<div class="spot-n">${me ? '輪到你發言！' : esc(p ? p.n : '') + ' 發言中'}</div><div class="spot-s"><b data-cd="sdl"></b> 秒${me ? '・講你嘅解釋' : ''}</div></div>`;
+    } else if (isJ) h += `<div class="spot idle">${ic('mic')}<div class="spot-n">揀下一個發言嘅人</div><div class="spot-s">撳下面個名，佢就要即刻講 30 秒</div></div>`;
+    else h += `<div class="spot idle">${ic('mic')}<div class="spot-n">等判官揀人發言…</div><div class="spot-s">判官撳到你個名，你就要講 30 秒</div></div>`;
+    const dots = v.ord.map((id) => `<i class="${v.done.includes(id) ? 'on' : ''}"></i>`).join('');
+    h += `<div class="prog"><span>已發言 ${doneN}／${total}</span><span class="dots">${dots}</span></div>`;
+    const rows = v.ord.map((id) => {
+      const p = pOf(v, id), me = id === ME.id, dn = v.done.includes(id), live = v.sp === id;
+      let right;
+      if (live) right = `<span class="tag live">${ic('mic')}發言中</span>`;
+      else if (dn) right = `<span class="tag ok">${ic('check')}已發言</span>`;
+      else if (isJ && !v.sp && p && p.on) right = `<span class="go">${ic('mic')}請佢發言</span>`;
+      else right = `<span class="tag">未發言</span>`;
+      const inner = `${av(p)}<span class="nm">${esc(p ? p.n : '?')}${me ? '（你）' : ''}</span>${right}`;
+      const tap = isJ && !v.sp && !dn && p && p.on;
+      return tap ? `<button class="pr" data-act="spk" data-x="${id}">${inner}</button>` : `<div class="pr${me ? ' me' : ''}${p && !p.on ? ' off' : ''}">${inner}</div>`;
+    }).join('');
+    h += `<div class="plist">${rows}</div>`;
+    if (inR) h += '<div class="sh"><span>你嘅身份</span></div>' + vRoleCard(v);
+    return h;
+  }
+  // judge
+  h += vWord(v, true);
+  h += `<div class="tmr">${ring('dl', JUDGE_MS)}<div><div class="tl">${isJ ? '你要判決' : '判官判決中'}</div><div class="ts">${isJ ? '4 分鐘內揀出老實人；肯定某人作嘢就拆穿佢，拆幾多次都得' : '判官 4 分鐘內要揀出老實人'}</div></div></div>`;
+  const rows = v.ord.map((id) => {
+    const p = pOf(v, id), me = id === ME.id, out = v.ex.includes(id);
+    let right = '';
+    if (out) right = '<span class="tag bad">已拆穿・大話精</span>';
+    else if (isJ) right = `<button class="sb red" data-act="burst" data-x="${id}">拆穿</button><button class="sb gold" data-act="pick" data-x="${id}">揀佢</button>`;
+    return `<div class="pr${me ? ' me' : ''}${(p && !p.on) || out ? ' off' : ''}">${av(p)}<span class="nm">${esc(p ? p.n : '?')}${me ? '（你）' : ''}</span>${right}</div>`;
+  }).join('');
+  h += `<div class="plist">${rows}</div>`;
+  if (inR) h += '<div class="sh"><span>你嘅身份</span></div>' + vRoleCard(v);
   return h;
 }
 function vReveal(v) {
   const hid = Object.keys(v.rl).find((id) => v.rl[id] === 'H');
   const hp = pOf(v, hid), isJ = v.jd === ME.id, host = v.host === ME.id;
-  let big, cls;
-  if (v.why === 'ok') { big = '判官估中咗！'; cls = 'ok'; }
-  else if (v.why === 'no') { big = '判官俾人呃咗！'; cls = 'bad'; }
-  else { big = '判官拆穿錯人！'; cls = 'bad'; }
+  const T = { ok: ['判官估中咗！', 'ok'], el: ['大話精全部拆穿晒！', 'ok'], no: ['判官俾人呃咗！', 'bad'], bh: ['判官拆穿錯人！', 'bad'], to: ['時間到！判官冇揀到', 'bad'] };
+  const [big, cls] = T[v.why] || T.to;
   let sub = '';
-  if (v.why === 'no') sub = `<div class="who">判官揀咗 ${av(pOf(v, v.pk))}${esc(nameOf(v, v.pk))}（大話精）</div>`;
+  if (v.why === 'no') sub = `<div class="who">判官揀咗 ${av(pOf(v, v.pk), 'sm')}${esc(nameOf(v, v.pk))}（大話精）</div>`;
   const deltas = v.pl.filter((p) => v.dt[p.id]).sort((a, b) => v.dt[b.id] - v.dt[a.id]).map((p) => {
     const d = v.dt[p.id];
-    return `<div class="pr${p.id === ME.id ? ' me' : ''}">${av(p)}<span class="nm">${esc(p.n)}${p.id === v.jd ? ' <span class="tag jd">判官</span>' : ''}</span><span class="dl ${d > 0 ? 'p' : 'm'}">${d > 0 ? '+' : ''}${d}</span><span class="sc">${p.sc} 分</span></div>`;
+    return `<div class="pr${p.id === ME.id ? ' me' : ''}">${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}<span class="dl ${d > 0 ? 'p' : 'm'}">${d > 0 ? '+' : ''}${d}</span><span class="sc">${p.sc} 分</span></div>`;
   }).join('') || '<div class="wait">今輪冇人得分</div>';
   const last = v.rd + 1 >= v.tot;
   let btn;
   if (isJ || host) {
     const can = last || v.pl.filter((p) => p.on && !p.gone).length >= MIN_PLAYERS;
-    btn = can ? `<button class="btn pri big" data-act="next">${last ? '睇最後結果' : '下一輪'}</button>` : `<button class="btn pri big" disabled>等人返嚟（最少 ${MIN_PLAYERS} 人）</button>`;
+    btn = can ? `<button class="btn gold big" data-act="next">${last ? '睇最後結果' : '下一輪'}</button>` : `<button class="btn gold big" disabled>等人返嚟（最少 ${MIN_PLAYERS} 人）</button>`;
   } else btn = `<div class="wait">等判官撳「${last ? '睇最後結果' : '下一輪'}」…</div>`;
   const key = 'r' + v.gid + '-' + v.rd, anim = !S.seen[key + 'a'];
   S.seen[key + 'a'] = 1;
-  return `<div class="${anim ? 'anim' : ''}">${vRound(v)}
-    <div class="res"><div class="big ${cls}">${big}</div><div class="who">${av(hp)}<b>${esc(hp ? hp.n : '？')}</b> 先係老實人</div>${sub}</div>
-    <div class="exb"><div class="k">「${esc(v.w.w)}」真正意思</div><div class="v">${esc(v.w.x)}</div></div>
-    <div class="h2">今輪分數</div><div class="list">${deltas}</div>
+  return `<div class="${anim ? 'anim' : ''}"><div class="rh"><div class="rn">第 <b>${v.rd + 1}</b> ／ ${v.tot} 輪</div></div>
+    <div class="res"><div class="big ${cls}">${big}</div><div class="who">${av(hp, 'sm')}<b>${esc(hp ? hp.n : '？')}</b> 先係老實人</div>${sub}</div>
+    <div class="defn"><div class="k">真正意思</div><div class="w">${esc(v.w ? v.w.w : '')}</div><div class="v">${esc(v.w ? v.w.x : '')}</div></div>
+    <div class="sh"><span>今輪分數</span></div><div class="plist">${deltas}</div>
     ${btn}</div>`;
 }
 function ranked(v) {
@@ -999,65 +1212,60 @@ function ranked(v) {
 function vEnd(v) {
   const rk = ranked(v), host = v.host === ME.id;
   const tops = rk.filter((r) => r.rank === 1).map((r) => r.p.n);
-  const rows = rk.map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}"><span class="rk r${rank}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}${p.id === ME.id ? '（你）' : ''}</span><span class="sc">${p.sc} 分</span></div>`).join('');
-  return `<div class="win">${CROWN}<div class="wn">${esc(tops.join('、'))}</div><div class="ws">${tops.length > 1 ? '並列第一！' : '係最強真定作王！'}</div></div>
-    <div class="h2">排名</div><div class="list">${rows}</div>
-    ${host ? '<button class="btn pri big" data-act="again">再嚟一局</button>' : '<div class="wait">等房主開新一局…</div>'}
-    <button class="btn line" data-act="leave">離開房間</button>`;
+  const slot = (r, cls) => (r ? `<div class="pd ${cls}">${cls === 'p1' ? CROWN : ''}${av(r.p)}<div class="n2">${esc(r.p.n)}</div><div class="s2">${r.p.sc} 分</div><div class="blk">${r.rank}</div></div>` : '<div class="pd"></div>');
+  const podium = `<div class="podium">${slot(rk[1], 'p2')}${slot(rk[0], 'p1')}${slot(rk[2], 'p3')}</div>`;
+  const rows = rk.map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}${p.id === ME.id ? '（你）' : ''}</span><span class="sc">${p.sc} 分</span></div>`).join('');
+  return `${podium}<div class="wtl gtx">${tops.length > 1 ? '並列第一：' + esc(tops.join('、')) : esc(tops[0] || '') + '・最強真定作王'}</div>
+    <div class="sh"><span>排名</span></div><div class="plist">${rows}</div>
+    ${host ? '<button class="btn gold big" data-act="again">再嚟一局</button>' : '<div class="wait">等房主開新一局…</div>'}
+    <button class="btn ghost" data-act="leave">離開房間</button>`;
 }
 
-/* 倒數：另外更新數字，唔好成個畫面重畫（WEB-27） */
+/* 倒數：另外更新數字同圓圈，唔好成個畫面重畫（WEB-27） */
 function tickCd() {
-  const v = S.view; if (!v || S.screen !== 'room' || !(v.ph === 'prep' || v.ph === 'talk') || !v.dl) return;
+  const v = S.view; if (!v || S.screen !== 'room') return;
   const now = Date.now() + (S.isHost ? 0 : S.off);
-  const ms = Math.max(0, v.dl - now), left = Math.ceil(ms / 1000);
-  const total = v.ph === 'prep' ? PREP_MS : (v.cfg.t || 1) * 1000;
-  $$('[data-cd]').forEach((e) => { const s = fmt(left); if (e.textContent !== s) e.textContent = s; });
-  $$('[data-bar]').forEach((e) => e.style.setProperty('--p', Math.min(1, ms / total).toFixed(3)));
-  if (v.ph === 'talk') {
-    const up = ms <= 0;
-    const w = $('[data-cdw]'); if (w) w.classList.toggle('up', up);
-    const l = $('[data-cdl]'); if (l) { const s = up ? '時間到！判官要揀' : '講解時間'; if (l.textContent !== s) l.textContent = s; }
-    const c = $('[data-cd]'); if (c && up) c.textContent = '';
-    const key = 't' + v.gid + '-' + v.rd;
-    if (up && !S.seen[key]) { S.seen[key] = 1; sfx('end'); }
+  $$('[data-cd]').forEach((e) => { const end = v[e.dataset.cd] || 0; const s = fmt(Math.max(0, Math.ceil((end - now) / 1000))); if (e.textContent !== s) e.textContent = s; });
+  $$('[data-ring]').forEach((e) => {
+    const end = v[e.dataset.ring] || 0, tot = +e.dataset.tot, left = end - now;
+    const p = Math.max(0, Math.min(1, left / tot));
+    const c = e.querySelector('.rp'); if (c) c.style.strokeDashoffset = (100 * (1 - p)).toFixed(2);
+    e.classList.toggle('low', left < Math.min(10000, tot * 0.34));
+  });
+  if (v.ph === 'speak' && v.sp && now >= v.sdl) {
+    const key = 'se' + v.gid + '-' + v.rd + '-' + v.sp;
+    if (!S.seen[key]) { S.seen[key] = 1; sfx('end'); }
   }
 }
 setInterval(tickCd, 250);
 
-/* 特效：拆穿彈出、結果音效、完場彩紙；用「第幾局-第幾輪」做 key（GAME-19、GAME-20） */
+/* 特效：拆穿彈出、出題、發言、結果音效、完場彩紙；用「第幾局-第幾輪」做 key（GAME-19、GAME-20） */
 let fxT = null;
 function fx(prevPh, had, v) {
   if (v.bu) {
-    const key = 'b' + v.gid + '-' + v.rd;
+    const key = 'b' + v.gid + '-' + v.rd + '-' + v.bu.k;
     if (!S.seen[key]) {
       S.seen[key] = 1;
       if (had) {
-        const n = esc(nameOf(v, v.bu.id));
-        const isL = v.bu.r === 'L';
-        const html = `<div class="fxc${isL ? ' ok' : ''}"><div class="t1">拆穿！</div><div class="t2">判官拆穿 ${n}</div><div class="t3" style="color:${isL ? 'var(--ok)' : 'var(--bad)'}">${isL ? `佢真係大話精！${n} −1，判官 +1` : '原來佢係老實人！判官 −2'}</div></div>`;
-        const f = $('#fx'); f.innerHTML = html; f.classList.add('show');
-        clearTimeout(fxT); fxT = setTimeout(() => f.classList.remove('show'), 2600);
+        const n = esc(nameOf(v, v.bu.id)), isL = v.bu.r === 'L';
+        const t3 = isL ? `佢真係大話精！${n} −1，判官 +1` : '原來佢係老實人！判官 −2';
+        $('#fx').innerHTML = `<div class="stamp${isL ? ' ok' : ''}"><div class="t1">拆穿</div><div class="t2">判官拆穿 ${n}</div><div class="t3" style="color:${isL ? '#a9f3d0' : '#ffbdc8'}">${t3}</div></div>`;
+        $('#fx').classList.add('show');
+        clearTimeout(fxT); fxT = setTimeout(() => $('#fx').classList.remove('show'), 2600);
         sfx(isL ? 'good' : 'bad');
       }
     }
   }
-  if (v.ph === 'reveal') {
-    const key = 'v' + v.gid + '-' + v.rd;
-    if (!S.seen[key]) { S.seen[key] = 1; if (had && prevPh !== 'reveal' && v.why !== 'bh') sfx(v.why === 'ok' ? 'good' : 'bad'); }
-  }
-  if (v.ph === 'end') {
-    const key = 'e' + v.gid;
-    if (!S.seen[key]) { S.seen[key] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
-  }
-  if (v.ph === 'prep') {
-    const key = 'p' + v.gid + '-' + v.rd + '-' + v.sk;
-    if (!S.seen[key]) { S.seen[key] = 1; S.hold = false; if (had && prevPh !== 'prep') sfx('tick'); }
-  }
+  const rk = v.gid + '-' + v.rd;
+  if (v.ph === 'role' && !S.seen['ro' + rk]) { S.seen['ro' + rk] = 1; S.hold = false; if (had && prevPh !== 'role') sfx('tick'); }
+  if (v.ph === 'think' && !S.seen['th' + rk + '-' + v.sk]) { S.seen['th' + rk + '-' + v.sk] = 1; S.hold = false; if (had) sfx('tick'); }
+  if (v.ph === 'speak' && v.sp && !S.seen['sp' + rk + '-' + v.sp]) { S.seen['sp' + rk + '-' + v.sp] = 1; if (had) sfx(v.sp === ME.id ? 'good' : 'tick'); }
+  if (v.ph === 'reveal' && !S.seen['v' + rk]) { S.seen['v' + rk] = 1; if (had && prevPh !== 'reveal' && v.why !== 'bh') sfx(v.why === 'ok' || v.why === 'el' ? 'good' : 'bad'); }
+  if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
 }
 function confetti() {
-  const cols = ['#ffd166', '#ff6b81', '#86bcff', '#4fe0a0', '#c9a0ff'];
-  for (let i = 0; i < 60; i++) {
+  const cols = ['#f9e9b6', '#e0b65c', '#ff7083', '#9cc2ff', '#5fd6a3', '#c9a0ff'];
+  for (let i = 0; i < 70; i++) {
     const d = document.createElement('div');
     d.className = 'cf';
     d.style.left = Math.random() * 100 + 'vw';
@@ -1075,19 +1283,18 @@ function confetti() {
  * ============================================================ */
 const RULES = `<div class="rules">
   <h4>人數</h4><p>3 至 10 人，每人一部手機入同一間房。</p>
-  <h4>身份</h4><ul><li><b>判官</b>：每輪一個，輪流做。</li><li><b>老實人</b>：其他人入面得一個，手機會見到詞語嘅真正意思。</li><li><b>大話精</b>：其餘全部人，只見到詞語，要自己作一個解釋。</li></ul>
-  <h4>每輪點玩</h4><ul>
-    <li>大家見到同一個冷門詞語。撳住身份卡睇自己係咩身份（唔好俾人見到）。</li>
-    <li>判官如果本身識呢個詞，撳「我識，換題」。</li>
-    <li>準備 10 秒之後，照「講解次序」逐個講。老實人用自己嘅講法講真解釋，大話精作一個似真嘅。</li>
-    <li>判官可以隨便問問題，最後撳「揀佢」揀邊個係老實人。</li></ul>
-  <h4>計分（題目有 1–3 粒星 ＝ 1–3 分）</h4><ul>
+  <h4>身份</h4><ul><li><b>判官</b>：每輪一個，輪流做。</li><li><b>老實人</b>：其他人入面得一個，會見到詞語嘅真正意思。</li><li><b>大話精</b>：其餘全部人，要自己作一個解釋。</li></ul>
+  <h4>每輪流程</h4><ol>
+    <li><b>確認身份</b>：撳住身份卡睇自己係咩身份（唔好俾人見到），撳「確定身份」。全部人確定咗先出題。</li>
+    <li><b>諗 15 秒</b>：出題。老實人只可以喺呢 15 秒睇答案，之後就收埋。判官如果本身識呢個詞，撳「我識，換題」。</li>
+    <li><b>發言</b>：判官撳一個人嘅名，嗰個人就要講 30 秒。講完判官再揀下一個，直到每人講過一次。</li>
+    <li><b>判決 4 分鐘</b>：判官揀邊個係老實人，或者不停拆穿人。</li></ol>
+  <h4>計分（題目 1–3 粒星 ＝ 1–3 分）</h4><ul>
     <li>判官揀中老實人：判官同老實人各得題目分。</li>
-    <li>判官揀咗大話精：嗰個大話精得題目分。</li></ul>
-  <h4>拆穿（每輪一次）</h4><ul>
-    <li>判官肯定某人作嘢，可以「拆穿」佢。</li>
-    <li>真係大話精：佢 −1 分、判官 +1 分，佢唔可以再被揀。</li>
-    <li>原來係老實人：判官 −2 分，每個大話精 +1 分，呢輪即刻完。</li></ul>
+    <li>判官揀咗大話精：嗰個大話精得題目分。</li>
+    <li>拆穿大話精：佢 −1 分、判官 +1 分，佢唔可以再被揀。拆穿晒所有大話精，就當揀中老實人。</li>
+    <li>拆穿老實人：判官 −2 分，未被拆穿嘅大話精每人 +1 分，呢輪即刻完。</li>
+    <li>4 分鐘到都未揀：呢輪完，冇人因為揀人得分。</li></ul>
   <h4>完場</h4><p>每人做完設定次數嘅判官就完場，分數最高係贏家。</p>
 </div>`;
 function openModal(m) { S.modal = m; renderModal(); }
@@ -1097,23 +1304,24 @@ function renderModal() {
   const el = $('#modal'), m = S.modal;
   if (!m) { el.classList.remove('show'); el.innerHTML = ''; return; }
   let h = '';
-  if (m.type === 'rules') h = `<h3>真定作 玩法</h3>${RULES}<button class="btn pri" data-act="mclose">知道</button>`;
-  else if (m.type === 'confirm') h = `<p style="text-align:center;font-size:18px;font-weight:700">${m.text}</p><div class="row"><button class="btn line" data-act="mclose">取消</button><button class="btn ${m.bad ? 'bad' : 'pri'}" data-act="mok">${m.ok}</button></div>`;
+  if (m.type === 'rules') h = `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
+  else if (m.type === 'confirm') h = `<div class="cfm">${m.text}</div><div class="row"><button class="btn ghost" data-act="mclose">取消</button><button class="btn ${m.bad ? 'red' : 'gold'}" data-act="mok">${m.ok}</button></div>`;
   else if (m.type === 'join') {
     const c = S.kp;
-    const boxes = [0, 1, 2, 3].map((i) => `<span class="${i === c.length ? 'cur' : ''}">${esc(c[i] || '')}</span>`).join('');
+    const boxes = [0, 1, 2, 3].map((i) => `<span class="${c[i] ? 'f' : i === c.length ? 'cur' : ''}">${esc(c[i] || '')}</span>`).join('');
     const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'c', '0', 'b'].map((k) => `<button class="${k === 'c' || k === 'b' ? 's' : ''}" data-act="kp" data-x="${k}">${k === 'c' ? '清除' : k === 'b' ? '⌫' : k}</button>`).join('');
     h = `<h3>輸入房號</h3><div class="kpd">${boxes}</div><div class="keys">${keys}</div>
-      <div class="row" style="margin-top:8px"><button class="btn line" data-act="mclose">取消</button><button class="btn pri" data-act="dojoin" ${c.length === 4 ? '' : 'disabled'}>加入</button></div>`;
+      <div class="row" style="margin-top:6px"><button class="btn ghost" data-act="mclose">取消</button><button class="btn gold" data-act="dojoin" ${c.length === 4 ? '' : 'disabled'}>加入</button></div>`;
   } else if (m.type === 'scores' && S.view) {
     const v = S.view, host = v.host === ME.id;
-    const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk r${rank}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}${p.id === v.jd ? ' <span class="tag jd">判官</span>' : ''}${p.gone ? ' <span class="tag">走咗</span>' : !p.on ? ' <span class="tag">離線</span>' : ''}</span><span class="sc">${p.sc} 分</span></div>`).join('');
-    const wt = v.wt.length ? `<div class="h2">等緊下一局 <small>${v.wt.length} 人</small></div><div class="list">${v.wt.map((p) => `<div class="pr">${av(p)}<span class="nm">${esc(p.n)}</span></div>`).join('')}</div>` : '';
+    const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}${p.gone ? '<span class="tag">走咗</span>' : !p.on ? '<span class="tag">離線</span>' : ''}<span class="sc">${p.sc} 分</span></div>`).join('');
+    const wt = v.wt.length ? `<div class="sh"><span>等緊下一局</span><small>${v.wt.length} 人</small></div><div class="plist">${v.wt.map((p) => `<div class="pr">${av(p)}<span class="nm">${esc(p.n)}</span></div>`).join('')}</div>` : '';
     let hb = '';
-    if (host && (v.ph === 'prep' || v.ph === 'talk')) hb += '<button class="btn line" data-act="redeal">重新派呢輪（換題同身份）</button>';
-    if (host && v.ph !== 'lobby' && v.ph !== 'end') hb += '<button class="btn line" data-act="endgame">即刻完場</button>';
-    h = `<h3>分數 · 第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪</h3><div class="list">${rows}</div>${wt}
-      <button class="btn line" data-act="snd">聲音：${SND.on ? '開' : '閂'}</button>${hb}<button class="btn pri" data-act="mclose">返去</button>`;
+    if (host && v.ph === 'role') hb += '<button class="btn ghost" data-act="force">唔等，即刻出題</button>';
+    if (host && PLAY_PH.includes(v.ph)) hb += '<button class="btn ghost" data-act="redeal">重新派呢輪（換題同身份）</button>';
+    if (host && v.ph !== 'lobby' && v.ph !== 'end') hb += '<button class="btn ghost" data-act="endgame">即刻完場</button>';
+    h = `<h3>分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪</h3><div class="plist">${rows}</div>${wt}
+      <button class="btn ghost" data-act="snd">聲音：${SND.on ? '開' : '閂'}</button>${hb}<button class="btn gold" data-act="mclose">返去</button>`;
   } else { S.modal = null; el.classList.remove('show'); return; }
   el.innerHTML = `<div class="mb">${h}</div>`;
   el.classList.add('show');
@@ -1146,26 +1354,34 @@ document.addEventListener('click', (e) => {
     case 'share': shareLink(); break;
     case 'copy': copyText(S.code, '已複製房號'); break;
     case 'cfg': act('cfg', [b.dataset.k, +b.dataset.v]); break;
-    case 'kick': if (v) confirmBox(`請 ${esc(nameOf(v, x))} 出房？佢之後入唔返呢間房。`, '請出房', () => act('kick', x), { bad: true }); break;
+    case 'kick': if (v) confirmBox(`請 ${esc(nameOf(v, x))} 出房？<small>佢之後入唔返呢間房。</small>`, '請出房', () => act('kick', x), { bad: true }); break;
     case 'start': act('start'); break;
+    case 'ok': act('ok'); break;
+    case 'force': closeModal(); act('force'); break;
     case 'skip': act('skip'); break;
-    case 'go': act('go'); break;
-    case 'burst': if (v) confirmBox(`拆穿 ${esc(nameOf(v, x))}？<br><small style="font-size:15px">每輪得一次。如果佢係老實人，你會扣 2 分，呢輪即刻完。</small>`, '拆穿', () => act('burst', x), { bad: true }); break;
+    case 'spk': act('spk', x); break;
+    case 'burst': if (v) confirmBox(`拆穿 ${esc(nameOf(v, x))}？<small>如果佢係老實人，你會扣 2 分，呢輪即刻完。</small>`, '拆穿', () => act('burst', x), { bad: true }); break;
     case 'pick': if (v) confirmBox(`確定 ${esc(nameOf(v, x))} 係老實人？`, '確定', () => act('pick', x)); break;
     case 'next': act('next'); break;
     case 'again': act('again'); break;
-    case 'redeal': closeModal(); confirmBox('重新派呢輪？會換過題目同身份，呢輪嘅分數取消。', '重新派', () => act('redeal')); break;
-    case 'endgame': closeModal(); confirmBox('即刻完場？會用而家嘅分數排名。', '完場', () => act('end'), { bad: true }); break;
+    case 'redeal': closeModal(); confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal')); break;
+    case 'endgame': closeModal(); confirmBox('即刻完場？<small>會用而家嘅分數排名。</small>', '完場', () => act('end'), { bad: true }); break;
     case 'snd': SND.on = !SND.on; LS.set('bgr_snd', SND.on); if (!SND.on) closeAudio(); renderModal(); break;
     default: break;
   }
 });
-/* 身份卡：撳住先見到 */
+/* 身份卡：撳住先見到；確認身份前一定要睇過一次 */
 document.addEventListener('pointerdown', (e) => {
   const c = e.target.closest('[data-hold]'); if (!c) return;
   S.hold = true; c.classList.add('show');
+  const v = S.view;
+  if (v && v.ph === 'role' && !S.seenRole[roleKey(v)]) { S.seenRole[roleKey(v)] = 1; S.needRender = true; }
 });
-const unhold = () => { if (!S.hold) return; S.hold = false; $$('[data-hold]').forEach((c) => c.classList.remove('show')); };
+const unhold = () => {
+  if (!S.hold) return;
+  S.hold = false; $$('[data-hold]').forEach((c) => c.classList.remove('show'));
+  if (S.needRender) { S.needRender = false; setTimeout(render, 380); }
+};
 window.addEventListener('pointerup', unhold);
 window.addEventListener('pointercancel', unhold);
 window.addEventListener('blur', unhold);
