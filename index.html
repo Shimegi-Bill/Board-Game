@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
-<script>window.__BGR_VER='2026-11-22-4';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-22-5';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -841,7 +841,7 @@ function hAct(id, t, x) {
     case 'leave': hRemove(id, false); break;
     case 'ok': if (st.ph === 'role' && (isJ || st.rl[id])) { st.ok[id] = 1; if (st.g === 'wd') wCheckRole(); else hCheckRole(); } break;
     // 誰是臥底
-    case 'dn': if (st.g === 'wd' && st.ph === 'desc' && st.ord[st.ci] === id) wNextSpeaker(); break;
+    case 'govote': if (isH && st.g === 'wd' && st.ph === 'desc') wVote(); break;
     case 'vote': if (st.g === 'wd' && st.ph === 'vote' && wVoters().includes(id) && !st.vt[id] && st.cand.includes(x) && x !== id) { st.vt[id] = x; wCheckVote(); } break;
     case 'cont': if (isH && st.g === 'wd' && st.ph === 'out') wCont(); break;
     case 'tolobby': if (isH && st.ph === 'end') hLobby(); break;
@@ -958,7 +958,8 @@ function hLobby() {
 /* ============================================================
  * 4b. 誰是臥底（房主計算）
  *    Bill 2026-11-22 定：臥底人數按人數自動（4–6 人 1 個、7–10 人 2 個）；房主可以開白板；
- *    每人輪流描述 30 秒（講完可以提早）；全部講完一齊投票，最多票出局並公開身份；
+ *    描述唔限時，或者房主設 5／10 分鐘；房主任何時候撳「開始投票」，或者時間到自動投票（Bill 2026-11-22 改）；
+ *    投票最多票出局並公開身份；
  *    平票就平票嘅人再講一次再投；臥底全部出局平民贏；剩 3 個人而臥底仲喺度就臥底贏
  *    role 睇詞語 → desc 描述 → vote 投票 → out 出局結果 → （下一輪 desc）… → end
  * ============================================================ */
@@ -997,17 +998,13 @@ function wCheckRole() {
   const st = HS; if (st.ph !== 'role') return;
   if (st.al.filter(wOn).every((id) => st.ok[id])) wDesc(null);
 }
+/* 描述：大家自由輪流講（次序只係建議）；有設時限就倒數，時間到自動投票；房主可以隨時開始投票 */
 function wDesc(list) {
   const st = HS;
-  st.ph = 'desc'; st.vt = {}; st.dl = 0;
+  st.ph = 'desc'; st.vt = {}; st.sdl = 0; st.ci = 0;
   st.ord = list ? list.filter((id) => st.al.includes(id)) : shuffle(st.al);
-  st.ci = -1; wNextSpeaker();
-}
-function wNextSpeaker() {
-  const st = HS;
-  st.ci++;
-  while (st.ci < st.ord.length && !wOn(st.ord[st.ci])) st.ci++;
-  if (st.ci >= st.ord.length) wVote(); else st.sdl = Date.now() + SPEAK_MS;
+  st.dt0 = st.cfg.t ? st.cfg.t * 1000 / SPEED : 0;
+  st.dl = st.dt0 ? Date.now() + st.dt0 : 0;
 }
 function wVote() {
   const st = HS;
@@ -1062,7 +1059,7 @@ function wTick(now) {
     }
   }
   if (st.ph === 'role') wCheckRole();
-  else if (st.ph === 'desc') { const cur = st.ord[st.ci]; if (!cur || now >= st.sdl || !wOn(cur)) wNextSpeaker(); }
+  else if (st.ph === 'desc') { if (st.dl && now >= st.dl) wVote(); }
   else if (st.ph === 'vote') { if (now >= st.dl) wTally(); else wCheckVote(); }
 }
 /* 房主計時：準備完自動入發言、每人 30 秒、全部講完入判決、4 分鐘到就完 */
@@ -1095,6 +1092,7 @@ const CFG_OPTS = {
   r: [[1, '1 次'], [2, '2 次'], [3, '3 次']],
   d: [[0, '全部'], [1, '★'], [2, '★★'], [3, '★★★']],
   b: [[0, '唔要'], [1, '要']],
+  t: [[0, '唔限時'], [300, '5 分鐘'], [600, '10 分鐘']],
 };
 
 async function enterRoom(code, host) {
@@ -1262,8 +1260,8 @@ const GAMEART_WD = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio=
 const GAMES = {
   zdz: { name: '真定作', min: 3, art: GAMEART, cfg: { r: 1, d: 0 }, tags: ['3–10 人', '一局 15–30 分鐘', '派對・講大話'],
     desc: '每輪一個冷門題目：怪字、古怪習俗、奇特食物、傳說人物…得一個人知道真正意思，其他人要作一個。判官聽完大家發言，要估邊個講真話。' },
-  wd: { name: '誰是臥底', min: 4, art: GAMEART_WD, cfg: { b: 0 }, tags: ['4–10 人', '一局 10–20 分鐘', '派對・推理'],
-    desc: '大家拎到同一個中文詞語，臥底嘅詞語相似但唔同。輪流用一句描述自己個詞語，再投票揪出臥底。' },
+  wd: { name: '誰是臥底', min: 4, art: GAMEART_WD, cfg: { b: 0, t: 0 }, tags: ['4–10 人', '一局 10–20 分鐘', '派對・推理'],
+    desc: '大家拎到同一個中文詞語，臥底嘅詞語相似但唔同。輪流描述自己個詞語，再投票揪出臥底。' },
 };
 const CROWN = `<svg viewBox="0 0 84 60" class="crown"><defs><linearGradient id="crG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".5" stop-color="#e0b65c"/><stop offset="1" stop-color="#b8862f"/></linearGradient></defs><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="url(#crG)" stroke="#8a5f1c" stroke-width="1.5" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#c3913a"/><circle cx="42" cy="34" r="5" fill="#ff7083"/><circle cx="22" cy="40" r="4" fill="#9cc2ff"/><circle cx="62" cy="40" r="4" fill="#5fd6a3"/></svg>`;
 
@@ -1354,8 +1352,9 @@ function vLobby(v) {
   const opts = v.g === 'wd'
     ? `<div class="cl">白板（冇詞語嘅玩家）</div>${seg('b', v.cfg.b, host)}
       <div class="cl">而家 ${onN} 人：臥底 ${nU} 個${v.cfg.b ? (onN >= 5 ? '・白板 1 個' : '・白板要 5 人或以上') : ''}</div>
-      <div class="cl" style="margin-top:12px">每輪流程</div>
-      <div class="flow"><span>睇詞語</span><i>›</i><span>每人描述 30 秒</span><i>›</i><span>投票 60 秒</span><i>›</i><span>最多票出局</span></div>`
+      <div class="cl" style="margin-top:12px">描述時間</div>${seg('t', v.cfg.t, host)}
+      <div class="cl">每輪流程</div>
+      <div class="flow"><span>睇詞語</span><i>›</i><span>輪流描述（${v.cfg.t ? v.cfg.t / 60 + ' 分鐘' : '唔限時'}）</span><i>›</i><span>房主開始投票</span><i>›</i><span>投票 60 秒</span><i>›</i><span>最多票出局</span></div>`
     : `<div class="cl">每人做判官幾多次</div>${seg('r', v.cfg.r, host)}
       <div class="cl">題目難度</div>${seg('d', v.cfg.d, host)}
       <div class="cl">每輪流程</div>
@@ -1529,8 +1528,8 @@ function tickCd() {
     const c = e.querySelector('.rp'); if (c) c.style.strokeDashoffset = (100 * (1 - p)).toFixed(2);
     e.classList.toggle('low', left < Math.min(10000, tot * 0.34));
   });
-  if (v.ph === 'desc' && v.ord && v.ord[v.ci] && now >= v.sdl) {
-    const key = 'we' + v.gid + '-' + v.rr + '-' + v.tie + '-' + v.ci;
+  if (v.ph === 'desc' && v.dl && now >= v.dl) {
+    const key = 'we' + v.gid + '-' + v.rr + '-' + v.tie;
     if (!S.seen[key]) { S.seen[key] = 1; sfx('end'); }
   }
   if (v.ph === 'speak' && v.sp && now >= v.sdl) {
@@ -1559,7 +1558,7 @@ function fx(prevPh, had, v) {
   }
   if (v.g === 'wd') {
     if (v.ph === 'role' && !S.seen['wr' + v.gid]) { S.seen['wr' + v.gid] = 1; S.hold = false; if (had) sfx('tick'); }
-    if (v.ph === 'desc' && v.ord[v.ci]) { const k = 'wd' + v.gid + '-' + v.rr + '-' + v.tie + '-' + v.ci; if (!S.seen[k]) { S.seen[k] = 1; if (had) sfx(v.ord[v.ci] === ME.id ? 'good' : 'tick'); } }
+    if (v.ph === 'desc') { const k = 'wd' + v.gid + '-' + v.rr + '-' + v.tie; if (!S.seen[k]) { S.seen[k] = 1; if (had) sfx('tick'); } }
     if (v.ph === 'out' && v.lo && !S.seen['wx' + v.gid + '-' + v.lo.k]) { S.seen['wx' + v.gid + '-' + v.lo.k] = 1; if (had) sfx(v.lo.id && v.lo.r !== 'C' ? 'good' : 'bad'); }
     if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
     return;
@@ -1627,17 +1626,18 @@ function vPlayWd(v) {
     return h;
   }
   if (v.ph === 'desc') {
-    const cur = v.ord[v.ci], p = pOf(v, cur), me = cur === ME.id;
+    const host = v.host === ME.id, first = pOf(v, v.ord[0]);
     if (v.tie) h += `<div class="tip">平票！只有平票嘅人再講一次，之後再投</div>`;
-    if (cur) {
-      h += `<div class="spot${me ? ' me' : ''}">${ring('sdl', SPEAK_MS, 'big', av(p, 'lg'))}<div class="spot-n">${me ? '輪到你描述！' : esc(p ? p.n : '') + ' 描述緊'}</div><div class="spot-s"><b data-cd="sdl"></b> 秒${me ? '・用一句講你個詞語，唔好講得太明' : ''}</div>${me ? '<button class="btn gold" data-act="dn">講完</button>' : ''}</div>`;
-    }
+    const lim = v.dl ? ring('dl', v.dt0 || 1) : `<div class="ring"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/></svg><b>∞</b></div>`;
+    const sub = v.dl ? (host ? '時間到自動投票；你可以隨時開始投票' : '時間到自動投票；房主可以隨時開始投票') : (host ? '唔限時；大家講完你撳「開始投票」' : '唔限時；房主撳「開始投票」先投票');
+    h += `<div class="tmr">${lim}<div><div class="tl">輪流描述</div><div class="ts">${sub}</div></div></div>`;
+    h += `<div class="spot idle">${ic('mic')}<div class="spot-n">${v.tie ? '平票嘅人再講一次' : '每人用一句描述自己個詞語'}</div><div class="spot-s">由 ${esc(first ? first.n : '')} 開始，照下面次序講；唔好講得太明，又要俾同伴知你係自己人</div></div>`;
+    if (host) h += '<button class="btn gold big" data-act="govote">開始投票</button>';
     const rows = v.ord.map((id, i) => {
       const q = pOf(v, id), mine = id === ME.id;
-      const right = i < v.ci ? `<span class="tag ok">${ic('check')}講咗</span>` : i === v.ci ? `<span class="tag live">${ic('mic')}描述緊</span>` : '<span class="tag">未講</span>';
-      return `<div class="pr${mine ? ' me' : ''}${q && !q.on ? ' off' : ''}"><span class="no">${i + 1}</span>${av(q)}<span class="nm">${esc(q ? q.n : '?')}${mine ? '（你）' : ''}</span>${right}</div>`;
+      return `<div class="pr${mine ? ' me' : ''}${q && !q.on ? ' off' : ''}"><span class="no">${i + 1}</span>${av(q)}<span class="nm">${esc(q ? q.n : '?')}${mine ? '（你）' : ''}</span></div>`;
     }).join('');
-    h += `<div class="sh"><span>描述次序</span><small>${Math.min(v.ci, v.ord.length)}／${v.ord.length}</small></div><div class="plist">${rows}</div>`;
+    h += `<div class="sh"><span>描述次序（建議）</span><small>${v.ord.length} 人</small></div><div class="plist">${rows}</div>`;
     h += meIn ? `<div class="sh"><span>你嘅詞語</span>${alive ? '' : '<small>你已出局</small>'}</div>` + vWordCard(v) : spect;
     return h;
   }
@@ -1698,7 +1698,8 @@ const RULES_WD = `<div class="rules">
   <h4>身份</h4><ul><li><b>平民</b>：大部分人，拎到同一個詞語。</li><li><b>臥底</b>：4–6 人有 1 個，7–10 人有 2 個；詞語同平民相似但唔同。臥底自己唔知自己係臥底。</li><li><b>白板</b>：房主開咗先有（5 人或以上）；冇詞語，要扮識混入去。</li></ul>
   <h4>每輪流程</h4><ol>
     <li><b>睇詞語</b>：撳住卡睇自己個詞語，撳「記住咗」。</li>
-    <li><b>描述</b>：系統隨機排次序，每人用一句講自己個詞語，每人 30 秒；講完可以撳「講完」。唔好講得太明，又要俾同伴知你係自己人。</li>
+    <li><b>描述</b>：系統隨機排一個建議次序，大家輪流用一句講自己個詞語。描述時間由房主設：唔限時、5 分鐘或者 10 分鐘。唔好講得太明，又要俾同伴知你係自己人。</li>
+    <li><b>開始投票</b>：房主任何時候都可以撳「開始投票」；有設時間嘅話，時間到就自動開始投票。</li>
     <li><b>投票</b>：大家一齊投你覺得係臥底嘅人（60 秒）。最多票嘅人出局，並公開佢係平民、臥底定白板。</li>
     <li><b>平票</b>：平票嗰幾個人再講一次，大家再投；再平票就今輪冇人出局。</li></ol>
   <h4>勝負</h4><ul>
@@ -1783,7 +1784,7 @@ document.addEventListener('click', (e) => {
     case 'kick': if (v) confirmBox(`請 ${esc(nameOf(v, x))} 出房？<small>佢之後入唔返呢間房。</small>`, '請出房', () => act('kick', x), { bad: true }); break;
     case 'start': act('start'); break;
     case 'game': act('game', x); break;
-    case 'dn': act('dn'); break;
+    case 'govote': if (v) confirmBox('開始投票？<small>描述會即刻停止。</small>', '開始投票', () => act('govote')); break;
     case 'vote': if (v) confirmBox(`投 ${esc(nameOf(v, x))} 係臥底？<small>投咗唔改得。</small>`, '投佢', () => act('vote', x)); break;
     case 'cont': act('cont'); break;
     case 'tolobby': act('tolobby'); break;
