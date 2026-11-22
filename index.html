@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-22-12';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-22-13';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -71,7 +71,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 #banner.show{display:block}
 /* 主頁 */
 .hero{text-align:center;padding:18px 0 6px}
-.logo{width:108px;height:108px;margin:0 auto;filter:drop-shadow(0 14px 30px rgba(224,182,92,.28))}
+.logo{width:108px;height:108px;margin:0 auto;filter:drop-shadow(0 14px 30px rgba(224,182,92,.28));animation:flt 4.8s ease-in-out var(--lp,0s) infinite}
+@keyframes flt{0%,100%{transform:translate3d(0,0,0) rotate(0)}50%{transform:translate3d(0,-7px,0) rotate(-2deg)}}
 .ttl{font-family:var(--serif);font-weight:900;font-size:46px;letter-spacing:10px;margin:8px 0 0 10px}
 .by{font-size:13px;color:var(--tx2);letter-spacing:3px;margin-top:2px}
 .fld{margin:24px 0 4px}
@@ -169,8 +170,8 @@ button.pr:active{background:rgba(var(--ink),.04)}
 .wc.seal .ic{width:30px;height:30px;color:var(--g2)}
 .wc.seal .sl1{font-family:var(--serif);font-size:22px;font-weight:900;margin-top:6px}
 .wc.seal .sl2{font-size:13px;color:var(--tx2);margin-top:4px}
-.deal{animation:deal .6s cubic-bezier(.2,.9,.25,1.15) both}
-@keyframes deal{from{opacity:0;transform:translateY(-16px) scale(.92)}to{opacity:1;transform:none}}
+.deal{transform-origin:50% 0;animation:deal .6s cubic-bezier(.16,1,.3,1) var(--et,0ms) backwards}
+@keyframes deal{0%{opacity:0;transform:perspective(900px) rotateX(-80deg) translate3d(0,-20px,0) scale(.94)}55%{opacity:1}100%{opacity:1;transform:none}}
 /* 倒數圓圈 */
 .tmr{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1);margin:0 0 14px}
 .tmr .tl{font-size:17px;font-weight:800}
@@ -181,6 +182,8 @@ button.pr:active{background:rgba(var(--ink),.04)}
 .ring .rt{stroke:rgba(var(--ink),.08)}
 .ring .rp{stroke:var(--g2);stroke-linecap:round;stroke-dasharray:100;transition:stroke-dashoffset .25s linear,stroke .3s}
 .ring.low .rp{stroke:var(--bad)}
+.ring.low{animation:hb .8s ease-in-out var(--lp,0s) infinite}
+@keyframes hb{0%,45%,100%{transform:scale(1)}18%{transform:scale(1.08)}}
 .ring>b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;font-variant-numeric:tabular-nums}
 .ring.low>b{color:var(--badtx)}
 .ring.big{width:136px;height:136px}
@@ -188,14 +191,17 @@ button.pr:active{background:rgba(var(--ink),.04)}
 .ring .av{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
 /* 身份卡：撳住翻轉 */
 .rc{position:relative;height:228px;margin:0 0 12px;perspective:1100px;touch-action:none;cursor:pointer}
-.rc-i{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .42s cubic-bezier(.2,.8,.2,1)}
+.rc-i{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .34s cubic-bezier(.2,.9,.25,1.1)}
 .rc.show .rc-i{transform:rotateY(180deg)}
 .rc-f,.rc-b,.idc{position:absolute;inset:0;border-radius:22px;-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;overflow:hidden}
 .rc-b{transform:rotateY(180deg)}
 .rc-f{background:radial-gradient(circle at 50% 46%,rgba(224,182,92,.2),transparent 52%),repeating-linear-gradient(45deg,rgba(224,182,92,.1) 0 1px,transparent 1px 14px),repeating-linear-gradient(-45deg,rgba(224,182,92,.1) 0 1px,transparent 1px 14px),linear-gradient(160deg,#1f1b36,#121022);box-shadow:inset 0 0 0 1px rgba(224,182,92,.5),inset 0 0 0 7px rgba(0,0,0,.25),inset 0 0 0 8px rgba(224,182,92,.25),0 16px 36px rgba(0,0,0,.45)}
 .emb{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:32px;font-weight:900;color:#2a1c05;background:var(--gold);box-shadow:0 0 0 6px rgba(224,182,92,.14),0 0 34px rgba(224,182,92,.35);margin-bottom:12px}
 .emb .ic{width:30px;height:30px}
-.rc-f .emb{animation:breathe 2.4s ease-in-out infinite}
+.rc-f .emb{position:relative;animation:breathe 2.4s ease-in-out var(--lp,0s) infinite}
+.rc-f .emb:before,.rc-f .emb:after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(224,182,92,.75);animation:ripple 2.4s cubic-bezier(.2,.7,.3,1) var(--lp,0s) infinite;pointer-events:none}
+.rc-f .emb:after{animation-delay:calc(var(--lp,0s) - 1.2s)}
+@keyframes ripple{0%{transform:scale(.92);opacity:.9}100%{transform:scale(2.2);opacity:0}}
 @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 .rc-t{font-size:18px;font-weight:800}
 .rc-s{font-size:13px;color:var(--tx2);margin-top:4px}
@@ -222,7 +228,7 @@ button.pr:active{background:rgba(var(--ink),.04)}
 .spot.me .spot-n{color:var(--g1)}
 .spot-s{font-size:14px;color:var(--tx2);margin-top:4px;line-height:1.5}
 .spot.idle{padding:22px 14px}
-.spot.idle .ic{width:34px;height:34px;color:var(--g2)}
+.spot.idle .ic{width:34px;height:34px;color:var(--g2);animation:flt 2.4s ease-in-out var(--lp,0s) infinite}
 .prog{display:flex;align-items:center;justify-content:space-between;margin:0 4px 10px;font-size:13px;font-weight:700;color:var(--tx2)}
 .dots{display:flex;gap:5px}
 .dots i{width:8px;height:8px;border-radius:50%;background:rgba(var(--ink),.12)}
@@ -241,8 +247,6 @@ button.pr:active{background:rgba(var(--ink),.04)}
 .dl.p{color:var(--oktx)}
 .dl.m{color:var(--badtx)}
 .sc{font-size:15px;font-weight:800;flex:none;color:var(--tx2);min-width:54px;text-align:right;font-variant-numeric:tabular-nums}
-.anim .res{animation:pop .55s cubic-bezier(.2,1.4,.4,1) both}
-.anim .defn{animation:pop .55s .15s cubic-bezier(.2,1.4,.4,1) both}
 @keyframes pop{from{opacity:0;transform:scale(.85) translateY(10px)}to{opacity:1;transform:none}}
 /* 完場 */
 .podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin:6px 0 4px}
@@ -314,14 +318,14 @@ button.pr:active{background:rgba(var(--ink),.04)}
 .pair .defn.u{background:var(--cardu)}
 .spot .btn{margin:14px 0 0;width:auto;min-width:160px}
 .gcard+.gcard{margin-top:16px}
-.hearts i{font-style:normal;color:rgba(var(--ink),.18);margin-left:2px}
+.hearts i{display:inline-block;font-style:normal;color:rgba(var(--ink),.18);margin-left:2px}
 .hearts i.on{color:#ff7083;text-shadow:0 0 10px rgba(255,112,131,.5)}
 .scale{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;font-weight:800;color:var(--cardlbl)}
 .scale i{flex:1;height:2px;background:var(--cardline)}
 .scale b{font-family:var(--serif);font-size:16px;margin:0 4px;color:var(--cardtx)}
 .hand{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:2px 0 4px}
 .nc{width:86px;height:118px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:46px;font-weight:900;color:var(--cardtx);background:var(--card);box-shadow:inset 0 0 0 4px #e0b65c,0 12px 28px rgba(0,0,0,.4)}
-.nc.first{transform:translateY(-6px);box-shadow:inset 0 0 0 4px #e0b65c,0 0 0 3px rgba(224,182,92,.5),0 16px 32px rgba(0,0,0,.5)}
+.nc.first{margin-top:-6px;margin-bottom:6px;box-shadow:inset 0 0 0 4px #e0b65c,0 0 0 3px rgba(224,182,92,.5),0 16px 32px rgba(0,0,0,.5)}
 .pile{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1);min-height:60px;align-items:center}
 .pc{display:flex;flex-direction:column;align-items:center;min-width:52px;padding:6px 6px 4px;border-radius:12px;background:var(--card);color:var(--cardtx)}
 .pc b{font-family:var(--serif);font-size:22px;line-height:1.1}
@@ -367,7 +371,7 @@ button.pr:active{background:rgba(var(--ink),.04)}
 .wcd.sm{width:34px;height:46px;transform:rotateX(10deg)}
 .wcd.sm .f3{font-size:9px}
 .wcd.sm .fr .ic{width:14px;height:14px;margin-bottom:1px}
-button.wcd.can{cursor:pointer;animation:bob 1.8s ease-in-out infinite}
+button.wcd.can{cursor:pointer;animation:bob 1.6s ease-in-out var(--lp,0s) infinite}
 button.wcd.can .bk{box-shadow:inset 0 0 0 2px #f2d892,0 0 0 3px rgba(224,182,92,.35),0 5px 0 #0c0a18,0 12px 22px rgba(224,182,92,.35)}
 button.wcd.can:active{transform:rotateX(0) translateY(-10px) scale(1.12);animation:none}
 @keyframes bob{0%,100%{transform:rotateX(16deg) translateY(0)}50%{transform:rotateX(16deg) translateY(-5px)}}
@@ -401,9 +405,6 @@ button.wcd.can:active{transform:rotateX(0) translateY(-10px) scale(1.12);animati
 .boom.ok .ring{border-color:#7ff0c0}
 .shake{animation:shake .6s cubic-bezier(.36,.07,.19,.97) both}
 @keyframes shake{10%,90%{transform:translate(-2px,1px)}20%,80%{transform:translate(4px,-2px)}30%,50%,70%{transform:translate(-8px,3px)}40%,60%{transform:translate(8px,-3px)}}
-.rbanner{text-align:center;color:#f6f2e9;animation:stamp .5s cubic-bezier(.2,1.6,.4,1) both;padding:22px 28px;border-radius:22px;background:rgba(19,14,30,.94);box-shadow:inset 0 0 0 2px var(--g2),0 24px 60px rgba(0,0,0,.6)}
-.rbanner b{display:block;font-family:var(--serif);font-size:40px;letter-spacing:6px;color:#f2d892}
-.rbanner span{font-size:16px;font-weight:700}
 /* 邊個偷咗蛋撻 */
 .dice{width:64px;height:64px;border-radius:14px;background:linear-gradient(160deg,#fffdf7,#e9dcc0);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12),0 8px 18px rgba(0,0,0,.35);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:9px;gap:2px;flex:none;transform:rotate(-6deg)}
 .dice i{width:11px;height:11px;border-radius:50%;background:#2a1c05;align-self:center;justify-self:center;opacity:0}
@@ -419,11 +420,12 @@ button.wcd.can:active{transform:rotateX(0) translateY(-10px) scale(1.12);animati
 .tart.gone{opacity:0;transform:translateY(-30px) scale(.6)}
 .tray .gonetxt{position:absolute;font-family:var(--serif);font-size:20px;font-weight:900;color:var(--badtx);top:10px}
 .clock{display:flex;align-items:center;gap:14px;padding:14px;border-radius:22px;margin:0 0 14px;background:linear-gradient(160deg,#151a38,#090b1c);box-shadow:inset 0 0 0 1px rgba(156,194,255,.3),0 14px 30px rgba(0,0,0,.35);color:#e9eeff}
-.clock .moon{width:46px;height:46px;border-radius:50%;box-shadow:inset -12px -4px 0 0 #f2e7b8;transform:rotate(-20deg);flex:none}
+.clock .moon{width:46px;height:46px;border-radius:50%;box-shadow:inset -12px -4px 0 0 #f2e7b8;transform:rotate(-20deg);flex:none;animation:moon 4.8s ease-in-out var(--lp,0s) infinite}
+@keyframes moon{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(-6deg) scale(1.06)}}
 .clock b{font-family:var(--serif);font-size:34px;font-weight:900;letter-spacing:2px}
 .clock small{display:block;font-size:13px;color:#b8c3ea;margin-top:2px}
-.sleep{text-align:center;padding:40px 14px 30px;border-radius:24px;background:linear-gradient(170deg,#0d1028,#05060f);color:#cdd5f6;box-shadow:inset 0 0 0 1px rgba(156,194,255,.2);margin:0 0 14px}
-.sleep .z{font-family:var(--serif);font-size:44px;font-weight:900;letter-spacing:6px;color:#8fa4e8;animation:zz 2.4s ease-in-out infinite}
+.sleep{position:relative;overflow:hidden;text-align:center;padding:40px 14px 30px;border-radius:24px;background:linear-gradient(170deg,#0d1028,#05060f);color:#cdd5f6;box-shadow:inset 0 0 0 1px rgba(156,194,255,.2);margin:0 0 14px}
+.sleep .z{font-family:var(--serif);font-size:44px;font-weight:900;letter-spacing:6px;color:#8fa4e8;animation:zz 2.4s ease-in-out var(--lp,0s) infinite}
 @keyframes zz{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(-6px)}}
 .sleep .s1{font-size:18px;font-weight:800;margin-top:8px}
 .sleep .s2{font-size:14px;margin-top:6px;color:#9fa9d0}
@@ -440,6 +442,99 @@ button.wcd.can:active{transform:rotateX(0) translateY(-10px) scale(1.12);animati
 .rc.tall{height:300px}
 .rc-b .dice{margin:6px auto 2px}
 .pendw .btn.gold,.pendw .sb,.pendw .seg button,.pendw .pr .go,.pendw [data-act=skip]{opacity:.5;pointer-events:none}
+/* 動畫・速度感：轉階段先入場、掃過橫額、一次性彈出；用 --et（負 delay）接住重畫，唔會重播（GAME-19）；只郁 transform、opacity（WEB-35） */
+.stage{--et:0ms}
+.stage.enter>*{animation:sIn .46s cubic-bezier(.16,1,.3,1) calc(var(--d,0ms) + var(--et)) backwards}
+.stage.enter>:nth-child(2){--d:40ms}.stage.enter>:nth-child(3){--d:80ms}.stage.enter>:nth-child(4){--d:120ms}.stage.enter>:nth-child(5){--d:160ms}.stage.enter>:nth-child(6){--d:200ms}.stage.enter>:nth-child(7){--d:230ms}.stage.enter>:nth-child(n+8){--d:260ms}
+@keyframes sIn{0%{opacity:0;transform:translate3d(48px,0,0) skewX(-8deg)}55%{opacity:1}100%{opacity:1;transform:none}}
+.stage.enter .plist>*,.stage.enter .okl>*{animation:rIn .4s cubic-bezier(.16,1,.3,1) calc(var(--d,0ms) + var(--r,0ms) + 90ms + var(--et)) backwards}
+.stage.enter .plist>:nth-child(2),.stage.enter .okl>:nth-child(2){--r:35ms}.stage.enter .plist>:nth-child(3),.stage.enter .okl>:nth-child(3){--r:70ms}.stage.enter .plist>:nth-child(4),.stage.enter .okl>:nth-child(4){--r:105ms}.stage.enter .plist>:nth-child(5),.stage.enter .okl>:nth-child(5){--r:140ms}.stage.enter .plist>:nth-child(6),.stage.enter .okl>:nth-child(6){--r:175ms}.stage.enter .plist>:nth-child(7),.stage.enter .okl>:nth-child(7){--r:210ms}.stage.enter .plist>:nth-child(n+8),.stage.enter .okl>:nth-child(n+8){--r:240ms}
+@keyframes rIn{0%{opacity:0;transform:translate3d(30px,0,0)}100%{opacity:1;transform:none}}
+.stage.enter .res .big,.stage.enter .awake .a1,.stage.enter .spot-n{animation:slam .6s cubic-bezier(.2,1.5,.35,1) calc(var(--d,0ms) + 120ms + var(--et)) backwards}
+@keyframes slam{0%{opacity:0;transform:scale(2.3) rotate(-4deg)}45%{opacity:1}100%{opacity:1;transform:none}}
+.stage.enter .defn{animation:pop .5s cubic-bezier(.2,1.4,.4,1) calc(var(--d,0ms) + 220ms + var(--et)) backwards}
+.stage.enter .dl.p,.stage.enter .dl.m,.stage.enter .rtag{animation:pop .5s cubic-bezier(.2,1.6,.4,1) calc(var(--d,0ms) + var(--r,0ms) + 360ms + var(--et)) backwards}
+.stage.enter .stp.on i{animation:stOn .55s cubic-bezier(.2,1.6,.4,1) calc(var(--d,0ms) + 240ms + var(--et)) backwards}
+@keyframes stOn{0%{transform:scale(.3)}100%{transform:none}}
+.sl.nw{transform-origin:0 50%}
+.stage.enter .sl.nw{animation:slF .45s cubic-bezier(.6,0,.2,1) calc(var(--d,0ms) + 60ms + var(--et)) backwards}
+@keyframes slF{from{transform:scaleX(0)}to{transform:none}}
+.stage.enter .tk-code span{animation:dIn .5s cubic-bezier(.2,1.5,.4,1) calc(var(--k,0) * 70ms + 120ms + var(--et)) backwards}
+@keyframes dIn{0%{opacity:0;transform:perspective(400px) rotateX(-90deg) translate3d(0,-10px,0)}100%{opacity:1;transform:none}}
+.stage.enter .hand>*{animation:fly .55s cubic-bezier(.2,1.2,.35,1) calc(var(--d,0ms) + var(--r,0ms) + 150ms + var(--et)) backwards}
+.stage.enter .hand>:nth-child(2){--r:80ms}.stage.enter .hand>:nth-child(3){--r:160ms}
+.stage.enter .wires>*{animation:wIn .5s cubic-bezier(.2,1.3,.4,1) calc(var(--d,0ms) + var(--r,0ms) + 160ms + var(--et)) backwards}
+.stage.enter .wires>:nth-child(2){--r:50ms}.stage.enter .wires>:nth-child(3){--r:100ms}.stage.enter .wires>:nth-child(4){--r:150ms}.stage.enter .wires>:nth-child(5){--r:200ms}
+@keyframes wIn{0%{opacity:0;transform:translate3d(0,-46px,0) rotateX(90deg) scale(1.2)}100%{opacity:1;transform:rotateX(16deg)}}
+.pp{animation:pp .5s cubic-bezier(.2,1.7,.4,1) var(--et,0ms) backwards}
+@keyframes pp{0%{transform:scale(.4);opacity:0}100%{transform:none;opacity:1}}
+.zin{animation:zin .45s cubic-bezier(.2,1.4,.4,1) var(--et,0ms) backwards}
+@keyframes zin{0%{transform:scale(.86);opacity:0}100%{transform:none;opacity:1}}
+.pin{animation:pin .5s cubic-bezier(.16,1,.3,1) var(--et,0ms) backwards}
+@keyframes pin{0%{opacity:0;transform:translate3d(-34px,0,0) scale(.96)}100%{opacity:1;transform:none}}
+.fly{animation:fly .6s cubic-bezier(.2,1.2,.35,1) var(--et,0ms) backwards}
+@keyframes fly{0%{opacity:0;transform:translate3d(0,90px,0) rotate(-14deg) scale(1.5)}60%{opacity:1}100%{opacity:1;transform:none}}
+.brk{animation:brk .8s cubic-bezier(.2,1.4,.4,1) var(--et,0ms) backwards}
+@keyframes brk{0%{transform:scale(2.2) rotate(-20deg);color:#ff7083;opacity:1}100%{transform:none}}
+.swap{animation:sIn .4s cubic-bezier(.16,1,.3,1) var(--et,0ms) backwards}
+/* 掣：主掣閃光；撳落有彈性 */
+.btn.gold.big{overflow:hidden}
+.btn.gold.big:not([disabled]):after{content:"";position:absolute;top:0;bottom:0;left:0;width:38%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:translate3d(-160%,0,0) skewX(-20deg);animation:shine 2.4s ease-in-out var(--lp,0s) infinite;pointer-events:none}
+@keyframes shine{0%,52%{transform:translate3d(-160%,0,0) skewX(-20deg)}84%,100%{transform:translate3d(330%,0,0) skewX(-20deg)}}
+.btn{transition:transform .16s cubic-bezier(.2,1.6,.4,1),filter .12s ease}
+.btn:active{transform:scale(.96)}
+.sb:active,.seg button:active{transform:scale(.92)}
+button.pr{transition:transform .14s ease}
+button.pr:active{transform:scale(.985)}
+.gcard{transition:transform .18s ease}
+.gcard:active{transform:scale(.985)}
+/* 等緊：三粒跳動嘅點 */
+.ld{display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle}
+.ld i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:ld 1.2s ease-in-out var(--lp,0s) infinite}
+.ld i:nth-child(2){animation-delay:calc(var(--lp,0s) - 1s)}
+.ld i:nth-child(3){animation-delay:calc(var(--lp,0s) - .8s)}
+@keyframes ld{0%,50%,100%{opacity:.25;transform:none}25%{opacity:1;transform:translate3d(0,-4px,0)}}
+/* 發言：光環 */
+.spot.live .ring.big:before{content:"";position:absolute;inset:16px;border-radius:50%;background:radial-gradient(circle,rgba(224,182,92,.55),rgba(224,182,92,0) 70%);animation:aura 1.6s ease-out var(--lp,0s) infinite}
+@keyframes aura{0%{transform:scale(.75);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+/* 投票：發起投票同意條、票數條 */
+.mtr{position:relative;display:flex;height:10px;border-radius:6px;background:rgba(var(--ink),.08);margin:9px 0 4px}
+.mtr i{height:100%}
+.mtr i.y{background:var(--ok);border-radius:6px 0 0 6px}
+.mtr i.n{background:var(--bad);margin-left:auto;border-radius:0 6px 6px 0}
+.mtr b{position:absolute;top:-4px;bottom:-4px;width:3px;margin-left:-1.5px;border-radius:2px;background:var(--g2)}
+.pr.tl{position:relative;z-index:0}
+.vbar{position:absolute;left:-6px;top:8px;bottom:8px;width:calc(100% + 12px);border-radius:12px;z-index:-1;background:linear-gradient(90deg,rgba(255,112,131,.26),rgba(255,112,131,.08));transform-origin:0 50%;transform:scaleX(var(--w,0));pointer-events:none}
+.stage.enter .vbar{animation:vbar .8s cubic-bezier(.16,1,.3,1) calc(var(--d,0ms) + var(--r,0ms) + 260ms + var(--et)) backwards}
+@keyframes vbar{from{transform:scaleX(0)}}
+/* 天黑：星星、一齊醒嘅人、蛋撻飛走、骰仔轉 */
+.stars i{position:absolute;width:3px;height:3px;border-radius:50%;background:#f7e4a8;animation:tw 2.4s ease-in-out var(--lp,0s) infinite}
+.stars i:nth-child(1){left:12%;top:18%}.stars i:nth-child(2){left:28%;top:62%;animation-delay:calc(var(--lp,0s) - .8s)}.stars i:nth-child(3){left:52%;top:14%;animation-delay:calc(var(--lp,0s) - 1.6s)}.stars i:nth-child(4){left:74%;top:30%;animation-delay:calc(var(--lp,0s) - .4s)}.stars i:nth-child(5){left:88%;top:70%;animation-delay:calc(var(--lp,0s) - 1.2s)}.stars i:nth-child(6){left:64%;top:80%;animation-delay:calc(var(--lp,0s) - 2s)}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.3)}}
+.mates{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:8px 0 12px;font-size:13px;font-weight:700;color:var(--tx2)}
+.tart.gone.tg{animation:tg .7s cubic-bezier(.5,0,.75,0) calc(var(--i,0) * 120ms + 250ms + var(--et)) backwards}
+@keyframes tg{0%{opacity:1;transform:none}100%{opacity:0;transform:translate3d(0,-40px,0) scale(.5) rotate(25deg)}}
+.rc.show .rc-b .dice{animation:roll .7s cubic-bezier(.2,1.2,.35,1) .12s backwards}
+@keyframes roll{0%{transform:rotate(-260deg) scale(.3)}100%{transform:rotate(-6deg)}}
+/* 掃過橫額：轉階段時一條斜帶連大字快速掃過 */
+#sw{position:fixed;inset:0;z-index:28;pointer-events:none;overflow:hidden;visibility:hidden}
+#sw.go{visibility:visible}
+#sw .bd{position:absolute;left:-20%;right:-20%;top:50%;height:124px;margin-top:-62px;background:var(--gold);box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 2px 0 rgba(255,255,255,.55),inset 0 -3px 0 rgba(120,80,10,.35);animation:swB .95s cubic-bezier(.75,0,.25,1) both}
+#sw .bd.red{background:linear-gradient(135deg,#ff8796,#c3203d);box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 2px 0 rgba(255,255,255,.4)}
+#sw .bd.night{background:linear-gradient(135deg,#2a3576,#0b0e26);box-shadow:0 18px 50px rgba(0,0,0,.45),inset 0 0 0 1px rgba(156,194,255,.45)}
+#sw .bd.green{background:linear-gradient(135deg,#8ff0c4,#1f9a6a);box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 2px 0 rgba(255,255,255,.5)}
+@keyframes swB{0%{transform:skewY(-6deg) translate3d(-120%,0,0)}26%,70%{transform:skewY(-6deg) translate3d(0,0,0)}100%{transform:skewY(-6deg) translate3d(120%,0,0)}}
+#sw .tx{position:absolute;left:0;right:0;top:50%;height:110px;margin-top:-55px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#2a1c05;animation:swT .95s cubic-bezier(.6,0,.25,1) both}
+#sw .tx.red{color:#fff}
+#sw .tx.night{color:#f2d892}
+#sw .tx.green{color:#05301f}
+#sw .tx b{font-family:var(--serif);font-size:48px;font-weight:900;letter-spacing:8px;line-height:1.1;white-space:nowrap;margin-left:8px}
+#sw .tx small{font-size:16px;font-weight:800;letter-spacing:3px;margin-top:6px;opacity:.85}
+@keyframes swT{0%{opacity:0;transform:translate3d(70vw,0,0) skewX(-16deg)}30%{opacity:1;transform:translate3d(0,0,0) skewX(0)}70%{opacity:1;transform:translate3d(-3vw,0,0)}100%{opacity:0;transform:translate3d(-80vw,0,0) skewX(16deg)}}
+#sw .ln i{position:absolute;left:0;height:3px;width:46vw;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.95));animation:swL .6s cubic-bezier(.5,0,.3,1) both}
+#sw .ln i:nth-child(1){top:24%}#sw .ln i:nth-child(2){top:33%;width:30vw;animation-delay:.06s}#sw .ln i:nth-child(3){top:41%;animation-delay:.12s}#sw .ln i:nth-child(4){top:60%;width:34vw;animation-delay:.04s}#sw .ln i:nth-child(5){top:68%;animation-delay:.1s}#sw .ln i:nth-child(6){top:77%;width:26vw;animation-delay:.16s}
+@keyframes swL{0%{transform:translate3d(-60vw,0,0);opacity:0}25%{opacity:1}100%{transform:translate3d(130vw,0,0);opacity:0}}
+html[data-theme="cream"] #sw .ln i{background:linear-gradient(90deg,rgba(160,110,30,0),rgba(160,110,30,.75))}
 /* 深色卡（身份卡、判官卡、封住嘅題目卡）入面嘅字固定淺色 */
 .rc-f,.rc-b.h,.rc-b.l,.rc-b.o,.idc{color:#f6f2e9}
 .rc-f .rc-s{color:#cdc6de}
@@ -475,6 +570,7 @@ html[data-theme="cream"] #banner{background:rgba(210,59,85,.1);color:#9b1f37}
 <div id="app"></div>
 <div id="modal"></div>
 <div id="fx"></div>
+<div id="sw"></div>
 <div id="toast"></div>
 <script>
 (() => {
@@ -1673,6 +1769,13 @@ setInterval(() => {
 /* ============================================================
  * 6. 畫面
  * ============================================================ */
+/* 一次性動畫：第一次見到 key 記低時間；之後重畫用負 delay（--et）接住，唔會重播（GAME-19）；tag 唔同就重新嚟過 */
+const AN = {};
+function an(key, dur = 900, tag = 1) { const now = Date.now(); let r = AN[key]; if (!r || r.tag !== tag) r = AN[key] = { t: now, tag }; const e = now - r.t; return e < dur ? `--et:-${e}ms` : ''; }
+function anA(key, dur, cls, tag) { const a = an(key, dur, tag); return a ? { c: ' ' + cls, s: ` style="${a}"` } : { c: '', s: '' }; }
+const okChips = (v, ids, m) => ids.map((id) => { const p = pOf(v, id), y = !!m[id], q = y ? anA('ok:' + S.scrK + ':' + id, 600, 'pp') : { c: '', s: '' }; return `<span class="okc${y ? ' y' : ''}${q.c}"${q.s}>${av(p, 'sm')}${esc(p ? p.n : '?')}${y ? ic('check') : ''}</span>`; }).join('');
+const meter = (y, n, tot, need) => `<div class="mtr"><i class="y" style="width:${(y / tot * 100).toFixed(1)}%"></i><i class="n" style="width:${(n / tot * 100).toFixed(1)}%"></i><b style="left:${(need / tot * 100).toFixed(1)}%"></b></div><div class="ts">同意 ${y}／${need}</div>`;
+const sleepHtml = (t) => `<div class="sleep"><span class="stars"><i></i><i></i><i></i><i></i><i></i><i></i></span><div class="z">zZz</div><div class="s1">${t}</div></div>`;
 const pOf = (v, id) => v.pl.find((p) => p.id === id) || v.wt.find((p) => p.id === id);
 const first = (n) => Array.from(String(n || '?'))[0] || '?';
 const av = (p, cls = '') => `<span class="av ${cls}" style="--c:${COLORS[(p && p.c) % COLORS.length] || '#888'}">${esc(first(p && p.n))}</span>`;
@@ -1712,26 +1815,37 @@ const GAMEART_CD = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio=
 const GAMEART_TT = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gtB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101536"/><stop offset="1" stop-color="#14121f"/></linearGradient><radialGradient id="gtT" cx=".5" cy=".45" r=".5"><stop offset="0" stop-color="#ffe27a"/><stop offset=".46" stop-color="#ffd34f"/><stop offset=".56" stop-color="#f2b53a"/><stop offset=".72" stop-color="#d58a2a"/><stop offset="1" stop-color="#9a5210"/></radialGradient></defs><rect width="400" height="150" fill="url(#gtB)"/><circle cx="330" cy="36" r="18" fill="#f2e7b8"/><circle cx="338" cy="30" r="16" fill="#101536"/><g fill="#f7e4a8" opacity=".7"><circle cx="60" cy="30" r="1.6"/><circle cx="120" cy="18" r="1.2"/><circle cx="250" cy="24" r="1.4"/><circle cx="290" cy="70" r="1.1"/></g><ellipse cx="200" cy="118" rx="110" ry="20" fill="#e4e8f0"/><ellipse cx="200" cy="114" rx="96" ry="14" fill="#fff"/><circle cx="150" cy="96" r="22" fill="url(#gtT)"/><circle cx="200" cy="92" r="22" fill="url(#gtT)"/><circle cx="250" cy="96" r="22" fill="url(#gtT)" opacity=".35"/><path d="M262 60 C280 50 300 54 312 62 L300 72 C290 66 278 66 268 72Z" fill="#2a2348" stroke="#e0b65c" stroke-width="2"/><g font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif" font-weight="900" fill="#f2d892" font-size="22"><text x="40" y="132">?</text><text x="352" y="128">?</text></g><g transform="translate(70 62)"><rect width="34" height="34" rx="7" fill="#fffdf7" transform="rotate(-10)"/><circle cx="9" cy="10" r="3.2" fill="#2a1c05"/><circle cx="23" cy="20" r="3.2" fill="#2a1c05"/><circle cx="16" cy="15" r="3.2" fill="#2a1c05"/></g></svg>`;
 const GAMES = {
   zdz: { name: '真定作', min: 3, art: GAMEART, cfg: { r: 1, d: 0 }, tags: ['3–10 人', '一局 15–30 分鐘', '派對・講大話'],
-    desc: '每輪一個冷門題目：怪字、古怪習俗、奇特食物、傳說人物…得一個人知道真正意思，其他人要作一個。判官聽完大家發言，要估邊個講真話。' },
+    desc: '冷門題目得一個人知真正意思，其他人作。判官估邊個講真話。' },
   wd: { name: '誰是臥底', min: 3, art: GAMEART_WD, cfg: { b: 0, t: 0 }, tags: ['3–10 人', '一局 10–20 分鐘', '派對・推理'],
-    desc: '大家拎到同一個中文詞語，臥底嘅詞語相似但唔同。輪流描述自己個詞語，再投票揪出臥底。' },
+    desc: '臥底個詞語似你但唔同。輪流描述，投票揪出佢。' },
   xs: { name: '心水數字', min: 2, art: GAMEART_XS, cfg: {}, tags: ['2–10 人', '一局 10–15 分鐘', '合作・默契'],
-    desc: '每人暗中拎到 1–100 嘅數字，用題目（例如「動物有幾強」）形容自己個數字，大家合作由細到大出晒所有牌。3 條命，過 3 關。' },
+    desc: '暗中拎 1–100，用題目形容，合作由細到大出晒啲牌。' },
   cd: { name: '拆彈危機', min: 4, max: 8, art: GAMEART_CD, cfg: {}, tags: ['4–8 人', '一局 10–15 分鐘', '陣營・推理'],
-    desc: '拆彈組同炸彈客暗中對決。輪流拎剪刀剪其他人嘅線，4 輪內剪晒拆除線就拆彈組贏，剪到炸彈或者拖過 4 輪就炸彈客贏。' },
+    desc: '拆彈組對炸彈客，輪流剪線：剪晒拆除線定剪中炸彈？' },
   tt: { name: '邊個偷咗蛋撻', min: 4, max: 8, art: GAMEART_TT, cfg: { t: 0 }, tags: ['4–8 人', '一局 10–15 分鐘', '天黑閉眼・推理'],
-    desc: '茶餐廳深夜，蛋撻唔見咗！每人擲骰決定凌晨幾點醒，偷撻賊醒嗰陣偷蛋撻，單獨醒嘅伙記可以偷睇人粒骰。天光之後大家討論，投票揪出偷撻賊。' },
+    desc: '擲骰決定幾點醒，偷撻賊趁夜偷蛋撻。天光投票揪出佢。' },
 };
 const CROWN = `<svg viewBox="0 0 84 60" class="crown"><defs><linearGradient id="crG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".5" stop-color="#e0b65c"/><stop offset="1" stop-color="#b8862f"/></linearGradient></defs><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="url(#crG)" stroke="#8a5f1c" stroke-width="1.5" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#c3913a"/><circle cx="42" cy="34" r="5" fill="#ff7083"/><circle cx="22" cy="40" r="4" fill="#9cc2ff"/><circle cx="62" cy="40" r="4" fill="#5fd6a3"/></svg>`;
 
+/* 畫面 key：轉咗階段先行入場動畫；同一個階段重畫唔會重播（GAME-19） */
+function scrKey(v) {
+  if (S.screen === 'home') return 'home';
+  if (!v) return 'conn';
+  if (v.ph === 'lobby') return v.code + '|lobby';
+  return [v.code, v.g, v.gid, v.ph, v.rd, v.rr, v.lv, v.cr, v.hr, v.tie, v.g === 'cd' && v.ph === 'end' && Date.now() < (S.cdHold || 0) ? 'h' : ''].join('|');
+}
 function render() {
-  const app = $('#app');
-  let h;
+  const app = $('#app'), now = Date.now();
+  const sk = scrKey(S.view);
+  if (sk !== S.scrK) { S.scrK = sk; S.scrAt = now; }
+  const ee = now - S.scrAt, ent = ee < 950;
+  let h, top = '';
   if (S.screen === 'home') h = vHome();
   else if (!S.view) h = vConnecting();
   else {
     const v = S.view;
-    h = vTop(v) + '<div id="banner"></div>';
+    top = vTop(v) + '<div id="banner"></div>';
+    h = '';
     if (v.ph === 'lobby') h += vLobby(v);
     else if (v.g === 'tt' && v.ph === 'end') h += vEndTt(v);
     else if (v.g === 'tt' && TT_PH.includes(v.ph)) h += vPlayTt(v);
@@ -1745,11 +1859,12 @@ function render() {
     else if (v.ph === 'end') h += vEnd(v);
     else if (v.ph === 'reveal') h += vReveal(v);
     else if (PLAY_PH.includes(v.ph)) h += vPlay(v);
-    else h += '<div class="wait">等緊…</div>';
+    else h += '<div class="wait">等緊<span class="ld"><i></i><i></i><i></i></span></div>';
   }
   const scrollTop = app.scrollTop;
-  app.innerHTML = '<div class="scr' + (S.pend ? ' pendw' : '') + '">' + h + '</div>';
-  app.scrollTop = scrollTop;
+  app.innerHTML = `<div class="scr${S.pend ? ' pendw' : ''}" style="--lp:-${now % 4800}ms">${top}<div class="stage${ent ? ' enter' : ''}" style="--et:-${ee}ms">${h}</div></div>`;
+  app.scrollTop = ent && ee < 60 ? 0 : scrollTop;
+  if (ent) { clearTimeout(S.entT); S.entT = setTimeout(() => { if (S.scrK === sk) { const st = $('.stage.enter'); if (st) st.classList.remove('enter'); } }, 960 - ee); }
   if (S.screen === 'home') {
     const nm = $('#nm');
     if (nm) nm.addEventListener('input', () => { const n = cleanName(nm.value); if (n) { ME.name = n; LS.set('bgr_name', n); } });
@@ -1781,7 +1896,7 @@ function renderBanner() {
 }
 function vHome() {
   return `<div class="hbar"><button class="ib icon" data-act="settings" aria-label="設定">${ic('gear')}</button></div><div class="hero"><div class="logo">${LOGO}</div><h1 class="ttl gtx">桌遊房</h1><div class="by">由 Bill Chiu 開發</div></div>
-    <div class="fld"><label for="nm">你嘅名（其他人會見到）</label>
+    <div class="fld"><label for="nm">你嘅名</label>
     <input id="nm" class="inp" maxlength="8" value="${esc(ME.name)}" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done"></div>
     <button class="btn gold big" data-act="joinpad">輸入房號加入</button>
     <div class="sec-t">開房玩</div>
@@ -1814,14 +1929,15 @@ function vLobby(v) {
     if (p.id === v.host) tags += '<span class="tag gold">房主</span>';
     if (!p.on) tags += '<span class="tag">離線</span>';
     const x = host && !me ? `<button class="x" data-act="kick" data-x="${p.id}" aria-label="請出房">${ic('x')}</button>` : '';
-    return `<div class="pr${me ? ' me' : ''}${p.on ? '' : ' off'}">${av(p)}<span class="nm">${esc(p.n)}${me ? '（你）' : ''}</span>${tags}${x}</div>`;
+    const q = anA('pj:' + v.code + ':' + p.id, 600, 'pin');
+    return `<div class="pr${me ? ' me' : ''}${p.on ? '' : ' off'}${q.c}"${q.s}>${av(p)}<span class="nm">${esc(p.n)}${me ? '（你）' : ''}</span>${tags}${x}</div>`;
   }).join('');
   let btn;
   const G = GAMES[v.g] || GAMES.zdz;
   if (host && G.max && onN > G.max) btn = `<button class="btn gold big" disabled>${G.name}最多 ${G.max} 人</button>`;
   else if (host) btn = onN >= G.min ? `<button class="btn gold big" data-act="start">開始${G.name}（${onN} 人）</button>` : `<button class="btn gold big" disabled>${G.name}最少 ${G.min} 人先開始到</button>`;
-  else btn = '<div class="wait">等房主開始遊戲…</div>';
-  const digits = String(v.code).split('').map((d) => `<span>${esc(d)}</span>`).join('');
+  else btn = '<div class="wait">等房主開始遊戲<span class="ld"><i></i><i></i><i></i></span></div>';
+  const digits = String(v.code).split('').map((d, i) => `<span style="--k:${i}">${esc(d)}</span>`).join('');
   const gsel = `<div class="seg${host ? '' : ' ro'}">` + Object.keys(GAMES).map((g) => `<button class="${g === v.g ? 'on' : ''}" data-act="game" data-x="${g}">${GAMES[g].name}</button>`).join('') + '</div>';
   const nU = onN >= 7 ? 2 : 1;
   const cdN = CD_ROLES[Math.min(8, Math.max(4, onN))];
@@ -1845,13 +1961,13 @@ function vLobby(v) {
       <div class="cl">題目難度</div>${seg('d', v.cfg.d, host)}
       <div class="cl">每輪流程</div>
       <div class="flow"><span>確認身份</span><i>›</i><span>諗 15 秒</span><i>›</i><span>每人發言 30 秒</span><i>›</i><span>判官 4 分鐘</span></div>`;
-  return `<div class="ticket"><div class="tk-l">房號・話俾朋友知</div><div class="tk-code">${digits}</div>
-      <div class="tk-h">朋友打開呢個網址，撳「輸入房號加入」</div>
+  const gq = anA('lg:' + v.code, 450, 'swap', v.g);
+  return `<div class="ticket"><div class="tk-l">房號</div><div class="tk-code">${digits}</div>
       <div class="row"><button class="btn ghost sm" data-act="share">${ic('share')}分享入房連結</button><button class="btn ghost sm" data-act="copy">${ic('copy')}複製房號</button></div></div>
     <div class="sh"><span>玩家</span><small>${n}／${MAX_SEATS}</small></div>
     <div class="plist">${rows}</div>
     <div class="sh"><span>設定</span>${host ? '' : '<small>房主先改到</small>'}</div>
-    <div class="panel">
+    <div class="panel${gq.c}"${gq.s}>
       <div class="cl">遊戲</div>${gsel}
       ${opts}
     </div>
@@ -1859,16 +1975,15 @@ function vLobby(v) {
 }
 function vWord(v, sm) {
   const w = v.w;
-  if (!w) return `<div class="wc seal"><div class="wc-in">${ic('lock')}<div class="sl1">題目未開</div><div class="sl2">大家確認身份之後先出題</div></div></div>`;
-  const key = 'w' + v.gid + '-' + v.rd + '-' + v.sk, deal = !S.seen[key];
-  S.seen[key] = 1;
-  return `<div class="wc${sm ? ' sm' : ''}${deal ? ' deal' : ''}"><div class="wc-in"><div class="wc-top"><span>${esc(w.c)}</span>${stars(w.d)}</div><div class="ww${isLat(w.w) ? ' lat' : ''}">${esc(w.w)}</div><div class="wc-pts">呢題 ${w.d} 分</div></div></div>`;
+  if (!w) return `<div class="wc seal"><div class="wc-in">${ic('lock')}<div class="sl1">題目未開</div></div></div>`;
+  const dq = anA('w' + v.gid + '-' + v.rd + '-' + v.sk, 700, 'deal');
+  return `<div class="wc${sm ? ' sm' : ''}${dq.c}"${dq.s}><div class="wc-in"><div class="wc-top"><span>${esc(w.c)}</span>${stars(w.d)}</div><div class="ww${isLat(w.w) ? ' lat' : ''}">${esc(w.w)}</div><div class="wc-pts">呢題 ${w.d} 分</div></div></div>`;
 }
 const STEPS = [['role', '身份'], ['think', '諗'], ['speak', '發言'], ['judge', '判決']];
 function vHead(v) {
   const j = pOf(v, v.jd);
   const cur = STEPS.findIndex((s) => s[0] === v.ph);
-  const steps = STEPS.map((s, i) => (i ? `<div class="sl${i <= cur ? ' done' : ''}"></div>` : '') + `<div class="stp${i === cur ? ' on' : i < cur ? ' done' : ''}"><i>${i < cur ? '✓' : i + 1}</i><span>${s[1]}</span></div>`).join('');
+  const steps = STEPS.map((s, i) => (i ? `<div class="sl${i <= cur ? ' done' : ''}${i === cur ? ' nw' : ''}"></div>` : '') + `<div class="stp${i === cur ? ' on' : i < cur ? ' done' : ''}"><i>${i < cur ? '✓' : i + 1}</i><span>${s[1]}</span></div>`).join('');
   return `<div class="rh"><div class="rn">第 <b>${v.rd + 1}</b> ／ ${v.tot} 輪</div><div class="jchip">${av(j, 'sm')}<span>判官 ${esc(j ? j.n : '')}</span></div></div>
     <div class="steps">${steps}</div>`;
 }
@@ -1876,18 +1991,18 @@ function roleKey(v) { return v.gid + '-' + v.rd; }
 function vRoleCard(v) {
   const r = v.rl[ME.id], out = v.ex.includes(ME.id);
   let back;
-  if (out) back = '<div class="rc-b o"><div class="rl">已被拆穿</div><div class="tp">判官拆穿咗你係大話精，呢輪坐定定睇</div></div>';
+  if (out) back = '<div class="rc-b o"><div class="rl">已被拆穿</div><div class="tp">呢輪坐定定睇</div></div>';
   else if (r === 'H') {
     let body;
-    if (v.ph === 'role') body = '<div class="tp">出題之後有 15 秒睇答案，之後就會收埋</div>';
-    else if (v.ph === 'think' && v.w && v.w.x) body = `<div class="ex">${esc(v.w.x)}</div><div class="tp">記住佢！15 秒後答案會收埋，用自己嘅講法講</div>`;
-    else body = '<div class="tp">答案已經收埋。照你記得嘅意思講</div>';
+    if (v.ph === 'role') body = '<div class="tp">出題後 15 秒睇答案</div>';
+    else if (v.ph === 'think' && v.w && v.w.x) body = `<div class="ex">${esc(v.w.x)}</div><div class="tp">記住佢！</div>`;
+    else body = '<div class="tp">答案已收埋</div>';
     back = `<div class="rc-b h"><div class="rl">你係老實人</div>${body}</div>`;
   } else {
-    const t = v.ph === 'role' ? '出題之後要作一個似真嘅解釋' : '作一個似真嘅解釋，呃判官揀你！<br>判官揀中你，你就得分';
+    const t = v.ph === 'role' ? '作個似真嘅解釋' : '呃判官揀你！';
     back = `<div class="rc-b l"><div class="rl">你係大話精</div><div class="tp">${t}</div></div>`;
   }
-  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇身份</div><div class="rc-s">放手就收埋，唔好俾人見到</div></div>`;
+  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇身份</div></div>`;
   return `<div class="rc${S.hold ? ' show' : ''}" data-hold><div class="rc-i">${front}${back}</div></div>`;
 }
 function vJudgeCard(sub) {
@@ -1900,26 +2015,26 @@ function vPlay(v) {
   if (v.ph === 'role') {
     h += vWord(v);
     const need = [v.jd, ...v.ord].filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
-    const chips = need.map((id) => { const p = pOf(v, id), y = !!v.ok[id]; return `<span class="okc${y ? ' y' : ''}">${av(p, 'sm')}${esc(p.n)}${y ? ic('check') : ''}</span>`; }).join('');
+    const chips = okChips(v, need, v.ok);
     const mine = !!v.ok[ME.id];
     if (isJ) {
-      h += vJudgeCard('聽晒大家發言，揀出邊個係老實人');
-      h += mine ? '<div class="wait">已確定，等其他人…</div>' : '<button class="btn gold big" data-act="ok">確定</button>';
+      h += vJudgeCard('揀出老實人');
+      h += mine ? '<div class="wait">已確定，等其他人<span class="ld"><i></i><i></i><i></i></span></div>' : '<button class="btn gold big" data-act="ok">確定</button>';
     } else if (inR) {
       h += vRoleCard(v);
       const seen = S.seenRole[roleKey(v)];
-      h += mine ? '<div class="wait">已確定，等其他人…</div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '確定身份' : '先撳住上面張卡睇身份'}</button>`;
-    } else h += `<div class="wait">${wt ? '遊戲進行緊，下一局先可以加入。可以先睇住。' : '你今輪冇身份，坐定定睇住。'}</div>`;
+      h += mine ? '<div class="wait">已確定，等其他人<span class="ld"><i></i><i></i><i></i></span></div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '確定身份' : '先撳住張卡睇身份'}</button>`;
+    } else h += `<div class="wait">${wt ? '觀戰中・下一局加入' : '今輪冇身份・觀戰中'}</div>`;
     h += `<div class="sh"><span>確認身份</span><small>${need.filter((id) => v.ok[id]).length}／${need.length}</small></div><div class="okl">${chips}</div>`;
     if (v.host === ME.id) h += '<button class="link" data-act="force">唔等，即刻出題</button>';
     return h;
   }
   if (v.ph === 'think') {
     h += vWord(v);
-    h += `<div class="tmr">${ring('dl', THINK_MS)}<div><div class="tl">諗定點講</div><div class="ts">${isJ ? '15 秒後開始發言' : v.rl[ME.id] === 'H' ? '撳住身份卡睇答案，15 秒後收埋' : '15 秒後開始發言'}</div></div></div>`;
-    if (isJ) h += vJudgeCard('如果你本身識呢個題目，換一個') + '<button class="btn ghost" data-act="skip">我識，換題</button>';
+    h += `<div class="tmr">${ring('dl', THINK_MS)}<div><div class="tl">諗定點講</div>${!isJ && v.rl[ME.id] === 'H' ? '<div class="ts">撳住身份卡睇答案</div>' : ''}</div></div>`;
+    if (isJ) h += vJudgeCard('識呢題就換') + '<button class="btn ghost" data-act="skip">我識，換題</button>';
     else if (inR) h += vRoleCard(v);
-    else h += `<div class="wait">${wt ? '遊戲進行緊，下一局先可以加入。' : '你今輪冇身份，坐定定睇住。'}</div>`;
+    else h += `<div class="wait">${wt ? '觀戰中・下一局加入' : '今輪冇身份・觀戰中'}</div>`;
     return h;
   }
   if (v.ph === 'speak') {
@@ -1927,18 +2042,19 @@ function vPlay(v) {
     const total = v.ord.length, doneN = v.done.length;
     if (v.sp) {
       const p = pOf(v, v.sp), me = v.sp === ME.id;
-      h += `<div class="spot${me ? ' me' : ''}">${ring('sdl', SPEAK_MS, 'big', av(p, 'lg'))}<div class="spot-n">${me ? '輪到你發言！' : esc(p ? p.n : '') + ' 發言中'}</div><div class="spot-s"><b data-cd="sdl"></b> 秒${me ? '・講你嘅解釋' : ''}</div>${me ? '<button class="btn gold" data-act="spkend">講完，結束發言</button>' : ''}</div>`;
-    } else if (isJ) h += `<div class="spot idle">${ic('mic')}<div class="spot-n">揀下一個發言嘅人</div><div class="spot-s">撳下面個名，佢就要即刻講（最多 30 秒）</div></div>`;
-    else h += `<div class="spot idle">${ic('mic')}<div class="spot-n">等判官揀人發言…</div><div class="spot-s">判官撳到你個名，你就要講（最多 30 秒，講完可以提早結束）</div></div>`;
+      const q = anA('sp:' + v.gid + '-' + v.rd + '-' + v.sp, 600, 'zin');
+      h += `<div class="spot live${me ? ' me' : ''}${q.c}"${q.s}>${ring('sdl', SPEAK_MS, 'big', av(p, 'lg'))}<div class="spot-n">${me ? '輪到你發言！' : esc(p ? p.n : '') + ' 發言中'}</div><div class="spot-s"><b data-cd="sdl"></b> 秒</div>${me ? '<button class="btn gold" data-act="spkend">講完，結束發言</button>' : ''}</div>`;
+    } else if (isJ) h += `<div class="spot idle">${ic('mic')}<div class="spot-n">揀人發言</div></div>`;
+    else h += `<div class="spot idle">${ic('mic')}<div class="spot-n">等判官揀人<span class="ld"><i></i><i></i><i></i></span></div></div>`;
     const dots = v.ord.map((id) => `<i class="${v.done.includes(id) ? 'on' : ''}"></i>`).join('');
     h += `<div class="prog"><span>已發言 ${doneN}／${total}</span><span class="dots">${dots}</span></div>`;
     const rows = v.ord.map((id) => {
       const p = pOf(v, id), me = id === ME.id, dn = v.done.includes(id), live = v.sp === id;
       let right;
       if (live) right = `<span class="tag live">${ic('mic')}發言中</span>`;
-      else if (dn) right = `<span class="tag ok">${ic('check')}已發言</span>`;
+      else if (dn) right = `<span class="tag ok">${ic('check')}講咗</span>`;
       else if (isJ && !v.sp && p && p.on) right = `<span class="go">${ic('mic')}請佢發言</span>`;
-      else right = `<span class="tag">未發言</span>`;
+      else right = '';
       const inner = `${av(p)}<span class="nm">${esc(p ? p.n : '?')}${me ? '（你）' : ''}</span>${right}`;
       const tap = isJ && !v.sp && !dn && p && p.on;
       return tap ? `<button class="pr" data-act="spk" data-x="${id}">${inner}</button>` : `<div class="pr${me ? ' me' : ''}${p && !p.on ? ' off' : ''}">${inner}</div>`;
@@ -1949,11 +2065,11 @@ function vPlay(v) {
   }
   // judge
   h += vWord(v, true);
-  h += `<div class="tmr">${ring('dl', JUDGE_MS)}<div><div class="tl">${isJ ? '你要判決' : '判官判決中'}</div><div class="ts">${isJ ? '4 分鐘內揀出老實人；肯定某人作嘢就拆穿佢，拆幾多次都得' : '判官 4 分鐘內要揀出老實人'}</div></div></div>`;
+  h += `<div class="tmr">${ring('dl', JUDGE_MS)}<div><div class="tl">${isJ ? '揀出老實人' : '判官判決中'}</div>${isJ ? '<div class="ts">可以拆穿幾多次都得</div>' : ''}</div></div>`;
   const rows = v.ord.map((id) => {
     const p = pOf(v, id), me = id === ME.id, out = v.ex.includes(id);
     let right = '';
-    if (out) right = '<span class="tag bad">已拆穿・大話精</span>';
+    if (out) right = '<span class="tag bad">大話精</span>';
     else if (isJ) right = `<button class="sb red" data-act="burst" data-x="${id}">拆穿</button><button class="sb gold" data-act="pick" data-x="${id}">揀佢</button>`;
     return `<div class="pr${me ? ' me' : ''}${(p && !p.on) || out ? ' off' : ''}">${av(p)}<span class="nm">${esc(p ? p.n : '?')}${me ? '（你）' : ''}</span>${right}</div>`;
   }).join('');
@@ -1977,7 +2093,7 @@ function vReveal(v) {
   if (isJ || host) {
     const can = last || v.pl.filter((p) => p.on && !p.gone).length >= MIN_PLAYERS;
     btn = can ? `<button class="btn gold big" data-act="next">${last ? '睇最後結果' : '下一輪'}</button>` : `<button class="btn gold big" disabled>等人返嚟（最少 ${MIN_PLAYERS} 人）</button>`;
-  } else btn = `<div class="wait">等判官撳「${last ? '睇最後結果' : '下一輪'}」…</div>`;
+  } else btn = `<div class="wait">等判官撳「${last ? '睇最後結果' : '下一輪'}」<span class="ld"><i></i><i></i><i></i></span></div>`;
   const key = 'r' + v.gid + '-' + v.rd, anim = !S.seen[key + 'a'];
   S.seen[key + 'a'] = 1;
   return `<div class="${anim ? 'anim' : ''}"><div class="rh"><div class="rn">第 <b>${v.rd + 1}</b> ／ ${v.tot} 輪</div></div>
@@ -1999,7 +2115,7 @@ function vEnd(v) {
   const rows = rk.map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}${p.id === ME.id ? '（你）' : ''}</span><span class="sc">${p.sc} 分</span></div>`).join('');
   return `${podium}<div class="wtl gtx">${tops.length > 1 ? '並列第一：' + esc(tops.join('、')) : esc(tops[0] || '') + '・最強真定作王'}</div>
     <div class="sh"><span>排名</span></div><div class="plist">${rows}</div>
-    ${host ? '<button class="btn gold big" data-act="again">再嚟一局</button>' : '<div class="wait">等房主開新一局…</div>'}
+    ${host ? '<button class="btn gold big" data-act="again">再嚟一局</button>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
     <button class="btn ghost" data-act="leave">離開房間</button>`;
 }
 
@@ -2026,6 +2142,17 @@ function tickCd() {
 }
 setInterval(tickCd, 250);
 
+/* 掃過橫額：轉階段時一條斜帶連大字快速掃過（唔擋撳掣） */
+let swT = null;
+function sweep(t, sub = '', tone = '') {
+  const el = $('#sw'); if (!el) return;
+  el.className = ''; el.innerHTML = ''; void el.offsetWidth;
+  el.innerHTML = `<div class="bd ${tone}"></div><div class="ln"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tx ${tone}"><b>${esc(t)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</div>`;
+  el.className = 'go';
+  clearTimeout(swT); swT = setTimeout(() => { el.className = ''; el.innerHTML = ''; }, 1000);
+  sfx('swish');
+}
+function shakeApp() { const app = $('#app'); app.classList.remove('shake'); void app.offsetWidth; app.classList.add('shake'); setTimeout(() => app.classList.remove('shake'), 700); }
 /* 特效：拆穿彈出、出題、發言、結果音效、完場彩紙；用「第幾局-第幾輪」做 key（GAME-19、GAME-20） */
 let fxT = null;
 function fx(prevPh, had, v) {
@@ -2044,14 +2171,16 @@ function fx(prevPh, had, v) {
     }
   }
   if (v.g === 'tt') {
-    if (v.ph === 'role' && !S.seen['tr' + v.gid]) { S.seen['tr' + v.gid] = 1; S.hold = false; }
-    if (v.ph === 'night' && !S.seen['th' + v.gid + '-' + v.hr]) { S.seen['th' + v.gid + '-' + v.hr] = 1; if (had) sfx('tick'); }
-    if (v.ph === 'day' && !S.seen['td' + v.gid]) { S.seen['td' + v.gid] = 1; S.hold = false; if (had) sfx('good'); }
+    if (v.ph === 'role' && !S.seen['tr' + v.gid]) { S.seen['tr' + v.gid] = 1; S.hold = false; if (had) sweep('收工', '睇身份同骰'); }
+    if (v.ph === 'night' && !S.seen['th' + v.gid + '-' + v.hr]) { S.seen['th' + v.gid + '-' + v.hr] = 1; if (had) { sweep(`凌晨 ${v.hr} 點`, '', 'night'); sfx('tick'); } }
+    if (v.ph === 'acc' && !S.seen['ta' + v.gid]) { S.seen['ta' + v.gid] = 1; if (had) sweep('6 點之後', '', 'night'); }
+    if (v.ph === 'day' && !S.seen['td' + v.gid]) { S.seen['td' + v.gid] = 1; S.hold = false; if (had) { sweep('天光！', '蛋撻唔見咗'); sfx('good'); } }
+    if (v.ph === 'vote' && !S.seen['tv' + v.gid]) { S.seen['tv' + v.gid] = 1; if (had) sweep('投票！', '60 秒', 'red'); }
     if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
     return;
   }
   if (v.g === 'cd') {
-    if (v.ph === 'role' && !S.seen['cr0' + v.gid]) { S.seen['cr0' + v.gid] = 1; S.hold = false; if (had) sfx('tick'); }
+    if (v.ph === 'role' && !S.seen['cr0' + v.gid]) { S.seen['cr0' + v.gid] = 1; S.hold = false; if (had) sweep('拆彈危機', '睇身份', 'red'); }
     if (v.ev && !S.seen['ce' + v.gid + '-' + v.ev.k]) {
       S.seen['ce' + v.gid + '-' + v.ev.k] = 1;
       if (had) {
@@ -2059,9 +2188,9 @@ function fx(prevPh, had, v) {
         if (v.ph === 'end') { const wait = v.ev.t === 'X' ? 2600 : 1800; S.cdHold = Date.now() + wait; setTimeout(render, wait + 30); }
       }
     }
-    if (v.ph === 'play' && v.cr > 1 && !S.seen['crd' + v.gid + '-' + v.cr]) {
+    if (v.ph === 'play' && !S.seen['crd' + v.gid + '-' + v.cr]) {
       S.seen['crd' + v.gid + '-' + v.cr] = 1;
-      if (had) setTimeout(() => { const f = $('#fx'); f.innerHTML = `<div class="rbanner"><b>第 ${v.cr} 輪</b><span>收返啲線洗過再派・每人 ${6 - v.cr} 條</span></div>`; f.classList.add('show'); clearTimeout(fxT); fxT = setTimeout(() => f.classList.remove('show'), 1700); }, 1800);
+      if (had) { const go = () => sweep(`第 ${v.cr} 輪`, `每人 ${6 - v.cr} 條線`); if (v.cr > 1) setTimeout(go, 1800); else go(); }
     }
     if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') setTimeout(() => { confetti(); sfx('win'); }, v.why === 'bomb' ? 2400 : 1600); }
     return;
@@ -2069,29 +2198,36 @@ function fx(prevPh, had, v) {
   if (v.g === 'xs') {
     const pk = 'xp' + v.gid + '-' + v.lv + '-' + (v.pile ? v.pile.length : 0);
     if (v.pile && v.pile.length && !S.seen[pk]) { S.seen[pk] = 1; if (had) sfx('tick'); }
+    let mis = false;
     if (v.lm && !S.seen['xm' + v.gid + '-' + v.lm.k]) {
       S.seen['xm' + v.gid + '-' + v.lm.k] = 1;
       if (had) {
+        mis = true;
         const lows = v.lm.low.map((c) => `${c.n}（${esc(nameOf(v, c.id))}）`).join('、');
         $('#fx').innerHTML = `<div class="stamp"><div class="t1">出錯</div><div class="t2">${esc(nameOf(v, v.lm.by))} 出咗 ${v.lm.n}</div><div class="t3" style="color:#ffbdc8">仲有更細：${lows}<br>扣 1 條命</div></div>`;
-        $('#fx').classList.add('show'); clearTimeout(fxT); fxT = setTimeout(() => $('#fx').classList.remove('show'), 2800); sfx('bad');
+        $('#fx').classList.add('show'); clearTimeout(fxT); fxT = setTimeout(() => $('#fx').classList.remove('show'), 2800); sfx('bad'); shakeApp();
       }
     }
-    if (v.ph === 'clear' && !S.seen['xc' + v.gid + '-' + v.lv]) { S.seen['xc' + v.gid + '-' + v.lv] = 1; if (had) sfx('good'); }
-    if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { if (v.res === 'win') { confetti(); sfx('win'); } else sfx('bad'); } }
+    if (v.ph === 'play' && !S.seen['xl' + v.gid + '-' + v.lv]) { S.seen['xl' + v.gid + '-' + v.lv] = 1; if (had) sweep(`第 ${v.lv} 關`, `每人 ${v.lv} 張`); }
+    if (v.ph === 'clear' && !S.seen['xc' + v.gid + '-' + v.lv]) { S.seen['xc' + v.gid + '-' + v.lv] = 1; if (had) { const go = () => { sweep('過關！', '', 'green'); sfx('good'); }; if (mis) setTimeout(go, 2700); else go(); } }
+    if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { const go = () => { if (v.res === 'win') { confetti(); sfx('win'); } else if (!mis) sfx('bad'); }; if (mis) setTimeout(go, 2700); else go(); } }
     return;
   }
   if (v.g === 'wd') {
-    if (v.ph === 'role' && !S.seen['wr' + v.gid]) { S.seen['wr' + v.gid] = 1; S.hold = false; if (had) sfx('tick'); }
-    if (v.ph === 'desc') { const k = 'wd' + v.gid + '-' + v.rr + '-' + v.tie; if (!S.seen[k]) { S.seen[k] = 1; if (had) sfx('tick'); } }
+    if (v.ph === 'role' && !S.seen['wr' + v.gid]) { S.seen['wr' + v.gid] = 1; S.hold = false; if (had) sweep('誰是臥底', '睇詞語'); }
+    if (v.ph === 'desc') { const k = 'wd' + v.gid + '-' + v.rr + '-' + v.tie; if (!S.seen[k]) { S.seen[k] = 1; if (had) sweep(v.tie ? '平票' : `第 ${v.rr} 輪`, v.tie ? '佢哋再講一次' : '輪流描述'); } }
+    if (v.ph === 'vote') { const k = 'wv' + v.gid + '-' + v.rr + '-' + v.tie; if (!S.seen[k]) { S.seen[k] = 1; if (had) sweep(v.tie ? '再投' : '投票！', '60 秒', 'red'); } }
+    if (v.ph === 'guess' && v.lo && !S.seen['wg' + v.gid + '-' + v.lo.k]) { S.seen['wg' + v.gid + '-' + v.lo.k] = 1; if (had) sweep('臥底估詞', '60 秒', 'red'); }
     if (v.ph === 'out' && v.lo && !S.seen['wx' + v.gid + '-' + v.lo.k]) { S.seen['wx' + v.gid + '-' + v.lo.k] = 1; if (had) sfx(v.lo.id && v.lo.r !== 'C' ? 'good' : 'bad'); }
     if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
     return;
   }
   const rk = v.gid + '-' + v.rd;
-  if (v.ph === 'role' && !S.seen['ro' + rk]) { S.seen['ro' + rk] = 1; S.hold = false; if (had && prevPh !== 'role') sfx('tick'); }
-  if (v.ph === 'think' && !S.seen['th' + rk + '-' + v.sk]) { S.seen['th' + rk + '-' + v.sk] = 1; S.hold = false; if (had) sfx('tick'); }
-  if (v.ph === 'speak' && v.sp && !S.seen['sp' + rk + '-' + v.sp]) { S.seen['sp' + rk + '-' + v.sp] = 1; if (had) sfx(v.sp === ME.id ? 'good' : 'tick'); }
+  if (v.ph === 'role' && !S.seen['ro' + rk]) { S.seen['ro' + rk] = 1; S.hold = false; if (had && prevPh !== 'role') sweep(`第 ${v.rd + 1} 輪`, '判官 ' + nameOf(v, v.jd)); }
+  if (v.ph === 'think' && !S.seen['th' + rk + '-' + v.sk]) { S.seen['th' + rk + '-' + v.sk] = 1; S.hold = false; if (had) sweep(v.sk ? '換題' : '出題！', '諗 15 秒'); }
+  if (v.ph === 'speak' && !S.seen['sk' + rk]) { S.seen['sk' + rk] = 1; if (had) sweep('發言', '每人 30 秒'); }
+  if (v.ph === 'speak' && v.sp && !S.seen['sp' + rk + '-' + v.sp]) { S.seen['sp' + rk + '-' + v.sp] = 1; if (had) { if (v.sp === ME.id) { sweep('到你講！', '30 秒'); sfx('good'); } else sfx('tick'); } }
+  if (v.ph === 'judge' && !S.seen['jg' + rk]) { S.seen['jg' + rk] = 1; if (had) sweep('判決', '4 分鐘', 'red'); }
   if (v.ph === 'reveal' && !S.seen['v' + rk]) { S.seen['v' + rk] = 1; if (had && prevPh !== 'reveal' && v.why !== 'bh') sfx(v.why === 'ok' || v.why === 'el' ? 'good' : 'bad'); }
   if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
 }
@@ -2117,7 +2253,7 @@ function confetti() {
 const WSTEPS = [['role', '詞語'], ['desc', '描述'], ['vote', '投票'], ['out', '出局']];
 function stepsHtml(list, ph) {
   const cur = list.findIndex((s) => s[0] === (ph === 'guess' ? 'out' : ph));
-  return '<div class="steps">' + list.map((s, i) => (i ? `<div class="sl${i <= cur ? ' done' : ''}"></div>` : '') + `<div class="stp${i === cur ? ' on' : i < cur ? ' done' : ''}"><i>${i < cur ? '✓' : i + 1}</i><span>${s[1]}</span></div>`).join('') + '</div>';
+  return '<div class="steps">' + list.map((s, i) => (i ? `<div class="sl${i <= cur ? ' done' : ''}${i === cur ? ' nw' : ''}"></div>` : '') + `<div class="stp${i === cur ? ' on' : i < cur ? ' done' : ''}"><i>${i < cur ? '✓' : i + 1}</i><span>${s[1]}</span></div>`).join('') + '</div>';
 }
 function vHeadWd(v) {
   return `<div class="rh"><div class="rn">第 <b>${v.rr}</b> 輪</div><div class="ichip">剩 ${v.al.length} 人・臥底 ${v.nu} 個${v.nb ? '・白板 1 個' : ''}</div></div>${stepsHtml(WSTEPS, v.ph)}`;
@@ -2128,64 +2264,60 @@ function vWordCard(v) {
   if (!r) return '';
   const out = !v.al.includes(ME.id);
   let back;
-  if (r === 'B') back = `<div class="rc-b o"><div class="rl">你係白板</div><div class="tp">你冇詞語。聽其他人點講，扮識混入去，唔好俾人發現</div></div>`;
-  else back = `<div class="rc-b w"><div class="wk">你嘅詞語</div><div class="wv">${esc(r === 'U' ? v.wu : v.wc)}</div><div class="tp">${out ? '你已經出局' : '有人同你唔同詞語。描述時唔好講得太明'}</div></div>`;
-  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇詞語</div><div class="rc-s">放手就收埋，唔好俾人見到</div></div>`;
+  if (r === 'B') back = `<div class="rc-b o"><div class="rl">你係白板</div><div class="tp">冇詞語，扮識混入去</div></div>`;
+  else back = `<div class="rc-b w"><div class="wk">你嘅詞語</div><div class="wv">${esc(r === 'U' ? v.wu : v.wc)}</div>${out ? '<div class="tp">你已經出局</div>' : ''}</div>`;
+  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇詞語</div></div>`;
   return `<div class="rc${S.hold ? ' show' : ''}" data-hold><div class="rc-i">${front}${back}</div></div>`;
 }
 function vPlayWd(v) {
   const meIn = !!v.rl[ME.id], alive = v.al.includes(ME.id);
   const wt = v.wt.some((p) => p.id === ME.id);
-  const spect = !meIn ? `<div class="wait">${wt ? '遊戲進行緊，下一局先可以加入。可以先睇住。' : '你今局冇參加，坐定定睇住。'}</div>` : '';
+  const spect = !meIn ? `<div class="wait">${wt ? '觀戰中・下一局加入' : '觀戰中'}</div>` : '';
   let h = vHeadWd(v);
   if (v.ph === 'role') {
     const need = v.al.filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
-    const chips = need.map((id) => { const p = pOf(v, id), y = !!v.ok[id]; return `<span class="okc${y ? ' y' : ''}">${av(p, 'sm')}${esc(p.n)}${y ? ic('check') : ''}</span>`; }).join('');
+    const chips = okChips(v, need, v.ok);
     if (meIn) {
       h += vWordCard(v);
       const seen = S.seenRole[roleKey(v)], mine = !!v.ok[ME.id];
-      h += mine ? '<div class="wait">已記住，等其他人…</div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '記住咗' : '先撳住上面張卡睇詞語'}</button>`;
+      h += mine ? '<div class="wait">已記住，等其他人<span class="ld"><i></i><i></i><i></i></span></div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '記住咗' : '先撳住張卡睇詞語'}</button>`;
     } else h += spect;
     h += `<div class="sh"><span>睇咗詞語</span><small>${need.filter((id) => v.ok[id]).length}／${need.length}</small></div><div class="okl">${chips}</div>`;
     if (v.host === ME.id) h += '<button class="link" data-act="force">唔等，即刻開始描述</button>';
     return h;
   }
   if (v.ph === 'desc') {
-    const host = v.host === ME.id, first = pOf(v, v.ord[0]);
-    if (v.tie) h += `<div class="tip">平票！只有平票嘅人再講一次，之後再投</div>`;
-    const lim = v.dl ? ring('dl', v.dt0 || 1) : `<div class="ring"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/></svg><b>∞</b></div>`;
-    const sub = (v.dl ? '時間到自動投票；' : '唔限時；') + '任何人都可以發起投票，過半數同意就開始投票';
-    h += `<div class="tmr">${lim}<div><div class="tl">輪流描述</div><div class="ts">${sub}</div></div></div>`;
-    h += `<div class="spot idle">${ic('mic')}<div class="spot-n">${v.tie ? '平票嘅人再講一次' : '每人用一句描述自己個詞語'}</div><div class="spot-s">由 ${esc(first ? first.n : '')} 開始，照下面次序講；唔好講得太明，又要俾同伴知你係自己人</div></div>`;
+        const lim = v.dl ? ring('dl', v.dt0 || 1) : `<div class="ring"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/></svg><b>∞</b></div>`;
+    h += `<div class="tmr">${lim}<div><div class="tl">${v.tie ? '平票！佢哋再講' : '輪流描述'}</div><div class="ts">${v.dl ? '時間到自動投票' : '唔限時'}</div></div></div>`;
     const vs = v.al.filter((id) => { const q = pOf(v, id); return q && q.on && !q.gone; });
     const voter = vs.includes(ME.id);
     if (v.pr) {
       const by = pOf(v, v.pr.by), need = Math.floor(vs.length / 2) + 1, mineV = v.pr.y.includes(ME.id) ? 1 : v.pr.n.includes(ME.id) ? 0 : -1;
-      const btns = voter && mineV < 0 ? '<div class="row"><button class="btn ghost" data-act="pv" data-x="0">唔同意</button><button class="btn gold" data-act="pv" data-x="1">同意</button></div>' : `<div class="wait">${mineV === 1 ? '你同意咗，' : mineV === 0 ? '你唔同意，' : ''}等其他人…</div>`;
-      h += `<div class="tmr">${ring('prdl', PROP_MS)}<div><div class="tl">${esc(by ? by.n : '')} 發起投票</div><div class="ts">而家就開始投票？同意 ${v.pr.y.length}・唔同意 ${v.pr.n.length}（要 ${need} 個同意）</div></div></div>${btns}`;
+      const btns = voter && mineV < 0 ? '<div class="row"><button class="btn ghost" data-act="pv" data-x="0">唔同意</button><button class="btn gold" data-act="pv" data-x="1">同意</button></div>' : `<div class="wait">${mineV === 1 ? '你同意咗，' : mineV === 0 ? '你唔同意，' : ''}等其他人<span class="ld"><i></i><i></i><i></i></span></div>`;
+      h += `<div class="tmr">${ring('prdl', PROP_MS)}<div style="flex:1;min-width:0"><div class="tl">${esc(by ? by.n : '')} 發起投票</div>${meter(v.pr.y.length, v.pr.n.length, vs.length, need)}</div></div>${btns}`;
     } else if (voter) h += '<button class="btn gold big" data-act="prop">發起投票</button>';
-    if (!v.pr && v.prr && v.prr.ok === 0) h += '<div class="tip">上一次發起投票唔夠半數同意，繼續描述</div>';
+    if (!v.pr && v.prr && v.prr.ok === 0) h += '<div class="tip">唔夠半數同意，繼續描述</div>';
     const rows = v.ord.map((id, i) => {
       const q = pOf(v, id), mine = id === ME.id;
-      return `<div class="pr${mine ? ' me' : ''}${q && !q.on ? ' off' : ''}"><span class="no">${i + 1}</span>${av(q)}<span class="nm">${esc(q ? q.n : '?')}${mine ? '（你）' : ''}</span></div>`;
+      return `<div class="pr${mine ? ' me' : ''}${q && !q.on ? ' off' : ''}"><span class="no">${i + 1}</span>${av(q)}<span class="nm">${esc(q ? q.n : '?')}${mine ? '（你）' : ''}</span>${i === 0 ? `<span class="tag live">${ic('mic')}先講</span>` : ''}</div>`;
     }).join('');
-    h += `<div class="sh"><span>描述次序（建議）</span><small>${v.ord.length} 人</small></div><div class="plist">${rows}</div>`;
+    h += `<div class="sh"><span>次序</span><small>${v.ord.length} 人</small></div><div class="plist">${rows}</div>`;
     h += meIn ? `<div class="sh"><span>你嘅詞語</span>${alive ? '' : '<small>你已出局</small>'}</div>` + vWordCard(v) : spect;
     return h;
   }
   if (v.ph === 'vote') {
     const voters = v.al.filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
     const mine = v.vt[ME.id], canVote = alive && voters.includes(ME.id) && !mine;
-    h += `<div class="tmr">${ring('dl', VOTE_MS)}<div><div class="tl">${v.tie ? '平票再投' : '投票揪出臥底'}</div><div class="ts">${!alive ? '你已出局，睇住佢哋投' : mine ? `你投咗 ${esc(nameOf(v, mine))}，等其他人…` : '揀你覺得係臥底嘅人，投咗唔改得'}</div></div></div>`;
+    h += `<div class="tmr">${ring('dl', VOTE_MS)}<div><div class="tl">${v.tie ? '平票再投' : '投票揪出臥底'}</div>${!alive ? '<div class="ts">你已出局</div>' : ''}</div></div>`;
     const rows = v.cand.map((id) => {
       const q = pOf(v, id), me2 = id === ME.id;
       let right = '';
-      if (mine === id) right = `<span class="tag gold">${ic('check')}你投咗佢</span>`;
+      if (mine === id) { const q = anA('mv:' + S.scrK, 600, 'pp'); right = `<span class="tag gold${q.c}"${q.s}>${ic('check')}你投咗佢</span>`; }
       else if (canVote && !me2) right = `<button class="sb gold" data-act="vote" data-x="${id}">投佢</button>`;
       return `<div class="pr${me2 ? ' me' : ''}${q && !q.on ? ' off' : ''}">${av(q)}<span class="nm">${esc(q ? q.n : '?')}${me2 ? '（你）' : ''}</span>${right}</div>`;
     }).join('');
     h += `<div class="plist">${rows}</div>`;
-    const chips = voters.map((id) => { const q = pOf(v, id), y = !!v.vt[id]; return `<span class="okc${y ? ' y' : ''}">${av(q, 'sm')}${esc(q.n)}${y ? ic('check') : ''}</span>`; }).join('');
+    const chips = okChips(v, voters, v.vt);
     h += `<div class="sh"><span>已投票</span><small>${voters.filter((id) => v.vt[id]).length}／${voters.length}</small></div><div class="okl">${chips}</div>`;
     if (meIn) h += '<div class="sh"><span>你嘅詞語</span></div>' + vWordCard(v);
     else h += spect;
@@ -2194,11 +2326,11 @@ function vPlayWd(v) {
   if (v.ph === 'guess') {
     const lo = v.lo || {}, q = pOf(v, lo.id), mine = lo.id === ME.id;
     h += `<div class="res"><div class="who">${av(q, 'lg')}</div><div class="big">${esc(q ? q.n : '')} 出局</div><div class="rtag U">臥底</div></div>`;
-    h += `<div class="tmr">${ring('dl', GUESS_MS)}<div><div class="tl">${mine ? '你係臥底！最後機會' : '臥底估緊平民詞語…'}</div><div class="ts">${mine ? '估中平民嘅詞語，臥底就贏' : '佢估中平民嘅詞語，臥底就贏'}</div></div></div>`;
+    h += `<div class="tmr">${ring('dl', GUESS_MS)}<div><div class="tl">${mine ? '最後機會！' : '臥底估詞'}</div><div class="ts">估中平民詞語就贏</div></div></div>`;
     const civ = v.rl[ME.id] === 'C';
-    if (mine) h += '<div class="spot idle">' + ic('mic') + '<div class="spot-n">講出你估嘅平民詞語</div><div class="spot-s">大聲講出嚟，平民會判斷你估中定估錯</div></div>';
-    else if (civ) h += `<div class="pair"><div class="defn"><div class="k">平民詞語</div><div class="w">${esc(v.wc || '')}</div></div></div><div class="tip">聽臥底講完，撳一個判斷（第一個撳嘅平民算數）</div><div class="row"><button class="btn red" data-act="gj" data-x="1">估中</button><button class="btn gold" data-act="gj" data-x="0">估錯</button></div>`;
-    else h += '<div class="wait">等臥底講，平民判斷…</div>';
+    if (mine) h += '<div class="spot idle">' + ic('mic') + '<div class="spot-n">大聲講出嚟！</div></div>';
+    else if (civ) h += `<div class="pair"><div class="defn"><div class="k">平民詞語</div><div class="w">${esc(v.wc || '')}</div></div></div><div class="tip">佢估中咗？</div><div class="row"><button class="btn red" data-act="gj" data-x="1">估中</button><button class="btn gold" data-act="gj" data-x="0">估錯</button></div>`;
+    else h += '<div class="wait">等臥底講，平民判斷<span class="ld"><i></i><i></i><i></i></span></div>';
     return h;
   }
   // out：出局結果
@@ -2213,13 +2345,13 @@ function vPlayWd(v) {
     if (r === 'U' && 'gok' in lo) gtxt = lo.gto ? '<div class="tip">臥底冇估到（時間到）</div>' : `<div class="tip">${esc(nameOf(v, lo.gj))} 判斷臥底估${lo.gok ? '中' : '錯'}</div><div class="big ${lo.gok ? 'bad' : 'ok'}" style="font-size:24px">${lo.gok ? '估中咗！臥底贏' : '估錯咗！'}</div>`;
     res = `<div class="res"><div class="who">${av(q, 'lg')}</div><div class="big">${esc(q ? q.n : '')} 出局</div><div class="rtag ${r}">${ROLE_NAME[r]}</div><div class="big ${cls}" style="font-size:24px;margin-top:6px">${say}</div>${gtxt}</div>`;
   } else if (lo.tie) {
-    res = `<div class="res"><div class="big bad">平票！</div><div class="who">${lo.tie.map((id) => av(pOf(v, id), 'sm') + esc(nameOf(v, id))).join('、')}</div><div class="tip">佢哋要再講一次，之後大家再投</div></div>`;
+    res = `<div class="res"><div class="big bad">平票！</div><div class="who">${lo.tie.map((id) => av(pOf(v, id), 'sm') + esc(nameOf(v, id))).join('、')}</div></div>`;
   } else res = `<div class="res"><div class="big">冇人出局</div><div class="tip">${lo.tie2 ? '再平票，今輪冇人出局' : '冇人投票'}</div></div>`;
-  const cnt = lo.c || {};
-  const tally = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]).map((id) => `<div class="pr">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="dl m">${cnt[id]} 票</span></div>`).join('') || '<div class="wait">冇人投票</div>';
+  const cnt = lo.c || {}, mx = Math.max(1, ...Object.values(cnt));
+  const tally = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]).map((id) => `<div class="pr tl"><span class="vbar" style="--w:${(cnt[id] / mx).toFixed(3)}"></span>${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="dl m">${cnt[id]} 票</span></div>`).join('') || '<div class="wait">冇人投票</div>';
   let btn;
   if (v.host === ME.id) btn = `<button class="btn gold big" data-act="cont">${v.win ? '睇結果' : '繼續'}</button>`;
-  else btn = `<div class="wait">等房主撳「${v.win ? '睇結果' : '繼續'}」…</div>`;
+  else btn = `<div class="wait">等房主撳「${v.win ? '睇結果' : '繼續'}」<span class="ld"><i></i><i></i><i></i></span></div>`;
   h += `<div class="${anim ? 'anim' : ''}">${res}</div><div class="sh"><span>票數</span></div><div class="plist">${tally}</div>${btn}`;
   return h;
 }
@@ -2233,8 +2365,8 @@ function vEndWd(v) {
   }).join('');
   return `<div class="res"><div class="big ${big[1]}" style="font-size:36px">${big[0]}</div></div>
     <div class="pair"><div class="defn"><div class="k">平民詞語</div><div class="w">${esc(v.wc || '')}</div></div><div class="defn u"><div class="k">臥底詞語</div><div class="w">${esc(v.wu || '')}</div></div></div>
-    <div class="sh"><span>累計分數</span><small>平民贏每人 +1・臥底方贏每人 +3</small></div><div class="plist">${rows}</div>
-    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局…</div>'}
+    <div class="sh"><span>累計分數</span></div><div class="plist">${rows}</div>
+    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
     <button class="btn ghost" data-act="leave">離開房間</button>`;
 }
 const RULES_WD = `<div class="rules">
@@ -2253,31 +2385,30 @@ const RULES_WD = `<div class="rules">
   <p>分數一局一局累計，房主撳「再嚟一局」會換新詞語繼續。</p>
 </div>`;
 /* ---------- 心水數字：畫面 ---------- */
-const hearts = (n) => '<span class="hearts">' + Array.from({ length: XS_LIVES }, (_, i) => `<i class="${i < n ? 'on' : ''}">♥</i>`).join('') + '</span>';
+const hearts = (n, k) => { const q = k != null && n < XS_LIVES ? anA('hl:' + k + ':' + n, 800, 'brk') : { c: '', s: '' }; return '<span class="hearts">' + Array.from({ length: XS_LIVES }, (_, i) => `<i class="${i < n ? 'on' : ''}${i === n ? q.c : ''}"${i === n ? q.s : ''}>♥</i>`).join('') + '</span>'; };
 function vThemeXs(v, sm) {
   const t = XS_THEMES[v.th] || ['', '', ''];
-  const key = 'xt' + v.gid + '-' + v.lv + '-' + v.tk, deal = !S.seen[key]; S.seen[key] = 1;
-  return `<div class="wc${sm ? ' sm' : ''}${deal ? ' deal' : ''}"><div class="wc-in"><div class="wc-top"><span>題目</span><span>第 ${v.lv} 關</span></div><div class="ww"${t[0].length > 6 ? ' style="font-size:' + (sm ? 26 : 32) + 'px"' : ''}>${esc(t[0])}</div><div class="scale"><span><b>1</b>${esc(t[1])}</span><i></i><span>${esc(t[2])}<b>100</b></span></div></div></div>`;
+  const dq = anA('xt' + v.gid + '-' + v.lv + '-' + v.tk, 700, 'deal');
+  return `<div class="wc${sm ? ' sm' : ''}${dq.c}"${dq.s}><div class="wc-in"><div class="wc-top"><span>題目</span><span>第 ${v.lv} 關</span></div><div class="ww"${t[0].length > 6 ? ' style="font-size:' + (sm ? 26 : 32) + 'px"' : ''}>${esc(t[0])}</div><div class="scale"><span><b>1</b>${esc(t[1])}</span><i></i><span>${esc(t[2])}<b>100</b></span></div></div></div>`;
 }
 function vPlayXs(v) {
   const host = v.host === ME.id, mine = (v.hd && v.hd[ME.id]) || [], inG = !!(v.hd && v.hd[ME.id]);
   const left = Object.values(v.hd || {}).reduce((a, h) => a + h.length, 0);
-  let h = `<div class="rh"><div class="rn">第 <b>${v.lv}</b> ／ ${XS_LV} 關</div><div class="ichip">命 ${hearts(v.lives)}</div></div>`;
+  let h = `<div class="rh"><div class="rn">第 <b>${v.lv}</b> ／ ${XS_LV} 關</div><div class="ichip">命 ${hearts(v.lives, v.gid)}</div></div>`;
   h += vThemeXs(v, v.ph !== 'play' || !!(v.pile && v.pile.length));
   if (v.ph === 'clear') {
-    h += '<div class="res anim"><div class="big ok">過關！</div><div class="tip">全部數字排啱晒次序</div></div>';
+    h += '<div class="res"><div class="big ok">過關！</div></div>';
   }
   // 自己手牌
   if (inG && v.ph === 'play') {
     const hid = S.xsHide;
-    const cards = mine.length ? mine.map((n, i) => `<span class="nc${i === 0 ? ' first' : ''}">${hid ? '?' : n}</span>`).join('') : '<span class="tip">你啲牌出晒喇</span>';
-    h += `<div class="sh"><span>你手上嘅數字</span><button class="ib" data-act="xhide">${ic('eye')}${hid ? '顯示' : '收埋'}</button></div><div class="hand">${cards}</div>`;
+    const cards = mine.length ? mine.map((n, i) => `<span class="nc${i === 0 ? ' first' : ''}">${hid ? '?' : n}</span>`).join('') : '<span class="tip">出晒喇</span>';
+    h += `<div class="sh"><span>你嘅數字</span><button class="ib" data-act="xhide">${ic('eye')}${hid ? '顯示' : '收埋'}</button></div><div class="hand">${cards}</div>`;
     h += mine.length ? `<button class="btn gold big" data-act="xplay">出 ${hid ? '最細嗰張' : mine[0]}</button>` : '';
-    h += '<div class="tip">用題目形容你個數字（唔可以直接講數字），覺得自己最細就出</div>';
-  } else if (!inG) h += `<div class="wait">${v.wt.some((p) => p.id === ME.id) ? '遊戲進行緊，下一局先可以加入。可以先睇住。' : '你今局冇參加，坐定定睇住。'}</div>`;
+  } else if (!inG) h += `<div class="wait">${v.wt.some((p) => p.id === ME.id) ? '觀戰中・下一局加入' : '觀戰中'}</div>`;
   // 已出嘅牌
-  const pile = (v.pile || []).map((c) => { const q = pOf(v, c.id); return `<span class="pc${c.d ? ' d' : ''}"><b>${c.n}</b><small>${esc(q ? q.n : '?')}</small></span>`; }).join('');
-  h += `<div class="sh"><span>已出嘅牌</span><small>仲有 ${left} 張</small></div><div class="pile">${pile || '<span class="tip">未有人出牌</span>'}</div>`;
+  const pile = (v.pile || []).map((c, i) => { const q = pOf(v, c.id), f = anA('xp:' + v.gid + '-' + v.lv + '-' + v.tk + '-' + i, 650, 'fly'); return `<span class="pc${c.d ? ' d' : ''}${f.c}"${f.s}><b>${c.n}</b><small>${esc(q ? q.n : '?')}</small></span>`; }).join('');
+  h += `<div class="sh"><span>已出嘅牌</span><small>仲有 ${left} 張</small></div><div class="pile">${pile || '<span class="tip">未有人出</span>'}</div>`;
   // 各人剩幾多張
   const rows = v.pl.filter((p) => v.hd && v.hd[p.id]).map((p) => {
     const k = v.hd[p.id].length;
@@ -2285,7 +2416,7 @@ function vPlayXs(v) {
   }).join('');
   h += `<div class="sh"><span>玩家</span></div><div class="plist">${rows}</div>`;
   if (host && v.ph === 'play' && !(v.pile && v.pile.length)) h += '<button class="btn ghost" data-act="xtheme">換題目</button>';
-  if (v.ph === 'clear') h += host ? `<button class="btn gold big" data-act="xnext">去第 ${v.lv + 1} 關</button>` : '<div class="wait">等房主撳「下一關」…</div>';
+  if (v.ph === 'clear') h += host ? `<button class="btn gold big" data-act="xnext">去第 ${v.lv + 1} 關</button>` : '<div class="wait">等房主撳「下一關」<span class="ld"><i></i><i></i><i></i></span></div>';
   return h;
 }
 function vEndXs(v) {
@@ -2295,7 +2426,7 @@ function vEndXs(v) {
   return `<div class="res"><div class="big ${big[1]}" style="font-size:36px">${big[0]}</div><div class="tip">${big[2]}・剩低 ${hearts(v.lives)}</div></div>
     ${vThemeXs(v, true)}
     <div class="sh"><span>最後一關出咗嘅牌</span></div><div class="pile">${pile || '<span class="tip">冇</span>'}</div>
-    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局…</div>'}
+    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
     <button class="btn ghost" data-act="leave">離開房間</button>`;
 }
 const RULES_XS = `<div class="rules">
@@ -2321,8 +2452,8 @@ function vCdCard(v) {
   const r = v.rl[ME.id]; if (!r) return '';
   const c = cdCounts(v.hd[ME.id]);
   const sum = `<div class="cdsum"><span><b>${c.S}</b>安全</span><span><b>${c.D}</b>拆除</span><span><b>${c.X}</b>炸彈</span></div>`;
-  const back = `<div class="rc-b ${r === 'B' ? 'cb' : 'cr'}"><div class="rl">${CD_TEAM[r]}</div><div class="tp">${r === 'B' ? '剪晒全部拆除線就贏' : '引爆炸彈或者拖過 4 輪就贏'}</div>${v.ph === 'play' ? `<div class="tp">你手上嘅線（唔知邊條係邊條）：</div>${sum}` : ''}</div>`;
-  const front = `<div class="rc-f"><div class="emb">${ic('bomb')}</div><div class="rc-t">撳住睇身份${v.ph === 'play' ? '同線' : ''}</div><div class="rc-s">放手就收埋，唔好俾人見到</div></div>`;
+  const back = `<div class="rc-b ${r === 'B' ? 'cb' : 'cr'}"><div class="rl">${CD_TEAM[r]}</div><div class="tp">${r === 'B' ? '剪晒拆除線' : '剪中炸彈／拖過 4 輪'}</div>${v.ph === 'play' ? sum : ''}</div>`;
+  const front = `<div class="rc-f"><div class="emb">${ic('bomb')}</div><div class="rc-t">撳住睇身份${v.ph === 'play' ? '同線' : ''}</div></div>`;
   return `<div class="rc${S.hold ? ' show' : ''}" data-hold><div class="rc-i">${front}${back}</div></div>`;
 }
 function vPlayCd(v) {
@@ -2332,19 +2463,19 @@ function vPlayCd(v) {
   if (v.ph === 'role') {
     h += `<div class="cdteam"><span class="b">拆彈組 ${n === 4 || n === 7 ? (cfg[0] - 1) + '–' + cfg[0] : cfg[0]} 人</span><span class="r">炸彈客 ${n === 4 || n === 7 ? (cfg[1] - 1) + '–' + cfg[1] : cfg[1]} 人</span></div>`;
     const need = Object.keys(v.rl).filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
-    const chips = need.map((id) => { const p = pOf(v, id), y = !!v.ok[id]; return `<span class="okc${y ? ' y' : ''}">${av(p, 'sm')}${esc(p.n)}${y ? ic('check') : ''}</span>`; }).join('');
+    const chips = okChips(v, need, v.ok);
     if (meIn) {
       h += vCdCard(v);
       const seen = S.seenRole[roleKey(v)], mine = !!v.ok[ME.id];
-      h += mine ? '<div class="wait">已記住，等其他人…</div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '記住咗' : '先撳住上面張卡睇身份'}</button>`;
-    } else h += '<div class="wait">遊戲進行緊，下一局先可以加入。</div>';
+      h += mine ? '<div class="wait">已記住，等其他人<span class="ld"><i></i><i></i><i></i></span></div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '記住咗' : '先撳住張卡睇身份'}</button>`;
+    } else h += '<div class="wait">觀戰中・下一局加入</div>';
     h += `<div class="sh"><span>睇咗身份</span><small>${need.filter((id) => v.ok[id]).length}／${need.length}</small></div><div class="okl">${chips}</div>`;
     if (v.host === ME.id) h += '<button class="link" data-act="force">唔等，即刻開始</button>';
     return h;
   }
   const hp = pOf(v, v.hold), myTurn = v.hold === ME.id && v.ph === 'play';
   const pulse = v.ev && !S.seen['cp' + v.gid + '-' + v.ev.k] ? ' pulse' : ''; if (v.ev) S.seen['cp' + v.gid + '-' + v.ev.k] = 1;
-  h += `<div class="holdbar${myTurn ? ' me' : ''}${pulse}"><span class="sc2">${ic('scis')}</span><div><div class="t1">${myTurn ? '輪到你剪！' : esc(hp ? hp.n : '') + ' 拎住剪刀'}</div><div class="t2">${myTurn ? '撳其他人一條線剪佢；大家可以隨便傾、可以講大話' : '大家講吓自己有咩線，幫佢揀'}</div></div></div>`;
+  h += `<div class="holdbar${myTurn ? ' me' : ''}${pulse}"><span class="sc2">${ic('scis')}</span><div><div class="t1">${myTurn ? '輪到你剪！' : esc(hp ? hp.n : '') + ' 拎住剪刀'}</div></div></div>`;
   const rows = v.pl.filter((p) => v.rl[p.id]).map((p) => {
     const me = p.id === ME.id, hand = v.hd[p.id] || [], rev = v.rv[p.id] || [];
     const can = myTurn && !me && p.on;
@@ -2358,7 +2489,7 @@ function vPlayCd(v) {
   if (v.ev) S.seen['cf' + v.gid + '-' + v.ev.k] = 1;
   h += `<div class="plist">${rows}</div>`;
   if (meIn) h += '<div class="sh"><span>你嘅身份同線</span></div>' + vCdCard(v);
-  else h += '<div class="wait">遊戲進行緊，下一局先可以加入。可以先睇住。</div>';
+  else h += '<div class="wait">觀戰中・下一局加入</div>';
   return h;
 }
 function vEndCd(v) {
@@ -2372,8 +2503,8 @@ function vEndCd(v) {
     return `<div class="pr${p.id === ME.id ? ' me' : ''}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}</span>${tag}${d ? `<span class="dl p">+${d}</span>` : ''}<span class="sc">${p.sc} 分</span></div>${rev ? `<div class="wires" style="min-height:0;padding:0 0 10px 48px">${rev}</div>` : ''}`;
   }).join('');
   return `<div class="res"><div class="big ${cls}" style="font-size:36px">${big}</div><div class="tip">${why}・拆除 ${v.dfx}／${n}・第 ${v.cr} 輪</div></div>
-    <div class="sh"><span>身份同累計分數</span><small>贏嗰隊每人 +1</small></div><div class="plist">${rows}</div>
-    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局…</div>'}
+    <div class="sh"><span>身份同累計分數</span></div><div class="plist">${rows}</div>
+    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
     <button class="btn ghost" data-act="leave">離開房間</button>`;
 }
 /* 剪線特效：大翻牌；炸彈爆炸（閃光、衝擊波、碎片、震畫面）；拆除綠光 */
@@ -2394,7 +2525,7 @@ function cdFx(v, ev) {
       parts += `<i style="--dx:${Math.cos(a) * d}px;--dy:${Math.sin(a) * d}px;--rt:${Math.random() * 720}deg;--pc:${cols[i % cols.length]};animation-delay:${Math.random() * 0.12}s"></i>`;
     }
     bm.innerHTML = parts;
-    setTimeout(() => { document.body.appendChild(bm); setTimeout(() => bm.remove(), 1500); if (ev.t === 'X') { const app = $('#app'); app.classList.remove('shake'); void app.offsetWidth; app.classList.add('shake'); setTimeout(() => app.classList.remove('shake'), 700); } }, 550);
+    setTimeout(() => { document.body.appendChild(bm); setTimeout(() => bm.remove(), 1500); if (ev.t === 'X') shakeApp(); }, 550);
   }
   sfx(ev.t === 'X' ? 'boom' : ev.t === 'D' ? 'good' : 'tick');
 }
@@ -2437,14 +2568,14 @@ function tMemo(v) {
 }
 function vTtCard(v) {
   const r = v.rl[ME.id]; if (!r) return '';
-  const tip = r === 'S' ? '揪出偷撻賊就贏' : r === 'T' ? '唔好俾人投中你就贏' : '幫偷撻賊唔俾人投中';
-  const back = `<div class="rc-b t${r}"><div class="rl">你係${TT_ROLE[r]}</div><div class="tp">${tip}・你粒骰：</div>${diceHtml(v.dice[ME.id])}${tMemo(v)}</div>`;
-  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇身份同骰</div><div class="rc-s">放手就收埋，唔好俾人見到</div></div>`;
+  const back = `<div class="rc-b t${r}"><div class="rl">你係${TT_ROLE[r]}</div>${diceHtml(v.dice[ME.id])}${tMemo(v)}</div>`;
+  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇身份同骰</div></div>`;
   return `<div class="rc tall${S.hold ? ' show' : ''}" data-hold><div class="rc-i">${front}${back}</div></div>`;
 }
 function vTray(v) {
   const gone = v.stolen && v.ph !== 'role' && v.ph !== 'night' ? 1 : 0;
-  return `<div class="tray"><span class="plate"></span>${[0, 1, 2].map(() => `<span class="tart${gone ? ' gone' : ''}"></span>`).join('')}${gone ? '<span class="gonetxt">蛋撻唔見咗！</span>' : ''}</div>`;
+  const a = gone ? an('tg:' + v.gid, 1400) : '';
+  return `<div class="tray"><span class="plate"></span>${[0, 1, 2].map((i) => `<span class="tart${gone ? ' gone' : ''}${a ? ' tg' : ''}" style="--i:${i};${a}"></span>`).join('')}${gone ? '<span class="gonetxt">蛋撻唔見咗！</span>' : ''}</div>`;
 }
 function vPlayTt(v) {
   const me = ME.id, meIn = !!v.rl[me], r = v.rl[me], host = v.host === me;
@@ -2452,12 +2583,12 @@ function vPlayTt(v) {
   if (v.ph === 'role') {
     h += vTray(v);
     const need = v.al.filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
-    const chips = need.map((id) => { const p = pOf(v, id), y = !!v.ok[id]; return `<span class="okc${y ? ' y' : ''}">${av(p, 'sm')}${esc(p.n)}${y ? ic('check') : ''}</span>`; }).join('');
+    const chips = okChips(v, need, v.ok);
     if (meIn) {
       h += vTtCard(v);
       const seen = S.seenRole[roleKey(v)], mine = !!v.ok[me];
-      h += mine ? '<div class="wait">已記住，等其他人…</div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '記住咗，瞓覺' : '先撳住上面張卡睇身份同骰'}</button>`;
-    } else h += '<div class="wait">遊戲進行緊，下一局先可以加入。</div>';
+      h += mine ? '<div class="wait">已記住，等其他人<span class="ld"><i></i><i></i><i></i></span></div>' : `<button class="btn gold big" data-act="ok" ${seen ? '' : 'disabled'}>${seen ? '記住咗，瞓覺' : '先撳住張卡睇身份同骰'}</button>`;
+    } else h += '<div class="wait">觀戰中・下一局加入</div>';
     h += `<div class="sh"><span>準備瞓覺</span><small>${need.filter((id) => v.ok[id]).length}／${need.length}</small></div><div class="okl">${chips}</div>`;
     if (host) h += '<button class="link" data-act="force">唔等，即刻天黑</button>';
     return h;
@@ -2465,75 +2596,74 @@ function vPlayTt(v) {
   if (v.ph === 'night') {
     const awake = meIn && v.dice[me] === v.hr;
     h += `<div class="clock"><span class="moon"></span><div><b>凌晨 ${v.hr} 點</b><small>${awake ? '你醒咗！' : '大家瞓緊覺…'}</small></div><span style="margin-left:auto">${ring('dl', HOUR_MAX)}</span></div>`;
-    if (!awake) return h + '<div class="sleep"><div class="z">zZz</div><div class="s1">你瞓緊覺</div><div class="s2">閉埋眼，等主持叫你嘅鐘數</div></div>';
+    if (!awake) return h + sleepHtml('你瞓緊覺');
     const others = v.al.filter((id) => id !== me && v.dice[id] === v.hr);
     const th = Object.keys(v.rl).find((id) => v.rl[id] === 'T');
-    let body = `<div class="a1">你醒咗！</div><div class="a2">${others.length ? '同你一齊醒：' + others.map((id) => esc(nameOf(v, id))).join('、') : '得你一個醒'}</div>`;
+    let body = `<div class="a1">你醒咗！</div><div class="mates">${others.length ? '一齊醒' + others.map((id) => `<span class="okc">${av(pOf(v, id), 'sm')}${esc(nameOf(v, id))}</span>`).join('') : '<span class="okc">得你一個醒</span>'}</div>`;
     if (r === 'T') {
       body += v.stolen ? '<div class="seen">你偷咗蛋撻！</div>' : '<button class="btn red big" data-act="steal">偷蛋撻</button>';
     } else if (others.includes(th)) {
       body += v.stolen ? `<div class="seen">你見到 ${esc(nameOf(v, th))} 偷咗蛋撻！</div>` : `<div class="a2">${esc(nameOf(v, th))} 鬼鬼祟祟咁…</div>`;
     } else if (!others.length) {
       if (v.pk[me]) body += `<div class="a2">${esc(nameOf(v, v.pk[me].t))} 粒骰係</div><div style="display:flex;justify-content:center">${diceHtml(v.pk[me].d, 'lg')}</div>`;
-      else body += '<div class="a2">得你一個醒，可以偷睇一個人粒骰：</div><div class="plist">' + v.al.filter((id) => id !== me).map((id) => `<button class="pr" data-act="peek" data-x="${id}">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="go">${ic('eye')}睇佢粒骰</span></button>`).join('') + '</div>';
+      else body += '<div class="a2">偷睇一個人粒骰</div><div class="plist">' + v.al.filter((id) => id !== me).map((id) => `<button class="pr" data-act="peek" data-x="${id}">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="go">${ic('eye')}睇</span></button>`).join('') + '</div>';
     }
     const can = r !== 'T' || v.stolen;
-    body += v.hd[me] ? '<div class="wait">瞓返喇，等其他人…</div>' : `<button class="btn ghost" data-act="tdone" ${can ? '' : 'disabled'}>瞓返</button>`;
+    body += v.hd[me] ? '<div class="wait">瞓返喇，等其他人<span class="ld"><i></i><i></i><i></i></span></div>' : `<button class="btn ghost" data-act="tdone" ${can ? '' : 'disabled'}>瞓返</button>`;
     return h + `<div class="awake">${body}</div>`;
   }
   if (v.ph === 'acc') {
     h += '<div class="clock"><span class="moon"></span><div><b>6 點之後</b><small>偷撻賊揀共犯</small></div></div>';
-    if (r !== 'T') return h + '<div class="sleep"><div class="z">zZz</div><div class="s1">你瞓緊覺</div><div class="s2">偷撻賊揀緊共犯…</div></div>';
+    if (r !== 'T') return h + sleepHtml('偷撻賊揀緊共犯');
     const rows = v.al.filter((id) => id !== me).map((id) => {
       const on = v.acc.includes(id);
       return on ? `<div class="pr">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="tag bad">共犯</span></div>` : `<button class="pr" data-act="tacc" data-x="${id}">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="go">揀佢</span></button>`;
     }).join('');
-    return h + `<div class="awake"><div class="a1">揀 ${v.accN} 個共犯</div><div class="a2">共犯會知道你係偷撻賊，幫你唔俾人投中（已揀 ${v.acc.length}／${v.accN}）</div><div class="plist">${rows}</div></div>`;
+    return h + `<div class="awake"><div class="a1">揀 ${v.accN} 個共犯</div><div class="a2">${v.acc.length}／${v.accN}</div><div class="plist">${rows}</div></div>`;
   }
   if (v.ph === 'day') {
     h += vTray(v);
     const vs = v.al.filter((id) => { const q = pOf(v, id); return q && q.on && !q.gone; });
     const voter = vs.includes(me);
     const lim = v.dl ? ring('dl', v.dt0 || 1) : `<div class="ring"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/></svg><b>∞</b></div>`;
-    h += `<div class="tmr">${lim}<div><div class="tl">天光討論</div><div class="ts">${v.dl ? '時間到自動投票；' : '唔限時；'}任何人都可以發起投票，過半數同意就開始投票</div></div></div>`;
+    h += `<div class="tmr">${lim}<div><div class="tl">天光討論</div><div class="ts">${v.dl ? '時間到自動投票' : '唔限時'}</div></div></div>`;
     if (v.pr) {
       const by = pOf(v, v.pr.by), need = Math.floor(vs.length / 2) + 1, mineV = v.pr.y.includes(me) ? 1 : v.pr.n.includes(me) ? 0 : -1;
-      const btns = voter && mineV < 0 ? '<div class="row"><button class="btn ghost" data-act="pv" data-x="0">唔同意</button><button class="btn gold" data-act="pv" data-x="1">同意</button></div>' : `<div class="wait">${mineV === 1 ? '你同意咗，' : mineV === 0 ? '你唔同意，' : ''}等其他人…</div>`;
-      h += `<div class="tmr">${ring('prdl', PROP_MS)}<div><div class="tl">${esc(by ? by.n : '')} 發起投票</div><div class="ts">而家就開始投票？同意 ${v.pr.y.length}・唔同意 ${v.pr.n.length}（要 ${need} 個同意）</div></div></div>${btns}`;
+      const btns = voter && mineV < 0 ? '<div class="row"><button class="btn ghost" data-act="pv" data-x="0">唔同意</button><button class="btn gold" data-act="pv" data-x="1">同意</button></div>' : `<div class="wait">${mineV === 1 ? '你同意咗，' : mineV === 0 ? '你唔同意，' : ''}等其他人<span class="ld"><i></i><i></i><i></i></span></div>`;
+      h += `<div class="tmr">${ring('prdl', PROP_MS)}<div style="flex:1;min-width:0"><div class="tl">${esc(by ? by.n : '')} 發起投票</div>${meter(v.pr.y.length, v.pr.n.length, vs.length, need)}</div></div>${btns}`;
     } else if (voter) h += '<button class="btn gold big" data-act="prop">發起投票</button>';
-    if (!v.pr && v.prr && v.prr.ok === 0) h += '<div class="tip">上一次發起投票唔夠半數同意，繼續討論</div>';
-    h += '<div class="tip">講吓你幾點醒、見到咩、偷睇到咩（可以講大話）</div>';
-    if (meIn) h += '<div class="sh"><span>你嘅身份、骰同夜晚記錄</span></div>' + vTtCard(v);
+    if (!v.pr && v.prr && v.prr.ok === 0) h += '<div class="tip">唔夠半數同意，繼續討論</div>';
+    if (meIn) h += '<div class="sh"><span>你嘅記錄</span></div>' + vTtCard(v);
     return h;
   }
   // vote
   const voters = v.al.filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone; });
   const mine = v.vt[me], canVote = voters.includes(me) && !mine;
-  h += `<div class="tmr">${ring('dl', VOTE_MS)}<div><div class="tl">投票揪出偷撻賊</div><div class="ts">${mine ? `你投咗 ${esc(nameOf(v, mine))}，等其他人…` : '揀你覺得係偷撻賊嘅人，投咗唔改得'}</div></div></div>`;
+  h += `<div class="tmr">${ring('dl', VOTE_MS)}<div><div class="tl">投票揪出偷撻賊</div></div></div>`;
   const rows = v.cand.map((id) => {
     const q = pOf(v, id), me2 = id === me;
     let right = '';
-    if (mine === id) right = `<span class="tag gold">${ic('check')}你投咗佢</span>`;
+    if (mine === id) { const q = anA('mv:' + S.scrK, 600, 'pp'); right = `<span class="tag gold${q.c}"${q.s}>${ic('check')}你投咗佢</span>`; }
     else if (canVote && !me2) right = `<button class="sb gold" data-act="vote" data-x="${id}">投佢</button>`;
     return `<div class="pr${me2 ? ' me' : ''}${q && !q.on ? ' off' : ''}">${av(q)}<span class="nm">${esc(q ? q.n : '?')}${me2 ? '（你）' : ''}</span>${right}</div>`;
   }).join('');
-  const chips = voters.map((id) => { const q = pOf(v, id), y = !!v.vt[id]; return `<span class="okc${y ? ' y' : ''}">${av(q, 'sm')}${esc(q.n)}${y ? ic('check') : ''}</span>`; }).join('');
+  const chips = okChips(v, voters, v.vt);
   h += `<div class="plist">${rows}</div><div class="sh"><span>已投票</span><small>${voters.filter((id) => v.vt[id]).length}／${voters.length}</small></div><div class="okl">${chips}</div>`;
-  if (meIn) h += '<div class="sh"><span>你嘅身份、骰同夜晚記錄</span></div>' + vTtCard(v);
+  if (meIn) h += '<div class="sh"><span>你嘅記錄</span></div>' + vTtCard(v);
   return h;
 }
 function vEndTt(v) {
   const host = v.host === ME.id, th = Object.keys(v.rl).find((id) => v.rl[id] === 'T');
   const big = v.win === 'S' ? ['伙記贏！', 'ok', `捉到偷撻賊 ${esc(nameOf(v, th))}`] : v.win === 'T' ? ['偷撻賊贏！', 'bad', `偷撻賊係 ${esc(nameOf(v, th))}，冇俾人投中`] : ['提早完場', '', `偷撻賊係 ${esc(nameOf(v, th))}`];
-  const tv = v.tv || {};
+  const tv = v.tv || {}, mx = Math.max(1, ...Object.values(tv));
   const rows = ranked(v).map(({ p, rank }) => {
     const r = v.rl[p.id], d = v.dt[p.id], n = tv[p.id] || 0, top = (v.top || []).includes(p.id);
     const tag = r ? `<span class="rtag sm ${r === 'S' ? 'C' : 'U'}">${TT_ROLE[r]}</span>` : '';
-    return `<div class="pr${p.id === ME.id ? ' me' : ''}">${r ? diceHtml(v.dice[p.id], 'sm') : ''}${av(p)}<span class="nm">${esc(p.n)}${n ? `<small class="outs">${n} 票${top ? '・最高' : ''}</small>` : ''}</span>${tag}${d ? `<span class="dl p">+${d}</span>` : ''}<span class="sc">${p.sc} 分</span></div>`;
+    return `<div class="pr tl${p.id === ME.id ? ' me' : ''}">${n ? `<span class="vbar" style="--w:${(n / mx).toFixed(3)}"></span>` : ''}${r ? diceHtml(v.dice[p.id], 'sm') : ''}${av(p)}<span class="nm">${esc(p.n)}${n ? `<small class="outs">${n} 票${top ? '・最高' : ''}</small>` : ''}</span>${tag}${d ? `<span class="dl p">+${d}</span>` : ''}<span class="sc">${p.sc} 分</span></div>`;
   }).join('');
   return `<div class="res"><div class="big ${big[1]}" style="font-size:36px">${big[0]}</div><div class="tip">${big[2]}・蛋撻喺凌晨 ${v.stolen && v.stolen < 7 ? v.stolen : '?'} 點唔見咗</div></div>
-    <div class="sh"><span>身份、骰同票數</span><small>贏嗰邊每人 +1</small></div><div class="plist">${rows}</div>
-    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局…</div>'}
+    <div class="sh"><span>身份、骰同票數</span></div><div class="plist">${rows}</div>
+    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
     <button class="btn ghost" data-act="leave">離開房間</button>`;
 }
 const RULES_TT = `<div class="rules">
@@ -2586,7 +2716,7 @@ function renderModal() {
       <div class="cl">系統顏色</div><div class="seg">${[['cream', '奶油色'], ['dark', '深夜金']].map((o) => `<button class="${THEME.cur === o[0] ? 'on' : ''}" data-act="theme" data-x="${o[0]}">${o[1]}</button>`).join('')}</div>
       <div class="cl">聲音</div><div class="seg">${[[true, '開'], [false, '閂']].map((o) => `<button class="${SND.on === o[0] ? 'on' : ''}" data-act="snd" data-x="${o[0] ? 1 : 0}">${o[1]}</button>`).join('')}</div>
       <div class="ver" style="margin:4px 0 10px">版本 ${esc(VER)}</div>
-      <button class="btn gold" data-act="mclose">完成</button>`;
+      ${S.screen === 'room' && S.view ? `<button class="btn ghost" data-act="rules">${ic('book')}玩法</button>` : ''}<button class="btn gold" data-act="mclose">完成</button>`;
   } else if (m.type === 'scores' && S.view) {
     const v = S.view, host = v.host === ME.id;
     const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}${p.gone ? '<span class="tag">走咗</span>' : !p.on ? '<span class="tag">離線</span>' : ''}<span class="sc">${p.sc} 分</span></div>`).join('');
@@ -2730,6 +2860,15 @@ function sfx(k) {
     else if (k === 'end') { tone(880, 0, 0.18, 'square', 0.08); tone(880, 0.25, 0.18, 'square', 0.08); tone(880, 0.5, 0.35, 'square', 0.08); }
     else if (k === 'boom') { tone(110, 0, 0.5, 'sawtooth', 0.22); tone(70, 0.04, 0.9, 'square', 0.14); tone(45, 0.1, 1.1, 'sawtooth', 0.12); }
     else if (k === 'win') { [523, 659, 784, 1046].forEach((f, i) => tone(f, i * 0.13, 0.35)); }
+    else if (k === 'swish') {
+      const c = SND.ctx, n = Math.floor(c.sampleRate * 0.4), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+      const src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain(), t = c.currentTime;
+      f.type = 'bandpass'; f.Q.value = 1.1; f.frequency.setValueAtTime(450, t); f.frequency.exponentialRampToValueAtTime(3400, t + 0.26);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.22, t + 0.08); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+      src.buffer = buf; src.connect(f); f.connect(g); g.connect(c.destination); src.start(t); src.stop(t + 0.42);
+      tone(988, 0.14, 0.14, 'triangle', 0.05);
+    }
   } catch (e) { /* 略過 */ }
 }
 
@@ -2800,7 +2939,7 @@ fixView();
 })();
 
 /* 測試用（Playwright）：睇到而家狀態 */
-window.__bgr = { S, get HS() { return HS; }, ME, WORDS };
+window.__bgr = { S, get HS() { return HS; }, ME, WORDS, render };
 })();
 </script>
 </body>
