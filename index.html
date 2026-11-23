@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-23-04';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-23-05';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -428,6 +428,107 @@ button.wcd.can:active{transform:rotateX(0) translateY(-10px) scale(1.12);animati
 @keyframes cdArtIn{0%{opacity:0;transform:translate3d(-40%,0,0) scale(1.2)}100%{opacity:1;transform:none}}
 .stage.enter .cdwin .big{animation:slam .6s cubic-bezier(.2,1.5,.35,1) calc(260ms + var(--et)) backwards}
 .stage.enter .cdwin .tip{animation:pop .5s cubic-bezier(.2,1.4,.4,1) calc(420ms + var(--et)) backwards}
+/* 真定作插畫（2026-11-23-05）：身份卡、判官卡、古書題目卡、封住嘅卷軸、發言舞台、結果橫幅、真正意思卡 */
+.cdart.zJ{background-image:var(--zdJ)}.cdart.zH{background-image:var(--zdH)}.cdart.zL{background-image:var(--zdL)}
+.rc-f.cdf.zdf{background-image:var(--zdFR)}
+.rc-b.cdr.zH{background:radial-gradient(120% 110% at 85% 0%,#1f9a64,#062a1c 75%);box-shadow:inset 0 0 0 1.5px rgba(130,240,190,.8),0 16px 36px rgba(0,0,0,.45)}
+.rc-b.cdr.zL{background:radial-gradient(120% 110% at 85% 0%,#b02a5e,#2a0618 75%);box-shadow:inset 0 0 0 1.5px rgba(255,140,190,.8),0 16px 36px rgba(0,0,0,.45)}
+.rc-b.cdr.zH .rl{color:#b8ffd9}.rc-b.cdr.zL .rl{color:#ffc4dc}
+.rc-b.cdr .rl.s{font-size:25px;letter-spacing:2px}
+.rc-b.cdr .ex{font-size:15px;line-height:1.55;max-height:122px;padding:0;margin-top:6px;text-align:left}
+.rc-b.cdr.out .cdart{opacity:.75}
+.zstp,.zstp2{display:inline-block;font-family:var(--serif);font-weight:900;color:#fff4ea;background:#c3203d;border-radius:6px;box-shadow:inset 0 0 0 2px #fff4ea,inset 0 0 0 4px #c3203d,0 4px 10px rgba(0,0,0,.35)}
+.rc-b .zstp2{position:absolute;left:9%;top:58%;padding:2px 4px 2px 9px;font-size:20px;letter-spacing:5px;transform:rotate(-12deg)}
+.idc.zj{flex-direction:row;align-items:stretch;padding:0;height:206px;text-align:left;overflow:hidden;background:radial-gradient(120% 110% at 85% 0%,#3468c0,#0d1a3a 75%);box-shadow:inset 0 0 0 1.5px rgba(156,194,255,.8),0 16px 36px rgba(0,0,0,.45)}
+.idc.zj .cdart{width:47%;flex:none;-webkit-mask-image:linear-gradient(90deg,#000 70%,transparent);mask-image:linear-gradient(90deg,#000 70%,transparent)}
+.idc.zj .cdtx{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:14px 16px 14px 2px}
+.idc.zj .rl{font-size:27px;margin:0;color:#d6e6ff}
+.idc.zj:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.22) 50%,rgba(255,255,255,0) 60%);transform:translate3d(-110%,0,0);animation:zdSh 4.8s cubic-bezier(.4,0,.2,1) var(--lp,0s) infinite;pointer-events:none}
+@keyframes zdSh{0%,62%{transform:translate3d(-110%,0,0)}100%{transform:translate3d(110%,0,0)}}
+.wc.zd{padding:7px;background:linear-gradient(160deg,#7a3e1c,#3a1808 55%,#6a3214);box-shadow:inset 0 0 0 1.5px #c9963c,inset 0 0 0 3px rgba(0,0,0,.35),0 18px 40px rgba(0,0,0,.45)}
+html[data-theme="cream"] .wc.zd{box-shadow:inset 0 0 0 1.5px #c9963c,inset 0 0 0 3px rgba(0,0,0,.35),0 14px 30px rgba(80,55,15,.3)}
+.wc.zd .wc-in{overflow:hidden;padding:16px 18px;color:#2a1408;background:var(--zdMT) center bottom/100% auto no-repeat,radial-gradient(120% 100% at 50% 25%,#fffaf0,#f4e6c4 65%,#e3cb98)}
+.wc.zd .wc-in:before{inset:5px;border-color:rgba(138,90,40,.3)}
+.wc.zd .wc-top{position:relative;padding:0 16px;color:#8a2a1a}
+.wc.zd .ww{position:relative;color:#24120a;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.wc.zd .wc-pts{position:relative;color:#7a5a30}
+.zcn{position:absolute;width:24px;height:24px;background:var(--zdCN) center/contain no-repeat;pointer-events:none}
+.zcn.tl{left:6px;top:6px}.zcn.tr{right:6px;top:6px;transform:scaleX(-1)}.zcn.bl{left:6px;bottom:6px;transform:scaleY(-1)}.zcn.br{right:6px;bottom:6px;transform:scale(-1)}
+.wc.zd.sm .zcn{width:18px;height:18px}
+.zseal{position:absolute;right:16px;bottom:12px;width:40px;height:40px;background:var(--zdSEAL) center/contain no-repeat;transform:rotate(-8deg);opacity:.92;pointer-events:none}
+.wc.zd.sm .zseal{width:28px;height:28px;right:12px;bottom:8px}
+.wc.zd.seal .wc-in{display:flex;align-items:flex-end;justify-content:center;height:108px;padding:0;color:#f2d892;background:#140a18 var(--zdSC) center/cover no-repeat}
+.wc.zd.seal .wc-in:before{border-color:rgba(224,182,92,.3)}
+.wc.zd.seal .wc-in:after{content:"";position:absolute;left:50%;top:50%;width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;background:radial-gradient(circle,rgba(255,120,120,.45),rgba(255,120,120,0) 65%);animation:breathe 2.4s ease-in-out var(--lp,0s) infinite;pointer-events:none}
+.wc.zd.seal .sl1{position:relative;margin:0 0 6px;font-size:15px;letter-spacing:5px;text-indent:5px;text-shadow:0 2px 6px rgba(0,0,0,.85)}
+.wc.zd .zink,.wc.zd .zsps{position:absolute;left:50%;top:50%;width:0;height:0;pointer-events:none}
+.wc.zd .zink:before{content:"";position:absolute;left:-230px;top:-230px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,150,0) 20%,rgba(255,226,150,.6) 31%,rgba(255,226,150,0) 47%);opacity:0}
+.wc.zd .zsps i{position:absolute;left:0;top:-1.5px;width:var(--l);height:3px;border-radius:3px;background:var(--c);box-shadow:0 0 6px var(--c);transform-origin:0 50%;opacity:0}
+.wc.zd.deal{transform-origin:50% 50%;animation:zdDeal .75s cubic-bezier(.16,1,.3,1) var(--et,0ms) backwards}
+@keyframes zdDeal{0%{opacity:0;transform:perspective(900px) translate3d(0,-60px,0) rotateX(-110deg) scale(.7)}45%{opacity:1}70%{transform:perspective(900px) rotateX(10deg) scale(1.03)}100%{opacity:1;transform:none}}
+.wc.zd.deal .zink:before{animation:zdInk .9s cubic-bezier(.15,.7,.3,1) calc(var(--et,0ms) + .3s) both}
+@keyframes zdInk{0%{opacity:1;transform:scale(.25)}100%{opacity:0;transform:scale(1.15)}}
+.wc.zd.deal .zsps i{animation:cdSp .8s cubic-bezier(.1,.75,.3,1) calc(var(--et,0ms) + .35s + var(--dl)) both}
+.wc.zd.deal .wc-in:after{content:"";position:absolute;top:-20%;bottom:-20%;left:-40%;width:36%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.8) 50%,rgba(255,255,255,0));animation:zdSheen .7s cubic-bezier(.3,0,.2,1) calc(var(--et,0ms) + .45s) both;pointer-events:none}
+@keyframes zdSheen{0%{transform:translate3d(0,0,0) skewX(-14deg)}100%{transform:translate3d(520%,0,0) skewX(-14deg)}}
+.wc.zd.deal .zseal{animation:zdStamp .42s cubic-bezier(.2,1.6,.4,1) calc(var(--et,0ms) + .7s) both}
+@keyframes zdStamp{0%{opacity:0;transform:rotate(-30deg) scale(3)}100%{opacity:.92;transform:rotate(-8deg)}}
+.spot.zd{position:relative;overflow:hidden;min-height:236px;justify-content:center;color:#f6f2e9;background:#1a0c16 var(--zdST) center/cover no-repeat;box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.55),0 16px 36px rgba(0,0,0,.35)}
+.spot.zd>*{position:relative}
+.spot.zd .zcone{position:absolute;left:50%;top:-6px;width:300px;height:calc(100% + 6px);margin-left:-150px;background:linear-gradient(180deg,rgba(255,240,200,.5),rgba(255,240,200,.06) 85%,rgba(255,240,200,0));clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);transform-origin:50% 0;pointer-events:none}
+.spot.zd.idle .zcone{opacity:.55;animation:zdSearch 4.8s ease-in-out var(--lp,0s) infinite}
+@keyframes zdSearch{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(16deg)}}
+.spot.zd.live .zcone{animation:zdFlick 2.4s ease-in-out var(--lp,0s) infinite}
+@keyframes zdFlick{0%,100%{opacity:.95}50%{opacity:.72}}
+.spot.zd.zin .zcone{animation:zdConeIn .6s cubic-bezier(.2,1,.3,1) var(--et,0ms) backwards}
+@keyframes zdConeIn{0%{opacity:0;transform:rotate(-38deg)}100%{opacity:.95;transform:none}}
+.spot.zd .spot-n{color:#fff3cc;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.spot.zd .spot-s{color:rgba(255,240,220,.85)}
+.spot.zd .ring .rt{stroke:rgba(255,255,255,.18)}
+.spot.zd .ring>b{color:#fff3cc}
+.spot.zd.me{box-shadow:inset 0 0 0 2.5px var(--g2),0 0 44px rgba(224,182,92,.35)}
+.spot.zd.idle .ic{color:#f2d892}
+.cdwin.z .big{font-size:27px}
+.cdwin.zg{background:radial-gradient(120% 120% at 75% 10%,#2fbf80,#062a1c 72%);box-shadow:inset 0 0 0 1.5px rgba(130,240,190,.8),0 16px 36px rgba(0,0,0,.3)}
+.cdwin.zr{background:radial-gradient(120% 120% at 75% 10%,#c2304a,#2a0712 72%);box-shadow:inset 0 0 0 1.5px rgba(255,140,160,.8),0 16px 36px rgba(0,0,0,.3)}
+.cdwin.zm{background:radial-gradient(120% 120% at 75% 10%,#b02a6e,#24061a 72%);box-shadow:inset 0 0 0 1.5px rgba(255,140,200,.8),0 16px 36px rgba(0,0,0,.3)}
+.cdwin.zb{background:radial-gradient(120% 120% at 75% 10%,#3a78d8,#0d1a3a 72%);box-shadow:inset 0 0 0 1.5px rgba(156,194,255,.8),0 16px 36px rgba(0,0,0,.3)}
+.cdwin.zg .big{color:#d8fff0}.cdwin.zr .big,.cdwin.zm .big{color:#ffd7e4}.cdwin.zb .big{color:#fff}
+.cdwin .who2{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:8px;font-size:14px;font-weight:700;color:rgba(255,255,255,.92)}
+.cdwin .who2 b{color:#fff3cc}
+.stage.enter .cdwin .who2{animation:pop .5s cubic-bezier(.2,1.4,.4,1) calc(420ms + var(--et)) backwards}
+.defn.zd{margin:22px 8px 14px;padding:18px 20px 20px;color:#2a1408;background:var(--zdMT) center bottom/100% auto no-repeat,radial-gradient(120% 100% at 50% 25%,#fffaf0,#f4e6c4 65%,#e3cb98);box-shadow:0 0 0 6px #4a2410,0 0 0 7.5px #c9963c,0 18px 36px rgba(0,0,0,.35)}
+.defn.zd .k{color:#8a2a1a}.defn.zd .w{color:#24120a}
+.defn.zd .zseal{top:12px;bottom:auto;right:14px}
+/* 真定作特效（zdBurst 拆穿、zdPick 揀佢），用拆彈危機嘅 #cdfx 層同碎光（cdBurst） */
+#cdfx.Z .halo,#cdfx.P .halo{animation-delay:.6s}
+#cdfx.Z .halo{top:44%}
+#cdfx.ok .halo{background:radial-gradient(circle,rgba(110,255,190,.75),rgba(110,255,190,0) 62%)}
+#cdfx.bad .halo{background:radial-gradient(circle,rgba(255,70,90,.8),rgba(255,70,90,0) 62%)}
+#cdfx.Z .burst{top:44%}
+#cdfx.ok .burst .rg{border-color:#8ff0c4}#cdfx.bad .burst .rg{border-color:#ff8a9a}
+#cdfx .zgv{left:50%;top:13%;width:150px;height:64px;margin-left:-75px;background:var(--zdGV) center/contain no-repeat;animation:zdGv .22s cubic-bezier(.55,0,1,.45) both,zdGvB .3s ease-out .22s}
+@keyframes zdGv{0%{opacity:0;transform:translate3d(0,-260px,0) rotate(-35deg) scale(1.4)}60%{opacity:1}100%{opacity:1;transform:none}}
+@keyframes zdGvB{0%{transform:none}35%{transform:translate3d(0,-14px,0) rotate(-4deg)}100%{transform:none}}
+#cdfx .zdust{left:50%;top:calc(13% + 50px);width:220px;height:44px;margin-left:-110px;border-radius:50%;border:3px solid rgba(255,240,200,.85);opacity:0;animation:zdDust .5s ease-out .22s both}
+@keyframes zdDust{0%{opacity:1;transform:scale(.3)}100%{opacity:0;transform:scale(1.7)}}
+#cdfx .zcard{position:absolute;left:50%;top:44%;width:176px;height:220px;margin:-110px 0 0 -88px;border-radius:20px;overflow:hidden;box-shadow:0 0 0 3px #c9963c,0 24px 50px rgba(0,0,0,.55);animation:zdCardIn .6s cubic-bezier(.2,.9,.3,1.1) .24s both}
+@keyframes zdCardIn{0%{opacity:0;transform:perspective(900px) translate3d(0,140px,0) rotateY(-95deg) scale(.6)}55%{opacity:1}100%{opacity:1;transform:none}}
+#cdfx.bad .zcard{animation:zdCardIn .6s cubic-bezier(.2,.9,.3,1.1) .24s both,zdWob .5s ease-in-out 1s}
+@keyframes zdWob{0%,100%{transform:none}25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+#cdfx .zcard .cdart{position:absolute;inset:0}
+#cdfx .zcard .znm{position:absolute;left:0;right:0;bottom:0;padding:24px 0 10px;text-align:center;font-family:var(--serif);font-size:22px;font-weight:900;letter-spacing:2px;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.72))}
+#cdfx .zcard:after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:60%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55) 50%,rgba(255,255,255,0));animation:cdSheen .65s cubic-bezier(.3,0,.2,1) .75s both}
+#cdfx .zstp{position:absolute;right:10px;top:12px;padding:4px 6px 4px 12px;font-size:30px;letter-spacing:6px;opacity:0;animation:zdStamp2 .4s cubic-bezier(.2,1.6,.4,1) .72s both}
+@keyframes zdStamp2{0%{opacity:0;transform:rotate(-30deg) scale(3.2)}100%{opacity:1;transform:rotate(-12deg)}}
+#cdfx.Z .cap{top:calc(44% + 124px);animation-delay:.92s}
+#cdfx.P .cap{animation-delay:.7s}
+#cdfx.ok .cap b{color:#8ff0c4}#cdfx.bad .cap b{color:#ff9aac}
+#cdfx.out .zgv,#cdfx.out .zcard,#cdfx.out .zdust{animation:cdOut .38s ease both}
+.wcd.zp .fr{background:#1a1028}
+.wcd.zp .fr .cdart{position:absolute;inset:0}
+.wcd.zp .fr .wl{position:relative}
+.wcd.zp .bk{background:#121022 var(--zdFR) center/cover no-repeat;box-shadow:0 0 0 2px rgba(224,182,92,.6),0 24px 50px rgba(0,0,0,.55)}
 /* 拆彈危機剪線特效（cdFx）：全部只郁 transform、opacity（WEB-35） */
 #cdfx{position:fixed;inset:0;z-index:30;pointer-events:none;overflow:hidden;perspective:1100px}
 #cdfx>b,#cdfx .burst>*,#cdfx .boom2>*{position:absolute;display:block}
@@ -3092,9 +3193,11 @@ function vLobby(v) {
 }
 function vWord(v, sm) {
   const w = v.w;
-  if (!w) return `<div class="wc seal"><div class="wc-in">${ic('lock')}<div class="sl1">題目未開</div></div></div>`;
-  const dq = anA('w' + v.gid + '-' + v.rd + '-' + v.sk, 700, 'deal');
-  return `<div class="wc${sm ? ' sm' : ''}${dq.c}"${dq.s}><div class="wc-in"><div class="wc-top"><span>${esc(w.c)}</span>${stars(w.d)}</div><div class="ww${isLat(w.w) ? ' lat' : ''}">${esc(w.w)}</div><div class="wc-pts">呢題 ${w.d} 分</div></div></div>`;
+  if (!w) return `<div class="wc zd seal"><div class="wc-in"><div class="sl1">題目未開</div></div></div>`;
+  // 2026-11-23-05：古書頁題目卡（金角、水墨山、「真」字印）；出題時由上面翻落嚟、金光圈、碎光、白光掃過、蓋印（ZD_ART）
+  const dq = anA('w' + v.gid + '-' + v.rd + '-' + v.sk, 1300, 'deal');
+  const sps = dq.c ? '<b class="zsps">' + Array.from({ length: 14 }, (_, i) => `<i style="--a:${Math.round(i * 25.7 + cdR(0, 12))}deg;--d:${Math.round(cdR(150, 230))}px;--c:${['#ffe08a', '#ffffff', '#e8bd62'][i % 3]};--dl:${Math.round(cdR(0, 120))}ms;--l:${Math.round(cdR(8, 20))}px"></i>`).join('') + '</b>' : '';
+  return `<div class="wc zd${sm ? ' sm' : ''}${dq.c}"${dq.s}><b class="zink"></b>${sps}<div class="wc-in"><i class="zcn tl"></i><i class="zcn tr"></i><i class="zcn bl"></i><i class="zcn br"></i><i class="zseal"></i><div class="wc-top"><span>${esc(w.c)}</span>${stars(w.d)}</div><div class="ww${isLat(w.w) ? ' lat' : ''}">${esc(w.w)}</div><div class="wc-pts">呢題 ${w.d} 分</div></div></div>`;
 }
 const STEPS = [['role', '身份'], ['think', '諗'], ['speak', '發言'], ['judge', '判決']];
 function vHead(v) {
@@ -3108,22 +3211,23 @@ function roleKey(v) { return v.gid + '-' + v.rd; }
 function vRoleCard(v) {
   const r = v.rl[ME.id], out = v.ex.includes(ME.id);
   let back;
-  if (out) back = '<div class="rc-b o"><div class="rl">已被拆穿</div><div class="tp">呢輪坐定定睇</div></div>';
+  // 2026-11-23-05：左邊角色插畫（老實人書生、大話精狐狸面具），右邊字；封面係「?」金徽章（ZD_ART）
+  if (out) back = '<div class="rc-b cdr zL out"><i class="cdart zL"></i><b class="zstp2">拆穿</b><div class="cdtx"><div class="rl s">已被拆穿</div><div class="tp">呢輪坐定定睇</div></div></div>';
   else if (r === 'H') {
     let body;
     if (v.ph === 'role') body = '<div class="tp">出題後 15 秒睇答案</div>';
     else if (v.ph === 'think' && v.w && v.w.x) body = `<div class="ex">${esc(v.w.x)}</div><div class="tp">記住佢！</div>`;
     else body = '<div class="tp">答案已收埋</div>';
-    back = `<div class="rc-b h"><div class="rl">你係老實人</div>${body}</div>`;
+    back = `<div class="rc-b cdr zH"><i class="cdart zH"></i><div class="cdtx"><div class="rl s">你係老實人</div>${body}</div></div>`;
   } else {
     const t = v.ph === 'role' ? '作個似真嘅解釋' : '呃判官揀你！';
-    back = `<div class="rc-b l"><div class="rl">你係大話精</div><div class="tp">${t}</div></div>`;
+    back = `<div class="rc-b cdr zL"><i class="cdart zL"></i><div class="cdtx"><div class="rl s">你係大話精</div><div class="tp">${t}</div></div></div>`;
   }
-  const front = `<div class="rc-f"><div class="emb">?</div><div class="rc-t">撳住睇身份</div></div>`;
+  const front = `<div class="rc-f cdf zdf"><div class="emb"></div><div class="rc-t">撳住睇身份</div></div>`;
   return `<div class="rc${S.hold ? ' show' : ''}" data-hold><div class="rc-i">${front}${back}</div></div>`;
 }
 function vJudgeCard(sub) {
-  return `<div class="idc"><div class="emb">${ic('gavel')}</div><div class="rl">你係判官</div><div class="tp">${sub}</div></div>`;
+  return `<div class="idc zj"><i class="cdart zJ"></i><div class="cdtx"><div class="rl">你係判官</div><div class="tp">${sub}</div></div></div>`;
 }
 function vPlay(v) {
   const isJ = v.jd === ME.id, inR = !!v.rl[ME.id];
@@ -3160,9 +3264,9 @@ function vPlay(v) {
     if (v.sp) {
       const p = pOf(v, v.sp), me = v.sp === ME.id;
       const q = anA('sp:' + v.gid + '-' + v.rd + '-' + v.sp, 600, 'zin');
-      h += `<div class="spot live${me ? ' me' : ''}${q.c}"${q.s}>${ring('sdl', SPEAK_MS, 'big', av(p, 'lg'))}<div class="spot-n">${me ? '輪到你發言！' : esc(p ? p.n : '') + ' 發言中'}</div><div class="spot-s"><b data-cd="sdl"></b> 秒</div>${me ? '<button class="btn gold" data-act="spkend">講完，結束發言</button>' : ''}</div>`;
-    } else if (isJ) h += `<div class="spot idle">${ic('mic')}<div class="spot-n">揀人發言</div></div>`;
-    else h += `<div class="spot idle">${ic('mic')}<div class="spot-n">等判官揀人<span class="ld"><i></i><i></i><i></i></span></div></div>`;
+      h += `<div class="spot zd live${me ? ' me' : ''}${q.c}"${q.s}><i class="zcone"></i>${ring('sdl', SPEAK_MS, 'big', av(p, 'lg'))}<div class="spot-n">${me ? '輪到你發言！' : esc(p ? p.n : '') + ' 發言中'}</div><div class="spot-s"><b data-cd="sdl"></b> 秒</div>${me ? '<button class="btn gold" data-act="spkend">講完，結束發言</button>' : ''}</div>`;
+    } else if (isJ) h += `<div class="spot zd idle"><i class="zcone"></i>${ic('mic')}<div class="spot-n">揀人發言</div></div>`;
+    else h += `<div class="spot zd idle"><i class="zcone"></i>${ic('mic')}<div class="spot-n">等判官揀人<span class="ld"><i></i><i></i><i></i></span></div></div>`;
     const dots = v.ord.map((id) => `<i class="${v.done.includes(id) ? 'on' : ''}"></i>`).join('');
     h += `<div class="prog"><span>已發言 ${doneN}／${total}</span><span class="dots">${dots}</span></div>`;
     const rows = v.ord.map((id) => {
@@ -3188,7 +3292,7 @@ function vPlay(v) {
     let right = '';
     if (out) right = '<span class="tag bad">大話精</span>';
     else if (isJ) right = `<button class="sb red" data-act="burst" data-x="${id}">拆穿</button><button class="sb gold" data-act="pick" data-x="${id}">揀佢</button>`;
-    return `<div class="pr${me ? ' me' : ''}${(p && !p.on) || out ? ' off' : ''}">${av(p)}<span class="nm">${esc(p ? p.n : '?')}${me ? '（你）' : ''}</span>${right}</div>`;
+    return `<div class="pr${me ? ' me' : ''}${(p && !p.on) || out ? ' off' : ''}" data-pid="${id}">${av(p)}<span class="nm">${esc(p ? p.n : '?')}${me ? '（你）' : ''}</span>${right}</div>`;
   }).join('');
   h += `<div class="plist">${rows}</div>`;
   if (inR) h += '<div class="sh"><span>你嘅身份</span></div>' + vRoleCard(v);
@@ -3198,9 +3302,12 @@ function vReveal(v) {
   const hid = Object.keys(v.rl).find((id) => v.rl[id] === 'H');
   const hp = pOf(v, hid), isJ = v.jd === ME.id, host = v.host === ME.id;
   const T = { ok: ['判官估中咗！', 'ok'], el: ['大話精全部拆穿晒！', 'ok'], no: ['判官俾人呃咗！', 'bad'], bh: ['判官拆穿錯人！', 'bad'], to: ['時間到！判官冇揀到', 'bad'] };
-  const [big, cls] = T[v.why] || T.to;
+  const [big] = T[v.why] || T.to;
   let sub = '';
-  if (v.why === 'no') sub = `<div class="who">判官揀咗 ${av(pOf(v, v.pk), 'sm')}${esc(nameOf(v, v.pk))}（大話精）</div>`;
+  if (v.why === 'no') sub = `<div class="who2">判官揀咗 ${av(pOf(v, v.pk), 'sm')}<b>${esc(nameOf(v, v.pk))}</b>（大話精）</div>`;
+  // 2026-11-23-05：結果橫幅（估中：老實人；俾人呃：大話精；拆穿錯人：老實人紅底；時間到：判官）
+  const WN = { ok: ['zg', 'zH'], el: ['zg', 'zH'], no: ['zm', 'zL'], bh: ['zr', 'zH'], to: ['zb', 'zJ'] };
+  const [wc, art] = WN[v.why] || WN.to;
   const deltas = v.pl.filter((p) => v.dt[p.id]).sort((a, b) => v.dt[b.id] - v.dt[a.id]).map((p) => {
     const d = v.dt[p.id];
     return `<div class="pr${p.id === ME.id ? ' me' : ''}">${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}<span class="dl ${d > 0 ? 'p' : 'm'}">${d > 0 ? '+' : ''}${d}</span><span class="sc">${p.sc} 分</span></div>`;
@@ -3214,8 +3321,8 @@ function vReveal(v) {
   const key = 'r' + v.gid + '-' + v.rd, anim = !S.seen[key + 'a'];
   S.seen[key + 'a'] = 1;
   return `<div class="${anim ? 'anim' : ''}"><div class="rh"><div class="rn">第 <b>${v.rd + 1}</b> ／ ${v.tot} 輪</div></div>
-    <div class="res"><div class="big ${cls}">${big}</div><div class="who">${av(hp, 'sm')}<b>${esc(hp ? hp.n : '？')}</b> 先係老實人</div>${sub}</div>
-    <div class="defn"><div class="k">真正意思</div><div class="w">${esc(v.w ? v.w.w : '')}</div><div class="v">${esc(v.w ? v.w.x : '')}</div></div>
+    <div class="cdwin z ${wc}"><i class="rays"></i><i class="cdart ${art}"></i><div class="wt"><div class="big">${big}</div><div class="who2">${av(hp, 'sm')}<b>${esc(hp ? hp.n : '？')}</b> 先係老實人</div>${sub}</div></div>
+    <div class="defn zd"><i class="zseal"></i><div class="k">真正意思</div><div class="w">${esc(v.w ? v.w.w : '')}</div><div class="v">${esc(v.w ? v.w.x : '')}</div></div>
     <div class="sh"><span>今輪分數</span></div><div class="plist">${deltas}</div>
     ${btn}</div>`;
 }
@@ -3278,12 +3385,7 @@ function fx(prevPh, had, v) {
     if (!S.seen[key]) {
       S.seen[key] = 1;
       if (had) {
-        const n = esc(nameOf(v, v.bu.id)), isL = v.bu.r === 'L';
-        const t3 = isL ? `佢真係大話精！${n} −1，判官 +1` : '原來佢係老實人！判官 −2';
-        $('#fx').innerHTML = `<div class="stamp${isL ? ' ok' : ''}"><div class="t1">拆穿</div><div class="t2">判官拆穿 ${n}</div><div class="t3" style="color:${isL ? '#a9f3d0' : '#ffbdc8'}">${t3}</div></div>`;
-        $('#fx').classList.add('show');
-        clearTimeout(fxT); fxT = setTimeout(() => $('#fx').classList.remove('show'), 2600);
-        sfx(isL ? 'good' : 'bad');
+        zdBurst(v, v.bu);
       }
     }
   }
@@ -3375,11 +3477,11 @@ function fx(prevPh, had, v) {
   }
   const rk = v.gid + '-' + v.rd;
   if (v.ph === 'role' && !S.seen['ro' + rk]) { S.seen['ro' + rk] = 1; S.hold = false; if (had && prevPh !== 'role') sweep(`第 ${v.rd + 1} 輪`, '判官 ' + nameOf(v, v.jd)); }
-  if (v.ph === 'think' && !S.seen['th' + rk + '-' + v.sk]) { S.seen['th' + rk + '-' + v.sk] = 1; S.hold = false; if (had) sweep(v.sk ? '換題' : '出題！', '諗 15 秒'); }
+  if (v.ph === 'think' && !S.seen['th' + rk + '-' + v.sk]) { S.seen['th' + rk + '-' + v.sk] = 1; S.hold = false; if (had) { sweep(v.sk ? '換題' : '出題！', '諗 15 秒'); setTimeout(() => sfx('stamp'), 720); } }
   if (v.ph === 'speak' && !S.seen['sk' + rk]) { S.seen['sk' + rk] = 1; if (had) sweep('發言', '每人 30 秒'); }
   if (v.ph === 'speak' && v.sp && !S.seen['sp' + rk + '-' + v.sp]) { S.seen['sp' + rk + '-' + v.sp] = 1; if (had) { if (v.sp === ME.id) { sweep('到你講！', '30 秒'); sfx('good'); } else sfx('tick'); } }
   if (v.ph === 'judge' && !S.seen['jg' + rk]) { S.seen['jg' + rk] = 1; if (had) sweep('判決', '4 分鐘', 'red'); }
-  if (v.ph === 'reveal' && !S.seen['v' + rk]) { S.seen['v' + rk] = 1; if (had && prevPh !== 'reveal' && v.why !== 'bh') sfx(v.why === 'ok' || v.why === 'el' ? 'good' : 'bad'); }
+  if (v.ph === 'reveal' && !S.seen['v' + rk]) { S.seen['v' + rk] = 1; if (had && prevPh !== 'reveal' && v.why !== 'bh') { if (v.why === 'ok' || v.why === 'no') zdPick(v); sfx(v.why === 'ok' || v.why === 'el' ? 'good' : 'bad'); } }
   if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') { confetti(); sfx('win'); } }
 }
 function confetti() {
@@ -3830,8 +3932,229 @@ ${star(191, 71.5, 9, '#fff3cc')}${star(191, 71.5, 4, '#fff')}
 <g fill="none" stroke="url(#au)" stroke-width="1.4"><path d="M18 34V18h16M342 34V18h-16M18 194v16h16M342 194v16h-16"/></g>`);
   return { BK, S, D, X: XB, B, R, FR };
 })();
-// 插畫變做 CSS 變數（--cdBK、--cdS、--cdD、--cdX、--cdB、--cdR、--cdFR），卡用 background-image 引用，每款瀏覽器只畫一次
-(() => { const rs = document.documentElement.style; for (const k in CD_ART) rs.setProperty('--cd' + k, "url('data:image/svg+xml;charset=utf-8," + encodeURIComponent(CD_ART[k]).replace(/'/g, '%27') + "')"); })();
+// 插畫變做 CSS 變數（拆彈危機 --cdBK、--cdS…；真定作 --zdJ、--zdH…），卡用 background-image 引用，每款瀏覽器只畫一次
+/* ---------- 真定作：插畫（SVG 字串，同拆彈危機一樣變做 CSS 變數 --zdJ 等） ---------- */
+const ZD_ART = (() => {
+  const X = (s) => '<svg xmlns="http://www.w3.org/2000/svg" ' + s + '</svg>';
+  const r1 = (n) => Math.round(n * 10) / 10;
+  const rays = (cx, cy, n, a0, a1, w, col, op) => { let o = ''; for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2, b = a + w; o += `<path d="M${r1(cx + Math.cos(a) * a0)} ${r1(cy + Math.sin(a) * a0)}L${r1(cx + Math.cos(a) * a1)} ${r1(cy + Math.sin(a) * a1)}L${r1(cx + Math.cos(b) * a1)} ${r1(cy + Math.sin(b) * a1)}L${r1(cx + Math.cos(b) * a0)} ${r1(cy + Math.sin(b) * a0)}Z"/>`; } return `<g fill="${col}" opacity="${op}">${o}</g>`; };
+  const star = (cx, cy, r, col, op = 1) => `<path d="M${cx} ${cy - r}Q${cx + r * 0.14} ${cy - r * 0.14} ${cx + r} ${cy}Q${cx + r * 0.14} ${cy + r * 0.14} ${cx} ${cy + r}Q${cx - r * 0.14} ${cy + r * 0.14} ${cx - r} ${cy}Q${cx - r * 0.14} ${cy - r * 0.14} ${cx} ${cy - r}Z" fill="${col}" opacity="${op}"/>`;
+  // 祥雲（一朵）：喺 (x,y)，大細 s
+  const cloud = (x, y, s, col, op) => `<g transform="translate(${x} ${y}) scale(${s})" fill="none" stroke="${col}" stroke-width="${r1(1.6 / s)}" opacity="${op}" stroke-linecap="round"><path d="M-14 4c-6 0-6-8 0-8 0-7 10-9 13-3 3-6 13-4 12 3 6 0 7 8 0 8z"/><path d="M-4 -1c0-3 4-3 4 0"/></g>`;
+  const SKIN = '<radialGradient id="sk" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#ffe7cf"/><stop offset=".6" stop-color="#f6c49b"/><stop offset="1" stop-color="#d9976b"/></radialGradient>';
+  const FACE = 'M56 96C56 74 66 64 80 64C94 64 104 74 104 96C104 116 94 128 80 128C66 128 56 116 56 96Z';
+  const EARS = '<ellipse cx="55.5" cy="99" rx="4.5" ry="7.5" fill="url(#sk)"/><ellipse cx="104.5" cy="99" rx="4.5" ry="7.5" fill="url(#sk)"/>';
+  const eye = (x, y) => `<ellipse cx="${x}" cy="${y}" rx="3.1" ry="3.9" fill="#2a1a12"/><circle cx="${x + 1}" cy="${y - 1.3}" r="1.2" fill="#fff"/>`;
+
+  /* 判官：烏紗帽、粗眉、長鬚、紅官袍金補子、手揸驚堂木；藍色底、祥雲 */
+  const J = X(`viewBox="0 0 160 200"><defs>${SKIN}
+<radialGradient id="g" cx="50%" cy="24%" r="90%"><stop offset="0" stop-color="#5b8ae6"/><stop offset=".38" stop-color="#26489a"/><stop offset=".78" stop-color="#0f2152"/><stop offset="1" stop-color="#070f26"/></radialGradient>
+<linearGradient id="rb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b3283a"/><stop offset="1" stop-color="#4f0c18"/></linearGradient>
+<linearGradient id="au" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cc"/><stop offset=".45" stop-color="#e8bd62"/><stop offset="1" stop-color="#9a6a1c"/></linearGradient>
+<linearGradient id="hat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3644"/><stop offset="1" stop-color="#0c0a10"/></linearGradient>
+<linearGradient id="wd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b0703a"/><stop offset=".5" stop-color="#7a4520"/><stop offset="1" stop-color="#4a2510"/></linearGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+<g fill="#cfe2ff" opacity=".08"><path d="M80 -10L22 200H52Z"/><path d="M80 -10L108 200H138Z"/></g>
+${cloud(26, 34, 1.3, '#e8bd62', 0.35)}${cloud(136, 52, 1.1, '#e8bd62', 0.3)}${cloud(18, 128, 1, '#e8bd62', 0.22)}${cloud(146, 120, 1.2, '#e8bd62', 0.22)}
+<path d="M-4 204V180c0-20 22-34 48-38l14-3h44l14 3c26 4 48 18 48 38v24z" fill="url(#rb)"/>
+<path d="M-4 180c0-20 22-34 48-38l14-3" fill="none" stroke="#ff9aa6" stroke-opacity=".45" stroke-width="1.4"/>
+<path d="M56 140c4 10 14 16 24 16s20-6 24-16" fill="none" stroke="#2a0610" stroke-width="7"/>
+<path d="M56 140c4 10 14 16 24 16s20-6 24-16" fill="none" stroke="url(#au)" stroke-width="2"/>
+<rect x="60" y="164" width="40" height="36" rx="2" fill="url(#au)"/><rect x="63" y="167" width="34" height="33" fill="#1b2e63"/>
+<g fill="none" stroke="url(#au)" stroke-width="1.3"><path d="M70 190c4-10 16-10 20 0M74 180c2-6 10-6 12 0"/><circle cx="80" cy="174" r="3"/></g>
+<rect x="72" y="126" width="16" height="16" fill="#e8b48a"/>
+${EARS}<path d="${FACE}" fill="url(#sk)"/>
+<path d="M60 66Q60 40 80 38Q100 40 100 66Z" fill="url(#hat)"/>
+<path d="M66 50q14-8 28 0" fill="none" stroke="#6a6478" stroke-width="1.4" opacity=".7"/>
+<g transform="rotate(-5 58 72)"><rect x="6" y="67" width="54" height="9" rx="4.5" fill="url(#hat)"/><rect x="8" y="68" width="40" height="2" rx="1" fill="#7a7488" opacity=".7"/></g>
+<g transform="rotate(5 102 72)"><rect x="100" y="67" width="54" height="9" rx="4.5" fill="url(#hat)"/><rect x="112" y="68" width="40" height="2" rx="1" fill="#7a7488" opacity=".7"/></g>
+<path d="M51 90Q51 64 80 62Q109 64 109 90Q96 80 80 80Q64 80 51 90Z" fill="url(#hat)"/>
+<path d="M56 82q24-14 48 0" fill="none" stroke="url(#au)" stroke-width="1.6"/>
+<path d="M62 90l14 4.5M98 90l-14 4.5" stroke="#1a1014" stroke-width="3.4" stroke-linecap="round"/>
+${eye(70, 99)}${eye(90, 99)}
+<path d="M66 95.5q4-2 8 0M86 95.5q4-2 8 0" stroke="#7a4a30" stroke-width="1" fill="none" opacity=".6"/>
+<path d="M78 104q2 5 4 0" stroke="#c0805a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<path d="M80 110c-5-3-13-1-17 6M80 110c5-3 13-1 17 6" stroke="#1a1014" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M68 117c2 14 6 30 12 42 6-12 10-28 12-42-6 4-18 4-24 0z" fill="#232028"/>
+<path d="M76 124l2 24M84 124l-2 24M80 122v30" stroke="#5a5664" stroke-width=".9" opacity=".8"/>
+<path d="M100 204c2-24 12-40 26-46 8 2 12 10 11 18l-9 28z" fill="#7a1622"/><path d="M104 196c3-18 10-30 20-36" fill="none" stroke="#ff9aa6" stroke-opacity=".35" stroke-width="1.2"/>
+<g transform="translate(130 150) rotate(-18)"><rect x="-22" y="-9" width="44" height="18" rx="3" fill="url(#wd)"/><rect x="-22" y="-9" width="44" height="5" rx="2.5" fill="#d79a5e" opacity=".6"/><path d="M-16 0h32" stroke="#4a2510" stroke-width="1" opacity=".5"/></g>
+<ellipse cx="128" cy="164" rx="10" ry="8" fill="url(#sk)"/>
+<g stroke="#fff3cc" stroke-width="2" stroke-linecap="round" opacity=".85"><path d="M150 132l7-6M152 144l8 0M146 122l3-8"/></g>
+${star(30, 20, 3.4, '#fff3cc', 0.8)}${star(140, 28, 2.6, '#fff3cc', 0.7)}`);
+
+  /* 老實人：圓眼鏡書生、頭頂髮髻綠絲帶、淺綠長袍，捧住發光嘅字典；綠色底、光線 */
+  const H = X(`viewBox="0 0 160 200"><defs>${SKIN}
+<radialGradient id="g" cx="50%" cy="78%" r="95%"><stop offset="0" stop-color="#b6ffd9"/><stop offset=".25" stop-color="#3fc98c"/><stop offset=".65" stop-color="#0f6b46"/><stop offset="1" stop-color="#042419"/></radialGradient>
+<linearGradient id="rb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2faf3"/><stop offset="1" stop-color="#9cc7aa"/></linearGradient>
+<linearGradient id="hr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3036"/><stop offset="1" stop-color="#120c10"/></linearGradient>
+<linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf2"/><stop offset="1" stop-color="#efe3c2"/></linearGradient>
+<radialGradient id="gl" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fffbe0"/><stop offset=".35" stop-color="#fff3a8" stop-opacity=".7"/><stop offset="1" stop-color="#fff3a8" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+${rays(80, 178, 22, 20, 210, 0.08, '#eafff4', 0.16)}
+<path d="M-4 204V182c0-20 22-34 48-38l14-3h44l14 3c26 4 48 18 48 38v22z" fill="url(#rb)"/>
+<path d="M58 141l22 26 22-26" fill="none" stroke="#1f8a5a" stroke-width="6"/><path d="M58 141l22 26 22-26" fill="none" stroke="#c9ffe6" stroke-width="1.4"/>
+<path d="M-4 182c0-20 22-34 48-38" fill="none" stroke="#ffffff" stroke-opacity=".7" stroke-width="1.4"/>
+<rect x="72" y="126" width="16" height="16" fill="#e8b48a"/>
+${EARS}<path d="${FACE}" fill="url(#sk)"/>
+<circle cx="80" cy="50" r="12" fill="url(#hr)"/><rect x="66" y="52" width="28" height="5" rx="2.5" fill="#22c07c"/><path d="M92 55c6 2 10 8 8 14" fill="none" stroke="#22c07c" stroke-width="3" stroke-linecap="round"/>
+<path d="M54 94C52 70 64 60 80 60C96 60 108 70 106 94C102 80 92 74 80 74C68 74 58 80 54 94Z" fill="url(#hr)"/>
+<path d="M62 70q18-10 36 0" fill="none" stroke="#7a6a72" stroke-width="1.2" opacity=".6"/>
+<path d="M63 89q6-4 12-1M85 88q6-3 12 1" stroke="#2a1a12" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+${eye(70, 98)}${eye(90, 98)}
+<g fill="#fff" fill-opacity=".18" stroke="#3a2a1a" stroke-width="2"><circle cx="70" cy="98" r="9.5"/><circle cx="90" cy="98" r="9.5"/></g><path d="M79.5 97q.5-2 1 0" stroke="#3a2a1a" stroke-width="2" fill="none"/>
+<path d="M64 93l4-3" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>
+<circle cx="63" cy="110" r="4.5" fill="#ff8a8a" opacity=".35"/><circle cx="97" cy="110" r="4.5" fill="#ff8a8a" opacity=".35"/>
+<path d="M72 112q8 8 16 0" fill="#a8324a" stroke="#6a1a24" stroke-width="1.4" stroke-linejoin="round"/><path d="M75 113q5 2.6 10 0" fill="#fff"/>
+<circle cx="80" cy="170" r="44" fill="url(#gl)"/>
+<path d="M40 168l38-10v40l-38 8z" fill="#7a4a24"/><path d="M120 168l-38-10v40l38 8z" fill="#7a4a24"/>
+<path d="M43 166l35-9v37l-35 8z" fill="url(#pg)"/><path d="M117 166l-35-9v37l35 8z" fill="url(#pg)"/>
+<g stroke="#b8a77a" stroke-width="1.1" opacity=".8"><path d="M49 172l23-6M49 178l23-6M49 184l23-6M49 190l16-4M111 172l-23-6M111 178l-23-6M111 184l-23-6M111 190l-16-4"/></g>
+<path d="M78 157v38M82 157v38" stroke="#c9b98a" stroke-width="1"/>
+<ellipse cx="42" cy="186" rx="8" ry="10" fill="url(#sk)"/><ellipse cx="118" cy="186" rx="8" ry="10" fill="url(#sk)"/>
+${star(80, 150, 9, '#fff')}${star(58, 140, 4, '#fffbe0')}${star(104, 136, 5, '#fffbe0')}${star(30, 118, 3, '#eafff4', 0.8)}${star(132, 106, 3.4, '#eafff4', 0.8)}${star(122, 30, 3, '#eafff4', 0.6)}
+<g fill="#fffbe0" opacity=".85"><rect x="66" y="128" width="4" height="4" rx="1" transform="rotate(20 68 130)"/><rect x="92" y="124" width="3.4" height="3.4" rx="1" transform="rotate(-15 94 126)"/><rect x="48" y="150" width="3" height="3" rx="1"/></g>`);
+
+  /* 大話精：眨眼奸笑、一邊眉揚起、油頭捲毛、頭側戴狐狸面具、手揸摺扇；紫紅煙霧底 */
+  const L = X(`viewBox="0 0 160 200"><defs>${SKIN}
+<radialGradient id="g" cx="50%" cy="38%" r="88%"><stop offset="0" stop-color="#e0487a"/><stop offset=".4" stop-color="#7a1848"/><stop offset=".8" stop-color="#2c0820"/><stop offset="1" stop-color="#14030e"/></radialGradient>
+<linearGradient id="rb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a3484"/><stop offset="1" stop-color="#231236"/></linearGradient>
+<linearGradient id="hr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a3a52"/><stop offset="1" stop-color="#140c18"/></linearGradient>
+<linearGradient id="au" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cc"/><stop offset=".45" stop-color="#e8bd62"/><stop offset="1" stop-color="#9a6a1c"/></linearGradient>
+<linearGradient id="mk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9d2c8"/></linearGradient>
+<linearGradient id="fn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset=".6" stop-color="#e0503a"/><stop offset="1" stop-color="#8a1a2a"/></linearGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+<g fill="none" stroke="#ff9ac0" stroke-opacity=".18" stroke-width="2" stroke-linecap="round"><path d="M6 40c18-14 34 6 20 18s-30-2-18-16M128 24c20-6 30 16 14 24s-24-10-10-18M140 108c16 2 20 22 4 24s-16-18 0-20M10 120c14-8 28 8 16 18"/></g>
+<g fill="#ffb3d1" opacity=".7">${''}<circle cx="24" cy="78" r="1.4"/><circle cx="140" cy="76" r="1.2"/><circle cx="134" cy="150" r="1"/><circle cx="20" cy="160" r="1.3"/></g>
+<path d="M-4 204V182c0-20 22-34 48-38l14-3h44l14 3c26 4 48 18 48 38v22z" fill="url(#rb)"/>
+<path d="M58 141l22 24 22-24" fill="none" stroke="url(#au)" stroke-width="5"/>
+<path d="M164 182c0-20-22-34-48-38" fill="none" stroke="#ff9ac0" stroke-opacity=".45" stroke-width="1.4"/>
+<rect x="72" y="126" width="16" height="16" fill="#e8b48a"/>
+<g transform="rotate(5 80 96)">
+${EARS}<path d="${FACE}" fill="url(#sk)"/>
+<path d="M52 92C50 66 64 56 82 58C100 58 110 70 106 92C102 78 96 72 86 72C84 80 74 82 66 78C60 80 56 86 52 92Z" fill="url(#hr)"/>
+<path d="M84 72c4 8 2 14-4 16" fill="none" stroke="#2a1a2e" stroke-width="3" stroke-linecap="round"/>
+<path d="M64 91q6 0 11 3" stroke="#2a1a12" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<path d="M85 86q6-6 13-2" stroke="#2a1a12" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<path d="M64 100q6 4 12 0" stroke="#2a1a12" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+${eye(91, 98)}
+<circle cx="64" cy="109" r="4.5" fill="#ff7a9a" opacity=".35"/>
+<path d="M70 114q12 6 22-6" fill="none" stroke="#6a1a24" stroke-width="2.4" stroke-linecap="round"/><path d="M90 110l3-4" stroke="#6a1a24" stroke-width="2" stroke-linecap="round"/>
+<path d="M78 104q2 4 4 0" stroke="#c0805a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+</g>
+<g transform="translate(50 62) rotate(-28)">
+<path d="M-16 -20l6 14h20l6-14 4 22c0 14-10 24-20 26-10-2-20-12-20-26z" fill="url(#mk)" stroke="#8a7a6a" stroke-width=".8"/>
+<path d="M-13 -16l4 9M13 -16l-4 9" stroke="#e0384c" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M-11 4q5-4 9 0M2 4q5-4 9 0" stroke="#c3203d" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<path d="M-8 5l3 1M5 5l3 1" stroke="#1a0a10" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M-2 18q2 2 4 0" stroke="#1a0a10" stroke-width="1.4" fill="none"/><circle cx="0" cy="14" r="2" fill="#1a0a10"/>
+<path d="M-14 10q-4 2-6 0M14 10q4 2 6 0" stroke="#e0384c" stroke-width="1.4" fill="none"/>
+</g>
+<g transform="translate(126 168)">
+<path d="M0 0L-46-30A55 55 0 0 1 -8-55Z" fill="url(#fn)"/>
+<g stroke="#5a1a1a" stroke-width=".9" opacity=".55"><path d="M0 0L-40-37M0 0L-33-43M0 0L-25-48M0 0L-17-52"/></g>
+<path d="M-46-30A55 55 0 0 1 -8-55" fill="none" stroke="url(#au)" stroke-width="2.4"/>
+<path d="M-30-30c4-6 10-6 12 0" fill="none" stroke="#fff3cc" stroke-width="1.4" opacity=".8"/>
+<circle r="3" fill="url(#au)"/>
+</g>
+<ellipse cx="126" cy="172" rx="9" ry="8" fill="url(#sk)"/>
+${star(28, 26, 3.2, '#ffe1ee', 0.85)}${star(118, 48, 3.8, '#fff3cc', 0.9)}${star(146, 92, 2.4, '#ffe1ee', 0.7)}`);
+
+  /* 身份卡封面（橫）：深藍金框、放射紋；左邊綠色書生剪影、右邊紅色狐狸面具剪影；中間金色「?」徽章 */
+  const FR = X(`viewBox="0 0 360 228" preserveAspectRatio="xMidYMid slice"><defs>
+<radialGradient id="g" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="#3b3274"/><stop offset=".5" stop-color="#1d1944"/><stop offset="1" stop-color="#0a091b"/></radialGradient>
+<linearGradient id="au" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cc"/><stop offset=".3" stop-color="#e8bd62"/><stop offset=".62" stop-color="#a3701e"/><stop offset=".82" stop-color="#e9c977"/><stop offset="1" stop-color="#8a5d16"/></linearGradient>
+<radialGradient id="md" cx="50%" cy="38%" r="65%"><stop offset="0" stop-color="#2b245a"/><stop offset="1" stop-color="#0c0a20"/></radialGradient>
+<linearGradient id="gn" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fe0a8" stop-opacity=".5"/><stop offset="1" stop-color="#5fe0a8" stop-opacity=".04"/></linearGradient>
+<linearGradient id="rd" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ff5a8c" stop-opacity=".5"/><stop offset="1" stop-color="#ff5a8c" stop-opacity=".04"/></linearGradient>
+<pattern id="dm" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M8 0L16 8L8 16L0 8Z" fill="none" stroke="#e0b65c" stroke-opacity=".09" stroke-width=".8"/></pattern>
+</defs>
+<rect width="360" height="228" fill="url(#g)"/><rect width="360" height="228" fill="url(#dm)"/>
+${rays(180, 96, 36, 40, 260, 0.05, '#e8bd62', 0.12)}
+${cloud(60, 40, 1.6, '#e8bd62', 0.3)}${cloud(304, 44, 1.4, '#e8bd62', 0.28)}
+<g transform="translate(18 46)"><circle cx="78" cy="54" r="13" fill="url(#gn)"/><path d="M0 184V170c0-20 22-34 48-38l8-2c-8-8-12-20-12-32 0-22 14-36 34-36s34 14 34 36c0 12-4 24-12 32l8 2c26 4 48 18 48 38v14z" fill="url(#gn)"/></g>
+<g transform="translate(176 40)"><path d="M40 190V172c0-20 22-34 48-38l8-2c-8-8-12-20-12-32 0-12 4-22 10-28l-8-24 20 14c4-1 8-2 12-2s8 1 12 2l20-14-8 24c6 6 10 16 10 28 0 12-4 24-12 32l8 2c26 4 48 18 48 38v18z" fill="url(#rd)"/></g>
+<circle cx="180" cy="96" r="40" fill="url(#md)" stroke="url(#au)" stroke-width="3.6"/>
+<circle cx="180" cy="96" r="34" fill="none" stroke="#e0b65c" stroke-opacity=".5" stroke-width=".9" stroke-dasharray="2.4 2.6"/>
+<path d="M168 86c0-10 6-15 13-15 8 0 13 5 13 12 0 9-11 10-11 20v3" fill="none" stroke="url(#au)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="183" cy="117" r="4.6" fill="url(#au)"/>
+<path d="M171 80q3-6 9-7" stroke="#fff6d8" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+${star(206, 70, 7, '#fff3cc')}${star(206, 70, 3, '#fff')}
+<rect x="5" y="5" width="350" height="218" rx="17" fill="none" stroke="url(#au)" stroke-width="2.2"/>
+<rect x="10.5" y="10.5" width="339" height="207" rx="13" fill="none" stroke="#e0b65c" stroke-opacity=".5" stroke-width=".9"/>
+<g fill="none" stroke="url(#au)" stroke-width="1.4"><path d="M18 34V18h16M342 34V18h-16M18 194v16h16M342 194v16h-16"/></g>`);
+
+  /* 印章（紅底白字「真」，邊粗糙似真印） */
+  const SEAL = X(`viewBox="0 0 60 60"><defs><filter id="r" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.6"/></filter></defs>
+<g filter="url(#r)"><rect x="5" y="5" width="50" height="50" rx="5" fill="#c3203d"/>
+<g stroke="#fff4ea" stroke-width="3.2" stroke-linecap="square" fill="none"><path d="M18 13h24M30 9v9M21 19h18v18H21zM21 25h18M21 31h18M13 41h34M24 45l-6 6M36 45l6 6"/></g>
+<rect x="8" y="8" width="44" height="44" rx="3" fill="none" stroke="#fff4ea" stroke-width="1.6"/></g>`);
+
+  /* 題目卡四角金色雲紋（左上；其他角用 CSS 反轉） */
+  const CN = X(`viewBox="0 0 40 40"><g fill="none" stroke="#c9963c" stroke-width="2.2" stroke-linecap="round"><path d="M4 30V4h26"/><path d="M9 22c0-8 5-13 13-13"/><path d="M14 16c3 0 5 2 5 5s-3 4-5 2"/></g><circle cx="4" cy="4" r="3" fill="#c9963c"/>`);
+
+  /* 題目卡底：水墨山 */
+  const MT = X(`viewBox="0 0 360 70" preserveAspectRatio="xMidYMax slice"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a1a" stop-opacity=".5"/><stop offset="1" stop-color="#3a2a1a" stop-opacity="0"/></linearGradient></defs>
+<path d="M0 70V52c20-6 34-24 54-26 16 0 22 16 38 14 20-2 30-30 54-30 20 0 30 22 48 24 16 2 26-14 44-12 22 2 30 22 52 24 26 2 40-16 70-16v70z" fill="url(#a)" opacity=".6"/>
+<path d="M0 70V60c30-2 50-18 76-16 24 2 34 14 60 12 30-2 40-20 70-18 26 2 36 18 60 18 30 0 50-12 94-10v24z" fill="url(#a)"/>
+<g fill="#3a2a1a" opacity=".25"><circle cx="300" cy="18" r="9"/></g>`);
+
+  /* 封住嘅卷軸（題目未開）：深紅絲綢卷、金線雲紋、金繩、紅色火漆印 */
+  const SC = X(`viewBox="0 0 360 110" preserveAspectRatio="xMidYMid slice"><defs>
+<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1430"/><stop offset="1" stop-color="#140a18"/></linearGradient>
+<linearGradient id="sl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a1424"/><stop offset=".35" stop-color="#b8283e"/><stop offset=".55" stop-color="#e0485c"/><stop offset=".8" stop-color="#8a1a2c"/><stop offset="1" stop-color="#3a0812"/></linearGradient>
+<linearGradient id="wd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2410"/><stop offset=".45" stop-color="#b07a3a"/><stop offset="1" stop-color="#2a1608"/></linearGradient>
+<linearGradient id="au" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cc"/><stop offset=".45" stop-color="#e8bd62"/><stop offset="1" stop-color="#9a6a1c"/></linearGradient>
+<radialGradient id="wx" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#ff7a7a"/><stop offset=".6" stop-color="#c3203d"/><stop offset="1" stop-color="#6a0a18"/></radialGradient>
+</defs>
+<rect width="360" height="110" fill="url(#g)"/>
+${rays(180, 55, 30, 30, 240, 0.05, '#e8bd62', 0.1)}
+<rect x="40" y="30" width="280" height="50" rx="6" fill="url(#sl)"/>
+<g fill="none" stroke="#e8bd62" stroke-opacity=".45" stroke-width="1"><path d="M60 42c6-6 14-2 12 4M100 66c6-6 14-2 12 4M248 42c6-6 14-2 12 4M288 66c6-6 14-2 12 4M140 44c6-6 14-2 12 4M210 64c6-6 14-2 12 4"/></g>
+<rect x="28" y="24" width="14" height="62" rx="5" fill="url(#wd)"/><rect x="318" y="24" width="14" height="62" rx="5" fill="url(#wd)"/>
+<rect x="24" y="26" width="6" height="58" rx="3" fill="url(#au)"/><rect x="330" y="26" width="6" height="58" rx="3" fill="url(#au)"/>
+<path d="M42 55h276" stroke="url(#au)" stroke-width="3"/>
+<path d="M170 55c-8 10-12 22-14 30M190 55c8 10 12 22 14 30" fill="none" stroke="url(#au)" stroke-width="2.4" stroke-linecap="round"/>
+<circle cx="180" cy="55" r="17" fill="url(#wx)"/>
+<path d="M163 55a17 17 0 0 1 3-10l4 3-2 4 3 3-3 4z" fill="#8a0a1a" opacity=".55"/>
+<circle cx="180" cy="55" r="11" fill="none" stroke="#ffb3b3" stroke-opacity=".5" stroke-width="1.2"/>
+<path d="M175 50l10 10M185 50l-10 10" stroke="#fff4ea" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+<ellipse cx="174" cy="48" rx="4" ry="2.4" fill="#fff" opacity=".45" transform="rotate(-30 174 48)"/>`);
+
+  /* 驚堂木：一嚿深色木，上面有金線 */
+  const GV = X(`viewBox="0 0 140 60"><defs><linearGradient id="t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c08a52"/><stop offset=".3" stop-color="#8a5226"/><stop offset="1" stop-color="#3a1a08"/></linearGradient><linearGradient id="au" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9a6a1c"/><stop offset=".5" stop-color="#fff3cc"/><stop offset="1" stop-color="#9a6a1c"/></linearGradient></defs>
+<ellipse cx="70" cy="52" rx="60" ry="6" fill="#000" opacity=".3"/>
+<path d="M12 14q0-8 8-8h100q8 0 8 8v26q0 8-8 8H20q-8 0-8-8z" fill="url(#t)"/>
+<path d="M14 12q2-5 8-5h96q6 0 8 5z" fill="#e0b07a" opacity=".6"/>
+<path d="M20 26h100" stroke="url(#au)" stroke-width="2"/><path d="M20 32h100" stroke="url(#au)" stroke-width=".8" opacity=".7"/>
+<g stroke="#2a1206" stroke-width="1" opacity=".35" fill="none"><path d="M24 40c14-3 30 3 44 0s30-3 44 0"/><path d="M30 18c10 2 20-2 30 0"/></g>`);
+
+  /* 發言舞台：深色台、紅絨幕兩邊同上面（金穗）、木地板 */
+  const fold = (x0, x1, dir) => { let o = ''; const n = 5, w = (x1 - x0) / n; for (let i = 0; i < n; i++) { const a = x0 + i * w; o += `<path d="M${r1(a)} 0h${r1(w)}c${r1(dir * 4)} 90 ${r1(-dir * 6)} 200 ${r1(dir * 10)} 300H${r1(a - dir * 6)}c${r1(-dir * 6)}-100 ${r1(dir * 4)}-210 0-300z" fill="url(#cu)" opacity="${(0.8 + (i % 2) * 0.2).toFixed(2)}"/>`; } return o; };
+  const ST = X(`viewBox="0 0 360 300" preserveAspectRatio="xMidYMid slice"><defs>
+<radialGradient id="g" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#3a2230"/><stop offset=".6" stop-color="#1a0c16"/><stop offset="1" stop-color="#0a0408"/></radialGradient>
+<linearGradient id="cu" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a0614"/><stop offset=".4" stop-color="#b3202e"/><stop offset=".6" stop-color="#d83a48"/><stop offset="1" stop-color="#5a0818"/></linearGradient>
+<linearGradient id="fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a3418"/><stop offset="1" stop-color="#24120a"/></linearGradient>
+<linearGradient id="au" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3cc"/><stop offset=".5" stop-color="#e8bd62"/><stop offset="1" stop-color="#9a6a1c"/></linearGradient>
+<radialGradient id="pool" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3cc" stop-opacity=".45"/><stop offset="1" stop-color="#fff3cc" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="360" height="300" fill="url(#g)"/>
+<path d="M0 238h360v62H0z" fill="url(#fl)"/>
+<g stroke="#000" stroke-opacity=".35" stroke-width="1"><path d="M0 250h360M0 266h360M0 284h360M60 238l-30 62M120 238l-14 62M180 238v62M240 238l14 62M300 238l30 62"/></g>
+<path d="M0 238h360" stroke="#c9963c" stroke-width="2" opacity=".6"/>
+<ellipse cx="180" cy="250" rx="110" ry="18" fill="url(#pool)"/>
+<g>${fold(0, 70, 1)}</g><g transform="translate(360 0) scale(-1 1)">${fold(0, 70, 1)}</g>
+<path d="M0 0h360v26c-12 10-24 10-36 0-12 10-24 10-36 0-12 10-24 10-36 0-12 10-24 10-36 0-12 10-24 10-36 0-12 10-24 10-36 0-12 10-24 10-36 0-12 10-24 10-36 0-12 10-24 10-36 0-12 10-24 10-36 0z" fill="url(#cu)"/>
+<path d="M0 26c12 10 24 10 36 0 12 10 24 10 36 0 12 10 24 10 36 0 12 10 24 10 36 0 12 10 24 10 36 0 12 10 24 10 36 0 12 10 24 10 36 0 12 10 24 10 36 0 12 10 24 10 36 0 12 10 24 10 36 0" fill="none" stroke="url(#au)" stroke-width="3"/>
+<g stroke="#e8bd62" stroke-width="1.2" opacity=".85">${Array.from({ length: 10 }, (_, i) => `<path d="M${18 + i * 36} 33.5v6"/>`).join('')}</g>
+<path d="M70 300c-4-40 4-80 0-120M290 300c4-40-4-80 0-120" stroke="#e8bd62" stroke-width="2" opacity=".35" fill="none"/>`);
+
+  return { J, H, L, FR, SEAL, CN, MT, SC, GV, ST };
+})();
+(() => { const rs = document.documentElement.style, put = (pre, A) => { for (const k in A) rs.setProperty(pre + k, "url('data:image/svg+xml;charset=utf-8," + encodeURIComponent(A[k]).replace(/'/g, '%27') + "')"); }; put('--cd', CD_ART); put('--zd', ZD_ART); })();
 function wireCard(t, cls = '', attrs = '') {
   if (!t) return `<span class="wcd ${cls}" ${attrs}><span class="f3 bk"></span></span>`;
   return `<span class="wcd face ${t} ${cls}" ${attrs}><span class="f3 fr"><b class="wl">${WIRE[t][0]}</b></span><span class="f3 bk"></span></span>`;
@@ -3956,14 +4279,59 @@ function cdFx(v, ev) {
   });
   at(2050, () => el.remove());
 }
-function cdBurst(el, card, T) {
+function cdBurst(el, card, T, cc) {
   const b = document.createElement('b'); b.className = 'burst';
-  const col = T === 'D' ? ['#8ff0c4', '#ffffff', '#3fe39d', '#d8fff0'] : T === 'S' ? ['#dbe7ff', '#ffffff', '#9fb4d8'] : ['#ffd28a', '#ffffff', '#ff7a3c'];
+  const col = cc || (T === 'D' ? ['#8ff0c4', '#ffffff', '#3fe39d', '#d8fff0'] : T === 'S' ? ['#dbe7ff', '#ffffff', '#9fb4d8'] : ['#ffd28a', '#ffffff', '#ff7a3c']);
   const N = T === 'D' ? 28 : 14, d0 = T === 'D' ? 120 : 80, d1 = T === 'D' ? 300 : 190;
   let h = (T === 'D' ? '<u class="rays2"></u>' : '') + '<u class="rg"></u>' + (T !== 'S' ? '<u class="rg r2"></u>' : '');
   for (let i = 0; i < N; i++) h += `<i style="--a:${Math.round(cdR(0, 360))}deg;--d:${Math.round(cdR(d0, d1))}px;--c:${col[i % col.length]};--dl:${Math.round(cdR(0, 90))}ms;--l:${Math.round(cdR(8, 22))}px"></i>`;
   b.innerHTML = h; el.insertBefore(b, card);
-  if (T === 'D') sfx('zap'); else if (T === 'S') sfx('tick');
+  if (!cc) { if (T === 'D') sfx('zap'); else if (T === 'S') sfx('tick'); }
+}
+/* 真定作拆穿（2026-11-23-05）：驚堂木由上面拍落（0.22 秒：震畫面、木聲、塵圈）→ 被拆穿嗰個人嘅身份卡（插畫）飛上嚟翻開
+ * → 0.72 秒「拆穿」紅印蓋落張卡、光圈同碎光 → 0.92 秒大字（綠：真係大話精；紅：原來係老實人，張卡擰兩下）→ 2.5 秒收 */
+function zdBurst(v, bu) {
+  cdT.forEach(clearTimeout); cdT = [];
+  const old = $('#cdfx'); if (old) old.remove();
+  const isL = bu.r === 'L', n = esc(nameOf(v, bu.id)), at = (ms, fn) => cdT.push(setTimeout(fn, ms));
+  const el = document.createElement('div'); el.id = 'cdfx'; el.className = 'Z ' + (isL ? 'ok' : 'bad');
+  const lines = Array.from({ length: 12 }, (_, i) => `<i style="--a:${Math.round(i * 30 + cdR(0, 22))}deg;--w:${Math.round(cdR(70, 150))}px;--dl:${Math.round(cdR(140, 300))}ms"></i>`).join('');
+  el.innerHTML = `<b class="dim"></b><b class="lines">${lines}</b><b class="halo"></b><b class="zgv"></b><b class="zdust"></b><div class="zcard"><i class="cdart ${isL ? 'zL' : 'zH'}"></i><b class="znm">${n}</b><b class="zstp">拆穿</b></div><div class="cap"><b>${isL ? '真係大話精！' : '原來係老實人！'}</b><small>${isL ? `${n} −1・判官 +1` : '判官 −2・呢輪完'}</small></div>`;
+  document.body.appendChild(el);
+  sfx('swish');
+  at(210, () => { shakeApp(); sfx('knock'); });
+  at(720, () => { sfx('stamp'); cdBurst(el, el.querySelector('.zcard'), isL ? 'D' : 'X', isL ? ['#8ff0c4', '#ffffff', '#ffe08a'] : ['#ff8a9a', '#ffffff', '#ffb36b']); });
+  at(950, () => sfx(isL ? 'good' : 'bad'));
+  at(2500, () => el.classList.add('out'));
+  at(2950, () => el.remove());
+}
+/* 真定作揀佢結果（2026-11-23-05）：被揀嗰個人嘅身份卡由佢嗰行飛去中間、半空翻牌（卡背係身份卡封面）
+ * → 0.64 秒估中：綠光放射同碎光；俾人呃咗：紅光、張卡擰兩下 → 1.7 秒收（下面已經係結果畫面） */
+function zdPick(v) {
+  cdT.forEach(clearTimeout); cdT = [];
+  const old = $('#cdfx'); if (old) old.remove();
+  const ok = v.why === 'ok', pk = ok ? Object.keys(v.rl).find((id) => v.rl[id] === 'H') : v.pk, at = (ms, fn) => cdT.push(setTimeout(fn, ms));
+  const n = esc(nameOf(v, pk));
+  const el = document.createElement('div'); el.id = 'cdfx'; el.className = 'P ' + (ok ? 'ok' : 'bad');
+  const lines = Array.from({ length: 12 }, (_, i) => `<i style="--a:${Math.round(i * 30 + cdR(0, 22))}deg;--w:${Math.round(cdR(70, 150))}px;--dl:${Math.round(cdR(60, 260))}ms"></i>`).join('');
+  el.innerHTML = `<b class="dim"></b><b class="lines">${lines}</b><b class="halo"></b><b class="slash"></b><div class="card3"><span class="wcd face xl zp"><span class="f3 fr"><i class="cdart ${ok ? 'zH' : 'zL'}"></i><b class="wl">${ok ? '老實人' : '大話精'}</b></span><span class="f3 bk"></span></span></div><div class="cap"><b>${ok ? '估中！' : '俾人呃咗！'}</b><small>${n} 係${ok ? '老實人' : '大話精'}</small></div>`;
+  document.body.appendChild(el);
+  const W = innerWidth, H = innerHeight, cy = H * 0.42, card = el.querySelector('.card3');
+  const row = $(`.pr[data-pid="${pk}"]`), rr = row && row.getBoundingClientRect();
+  const sx = rr ? rr.left + rr.width / 2 - W / 2 : 0, sy = rr ? Math.max(-H, Math.min(H, rr.top + rr.height / 2 - cy)) : H * 0.4;
+  card.animate([
+    { transform: `translate3d(${sx}px,${sy}px,0) scale(.24) rotateY(180deg) rotateZ(-26deg)`, easing: 'cubic-bezier(.3,.6,.35,1)' },
+    { transform: `translate3d(${sx * 0.2}px,${sy * 0.2 - 60}px,0) scale(.9) rotateY(140deg) rotateZ(-8deg)`, offset: 0.4, easing: 'cubic-bezier(.2,.75,.3,1)' },
+    { transform: 'translate3d(0,0,0) scale(1.12) rotateY(-18deg) rotateZ(3deg)', offset: 0.8, easing: 'cubic-bezier(.35,0,.3,1)' },
+    { transform: 'translate3d(0,0,0) scale(1) rotateY(0deg) rotateZ(0deg)' }
+  ], { duration: 720, fill: 'both' });
+  sfx('swish');
+  at(640, () => {
+    cdBurst(el, card, ok ? 'D' : 'X', ok ? ['#8ff0c4', '#ffffff', '#ffe08a', '#3fe39d'] : ['#ff8ac0', '#ffffff', '#c9a0ff']);
+    if (!ok) card.animate([0, 1, 2, 3, 4].map((i) => ({ transform: `rotateZ(${i === 4 ? 0 : (i % 2 ? 6 : -6)}deg)`, easing: 'ease-in-out' })), { duration: 520, delay: 120 });
+  });
+  at(1700, () => el.classList.add('out'));
+  at(2150, () => el.remove());
 }
 function cdBoom(el, card) {
   const fl = document.createElement('b'); fl.className = 'fl'; el.appendChild(fl);
@@ -4576,6 +4944,8 @@ function sfx(k) {
     else if (k === 'zap') { [784, 1046, 1318, 1568, 2093].forEach((f, i) => tone(f, i * 0.055, 0.26, 'triangle', 0.075)); }
     else if (k === 'beep') { [0, 0.11, 0.22].forEach((t) => tone(1760, t, 0.06, 'square', 0.05)); }
     else if (k === 'flick') { noise(0, 0.05, 'bandpass', 2200, 1.2, 0.35); }
+    else if (k === 'knock') { noise(0, 0.09, 'bandpass', 900, 2, 1); tone(160, 0, 0.16, 'triangle', 0.25); noise(0.1, 0.06, 'bandpass', 1300, 2, 0.45); }
+    else if (k === 'stamp') { noise(0, 0.12, 'lowpass', 380, 0.8, 0.85); tone(90, 0, 0.18, 'sine', 0.3); }
     else if (k === 'win') { [523, 659, 784, 1046].forEach((f, i) => tone(f, i * 0.13, 0.35)); }
     else if (k === 'roll') { for (let i = 0; i < 7; i++) tone(180 + Math.random() * 380, i * 0.075, 0.045, 'square', 0.035); }
     else if (k === 'hop') { tone(560 + Math.random() * 120, 0, 0.07, 'triangle', 0.08); }
