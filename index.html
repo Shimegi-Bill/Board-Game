@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-22-15';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-23-01';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -561,6 +561,121 @@ button.gdd:active{transform:scale(.98)}
 .apw .inp{flex:1;min-width:0;padding:11px 14px}
 .apw .btn{flex:0 0 92px;margin:0}
 .teston{display:flex;align-items:center;gap:8px;margin:0 2px 8px;font-size:14px;font-weight:700;color:var(--tx2)}
+/* 蟹仔大賽：沙灘賽道（5×5 外圈 16 格）、中間海水放骰盅 */
+.kr-turn{display:flex;align-items:center;gap:12px;min-height:62px;padding:8px 12px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1);margin:0 0 10px}
+.kr-turn.me{background:radial-gradient(120% 100% at 50% 0%,rgba(255,200,90,.3),transparent 70%),var(--s1);box-shadow:inset 0 0 0 2px var(--g2),0 8px 22px rgba(224,182,92,.2)}
+.kr-tav{display:flex}
+.kr-tw{flex:1;min-width:0}
+.kr-tw b{display:block;font-family:var(--serif);font-size:20px;font-weight:900;letter-spacing:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kr-turn.me .kr-tw b{color:var(--g1)}
+.kr-tw small{font-size:13px;color:var(--tx2);font-weight:700}
+.kr-turn .ring{width:46px;height:46px}
+.kr-turn .ring>b{font-size:14px}
+.kr-bd{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:6px;border-radius:22px;margin:0 0 10px;background:linear-gradient(160deg,#f3dca6,#dcb46a);box-shadow:inset 0 0 0 1px rgba(120,80,20,.35),0 14px 30px rgba(60,40,10,.3)}
+.kr-cell{position:relative;aspect-ratio:1;border-radius:12px;background:radial-gradient(120% 100% at 40% 22%,#fff6dc,#ecd29a);box-shadow:inset 0 0 0 1px rgba(120,80,20,.22),inset 0 -3px 0 rgba(150,100,30,.16)}
+.kr-no{position:absolute;left:5px;top:3px;font-size:10px;font-weight:800;color:#a27a35;line-height:1}
+.kr-cell.c1:after{content:"";position:absolute;left:4%;right:4%;bottom:-5px;height:6px;border-radius:2px;background:repeating-conic-gradient(#1b1424 0 25%,#fff 0 50%) 0 0/6px 6px;box-shadow:0 0 0 1px rgba(0,0,0,.25);z-index:9}
+.kr-cell.c1:before{content:"終點";position:absolute;right:4px;top:3px;font-size:9px;font-weight:900;color:#1b1424;letter-spacing:1px;line-height:1}
+.kr-cell.ok{background:radial-gradient(120% 100% at 40% 22%,#eafff2,#a8e6c0);box-shadow:inset 0 0 0 2px #16a34a;animation:krOk 1.2s ease-in-out var(--lp,0s) infinite;cursor:pointer}
+.kr-cell.ok:active{transform:scale(.94)}
+@keyframes krOk{0%,100%{box-shadow:inset 0 0 0 2px #16a34a,0 0 0 0 rgba(22,163,74,.45)}50%{box-shadow:inset 0 0 0 2px #16a34a,0 0 0 5px rgba(22,163,74,0)}}
+.kr-ck{position:absolute;left:23%;width:54%;bottom:calc(8% + var(--i) * var(--so));z-index:calc(var(--i) + 1);pointer-events:none}
+.kr-crab{display:block;width:100%;height:auto;filter:drop-shadow(0 2px 1px rgba(60,30,0,.35))}
+.kr-sp{position:absolute;inset:16%;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.22),inset 0 0 0 2px rgba(255,255,255,.65)}
+.kr-sp b{font-family:var(--serif);font-size:16px;font-weight:900;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.kr-sp.up{background:radial-gradient(circle at 35% 30%,#86efac,#15803d)}
+.kr-sp.dn{background:radial-gradient(circle at 35% 30%,#fda4af,#be123c)}
+.kr-sp.mine{box-shadow:0 3px 0 rgba(0,0,0,.22),inset 0 0 0 2px rgba(255,255,255,.65),0 0 0 3px var(--g2)}
+.kr-sp .av{position:absolute;right:-7px;bottom:-7px;width:20px;height:20px;font-size:10px}
+.kr-mid{grid-area:2/2/5/5;position:relative;z-index:0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#e9fbff;background:radial-gradient(120% 90% at 50% 15%,#6fd3ee,#1a7fb3 58%,#0e4f7c);box-shadow:inset 0 0 0 2px rgba(255,255,255,.4),inset 0 8px 20px rgba(0,0,0,.22)}
+.kr-mid:before,.kr-mid:after{content:"";position:absolute;left:-30%;right:-30%;height:14px;border-radius:50%;border-top:2px solid rgba(255,255,255,.35);animation:krWv 4.8s ease-in-out var(--lp,0s) infinite;pointer-events:none}
+.kr-mid:before{top:18%}
+.kr-mid:after{top:74%;animation-delay:calc(var(--lp,0s) - 2.4s)}
+@keyframes krWv{0%,100%{transform:translate3d(-8%,0,0)}50%{transform:translate3d(8%,0,0)}}
+.kr-lg{font-family:var(--serif);font-size:15px;font-weight:900;letter-spacing:2px;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.kr-by{font-size:11px;font-weight:800;opacity:.9;letter-spacing:1px}
+.kr-pail{width:58px;height:66px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.3));animation:krBob 2.4s ease-in-out var(--lp,0s) infinite}
+@keyframes krBob{0%,100%{transform:translate3d(0,0,0) rotate(-4deg)}50%{transform:translate3d(0,-4px,0) rotate(4deg)}}
+.kr-big{display:flex}
+.kr-roll{animation:krRoll .8s cubic-bezier(.2,1.25,.35,1) var(--et,0ms) backwards}
+@keyframes krRoll{0%{opacity:0;transform:translate3d(0,-80px,0) rotate(-320deg) scale(.4)}35%{opacity:1}100%{opacity:1;transform:none}}
+.kr-die{width:30px;height:30px;border-radius:8px;background:var(--c);display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:4px;gap:1px;flex:none;vertical-align:middle;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),inset 0 0 0 1.5px rgba(0,0,0,.35),0 3px 6px rgba(0,0,0,.25)}
+.kr-die i{width:5px;height:5px;border-radius:50%;background:var(--pc);align-self:center;justify-self:center;opacity:0}
+.kr-die i.on{opacity:1}
+.kr-die.sm{width:24px;height:24px;border-radius:6px;padding:3px}
+.kr-die.sm i{width:4px;height:4px}
+.kr-die.xs{width:20px;height:20px;border-radius:5px;padding:3px;margin:0 4px}
+.kr-die.xs i{width:3.5px;height:3.5px}
+.kr-die.lg{width:62px;height:62px;border-radius:14px;padding:9px}
+.kr-die.lg i{width:11px;height:11px}
+.kr-dl{display:flex;gap:4px}
+.kr-ds{width:24px;height:24px;border-radius:6px;border:1.5px dashed rgba(255,255,255,.6)}
+.kr-log{display:flex;flex-wrap:wrap;align-items:center;gap:2px;min-height:42px;padding:8px 12px;border-radius:14px;background:rgba(var(--ink),.045);box-shadow:inset 0 0 0 1px var(--e1);font-size:14px;font-weight:700;color:var(--tx2);margin:0 0 10px;line-height:1.5}
+.kr-log b{color:var(--tx)}
+.kr-lgi{animation:pin .45s cubic-bezier(.16,1,.3,1) calc(var(--dd,0ms) + var(--et,0ms)) backwards}
+.kr-tls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0 0 10px}
+.kr-tl{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px 5px;border-radius:14px;background:var(--s1);box-shadow:inset 0 0 0 2px var(--c),0 4px 10px rgba(0,0,0,.14);transition:transform .14s ease}
+.kr-tl .kr-crab{width:36px}
+.kr-tl b{font-family:var(--serif);font-size:18px;font-weight:900;line-height:1.15}
+.kr-tl small{font-size:10px;color:var(--tx3);font-weight:700}
+.kr-tl.emp{opacity:.4}
+.kr-tl.on{background:radial-gradient(120% 100% at 50% 0%,rgba(255,200,90,.28),transparent 75%),var(--s1);animation:krTl 2.4s ease-in-out var(--lp,0s) infinite}
+.kr-tl.on:active{transform:scale(.92)}
+@keyframes krTl{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-3px,0)}}
+.kr-row{margin:-2px 0 10px}
+.kr-row .btn{font-size:14px;gap:4px;padding:9px 4px;min-height:46px}
+.kr-row .ic{width:17px;height:17px}
+.kr-spm{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 2px #16a34a;margin:0 0 10px}
+.kr-spm .seg{margin:0}
+.kr-spt{text-align:center;font-size:14px;font-weight:800;color:var(--oktx)}
+.kr-me{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:18px;background:var(--panel);box-shadow:inset 0 0 0 1px rgba(224,182,92,.45);margin:0 0 10px}
+.kr-money{font-family:var(--serif);font-size:30px;font-weight:900;color:var(--g1);min-width:64px;text-align:center}
+.kr-mi{flex:1;min-width:0}
+.kr-mi small{font-size:12px;color:var(--tx3);font-weight:700}
+.kr-chips{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.kr-nm{display:flex;flex-direction:column;gap:3px;white-space:normal}
+.kr-nm>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kr-ti{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 5px;border-radius:6px;background:var(--c);color:#fff;font-size:13px;font-weight:900;box-shadow:inset 0 -2px 0 rgba(0,0,0,.22);text-shadow:0 1px 0 rgba(0,0,0,.3)}
+.kr-ti.dk{color:#3a2a05;text-shadow:none}
+.kr-ti.sm{min-width:20px;height:18px;font-size:11px;padding:0 4px}
+.kr-pt{display:inline-flex;align-items:center;gap:2px;height:22px;padding:0 7px;border-radius:6px;background:rgba(var(--ink),.07);color:var(--tx2);font-size:12px;font-weight:800}
+.kr-pt .ic{width:13px;height:13px}
+.kr-pt.sm{height:18px;font-size:11px;padding:0 5px}
+.kr-fc{display:flex;align-items:center;gap:4px;margin-top:7px}
+.kr-fc i{width:15px;height:20px;border-radius:4px;background:var(--c);box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.3)}
+.kr-fc i.used{opacity:.15}
+.kr-fc small{margin-left:4px}
+.kr-piles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 4px}
+.kr-pile{padding:9px 10px;border-radius:16px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1);min-height:62px}
+.kr-pile b{display:block;font-size:12px;letter-spacing:2px;color:var(--g1);margin-bottom:6px}
+.kr-pile small{font-size:12px;color:var(--tx3);font-weight:700}
+.kr-cds{display:flex;flex-wrap:wrap;gap:3px}
+.kr-cdb{width:17px;height:23px;border-radius:4px;background:linear-gradient(135deg,#3b2f63,#1d1838);box-shadow:inset 0 0 0 2px var(--c),0 2px 4px rgba(0,0,0,.25)}
+.kr-cdb.mine{background:var(--c);box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.35),0 0 0 2px var(--g2)}
+.pr.kr-pr.cur:before{content:"";position:absolute;left:-8px;right:-8px;top:4px;bottom:4px;border-radius:14px;background:rgba(224,182,92,.13);box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.55);z-index:-1}
+.pr.kr-pr{position:relative;z-index:0}
+.kr-rks{display:flex;justify-content:center;gap:6px;margin:8px 0 14px}
+.kr-rk{display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;padding:8px 2px 7px;border-radius:14px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1)}
+.kr-rk .kr-crab{width:40px}
+.kr-rk.t0{background:var(--gold);color:#2a1c05}
+.kr-rk.t1{background:linear-gradient(135deg,#f3f5fb,#aab3c8);color:#1e2433}
+.kr-rk b{font-family:var(--serif);font-size:20px;font-weight:900;line-height:1.2}
+.kr-rk small{font-size:11px;font-weight:800;opacity:.85}
+.stage.enter .kr-rk{animation:pop .5s cubic-bezier(.2,1.6,.4,1) calc(var(--d,0ms) + var(--r,0ms) + 200ms + var(--et)) backwards}
+.kr-it{display:inline-flex;align-items:center;gap:3px;height:22px;padding:0 6px 0 3px;border-radius:7px;font-size:12px;font-weight:900;background:rgba(var(--ink),.05)}
+.kr-it.p{color:var(--oktx)}
+.kr-it.m{color:var(--badtx)}
+.kr-it .ic{width:13px;height:13px}
+.kr-win{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px 0 6px}
+.kr-wc{width:92px;flex:none;animation:krBob 2.4s ease-in-out var(--lp,0s) infinite}
+.kr-win .res{text-align:left}
+.kr-win .tip{text-align:left;margin:2px 0 0}
+.kr-fcd{width:40px;flex:none}
+.kr-fcr{display:flex;gap:8px;margin:0 0 14px}
+.kr-fcb{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;height:58px;border-radius:14px;background:var(--s1);box-shadow:inset 0 0 0 2px var(--c),0 4px 10px rgba(0,0,0,.15);transition:transform .14s ease}
+.kr-fcb:active{transform:scale(.92)}
+.kr-fcb .kr-crab{width:40px}
+.kr-fcb.used{opacity:.25;box-shadow:inset 0 0 0 1px var(--e2)}
 /* 深色卡（身份卡、判官卡、封住嘅題目卡）入面嘅字固定淺色 */
 .rc-f,.rc-b.h,.rc-b.l,.rc-b.o,.idc{color:#f6f2e9}
 .rc-f .rc-s{color:#cdc6de}
@@ -1775,6 +1890,13 @@ function hAct(id, t, x) {
     case 'peek': if (st.g === 'tt' && st.ph === 'night' && st.rl[id] === 'S' && st.dice[id] === st.hr && tAwake().length === 1 && !st.pk[id] && x !== id && st.dice[x]) st.pk[id] = { t: x, d: st.dice[x] }; break;
     case 'tdone': if (st.g === 'tt' && st.ph === 'night' && st.dice[id] === st.hr && (st.rl[id] !== 'T' || st.stolen)) st.hd[id] = 1; break;
     case 'tacc': if (st.g === 'tt' && st.ph === 'acc' && st.rl[id] === 'T' && x !== id && st.rl[x] === 'S' && !st.acc.includes(x) && st.acc.length < st.accN) st.acc.push(x); break;
+    // 蟹仔大賽（輪到先做到；每樣做完就到下一個人）
+    case 'cbet': if (crTurn(id) && CR_C.includes(x) && st.hx.lt[x].length) crBet(id, x); break;
+    case 'cdie': if (crTurn(id)) crRoll(id); break;
+    case 'cspec': if (crTurn(id) && Array.isArray(x) && (x[1] === 1 || x[1] === -1) && crSpecOk(st.hx, id, +x[0]) && !(st.hx.ps[id].sp && st.hx.ps[id].sp.p === +x[0] && st.hx.ps[id].sp.s === x[1])) crSpec(id, +x[0], x[1]); break;
+    case 'cfin': if (crTurn(id) && Array.isArray(x) && (x[0] === 'w' || x[0] === 'l') && st.hx.ps[id].fc.includes(x[1])) crFin(id, x[0], x[1]); break;
+    case 'cpair': if (crTurn(id) && crPairOk(st.hx, id, x)) crPair(id, x); break;
+    case 'cnext': if (isH && st.g === 'cr' && st.ph === 'leg') crNewLeg(); break;
     // 拆彈危機
     case 'cut': if (st.g === 'cd' && st.ph === 'play' && id === st.hold && Array.isArray(x) && (x[0] !== id || (st.test && Object.keys(st.rl).filter(hOn).length === 1)) && st.hd[x[0]] && hOn(x[0])) cCut(id, x[0], +x[1]); break;
     // 誰是臥底
@@ -1796,16 +1918,16 @@ function hAct(id, t, x) {
     case 'pick': if (isJ && st.ph === 'judge' && st.rl[x] && !st.ex.includes(x)) hPick(x); break;
     case 'next': if ((isJ || isH) && st.ph === 'reveal' && hCanNext()) hNext(); break;
     // 房主專用
-    case 'start': if (isH && st.ph === 'lobby') { if (st.g === 'wd') wStart(false); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(false); else if (st.g === 'tt') tStart(false); else hStart(); } break;
+    case 'start': if (isH && st.ph === 'lobby') { if (st.g === 'wd') wStart(false); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(false); else if (st.g === 'tt') tStart(false); else if (st.g === 'cr') crStart(); else hStart(); } break;
     // 心水數字
     case 'xplay': if (st.g === 'xs' && st.ph === 'play' && st.hd && st.hd[id]) xPlay(id); break;
     case 'xnext': if (isH && st.g === 'xs' && st.ph === 'clear') { st.lv++; xDeal(); } break;
     case 'xtheme': if (isH && st.g === 'xs' && st.ph === 'play' && !st.pile.length) xTheme(); break;
     case 'cfg': if (isH && st.ph === 'lobby' && Array.isArray(x) && CFG_OPTS[x[0]] && (x[0] in GAMES[st.g].cfg) && CFG_OPTS[x[0]].some((o) => o[0] === x[1])) st.cfg[x[0]] = x[1]; break;
     case 'kick': if (isH && x !== st.host) hRemove(x, true); break;
-    case 'again': if (isH && st.ph === 'end') { if (st.g === 'wd') wStart(true); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(true); else if (st.g === 'tt') tStart(true); else hLobby(); } break;
+    case 'again': if (isH && st.ph === 'end') { if (st.g === 'wd') wStart(true); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(true); else if (st.g === 'tt') tStart(true); else if (st.g === 'cr') crStart(); else hLobby(); } break;
     case 'force': if (isH && st.ph === 'role') { if (st.g === 'wd') wDesc(null); else if (st.g === 'cd') st.ph = 'play'; else if (st.g === 'tt') tNight(); else hThink(); } break;
-    case 'redeal': if (isH && st.g === 'tt' && TT_PH.includes(st.ph)) tStart(true); else if (isH && st.g === 'cd' && CD_PH.includes(st.ph)) cStart(true); else if (isH && st.g === 'xs' && XS_PH.includes(st.ph)) xDeal(); else if (isH && st.g === 'wd' && WD_PH.includes(st.ph)) wStart(true); else if (isH && st.g === 'zdz' && PLAY_PH.includes(st.ph)) hRedeal(); break;
+    case 'redeal': if (isH && st.g === 'cr' && CR_PH.includes(st.ph)) crStart(); else if (isH && st.g === 'tt' && TT_PH.includes(st.ph)) tStart(true); else if (isH && st.g === 'cd' && CD_PH.includes(st.ph)) cStart(true); else if (isH && st.g === 'xs' && XS_PH.includes(st.ph)) xDeal(); else if (isH && st.g === 'wd' && WD_PH.includes(st.ph)) wStart(true); else if (isH && st.g === 'zdz' && PLAY_PH.includes(st.ph)) hRedeal(); break;
     case 'end': if (isH && st.ph !== 'lobby' && st.ph !== 'end') st.ph = 'end'; break;
     case 'close': if (isH) st.ph = 'closed'; break;
     default: break;
@@ -2243,15 +2365,160 @@ function tTick(now) {
     else if (st.pr) { if (now >= st.pr.dl) wPropFail(); else wPropCheck(); }
   } else if (st.ph === 'vote') { if (now >= st.dl) tTally(); else tCheckVote(); }
 }
+/* ============================================================
+ * 4f. 蟹仔大賽（房主計算；駱駝大賽第二版玩法，名、角色同外觀自己整，GAME-27）
+ *    Bill 2026-11-22 定：主題蟹仔；6 人以上拍檔，結算自動揀對方最好嗰張票；每人每步 60 秒，唔揀自動擲骰
+ *    play 輪流做一樣嘢 → 骰盅出咗 5 粒骰 → leg 呢段結算 → 下一段 …… → 有隻賽跑蟹衝過終點 → end
+ *    賽道 16 格：bd[1]–bd[16]，bd[17]–bd[19] ＝ 衝咗線；每格嘅陣列由下到上
+ * ============================================================ */
+const CR_C = ['r', 'y', 'g', 'b', 'p'], CR_X = ['k', 'w'];   // 5 隻賽跑蟹、黑白兩隻倒行蟹
+const CR_NM = { r: '紅蟹', y: '黃蟹', g: '綠蟹', b: '藍蟹', p: '紫蟹', k: '黑蟹', w: '白蟹' };
+const CR_COL = { r: '#ef4444', y: '#facc15', g: '#22c55e', b: '#3b82f6', p: '#a855f7', k: '#2b2733', w: '#f5f3ee' };
+const CR_TILES = [5, 3, 2, 2], CR_FIN = [8, 5, 3, 2, 1], CR_START = 3, CR_PAIR = 6;
+const CR_TURN_MS = 60000 / SPEED, CR_LEG_MS = 15000 / SPEED;
+const CR_PH = ['play', 'leg'];
+const crNew = () => ({ m: CR_START, lt: [], pt: 0, sp: null, fc: CR_C.slice(), pa: null, sg: 0 });
+const crLt = () => Object.fromEntries(CR_C.map((c) => [c, CR_TILES.slice()]));
+function crStart() {
+  const st = HS;
+  st.pl = st.pl.filter((p) => (p.on || p.id === st.host) && !p.gone);
+  for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
+  st.wt = [];
+  while (st.pl.length > gMax('cr')) { const p = st.pl.pop(); st.wt.unshift({ id: p.id, n: p.n, c: p.c, on: p.on }); }
+  if (st.pl.length < gMin('cr')) { hLobby(); return; }
+  st.gid++;
+  const bd = Array.from({ length: 20 }, () => []), d3 = () => 1 + Math.floor(Math.random() * 3);
+  shuffle(CR_C).forEach((c) => { bd[d3()].push(c); });   // 起點：逐粒骰擲，1–3 格；後擲嘅疊上面
+  const x0 = CR_X[Math.floor(Math.random() * 2)];
+  bd[17 - d3()].push(x0); bd[17 - d3()].push(x0 === 'k' ? 'w' : 'k');   // 黑白蟹：灰骰 1 → 第 16 格、2 → 15、3 → 14
+  const od = st.pl.map((p) => p.id), ps = {};
+  od.forEach((id) => { ps[id] = crNew(); });
+  st.pl.forEach((p) => { p.gone = 0; p.sc = CR_START; });
+  st.hx = { bd, by: CR_C.concat('x'), dc: [], lt: crLt(), ps, od, wb: [], lb: [], ti: Math.floor(Math.random() * od.length), lg: 1, tk: 1, ev: null, evk: 0, log: [], lr: null, fr: null, pair: od.length >= CR_PAIR ? 1 : 0 };
+  st.ph = 'play'; st.dl = Date.now() + CR_TURN_MS;
+  st.jd = null; st.w = null; st.rl = {}; st.dt = {};
+}
+const crCell = (p) => ((p - 1) % 16 + 16) % 16 + 1;   // 顯示用：第 17 格畫喺第 1 格位
+const crStack = (bd, c) => bd[c].concat(bd[c + 16] || []);
+function crFind(bd, c) { for (let p = 1; p < bd.length; p++) { const i = bd[p].indexOf(c); if (i >= 0) return [p, i]; } return [0, -1]; }
+const crTileAt = (hx, p) => { for (const o of hx.od) { const s = hx.ps[o].sp; if (s && s.p === p) return { p, s: s.s, o }; } return null; };
+/* 灰骰：得一隻黑白蟹揹住賽跑蟹 → 郁佢；兩隻直接疊埋（中間冇賽跑蟹）→ 郁上面嗰隻；否則郁骰面顏色 */
+function crCrazy(bd, shown) {
+  const [pk, ik] = crFind(bd, 'k'), [pw, iw] = crFind(bd, 'w');
+  const carry = (p, i) => bd[p].slice(i + 1).some((c) => CR_C.includes(c));
+  const ck = carry(pk, ik), cw = carry(pw, iw);
+  if (ck !== cw) return ck ? 'k' : 'w';
+  if (pk === pw && Math.abs(ik - iw) === 1) return ik > iw ? 'k' : 'w';
+  return shown;
+}
+/* 郁蟹：連上面嘅蟹一齊行，落到有蟹嘅格就疊上面；黑白蟹倒行，過咗第 1 格去第 16 格。
+ * 停喺觀眾牌：打氣再行 1 格疊上面，喝倒彩退 1 格塞落最底（黑白蟹方向相反）；牌主即刻 +$1 */
+function crMove(hx, c, n, dir) {
+  const bd = hx.bd, [f, i0] = crFind(bd, c), n0 = bd[f].length;
+  const u = bd[f].splice(i0), race = u.some((x) => CR_C.includes(x));
+  const norm = (q) => (q < 1 ? q + 16 : q > 16 && !race ? q - 16 : q);
+  const sz = (q) => crStack(bd, crCell(q)).length;
+  const q = norm(f + dir * n), nq = sz(q);
+  bd[q].push(...u);
+  let s = null, q2 = q, nq2 = 0;
+  const t = q <= 16 ? crTileAt(hx, q) : null;
+  if (t) {
+    const P = hx.ps[t.o]; P.m++; P.sg++;
+    s = t;
+    bd[q].splice(bd[q].length - u.length);
+    q2 = norm(q + dir * t.s); nq2 = sz(q2);
+    if (t.s > 0) bd[q2].push(...u); else bd[q2].unshift(...u);
+  }
+  return { c, dir, u, f, i0, n0, q, nq, s, q2, nq2 };
+}
+/* 名次：最前嗰格、疊喺最上面嘅排先；黑白蟹唔計 */
+function crRank(bd) { const r = []; for (let p = bd.length - 1; p >= 1; p--) for (let i = bd[p].length - 1; i >= 0; i--) if (CR_C.includes(bd[p][i])) r.push(bd[p][i]); return r; }
+const crCur = () => HS.hx.od[HS.hx.ti];
+const crTurn = (id) => HS.g === 'cr' && HS.ph === 'play' && !!HS.hx && crCur() === id;
+function crLog(e) { const hx = HS.hx; hx.evk++; e.k = hx.evk; hx.ev = e; hx.log = [e, ...hx.log].slice(0, 3); }
+function crSync() { const hx = HS.hx; HS.pl.forEach((p) => { if (hx.ps[p.id]) p.sc = hx.ps[p.id].m; }); }
+function crNext() {
+  const st = HS, hx = st.hx, n = hx.od.length;
+  for (let k = 1; k <= n; k++) { const i = (hx.ti + k) % n, p = st.pl.find((q) => q.id === hx.od[i]); if (p && !p.gone) { hx.ti = i; break; } }
+  hx.tk++; st.dl = Date.now() + CR_TURN_MS;
+}
+function crBet(id, c) { const hx = HS.hx, v = hx.lt[c].shift(); hx.ps[id].lt.push([c, v]); crLog({ t: 'bet', id, c, v }); crNext(); }
+/* 觀眾牌：第 2–16 格、冇蟹、唔可以貼住其他人嘅觀眾牌（自己嗰張可以搬） */
+function crSpecOk(hx, id, p) {
+  if (!(p >= 2 && p <= 16) || hx.bd[p].length) return false;
+  return hx.od.every((o) => { const s = hx.ps[o].sp; return o === id || !s || Math.abs(s.p - p) > 1; });
+}
+function crSpec(id, p, s) { const hx = HS.hx; hx.ps[id].sp = { p, s }; crLog({ t: 'spec', id, p, s }); crNext(); }
+function crFin(id, w, c) { const hx = HS.hx, P = hx.ps[id]; P.fc = P.fc.filter((x) => x !== c); (w === 'w' ? hx.wb : hx.lb).push({ id, c }); crLog({ t: 'fin', id, w }); crNext(); }
+const crPairOk = (hx, id, x) => !!hx.pair && x !== id && !!hx.ps[x] && !!hx.ps[id] && !hx.ps[id].pa && !hx.ps[x].pa;
+function crPair(id, x) { const hx = HS.hx; hx.ps[id].pa = x; hx.ps[x].pa = id; crLog({ t: 'pair', id, x }); crNext(); }
+/* 擲骰：拎一張骰票，骰盅隨機出一粒骰（1–3）；出咗 5 粒就呢段結算；有賽跑蟹衝線就完場 */
+function crRoll(id, auto) {
+  const st = HS, hx = st.hx;
+  hx.ps[id].pt++;
+  const d = hx.by.splice(Math.floor(Math.random() * hx.by.length), 1)[0], n = 1 + Math.floor(Math.random() * 3);
+  const sh = d === 'x' ? CR_X[Math.floor(Math.random() * 2)] : null;
+  const mv = d === 'x' ? crMove(hx, crCrazy(hx.bd, sh), n, -1) : crMove(hx, d, n, 1);
+  hx.dc.push({ d, n, sh });
+  crLog({ t: 'roll', id, d, n, sh, auto: auto ? 1 : 0, ...mv });
+  crSync();
+  if (hx.bd.slice(17).some((a) => a.some((c) => CR_C.includes(c)))) { crLegScore(); crFinal(); return; }
+  if (hx.dc.length >= 5) { crLegScore(); st.ph = 'leg'; st.dl = Date.now() + CR_LEG_MS; return; }
+  crNext();
+}
+/* 每段結算：押注牌（第一收牌面、第二 +1、其他 −1）、骰票每張 +1、拍檔加對方最好嗰張（Bill 定自動揀）；錢唔會少過 0 */
+function crLegScore() {
+  const hx = HS.hx, rk = crRank(hx.bd), a = rk[0], b = rk[1], rows = {};
+  const pay = (c, v) => (c === a ? v : c === b ? 1 : -1);
+  hx.od.forEach((id) => {
+    const P = hx.ps[id], it = P.lt.map(([c, v]) => ({ t: 'b', c, v, d: pay(c, v) }));
+    if (P.pt) it.push({ t: 'p', n: P.pt, d: P.pt });
+    if (P.pa && hx.ps[P.pa]) {
+      const Q = hx.ps[P.pa], cand = Q.lt.map(([c, v]) => ({ c, v, d: pay(c, v) }));
+      if (Q.pt) cand.push({ c: '', v: 0, d: 1 });
+      const best = cand.sort((x, y) => y.d - x.d)[0];
+      if (best && best.d > 0) it.push({ t: 'a', o: P.pa, c: best.c, v: best.v, d: best.d });
+    }
+    const m0 = P.m; P.m = Math.max(0, P.m + it.reduce((s, x) => s + x.d, 0));
+    rows[id] = { it, sg: P.sg, d: P.m - m0, m: P.m };
+  });
+  hx.lr = { lg: hx.lg, rk, rows };
+  crSync();
+}
+/* 完場：冠軍注、包尾注按落注次序 +8、+5、+3、+2、+1，之後估中都 +1；估錯 −1 */
+function crFinal() {
+  const st = HS, hx = st.hx, rk = crRank(hx.bd), win = rk[0], lose = rk[rk.length - 1];
+  const pay = (pile, ans) => { let k = 0; return pile.map((e) => ({ ...e, d: e.c === ans ? (CR_FIN[k++] || 1) : -1 })); };
+  const w = pay(hx.wb, win), l = pay(hx.lb, lose);
+  w.concat(l).forEach((e) => { const P = hx.ps[e.id]; P.m = Math.max(0, P.m + e.d); });
+  hx.fr = { win, lose, rk, w, l };
+  crSync();
+  st.ph = 'end'; st.dl = 0;
+}
+function crNewLeg() {
+  const st = HS, hx = st.hx;
+  hx.lg++; hx.by = CR_C.concat('x'); hx.dc = []; hx.lt = crLt();
+  hx.od.forEach((id) => { const P = hx.ps[id]; P.lt = []; P.pt = 0; P.sp = null; P.pa = null; P.sg = 0; });
+  st.ph = 'play'; crNext();
+}
+function crTick(now) {
+  const st = HS, hx = st.hx; if (!hx) return;
+  if (st.ph === 'play') {
+    const p = st.pl.find((q) => q.id === crCur());
+    if (!p || p.gone) crNext();
+    else if (now >= st.dl) crRoll(p.id, 1);   // 60 秒唔揀：自動幫佢擲骰
+  } else if (st.ph === 'leg' && now >= st.dl) crNewLeg();
+}
 /* 房主計時：準備完自動入發言、每人 30 秒、全部講完入判決、4 分鐘到就完 */
 setInterval(() => {
   if (!HS || !S.isHost || S.screen !== 'room') return;
   const st = HS, now = Date.now();
-  const sig = () => [st.ph, st.sp, st.ci, st.al ? st.al.length : 0, st.lk, st.win, st.hr, st.stolen, st.acc ? st.acc.length : 0, st.pr ? st.pr.k : 0, st.prr ? st.prr.k : 0].join('|'), s0 = sig();
+  const sig = () => [st.ph, st.sp, st.ci, st.al ? st.al.length : 0, st.lk, st.win, st.hr, st.stolen, st.acc ? st.acc.length : 0, st.pr ? st.pr.k : 0, st.prr ? st.prr.k : 0, st.hx ? st.hx.evk + '.' + st.hx.ti + '.' + st.hx.lg : ''].join('|'), s0 = sig();
   if (st.g === 'wd') wTick(now);
   else if (st.g === 'xs') { /* 心水數字冇計時 */ }
   else if (st.g === 'cd') { if (st.ph === 'role') cCheckRole(); }
   else if (st.g === 'tt') tTick(now);
+  else if (st.g === 'cr') crTick(now);
   else if (st.ph === 'role') hCheckRole();
   else if (st.ph === 'think' && now >= st.dl) hSpeak();
   else if (st.ph === 'speak') {
@@ -2375,6 +2642,7 @@ function onView(v) {
     LS.set('bgr_sess', { code: S.code, host: false, t: Date.now() });
   }
   if (S.modal && S.modal.type === 'confirm' && S.modal.ph && S.modal.ph !== v.ph) S.modal = null;
+  if (S.modal && S.modal.krTk != null && (!v.hx || v.hx.tk !== S.modal.krTk)) S.modal = null;   // 蟹仔大賽：轉咗人就收埋確認
   fx(prevPh, had, v);
   render();
 }
@@ -2447,6 +2715,9 @@ const ICP = {
   scis: '<circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/>',
   bomb: '<circle cx="11" cy="15" r="6.5"/><rect x="9" y="6.3" width="4" height="2.4" rx=".6"/><path d="M11 6.3c0-2.6 2.2-3.6 4.4-3.1"/><path d="M17.6 1.6l.4 1.4M20 4l-1.4.3M19.6 1.6l-.9 1.1"/>',
   cutw: '<path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/>',
+  dice: '<rect x="4" y="4" width="16" height="16" rx="3.5"/><circle cx="8.5" cy="8.5" r=".8" fill="currentColor"/><circle cx="12" cy="12" r=".8" fill="currentColor"/><circle cx="15.5" cy="15.5" r=".8" fill="currentColor"/>',
+  flag: '<path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/>',
+  sign: '<rect x="4" y="4" width="16" height="9" rx="2"/><path d="M12 13v8M9 21h6"/>',
 };
 const ic = (n) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICP[n] || ''}</svg>`;
 const ring = (key, tot, cls = '', inner = '') => `<div class="ring ${cls}" data-ring="${key}" data-tot="${tot}"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/><circle class="rp" cx="32" cy="32" r="29" pathLength="100"/></svg>${inner || `<b data-cd="${key}"></b>`}</div>`;
@@ -2457,6 +2728,11 @@ const GAMEART_WD = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio=
 const GAMEART_XS = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gxB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a1d3a"/><stop offset="1" stop-color="#14121f"/></linearGradient><radialGradient id="gxL" cx=".5" cy=".45" r=".6"><stop offset="0" stop-color="#ff8fb0" stop-opacity=".25"/><stop offset="1" stop-color="#ff8fb0" stop-opacity="0"/></radialGradient><linearGradient id="gxG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".45" stop-color="#e4bb60"/><stop offset=".6" stop-color="#c3913a"/><stop offset="1" stop-color="#f2d892"/></linearGradient></defs><rect width="400" height="150" fill="url(#gxB)"/><rect width="400" height="150" fill="url(#gxL)"/><path d="M60 120 C140 60, 260 60, 340 30" stroke="#e0b65c" stroke-opacity=".5" stroke-width="2" fill="none" stroke-dasharray="4 6"/><g font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif" font-weight="900" text-anchor="middle"><g transform="translate(78 52)"><rect width="62" height="86" rx="9" fill="url(#gxG)"/><rect x="4" y="4" width="54" height="78" rx="6" fill="#fff8ea"/><text x="31" y="56" font-size="30" fill="#2a1c05">7</text></g><g transform="translate(168 36)"><rect width="62" height="86" rx="9" fill="url(#gxG)"/><rect x="4" y="4" width="54" height="78" rx="6" fill="#fff8ea"/><text x="31" y="56" font-size="30" fill="#2a1c05">42</text></g><g transform="translate(258 20)"><rect width="62" height="86" rx="9" fill="url(#gxG)"/><rect x="4" y="4" width="54" height="78" rx="6" fill="#fff8ea"/><text x="31" y="56" font-size="30" fill="#2a1c05">88</text></g></g><g fill="#ff7083" transform="translate(340 108)"><path d="M0 6 C0 -2 10 -2 10 6 C10 -2 20 -2 20 6 C20 14 10 20 10 22 C10 20 0 14 0 6Z"/></g></svg>`;
 const GAMEART_CD = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gcB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a1418"/><stop offset="1" stop-color="#14121f"/></linearGradient><radialGradient id="gcL" cx=".55" cy=".45" r=".6"><stop offset="0" stop-color="#ff7a3c" stop-opacity=".35"/><stop offset="1" stop-color="#ff7a3c" stop-opacity="0"/></radialGradient></defs><rect width="400" height="150" fill="url(#gcB)"/><rect width="400" height="150" fill="url(#gcL)"/><path d="M20 120 C90 40 150 140 220 70 S330 30 390 90" stroke="#5fd6a3" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M20 135 C100 70 170 150 240 95 S340 60 390 120" stroke="#ff7083" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M20 105 C80 20 160 110 230 45 S320 10 390 60" stroke="#9cc2ff" stroke-width="5" fill="none" stroke-linecap="round"/><g transform="translate(200 78)"><circle r="34" fill="#1b1424" stroke="#e0b65c" stroke-width="3"/><rect x="-8" y="-46" width="16" height="14" rx="3" fill="#e0b65c"/><path d="M2 -46 C10 -60 24 -58 28 -66" stroke="#e0b65c" stroke-width="3" fill="none"/><circle cx="29" cy="-67" r="6" fill="#ffd28a"/><circle cx="29" cy="-67" r="11" fill="#ff7a3c" opacity=".35"/><text y="10" text-anchor="middle" font-size="26" font-weight="900" fill="#f2d892" font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif">4</text></g><g transform="translate(300 38) rotate(30)" fill="#e0b65c"><circle cx="-10" cy="16" r="7" fill="none" stroke="#e0b65c" stroke-width="3"/><circle cx="10" cy="16" r="7" fill="none" stroke="#e0b65c" stroke-width="3"/><path d="M-6 10 L8 -18 L11 -16 L-2 12Z"/><path d="M6 10 L-8 -18 L-11 -16 L2 12Z"/></g></svg>`;
 const GAMEART_TT = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gtB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101536"/><stop offset="1" stop-color="#14121f"/></linearGradient><radialGradient id="gtT" cx=".5" cy=".45" r=".5"><stop offset="0" stop-color="#ffe27a"/><stop offset=".46" stop-color="#ffd34f"/><stop offset=".56" stop-color="#f2b53a"/><stop offset=".72" stop-color="#d58a2a"/><stop offset="1" stop-color="#9a5210"/></radialGradient></defs><rect width="400" height="150" fill="url(#gtB)"/><circle cx="330" cy="36" r="18" fill="#f2e7b8"/><circle cx="338" cy="30" r="16" fill="#101536"/><g fill="#f7e4a8" opacity=".7"><circle cx="60" cy="30" r="1.6"/><circle cx="120" cy="18" r="1.2"/><circle cx="250" cy="24" r="1.4"/><circle cx="290" cy="70" r="1.1"/></g><ellipse cx="200" cy="118" rx="110" ry="20" fill="#e4e8f0"/><ellipse cx="200" cy="114" rx="96" ry="14" fill="#fff"/><circle cx="150" cy="96" r="22" fill="url(#gtT)"/><circle cx="200" cy="92" r="22" fill="url(#gtT)"/><circle cx="250" cy="96" r="22" fill="url(#gtT)" opacity=".35"/><path d="M262 60 C280 50 300 54 312 62 L300 72 C290 66 278 66 268 72Z" fill="#2a2348" stroke="#e0b65c" stroke-width="2"/><g font-family="Noto Serif TC,Songti TC,Hiragino Mincho ProN,serif" font-weight="900" fill="#f2d892" font-size="22"><text x="40" y="132">?</text><text x="352" y="128">?</text></g><g transform="translate(70 62)"><rect width="34" height="34" rx="7" fill="#fffdf7" transform="rotate(-10)"/><circle cx="9" cy="10" r="3.2" fill="#2a1c05"/><circle cx="23" cy="20" r="3.2" fill="#2a1c05"/><circle cx="16" cy="15" r="3.2" fill="#2a1c05"/></g></svg>`;
+/* 蟹仔：40×28；倒行蟹（黑白）有嬲嬲眉 */
+const crabG = (col, mad) => `<g fill="none" stroke="#1b1424" stroke-width="1.6" stroke-linecap="round"><path d="M10 19l-6 3M10 22l-5 4.5M30 19l6 3M30 22l5 4.5M15 10V5.5M25 10V5.5"/></g><path d="M2.6 10.5a5.2 5.2 0 0 1 8.6-5.6l-2.6 2.8 3.4 1.1a5.2 5.2 0 0 1-9.4 1.7z" fill="${col}" stroke="#1b1424" stroke-width="1.4" stroke-linejoin="round"/><path d="M37.4 10.5a5.2 5.2 0 0 0-8.6-5.6l2.6 2.8-3.4 1.1a5.2 5.2 0 0 0 9.4 1.7z" fill="${col}" stroke="#1b1424" stroke-width="1.4" stroke-linejoin="round"/><ellipse cx="20" cy="17.5" rx="12.5" ry="8" fill="${col}" stroke="#1b1424" stroke-width="1.6"/><ellipse cx="15.5" cy="14.2" rx="4.5" ry="2" fill="#fff" opacity=".42"/><circle cx="15" cy="4.6" r="2.8" fill="#fff" stroke="#1b1424" stroke-width="1.2"/><circle cx="25" cy="4.6" r="2.8" fill="#fff" stroke="#1b1424" stroke-width="1.2"/><circle cx="15.5" cy="5" r="1.2" fill="#1b1424"/><circle cx="25.5" cy="5" r="1.2" fill="#1b1424"/>${mad ? '<path d="M11.4 1.4l5.2 1.8M28.6 1.4l-5.2 1.8" stroke="#e11d48" stroke-width="1.7" stroke-linecap="round"/>' : '<path d="M17 21.4q3 2.2 6 0" fill="none" stroke="#1b1424" stroke-width="1.3" stroke-linecap="round"/>'}`;
+const crabSvg = (c) => `<svg class="kr-crab" viewBox="0 0 40 28">${crabG(CR_COL[c], CR_X.includes(c))}</svg>`;
+const PAILG = '<path d="M14 22h32l-4 30H18z" fill="#3b82f6" stroke="#1b1424" stroke-width="2" stroke-linejoin="round"/><path d="M12 19h36v6H12z" fill="#7dd3fc" stroke="#1b1424" stroke-width="2" stroke-linejoin="round"/><path d="M16 20c0-15 28-15 28 0" fill="none" stroke="#1b1424" stroke-width="2.4"/><path d="M21 31l1.5 15" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".45"/>';
+const GAMEART_CR = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gkS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#155e8c"/><stop offset="1" stop-color="#46b7da"/></linearGradient><linearGradient id="gkD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e3b4"/><stop offset="1" stop-color="#dcb46a"/></linearGradient></defs><rect width="400" height="150" fill="url(#gkS)"/><circle cx="330" cy="30" r="15" fill="#ffe27a"/><path d="M0 66 Q50 54 100 66 T200 66 T300 66 T400 66 V150 H0Z" fill="url(#gkD)"/><path d="M0 66 Q50 54 100 66 T200 66 T300 66 T400 66" fill="none" stroke="#fff" stroke-width="3" opacity=".75"/><g fill="#c99a4e" opacity=".35"><rect x="14" y="122" width="44" height="20" rx="6"/><rect x="64" y="122" width="44" height="20" rx="6"/><rect x="114" y="122" width="44" height="20" rx="6"/><rect x="214" y="122" width="44" height="20" rx="6"/><rect x="264" y="122" width="44" height="20" rx="6"/><rect x="314" y="122" width="44" height="20" rx="6"/></g><g transform="translate(352 60)"><rect width="3" height="58" fill="#5b4320"/><rect x="3" y="2" width="30" height="20" fill="#fff" stroke="#1b1424" stroke-width="1.5"/><g fill="#1b1424"><rect x="3" y="2" width="7.5" height="5"/><rect x="18" y="2" width="7.5" height="5"/><rect x="10.5" y="7" width="7.5" height="5"/><rect x="25.5" y="7" width="7.5" height="5"/><rect x="3" y="12" width="7.5" height="5"/><rect x="18" y="12" width="7.5" height="5"/><rect x="10.5" y="17" width="7.5" height="5"/><rect x="25.5" y="17" width="7.5" height="5"/></g></g><g transform="translate(26 58) scale(1.25)">${PAILG}</g><g transform="translate(150 90) scale(1.9)">${crabG(CR_COL.r)}</g><g transform="translate(150 70) scale(1.9)">${crabG(CR_COL.b)}</g><g transform="translate(150 50) scale(1.9)">${crabG(CR_COL.y)}</g><g transform="translate(262 92) scale(1.55)">${crabG(CR_COL.k, 1)}</g><g transform="translate(232 108) scale(.9)">${crabG(CR_COL.g)}</g></svg>`;
 const GAMES = {
   zdz: { name: '真定作', min: 3, art: GAMEART, cfg: { r: 1, d: 0 }, tags: ['3–10 人', '一局 15–30 分鐘', '派對・講大話'],
     desc: '冷門題目得一個人知真正意思，其他人作。判官估邊個講真話。' },
@@ -2468,6 +2744,8 @@ const GAMES = {
     desc: '拆彈組對炸彈客，輪流剪線：剪晒拆除線定剪中炸彈？' },
   tt: { name: '邊個偷咗蛋撻', min: 4, max: 8, art: GAMEART_TT, cfg: { t: 0 }, tags: ['4–8 人', '一局 10–15 分鐘', '天黑閉眼・推理'],
     desc: '擲骰決定幾點醒，偷撻賊趁夜偷蛋撻。天光投票揪出佢。' },
+  cr: { name: '蟹仔大賽', min: 3, max: 8, art: GAMEART_CR, cfg: {}, tags: ['3–8 人', '一局 30–45 分鐘', '賽跑・押注'],
+    desc: '五隻蟹疊住跑，黑白兩隻倒住行。押中邊隻贏，最多錢勝。' },
 };
 const CROWN = `<svg viewBox="0 0 84 60" class="crown"><defs><linearGradient id="crG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".5" stop-color="#e0b65c"/><stop offset="1" stop-color="#b8862f"/></linearGradient></defs><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="url(#crG)" stroke="#8a5f1c" stroke-width="1.5" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#c3913a"/><circle cx="42" cy="34" r="5" fill="#ff7083"/><circle cx="22" cy="40" r="4" fill="#9cc2ff"/><circle cx="62" cy="40" r="4" fill="#5fd6a3"/></svg>`;
 
@@ -2476,7 +2754,8 @@ function scrKey(v) {
   if (S.screen === 'home') return 'home';
   if (!v) return 'conn';
   if (v.ph === 'lobby') return v.code + '|lobby';
-  return [v.code, v.g, v.gid, v.ph, v.rd, v.rr, v.lv, v.cr, v.hr, v.tie, v.g === 'cd' && v.ph === 'end' && Date.now() < (S.cdHold || 0) ? 'h' : ''].join('|');
+  const krh = v.g === 'cr' && Date.now() < (S.crHold || 0);   // 蟹仔大賽：最後一步行完先轉結算畫面
+  return [v.code, v.g, v.gid, krh ? 'play' : v.ph, v.rd, v.rr, v.lv, v.cr, v.hr, v.tie, v.g === 'cd' && v.ph === 'end' && Date.now() < (S.cdHold || 0) ? 'h' : '', v.g === 'cr' && v.hx ? v.hx.lg : ''].join('|');
 }
 function render() {
   const app = $('#app'), now = Date.now();
@@ -2491,6 +2770,9 @@ function render() {
     top = vTop(v) + '<div id="banner"></div>';
     h = '';
     if (v.ph === 'lobby') h += vLobby(v);
+    else if (v.g === 'cr' && v.hx && (v.ph === 'play' || ((v.ph === 'leg' || v.ph === 'end') && Date.now() < (S.crHold || 0)))) h += vPlayCr(v);
+    else if (v.g === 'cr' && v.hx && v.ph === 'leg') h += vLegCr(v);
+    else if (v.g === 'cr' && v.ph === 'end') h += vEndCr(v);
     else if (v.g === 'tt' && v.ph === 'end') h += vEndTt(v);
     else if (v.g === 'tt' && TT_PH.includes(v.ph)) h += vPlayTt(v);
     else if (v.g === 'cd' && v.ph === 'end' && Date.now() < (S.cdHold || 0)) h += vPlayCd(v);
@@ -2524,6 +2806,7 @@ function render() {
   renderBanner();
   renderModal();
   tickCd();
+  if (S.screen === 'room' && S.view && S.view.g === 'cr') crAnim(S.view);
 }
 function renderBanner() {
   const b = $('#banner'); if (!b) return;
@@ -2587,7 +2870,10 @@ function vLobby(v) {
   const gsel = host ? `<button class="gdd" data-act="gpick">${ginner}${ic('down')}</button>` : `<div class="gdd">${ginner}</div>`;
   const nU = onN >= 7 ? 2 : 1;
   const cdN = CD_ROLES[Math.min(8, Math.max(4, onN))];
-  const opts = v.g === 'tt'
+  const opts = v.g === 'cr'
+    ? `<div class="cl">每段流程</div><div class="flow"><span>輪流揀一樣：押注／擲骰／觀眾牌／總注</span><i>›</i><span>出咗 5 粒骰就結算</span><i>›</i><span>有蟹衝線完場</span></div>
+      <div class="cl">每人起始 $3・每步 60 秒・${onN >= 6 ? '今次可以組拍檔' : '6 人以上可以組拍檔'}</div>`
+    : v.g === 'tt'
     ? `<div class="cl">天光討論時間</div>${seg('t', v.cfg.t, host)}
       <div class="cl">每局流程</div><div class="flow"><span>擲骰</span><i>›</i><span>凌晨 1–6 點逐個醒</span><i>›</i><span>賊揀共犯</span><i>›</i><span>天光討論（${v.cfg.t ? v.cfg.t / 60 + ' 分鐘' : '唔限時'}）</span><i>›</i><span>投票</span></div>
       <div class="cl">${onN < 4 ? '要 4–8 人' : onN > 8 ? '最多 8 人' : `而家 ${onN} 人：偷撻賊 1・共犯 ${onN >= 7 ? 2 : onN >= 5 ? 1 : 0}`}</div>`
@@ -2815,6 +3101,30 @@ function fx(prevPh, had, v) {
         sfx(isL ? 'good' : 'bad');
       }
     }
+  }
+  if (v.g === 'cr') {
+    const hx = v.hx; if (!hx) return;
+    const e = hx.ev, now = Date.now();
+    let wait = 0;
+    if (e && !S.seen['ke' + v.gid + '-' + e.k]) {
+      S.seen['ke' + v.gid + '-' + e.k] = 1;
+      if (had && e.t === 'roll') {
+        S.crA = { k: e.k + ':' + v.gid, t: now }; wait = crDur(e);
+        sfx('roll');
+        for (let j = 1; j <= e.n; j++) setTimeout(() => sfx('hop'), CR_T0 + j * CR_HOP - 40);
+        if (e.s) setTimeout(() => sfx('coin'), wait - 40);
+        if (v.ph === 'leg' || v.ph === 'end') { S.crHold = now + wait + 700; setTimeout(render, wait + 730); }
+      } else if (had) sfx(e.t === 'bet' || e.t === 'fin' ? 'coin' : 'tick');
+    }
+    if (v.ph === 'play') {
+      const lk = 'kl' + v.gid + '-' + hx.lg;
+      if (!S.seen[lk]) { S.seen[lk] = 1; S.crM = null; if (had) sweep(hx.lg === 1 ? '蟹仔大賽' : `第 ${hx.lg} 段`, hx.lg === 1 ? '開跑！' : '骰盅裝返滿'); }
+      const tk = 'kt' + v.gid + '-' + hx.tk;
+      if (!S.seen[tk]) { S.seen[tk] = 1; S.crM = null; if (had && hx.od[hx.ti] === ME.id) setTimeout(() => sfx('good'), wait); }
+    }
+    if (v.ph === 'leg' && !S.seen['kg' + v.gid + '-' + hx.lg]) { S.seen['kg' + v.gid + '-' + hx.lg] = 1; if (had) setTimeout(() => { sweep(`第 ${hx.lg} 段完`, '結算'); sfx('good'); }, wait ? wait + 700 : 0); }
+    if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; if (had && prevPh !== 'end') setTimeout(() => { if (hx.fr) sweep('衝線！', CR_NM[hx.fr.win] + '第一'); confetti(); sfx('win'); }, wait ? wait + 700 : 0); }
+    return;
   }
   if (v.g === 'tt') {
     if (v.ph === 'role' && !S.seen['tr' + v.gid]) { S.seen['tr' + v.gid] = 1; S.hold = false; if (had) sweep('收工', '睇身份同骰'); }
@@ -3326,6 +3636,162 @@ const RULES_TT = `<div class="rules">
     <li>最多票嘅人（平票就全部）翻身份。偷撻賊喺入面：<b>伙記贏</b>，每個伙記 +1 分。</li>
     <li>偷撻賊冇俾人投中：<b>偷撻賊同共犯贏</b>，每人 +1 分。</li></ul>
 </div>`;
+/* ---------- 蟹仔大賽：畫面 ---------- */
+const CR_GRID = [null, [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [2, 5], [3, 5], [4, 5], [5, 5], [5, 4], [5, 3], [5, 2], [5, 1], [4, 1], [3, 1], [2, 1]];   // 第 p 格喺 [行, 列]：順時針行一圈，第 16 格同第 1 格中間係終點線
+const crSo = (n) => (n <= 1 ? 0 : Math.min(15, 54 / (n - 1)));   // 疊蟹：每隻比下面高幾多 %（疊得多就逼啲）
+const crMine = (v) => v.g === 'cr' && v.ph === 'play' && !!v.hx && v.hx.od[v.hx.ti] === ME.id;
+const crDie = (d, n, sh, cls = '') => `<span class="kr-die ${cls}" style="--c:${d === 'x' ? '#a3a3ad' : CR_COL[d]};--pc:${d === 'x' ? CR_COL[sh] : d === 'y' ? '#3a2a05' : '#fff'}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[n] && PIPS[n].includes(i) ? 'on' : ''}"></i>`).join('')}</span>`;
+const crTi = (c, v, cls = '') => `<span class="kr-ti${c === 'y' ? ' dk' : ''}${cls ? ' ' + cls : ''}" style="--c:${CR_COL[c]}">${v}</span>`;
+const CR_T0 = 700, CR_HOP = 300;   // 擲骰 0.7 秒，之後每格跳 0.3 秒
+const crDur = (e) => CR_T0 + e.n * CR_HOP + (e.s ? 150 + CR_HOP : 0);
+function crEvText(v, e) {
+  const n = `<b>${esc(nameOf(v, e.id))}</b>`;
+  if (e.t === 'bet') return `${n} 押 ${crTi(e.c, '$' + e.v)}`;
+  if (e.t === 'spec') return `${n} 放${e.s > 0 ? '打氣' : '喝倒彩'}牌・第 ${e.p} 格`;
+  if (e.t === 'fin') return `${n} 落咗${e.w === 'w' ? '冠軍' : '包尾'}注`;
+  if (e.t === 'pair') return `${n} 同 <b>${esc(nameOf(v, e.x))}</b> 做拍檔`;
+  if (e.t === 'roll') return `${n}${e.auto ? '（超時）' : ''}${crDie(e.d, e.n, e.sh, 'xs')}${CR_NM[e.c]}${e.dir < 0 ? '倒行' : '行'} ${e.n} 格${e.u.length > 1 ? `・揹 ${e.u.length - 1} 隻` : ''}${e.s ? `・${e.s.s > 0 ? '打氣 +1' : '喝倒彩 −1'}，${esc(nameOf(v, e.s.o))} +$1` : ''}`;
+  return '';
+}
+function crBoard(v, mine) {
+  const hx = v.hx, P = hx.ps[ME.id], spm = mine && S.crM === 'spec' && P, side = S.crSide || 1;
+  let h = '';
+  for (let p = 1; p <= 16; p++) {
+    const [r, c] = CR_GRID[p], stk = crStack(hx.bd, p), so = crSo(stk.length), t = crTileAt(hx, p);
+    const ok = spm && crSpecOk(hx, ME.id, p) && !(P.sp && P.sp.p === p && P.sp.s === side);
+    const sp = t ? `<span class="kr-sp ${t.s > 0 ? 'up' : 'dn'}${t.o === ME.id ? ' mine' : ''}"><b>${t.s > 0 ? '+1' : '−1'}</b>${av(pOf(v, t.o), 'sm')}</span>` : '';
+    const crabs = stk.map((x, i) => `<span class="kr-ck" data-crab="${x}" style="--i:${i};--so:${so}%">${crabSvg(x)}</span>`).join('');
+    h += `<div class="kr-cell c${p}${ok ? ' ok' : ''}" data-cell="${p}" style="grid-area:${r}/${c}"${ok ? ` data-act="cspc" data-x="${p}"` : ''}><span class="kr-no">${p}</span>${sp}${crabs}</div>`;
+  }
+  return `<div class="kr-bd">${h}<div class="kr-mid">${crMid(v)}</div></div>`;
+}
+function crMid(v) {
+  const hx = v.hx, e = hx.ev;
+  const slots = [0, 1, 2, 3, 4].map((i) => { const d = hx.dc[i]; return d ? crDie(d.d, d.n, d.sh, 'sm') : '<span class="kr-ds"></span>'; }).join('');
+  let big;
+  if (hx.dc.length && e && e.t === 'roll') {
+    const ra = S.crA && S.crA.k === e.k + ':' + v.gid ? Date.now() - S.crA.t : 1e9;
+    big = `<div class="kr-big${ra < 900 ? ' kr-roll' : ''}"${ra < 900 ? ` style="--et:-${ra}ms"` : ''}>${crDie(e.d, e.n, e.sh, 'lg')}</div>`;
+  } else big = `<svg class="kr-pail" viewBox="8 4 44 50">${PAILG}</svg>`;
+  return `<div class="kr-lg">第 ${hx.lg} 段</div>${big}<div class="kr-dl">${slots}</div><div class="kr-by">骰盅剩 ${hx.by.length} 粒</div>`;
+}
+function vPlayCr(v) {
+  const hx = v.hx, me = ME.id, P = hx.ps[me], cur = hx.od[hx.ti], live = v.ph === 'play', mine = live && cur === me, cp = pOf(v, cur);
+  let h = '';
+  if (live) {
+    const tq = anA('kt:' + v.gid + ':' + hx.tk, 500, 'pp');
+    h += `<div class="kr-turn${mine ? ' me' : ''}"><span class="kr-tav${tq.c}"${tq.s}>${av(cp)}</span><div class="kr-tw"><b>${mine ? '到你！' : esc(cp ? cp.n : '?')}</b><small>${mine ? '揀一樣做' : '揀緊<span class="ld"><i></i><i></i><i></i></span>'}</small></div>${ring('dl', CR_TURN_MS)}</div>`;
+  } else h += `<div class="kr-turn"><div class="kr-tw"><b>${v.ph === 'end' ? '衝線！' : `第 ${hx.lg} 段完`}</b><small>結算緊<span class="ld"><i></i><i></i><i></i></span></small></div></div>`;
+  h += crBoard(v, mine);
+  if (hx.log.length) {
+    const e = hx.log[0], dd = e.t === 'roll' ? crDur(e) : 0, q = anA('kg:' + v.gid + ':' + e.k, dd + 500, 'kr-lgi');
+    h += `<div class="kr-log${q.c}" style="--dd:${dd}ms;${q.s ? q.s.slice(8, -1) : ''}">${crEvText(v, e)}</div>`;
+  }
+  h += `<div class="kr-tls">${CR_C.map((c) => { const t = hx.lt[c], top = t[0], on = mine && top; return `<button class="kr-tl${top ? '' : ' emp'}${on ? ' on' : ''}" style="--c:${CR_COL[c]}"${on ? ` data-act="cbet" data-x="${c}"` : ''}>${crabSvg(c)}<b>${top ? '$' + top : '冇'}</b><small>${t.length ? '剩 ' + t.length + ' 張' : '押晒'}</small></button>`; }).join('')}</div>`;
+  if (mine) {
+    if (S.crM === 'spec') {
+      const side = S.crSide || 1;
+      h += `<div class="kr-spm"><div class="seg">${[[1, '打氣 +1'], [-1, '喝倒彩 −1']].map((o) => `<button class="${side === o[0] ? 'on' : ''}" data-act="cside" data-x="${o[0]}">${o[1]}</button>`).join('')}</div><div class="kr-spt">撳賽道上發光嘅格</div><button class="btn ghost sm" data-act="cmc">取消</button></div>`;
+    } else {
+      const canPair = hx.pair && !P.pa && hx.od.some((x) => crPairOk(hx, me, x));
+      h += `<button class="btn gold big" data-act="cdie">${ic('dice')}擲骰・骰票 +$1</button><div class="row kr-row"><button class="btn ghost sm" data-act="cspm">${ic('sign')}${P.sp ? '搬觀眾牌' : '觀眾牌'}</button><button class="btn ghost sm" data-act="cfinm" ${P.fc.length ? '' : 'disabled'}>${ic('flag')}冠軍／包尾</button>${hx.pair ? `<button class="btn ghost sm" data-act="cpairm" ${canPair ? '' : 'disabled'}>${ic('users')}拍檔</button>` : ''}</div>`;
+    }
+  }
+  if (P) {
+    const pq = anA('km:' + v.gid + ':' + me + ':' + P.m, 600, 'pp');
+    const chips = P.lt.map(([c, x]) => crTi(c, x)).join('') + (P.pt ? `<span class="kr-pt">${ic('dice')}×${P.pt}</span>` : '') + (P.sp ? `<span class="kr-pt">${P.sp.s > 0 ? '打氣' : '喝倒彩'}・第 ${P.sp.p} 格</span>` : '') + (P.pa ? `<span class="kr-pt">拍檔 ${esc(nameOf(v, P.pa))}</span>` : '');
+    h += `<div class="kr-me"><div class="kr-money${pq.c}"${pq.s}>$${P.m}</div><div class="kr-mi"><div class="kr-chips">${chips || '<small>呢段未有票</small>'}</div><div class="kr-fc">${CR_C.map((c) => `<i class="${P.fc.includes(c) ? '' : 'used'}" style="--c:${CR_COL[c]}"></i>`).join('')}<small>冠軍／包尾牌</small></div></div></div>`;
+  } else h += '<div class="wait">觀戰中・下一場加入</div>';
+  const pile = (t, arr) => `<div class="kr-pile"><b>${t}</b><div class="kr-cds">${arr.length ? arr.map((e, i) => { const q = anA('kp:' + v.gid + ':' + t + i, 600, 'fly'); return e.id === me ? `<span class="kr-cdb mine${q.c}" style="--c:${CR_COL[e.c]};${q.s ? q.s.slice(8, -1) : ''}"></span>` : `<span class="kr-cdb${q.c}" style="--c:${COLORS[((pOf(v, e.id) || {}).c || 0) % COLORS.length]};${q.s ? q.s.slice(8, -1) : ''}"></span>`; }).join('') : '<small>未有人押</small>'}</div></div>`;
+  h += `<div class="kr-piles">${pile('冠軍注', hx.wb)}${pile('包尾注', hx.lb)}</div>`;
+  const rows = hx.od.map((id) => {
+    const p = pOf(v, id), Q = hx.ps[id]; if (!p) return '';
+    const q = anA('km:' + v.gid + ':' + id + ':' + Q.m, 600, 'pp');
+    const chips = Q.lt.map(([c, x]) => crTi(c, x, 'sm')).join('') + (Q.pt ? `<span class="kr-pt sm">${ic('dice')}×${Q.pt}</span>` : '') + (Q.pa ? `<span class="kr-pt sm">拍檔 ${esc(nameOf(v, Q.pa))}</span>` : '');
+    return `<div class="pr kr-pr${id === cur && live ? ' cur' : ''}${p.on ? '' : ' off'}">${av(p)}<span class="nm kr-nm"><span>${esc(p.n)}${id === me ? '（你）' : ''}</span>${chips ? `<span class="kr-chips">${chips}</span>` : ''}</span>${p.gone ? '<span class="tag">走咗</span>' : ''}<span class="sc${q.c}"${q.s}>$${Q.m}</span></div>`;
+  }).join('');
+  return h + `<div class="sh"><span>玩家</span></div><div class="plist">${rows}</div>`;
+}
+function vLegCr(v) {
+  const hx = v.hx, lr = hx.lr, host = v.host === ME.id; if (!lr) return '';
+  const pay = ['收牌面', '+$1', '−$1', '−$1', '−$1'];
+  const rk = lr.rk.map((c, i) => `<div class="kr-rk${i < 2 ? ' t' + i : ''}" style="--r:${i * 80}ms">${crabSvg(c)}<b>${i + 1}</b><small>${pay[i]}</small></div>`).join('');
+  const rows = hx.od.map((id) => {
+    const p = pOf(v, id), R = lr.rows[id]; if (!p || !R) return '';
+    const it = R.it.map((x) => (x.t === 'b' ? `<span class="kr-it ${x.d > 0 ? 'p' : 'm'}">${crTi(x.c, x.v, 'sm')}${x.d > 0 ? '+' : ''}${x.d}</span>` : x.t === 'p' ? `<span class="kr-it p">${ic('dice')}+${x.d}</span>` : `<span class="kr-it p">拍檔${x.c ? crTi(x.c, x.v, 'sm') : ic('dice')}+${x.d}</span>`)).join('') + (R.sg ? `<span class="kr-it p">觀眾牌 +${R.sg}</span>` : '');
+    const td = R.d + R.sg;
+    return `<div class="pr${id === ME.id ? ' me' : ''}">${av(p)}<span class="nm kr-nm"><span>${esc(p.n)}</span><span class="kr-chips">${it || '<small>冇押</small>'}</span></span><span class="dl ${td > 0 ? 'p' : td < 0 ? 'm' : ''}">${td > 0 ? '+' : ''}${td}</span><span class="sc">$${R.m}</span></div>`;
+  }).join('');
+  return `<div class="res"><div class="big">第 ${lr.lg} 段結算</div></div><div class="kr-rks">${rk}</div><div class="plist">${rows}</div>
+    <div class="tmr">${ring('dl', CR_LEG_MS)}<div><div class="tl">第 ${lr.lg + 1} 段</div><div class="ts">時間到自動開始</div></div></div>
+    ${host ? '<button class="btn gold big" data-act="cnext">即刻開始</button>' : ''}`;
+}
+function vEndCr(v) {
+  const hx = v.hx, host = v.host === ME.id, fr = hx && hx.fr, rk = ranked(v);
+  const tops = rk.filter((r) => r.rank === 1).map((r) => r.p.n);
+  let h = '';
+  if (fr) {
+    h += `<div class="kr-win"><span class="kr-wc">${crabSvg(fr.win)}</span><div class="res"><div class="big">${CR_NM[fr.win]}衝線！</div><div class="tip">包尾：${CR_NM[fr.lose]}</div></div></div>`;
+    const pile = (t, arr) => `<div class="sh"><span>${t}</span><small>按落注次序</small></div><div class="plist">${arr.length ? arr.map((e) => { const p = pOf(v, e.id); return `<div class="pr">${av(p)}<span class="nm">${esc(p ? p.n : '?')}</span><span class="kr-fcd">${crabSvg(e.c)}</span><span class="dl ${e.d > 0 ? 'p' : 'm'}">${e.d > 0 ? '+' : ''}${e.d}</span></div>`; }).join('') : '<div class="wait">冇人押</div>'}</div>`;
+    h += pile('冠軍注', fr.w) + pile('包尾注', fr.l);
+  } else h += '<div class="res"><div class="big">提早完場</div></div>';
+  const slot = (r, cls) => (r ? `<div class="pd ${cls}">${cls === 'p1' ? CROWN : ''}${av(r.p)}<div class="n2">${esc(r.p.n)}</div><div class="s2">$${r.p.sc}</div><div class="blk">${r.rank}</div></div>` : '<div class="pd"></div>');
+  h += `<div class="sh"><span>最後排名</span></div><div class="podium">${slot(rk[1], 'p2')}${slot(rk[0], 'p1')}${slot(rk[2], 'p3')}</div><div class="wtl gtx">${tops.length > 1 ? '並列第一：' + esc(tops.join('、')) : esc(tops[0] || '') + '・蟹王'}</div>`;
+  h += `<div class="plist">${rk.map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}${p.id === ME.id ? '（你）' : ''}</span><span class="sc">$${p.sc}</span></div>`).join('')}</div>`;
+  h += host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一場</button></div>' : '<div class="wait">等房主開新一場<span class="ld"><i></i><i></i><i></i></span></div>';
+  return h + '<button class="btn ghost" data-act="leave">離開房間</button>';
+}
+/* 蟹行路動畫：先擲骰，再逐格跳去終點；畫面重畫就用經過咗嘅時間接住，唔會重播（GAME-19）；只郁 transform（WEB-35） */
+function crAnim(v) {
+  const hx = v.hx, e = hx && hx.ev;
+  if (!e || e.t !== 'roll' || !S.crA || S.crA.k !== e.k + ':' + v.gid) return;
+  const el = Date.now() - S.crA.t, tot = crDur(e);
+  if (el >= tot) return;
+  const R = {}; $$('.kr-cell').forEach((c) => { R[+c.dataset.cell] = c.getBoundingClientRect(); });
+  if (!R[1]) return;
+  const H = R[1].height;
+  const pos = (p, i, n) => { const r = R[crCell(p)]; return [r.left, r.bottom - H * (0.08 + i * crSo(n) / 100)]; };   // 蟹嘅左下角
+  const fin = crStack(hx.bd, crCell(e.q2));
+  const kf = (pts, F) => pts.map(([t, [x, y], rot, ez]) => ({ offset: Math.min(1, t / tot), transform: `translate(${(x - F[0]).toFixed(1)}px,${(y - F[1]).toFixed(1)}px) rotate(${rot || 0}deg)`, easing: ez || 'linear' }));
+  const up = 'cubic-bezier(.25,.7,.45,1)', dn = 'cubic-bezier(.55,0,.75,.3)', tilt = e.dir > 0 ? -12 : 12;
+  const t1 = CR_T0 + e.n * CR_HOP + 150;
+  e.u.forEach((x, r) => {
+    const node = $(`.kr-ck[data-crab="${x}"]`); if (!node) return;
+    const F = pos(e.q2, fin.indexOf(x), fin.length);
+    let prev = pos(e.f, e.i0 + r, e.n0);
+    const pts = [[0, prev], [CR_T0, prev, 0, up]];
+    const hop = (t0, to) => { pts.push([t0 + CR_HOP / 2, [(prev[0] + to[0]) / 2, Math.min(prev[1], to[1]) - H * 0.34], tilt, dn]); pts.push([t0 + CR_HOP, to, 0, up]); prev = to; };
+    for (let j = 1; j <= e.n; j++) {
+      const p = e.f + e.dir * j, land = j === e.n;
+      const base = land ? e.nq : crStack(hx.bd, crCell(p)).filter((y) => !e.u.includes(y)).length;
+      hop(CR_T0 + (j - 1) * CR_HOP, land && !e.s ? F : pos(p, base + r, base + e.u.length));
+    }
+    if (e.s) { pts.push([t1, prev, 0, up]); hop(t1, F); }
+    pts[pts.length - 1][1] = F;
+    node.style.zIndex = 40 + r;
+    const a = node.animate(kf(pts, F), { duration: tot, fill: 'both' }); a.currentTime = el;
+  });
+  if (e.s && e.s.s < 0) {   // 喝倒彩：塞落最底，原本喺嗰格嘅蟹跟住升起
+    fin.forEach((x, i) => {
+      if (e.u.includes(x)) return;
+      const node = $(`.kr-ck[data-crab="${x}"]`); if (!node) return;
+      const F = pos(e.q2, i, fin.length), A = pos(e.q2, i - e.u.length, fin.length - e.u.length);
+      const a = node.animate(kf([[0, A], [t1 + CR_HOP * 0.6, A, 0, up], [tot, F]], F), { duration: tot, fill: 'both' }); a.currentTime = el;
+    });
+  }
+}
+const RULES_CR = `<div class="rules">
+  <h4>目標</h4><p>五隻賽跑蟹喺 16 格沙灘跑一圈。估中邊隻蟹贏、邊隻包尾就賺錢，完場最多錢嘅人勝。每人起始 $3。</p>
+  <h4>疊蟹</h4><p>蟹行到有蟹嘅格就疊上面。下面隻蟹行，上面嘅蟹會被揹住一齊行。<b>黑蟹</b>同<b>白蟹</b>倒住行，可以揹住賽跑蟹倒退；佢哋唔計名次。</p>
+  <h4>輪到你：揀一樣做（60 秒唔揀，自動幫你擲骰）</h4><ol>
+    <li><b>押注</b>：拎一隻蟹最面嗰張押注牌（$5、$3、$2、$2）。呢段完結時嗰隻蟹第一：收牌面；第二：+$1；其他：−$1。</li>
+    <li><b>擲骰</b>：拎一張骰票（呢段完 +$1），骰盅隨機出一粒骰，嗰隻蟹行 1–3 格。灰骰係黑白蟹：倒行；得一隻揹住賽跑蟹就郁佢，兩隻直接疊住就郁上面嗰隻。</li>
+    <li><b>觀眾牌</b>：放喺冇蟹嘅格（第 1 格唔得、唔可以貼住其他觀眾牌），揀打氣（+1）或者喝倒彩（−1）。蟹停喺度：打氣再行 1 格疊上面；喝倒彩退 1 格塞落最底；牌主即刻 +$1。之後可以搬或者反轉。</li>
+    <li><b>冠軍／包尾注</b>：用一張蟹牌暗中押全場冠軍或者包尾。越早押中越多：$8、$5、$3、$2、$1，之後都係 $1；押錯 −$1。每張蟹牌用一次。</li>
+    <li><b>拍檔</b>（6 人或以上）：同一個未有拍檔嘅人組隊到呢段完。結算時兩個人都會自動加對方最好嗰張票（押注牌或者骰票）。</li></ol>
+  <h4>每段</h4><p>骰盅有 6 粒骰，出咗 5 粒就結算，所以每段總有一粒骰唔郁。結算完押注牌、骰票、觀眾牌、拍檔全部收返，由下一個人開始新一段。</p>
+  <h4>完場</h4><p>有賽跑蟹衝過終點即刻完場：先結算呢段，再結算冠軍注同包尾注。最多錢嘅人贏；錢最少係 $0。</p>
+</div>`;
 const RULES = `<div class="rules">
   <h4>人數</h4><p>3 至 10 人，每人一部手機入同一間房。</p>
   <h4>身份</h4><ul><li><b>判官</b>：每輪一個，輪流做。</li><li><b>老實人</b>：其他人入面得一個，會見到題目嘅真正意思。</li><li><b>大話精</b>：其餘全部人，要自己作一個解釋。</li></ul>
@@ -3349,7 +3815,7 @@ function renderModal() {
   const el = $('#modal'), m = S.modal;
   if (!m) { el.classList.remove('show'); el.innerHTML = ''; el.dataset.mt = ''; S.mh = ''; return; }
   let h = '';
-  if (m.type === 'rules') h = m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
+  if (m.type === 'rules') h = m.g === 'cr' ? `<h3>蟹仔大賽・玩法</h3>${RULES_CR}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
   else if (m.type === 'confirm') h = `<div class="cfm">${m.text}</div><div class="row"><button class="btn ghost" data-act="mclose">取消</button><button class="btn ${m.bad ? 'red' : 'gold'}" data-act="mok">${m.ok}</button></div>`;
   else if (m.type === 'join') {
     const c = S.kp;
@@ -3363,6 +3829,13 @@ function renderModal() {
       const G = GAMES[g], on = g === v.g, ok = v.test || (onN >= G.min && (!G.max || onN <= G.max));
       return `<button class="gli${on ? ' on' : ''}${ok ? '' : ' dim'}" data-act="gsel" data-x="${g}"><span class="gli-a">${G.art}</span><span class="gli-t"><b>${G.name}</b><small>${G.tags[0]}${ok ? '' : `・而家 ${onN} 人`}</small></span>${on ? ic('check') : ''}</button>`;
     }).join('') + '</div><button class="btn ghost" data-act="mclose">取消</button>';
+  } else if (m.type === 'cfin' && S.view && crMine(S.view)) {
+    const v = S.view, P = v.hx.ps[ME.id];
+    const row = (w) => `<div class="kr-fcr">${CR_C.map((c) => (P.fc.includes(c) ? `<button class="kr-fcb" style="--c:${CR_COL[c]}" data-act="cfin" data-x="${w}${c}">${crabSvg(c)}</button>` : '<span class="kr-fcb used"></span>')).join('')}</div>`;
+    h = `<h3>冠軍／包尾注</h3><div class="cl">押全場冠軍・前面有 ${v.hx.wb.length} 張</div>${row('w')}<div class="cl">押全場包尾・前面有 ${v.hx.lb.length} 張</div>${row('l')}<div class="tip">越早押中越多：$8・$5・$3・$2・$1；押錯 −$1</div><button class="btn ghost" data-act="mclose">取消</button>`;
+  } else if (m.type === 'cpair' && S.view && crMine(S.view)) {
+    const v = S.view, hx = v.hx, list = hx.od.filter((id) => crPairOk(hx, ME.id, id));
+    h = `<h3>揀拍檔</h3><div class="plist">${list.length ? list.map((id) => `<button class="pr" data-act="cpair" data-x="${id}">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="go">揀佢</span></button>`).join('') : '<div class="wait">冇人可以揀</div>'}</div><div class="tip">做到呢段完；結算時兩個人都加對方最好嗰張票</div><button class="btn ghost" data-act="mclose">取消</button>`;
   } else if (m.type === 'settings') {
     const tst = TEST.on
       ? `<div class="teston"><span class="tag jd">${ic('flask')}已開啟</span>單人都開到房、唔限人數</div><button class="btn ghost sm" data-act="testoff" style="margin:0 0 14px">關閉測試模式</button>`
@@ -3375,14 +3848,14 @@ function renderModal() {
       ${S.screen === 'room' && S.view ? `<button class="btn ghost" data-act="rules">${ic('book')}玩法</button>` : ''}<button class="btn gold" data-act="mclose">完成</button>`;
   } else if (m.type === 'scores' && S.view) {
     const v = S.view, host = v.host === ME.id;
-    const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}${p.gone ? '<span class="tag">走咗</span>' : !p.on ? '<span class="tag">離線</span>' : ''}<span class="sc">${p.sc} 分</span></div>`).join('');
+    const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}${p.gone ? '<span class="tag">走咗</span>' : !p.on ? '<span class="tag">離線</span>' : ''}<span class="sc">${v.g === 'cr' ? '$' + p.sc : p.sc + ' 分'}</span></div>`).join('');
     const wt = v.wt.length ? `<div class="sh"><span>等緊下一局</span><small>${v.wt.length} 人</small></div><div class="plist">${v.wt.map((p) => `<div class="pr">${av(p)}<span class="nm">${esc(p.n)}</span></div>`).join('')}</div>` : '';
     let hb = '';
-    const wd = v.g === 'wd', xs = v.g === 'xs', cd = v.g === 'cd', tt = v.g === 'tt';
+    const wd = v.g === 'wd', xs = v.g === 'xs', cd = v.g === 'cd', tt = v.g === 'tt', cr = v.g === 'cr';
     if (host && v.ph === 'role') hb += `<button class="btn ghost" data-act="force">${tt ? '唔等，即刻天黑' : cd ? '唔等，即刻開始' : wd ? '唔等，即刻開始描述' : '唔等，即刻出題'}</button>`;
-    if (host && (tt ? TT_PH : cd ? CD_PH : xs ? XS_PH : wd ? WD_PH : PLAY_PH).includes(v.ph)) hb += `<button class="btn ghost" data-act="redeal">${tt ? '重新開始呢局（重新派身份同骰）' : cd ? '重新開始呢局（重新派身份同線）' : xs ? '重新派呢關（換數字同題目）' : wd ? '重新派詞語（呢局重新開始）' : '重新派呢輪（換題同身份）'}</button>`;
+    if (host && (cr ? CR_PH : tt ? TT_PH : cd ? CD_PH : xs ? XS_PH : wd ? WD_PH : PLAY_PH).includes(v.ph)) hb += `<button class="btn ghost" data-act="redeal">${cr ? '重新開始呢場（全部人返 $3）' : tt ? '重新開始呢局（重新派身份同骰）' : cd ? '重新開始呢局（重新派身份同線）' : xs ? '重新派呢關（換數字同題目）' : wd ? '重新派詞語（呢局重新開始）' : '重新派呢輪（換題同身份）'}</button>`;
     if (host && v.ph !== 'lobby' && v.ph !== 'end') hb += '<button class="btn ghost" data-act="endgame">即刻完場</button>';
-    h = `<h3>${v.g === 'tt' ? '邊個偷咗蛋撻・分數' : v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
+    h = `<h3>${v.g === 'cr' ? `蟹仔大賽・第 ${v.hx ? v.hx.lg : 1} 段` : v.g === 'tt' ? '邊個偷咗蛋撻・分數' : v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
 ${hb}<button class="btn gold" data-act="mclose">返去</button>`;
   } else { S.modal = null; el.classList.remove('show'); return; }
   const mb = el.querySelector('.mb');
@@ -3430,6 +3903,17 @@ document.addEventListener('click', (e) => {
     case 'tdone': act('tdone'); break;
     case 'tacc': act('tacc', x); break;
     case 'cut': if (v) confirmBox(`剪 ${esc(nameOf(v, x))} 嘅第 ${+b.dataset.i + 1} 條線？`, '剪', () => act('cut', [x, +b.dataset.i])); break;
+    case 'cbet': S.crM = null; act('cbet', x); break;
+    case 'cdie': S.crM = null; act('cdie'); break;
+    case 'cspm': S.crM = S.crM === 'spec' ? null : 'spec'; render(); break;
+    case 'cside': S.crSide = x === '-1' ? -1 : 1; render(); break;
+    case 'cmc': S.crM = null; render(); break;
+    case 'cspc': S.crM = null; act('cspec', [+x, S.crSide || 1]); break;
+    case 'cfinm': openModal({ type: 'cfin' }); break;
+    case 'cfin': if (v && v.hx && x) { const w = x[0], c = x.slice(1); confirmBox(`押${CR_NM[c]}全場${w === 'w' ? '冠軍' : '包尾'}？<small>呢張蟹牌用咗就冇。</small>`, '押', () => act('cfin', [w, c])); S.modal.krTk = v.hx.tk; } break;
+    case 'cpairm': openModal({ type: 'cpair' }); break;
+    case 'cpair': if (v && v.hx) { confirmBox(`同 ${esc(nameOf(v, x))} 做拍檔？<small>做到呢段完。</small>`, '做拍檔', () => act('cpair', x)); S.modal.krTk = v.hx.tk; } break;
+    case 'cnext': act('cnext'); break;
     case 'xtheme': act('xtheme'); break;
     case 'theme': setTheme(x); renderModal(); break;
     case 'xhide': S.xsHide = !S.xsHide; render(); break;
@@ -3447,7 +3931,7 @@ document.addEventListener('click', (e) => {
     case 'pick': if (v) confirmBox(`確定 ${esc(nameOf(v, x))} 係老實人？`, '確定', () => act('pick', x)); break;
     case 'next': act('next'); break;
     case 'again': act('again'); break;
-    case 'redeal': closeModal(); if (v && v.g === 'tt') confirmBox('重新開始呢局？<small>會重新派身份同骰。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'cd') confirmBox('重新開始呢局？<small>會重新派身份同線。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'xs') confirmBox('重新派呢關？<small>會換過數字同題目，命唔變。</small>', '重新派', () => act('redeal')); else if (v && v.g === 'wd') confirmBox('重新派詞語？<small>呢局重新開始，會換過詞語同身份。</small>', '重新派', () => act('redeal')); else confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal')); break;
+    case 'redeal': closeModal(); if (v && v.g === 'cr') confirmBox('重新開始呢場？<small>全部人返 $3，重新排蟹。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'tt') confirmBox('重新開始呢局？<small>會重新派身份同骰。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'cd') confirmBox('重新開始呢局？<small>會重新派身份同線。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'xs') confirmBox('重新派呢關？<small>會換過數字同題目，命唔變。</small>', '重新派', () => act('redeal')); else if (v && v.g === 'wd') confirmBox('重新派詞語？<small>呢局重新開始，會換過詞語同身份。</small>', '重新派', () => act('redeal')); else confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal')); break;
     case 'endgame': closeModal(); confirmBox('即刻完場？<small>會用而家嘅分數排名。</small>', '完場', () => act('end'), { bad: true }); break;
     case 'snd': SND.on = x == null ? !SND.on : x === '1'; LS.set('bgr_snd', SND.on); if (!SND.on) closeAudio(); renderModal(); break;
     case 'settings': openModal({ type: 'settings' }); break;
@@ -3527,6 +4011,9 @@ function sfx(k) {
     else if (k === 'end') { tone(880, 0, 0.18, 'square', 0.08); tone(880, 0.25, 0.18, 'square', 0.08); tone(880, 0.5, 0.35, 'square', 0.08); }
     else if (k === 'boom') { tone(110, 0, 0.5, 'sawtooth', 0.22); tone(70, 0.04, 0.9, 'square', 0.14); tone(45, 0.1, 1.1, 'sawtooth', 0.12); }
     else if (k === 'win') { [523, 659, 784, 1046].forEach((f, i) => tone(f, i * 0.13, 0.35)); }
+    else if (k === 'roll') { for (let i = 0; i < 7; i++) tone(180 + Math.random() * 380, i * 0.075, 0.045, 'square', 0.035); }
+    else if (k === 'hop') { tone(560 + Math.random() * 120, 0, 0.07, 'triangle', 0.08); }
+    else if (k === 'coin') { tone(1320, 0, 0.08, 'square', 0.045); tone(1760, 0.08, 0.18, 'square', 0.045); }
     else if (k === 'swish') {
       const c = SND.ctx, n = Math.floor(c.sampleRate * 0.4), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
       for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
@@ -3609,7 +4096,7 @@ fixView();
 })();
 
 /* 測試用（Playwright）：睇到而家狀態 */
-window.__bgr = { S, get HS() { return HS; }, ME, WORDS, render };
+window.__bgr = { S, get HS() { return HS; }, ME, WORDS, render, cr: { crMove, crCrazy, crRank, crSpecOk, crLegScore } };
 })();
 </script>
 </body>
