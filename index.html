@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-23-02';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-23-03';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -581,12 +581,6 @@ button.gdd:active{transform:scale(.98)}
 @keyframes krOk{0%,100%{box-shadow:inset 0 0 0 2px #16a34a,0 0 0 0 rgba(22,163,74,.45)}50%{box-shadow:inset 0 0 0 2px #16a34a,0 0 0 5px rgba(22,163,74,0)}}
 .kr-ck{position:absolute;left:23%;width:54%;bottom:calc(8% + var(--i) * var(--so));z-index:calc(var(--i) + 1);pointer-events:none}
 .kr-crab{display:block;width:100%;height:auto;filter:drop-shadow(0 2px 1px rgba(60,30,0,.35))}
-.kr-sp{position:absolute;inset:16%;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.22),inset 0 0 0 2px rgba(255,255,255,.65)}
-.kr-sp b{font-family:var(--serif);font-size:16px;font-weight:900;text-shadow:0 1px 0 rgba(0,0,0,.35)}
-.kr-sp.up{background:radial-gradient(circle at 35% 30%,#86efac,#15803d)}
-.kr-sp.dn{background:radial-gradient(circle at 35% 30%,#fda4af,#be123c)}
-.kr-sp.mine{box-shadow:0 3px 0 rgba(0,0,0,.22),inset 0 0 0 2px rgba(255,255,255,.65),0 0 0 3px var(--g2)}
-.kr-sp .av{position:absolute;right:-7px;bottom:-7px;width:20px;height:20px;font-size:10px}
 .kr-mid{grid-area:2/2/5/5;position:relative;z-index:0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#e9fbff;background:radial-gradient(120% 90% at 50% 15%,#6fd3ee,#1a7fb3 58%,#0e4f7c);box-shadow:inset 0 0 0 2px rgba(255,255,255,.4),inset 0 8px 20px rgba(0,0,0,.22)}
 .kr-mid:before,.kr-mid:after{content:"";position:absolute;left:-30%;right:-30%;height:14px;border-radius:50%;border-top:2px solid rgba(255,255,255,.35);animation:krWv 4.8s ease-in-out var(--lp,0s) infinite;pointer-events:none}
 .kr-mid:before{top:18%}
@@ -613,18 +607,7 @@ button.gdd:active{transform:scale(.98)}
 .kr-log{display:flex;flex-wrap:wrap;align-items:center;gap:2px;min-height:42px;padding:8px 12px;border-radius:14px;background:rgba(var(--ink),.045);box-shadow:inset 0 0 0 1px var(--e1);font-size:14px;font-weight:700;color:var(--tx2);margin:0 0 10px;line-height:1.5}
 .kr-log b{color:var(--tx)}
 .kr-lgi{animation:pin .45s cubic-bezier(.16,1,.3,1) calc(var(--dd,0ms) + var(--et,0ms)) backwards}
-.kr-tls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0 0 10px}
-.kr-tl{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px 5px;border-radius:14px;background:var(--s1);box-shadow:inset 0 0 0 2px var(--c),0 4px 10px rgba(0,0,0,.14);transition:transform .14s ease}
-.kr-tl .kr-crab{width:36px}
-.kr-tl b{font-family:var(--serif);font-size:18px;font-weight:900;line-height:1.15}
-.kr-tl small{font-size:10px;color:var(--tx3);font-weight:700}
-.kr-tl.emp{opacity:.4}
-.kr-tl.on{background:radial-gradient(120% 100% at 50% 0%,rgba(255,200,90,.28),transparent 75%),var(--s1);animation:krTl 2.4s ease-in-out var(--lp,0s) infinite}
-.kr-tl.on:active{transform:scale(.92)}
 @keyframes krTl{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-3px,0)}}
-.kr-row{margin:-2px 0 10px}
-.kr-row .btn{font-size:14px;gap:4px;padding:9px 4px;min-height:46px}
-.kr-row .ic{width:17px;height:17px}
 .kr-gx{padding:12px;border-radius:18px;margin:0 0 10px;background:radial-gradient(120% 100% at 50% 0%,rgba(255,200,90,.28),transparent 70%),var(--s1);box-shadow:inset 0 0 0 2px var(--g2)}
 .kr-gxt{display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--serif);font-size:18px;font-weight:900;margin:0 0 10px}
 .kr-gxr{display:flex;gap:10px}
@@ -633,33 +616,12 @@ button.gdd:active{transform:scale(.98)}
 .kr-gxb .kr-crab{width:64px}
 .kr-gxb b{font-family:var(--serif);font-size:19px;font-weight:900}
 .kr-gxb small{font-size:12px;color:var(--tx2);font-weight:700}
-.kr-spm{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 2px #16a34a;margin:0 0 10px}
-.kr-spm .seg{margin:0}
-.kr-spt{text-align:center;font-size:14px;font-weight:800;color:var(--oktx)}
-.kr-me{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:18px;background:var(--panel);box-shadow:inset 0 0 0 1px rgba(224,182,92,.45);margin:0 0 10px}
-.kr-money{font-family:var(--serif);font-size:30px;font-weight:900;color:var(--g1);min-width:64px;text-align:center}
-.kr-mi{flex:1;min-width:0}
-.kr-mi small{font-size:12px;color:var(--tx3);font-weight:700}
 .kr-chips{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
 .kr-nm{display:flex;flex-direction:column;gap:3px;white-space:normal}
 .kr-nm>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.kr-ti{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 5px;border-radius:6px;background:var(--c);color:#fff;font-size:13px;font-weight:900;box-shadow:inset 0 -2px 0 rgba(0,0,0,.22);text-shadow:0 1px 0 rgba(0,0,0,.3)}
-.kr-ti.dk{color:#3a2a05;text-shadow:none}
-.kr-ti.sm{min-width:20px;height:18px;font-size:11px;padding:0 4px}
 .kr-pt{display:inline-flex;align-items:center;gap:2px;height:22px;padding:0 7px;border-radius:6px;background:rgba(var(--ink),.07);color:var(--tx2);font-size:12px;font-weight:800}
 .kr-pt .ic{width:13px;height:13px}
 .kr-pt.sm{height:18px;font-size:11px;padding:0 5px}
-.kr-fc{display:flex;align-items:center;gap:4px;margin-top:7px}
-.kr-fc i{width:15px;height:20px;border-radius:4px;background:var(--c);box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.3)}
-.kr-fc i.used{opacity:.15}
-.kr-fc small{margin-left:4px}
-.kr-piles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 4px}
-.kr-pile{padding:9px 10px;border-radius:16px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1);min-height:62px}
-.kr-pile b{display:block;font-size:12px;letter-spacing:2px;color:var(--g1);margin-bottom:6px}
-.kr-pile small{font-size:12px;color:var(--tx3);font-weight:700}
-.kr-cds{display:flex;flex-wrap:wrap;gap:3px}
-.kr-cdb{width:17px;height:23px;border-radius:4px;background:linear-gradient(135deg,#3b2f63,#1d1838);box-shadow:inset 0 0 0 2px var(--c),0 2px 4px rgba(0,0,0,.25)}
-.kr-cdb.mine{background:var(--c);box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.35),0 0 0 2px var(--g2)}
 .pr.kr-pr.cur:before{content:"";position:absolute;left:-8px;right:-8px;top:4px;bottom:4px;border-radius:14px;background:rgba(224,182,92,.13);box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.55);z-index:-1}
 .pr.kr-pr{position:relative;z-index:0}
 .kr-rks{display:flex;justify-content:center;gap:6px;margin:8px 0 14px}
@@ -678,12 +640,130 @@ button.gdd:active{transform:scale(.98)}
 .kr-wc{width:92px;flex:none;animation:krBob 2.4s ease-in-out var(--lp,0s) infinite}
 .kr-win .res{text-align:left}
 .kr-win .tip{text-align:left;margin:2px 0 0}
-.kr-fcd{width:40px;flex:none}
-.kr-fcr{display:flex;gap:8px;margin:0 0 14px}
-.kr-fcb{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;height:58px;border-radius:14px;background:var(--s1);box-shadow:inset 0 0 0 2px var(--c),0 4px 10px rgba(0,0,0,.15);transition:transform .14s ease}
-.kr-fcb:active{transform:scale(.92)}
-.kr-fcb .kr-crab{width:40px}
-.kr-fcb.used{opacity:.25;box-shadow:inset 0 0 0 1px var(--e2)}
+/* 蟹仔大賽道具（2026-11-23-03，Bill 要道具簡單明顯、卡靚、有代入感）：押注攤、道具盤、觀眾牌、蟹牌、冠軍／包尾牌墊 */
+.kr-cell{container-type:inline-size}
+.kq-tk{--nr:3px;position:relative;display:inline-flex;align-items:center;justify-content:center;gap:2px;min-width:32px;height:22px;padding:0 7px;border-radius:5px;flex:none;color:#fff;font-size:12.5px;font-weight:900;line-height:1;text-shadow:0 1px 0 rgba(0,0,0,.3);background:linear-gradient(165deg,rgba(255,255,255,.34),rgba(255,255,255,0) 55%) center/calc(100% - 2 * var(--nr) - 2px) 100% no-repeat,radial-gradient(circle at 0 50%,transparent var(--nr),var(--c) calc(var(--nr) + .5px)) left/51% 100% no-repeat,radial-gradient(circle at 100% 50%,transparent var(--nr),var(--c) calc(var(--nr) + .5px)) right/51% 100% no-repeat}
+.kq-tk:before{content:"";position:absolute;inset:3px calc(var(--nr) + 3px);border:1px dashed rgba(255,255,255,.6);border-radius:3px;pointer-events:none}
+.kq-tk.dk{color:#3a2a05;text-shadow:none}
+.kq-tk.dk:before{border-color:rgba(58,42,5,.35)}
+.kq-tk .ic{width:13px;height:13px}
+.kq-tk.sm{--nr:2.5px;min-width:27px;height:18px;padding:0 5px;font-size:11px}
+.kq-tk.sm:before{inset:2.5px calc(var(--nr) + 2px)}
+.kq-tk.sm .ic{width:11px;height:11px}
+.kq-tk.lg{--nr:5px;width:56px;max-width:100%;height:44px;padding:0;border-radius:8px;font-family:var(--serif);font-size:22px}
+.kq-tk.lg:before{inset:4px calc(var(--nr) + 3px);border-radius:4px}
+.kq-tk.no{background:none;color:rgba(120,80,20,.5);text-shadow:none;outline:2px dashed rgba(120,80,20,.3);outline-offset:-2px;font-family:inherit;font-size:13px}
+.kq-tk.no:before{display:none}
+.kq-bth{position:relative;margin:0 0 12px;padding:34px 6px 10px;border-radius:18px;background:linear-gradient(180deg,#fbefd6,#ecd3a0);box-shadow:inset 0 0 0 1px rgba(120,80,20,.3),0 10px 24px rgba(60,40,10,.2)}
+.kq-bth.on{box-shadow:inset 0 0 0 1px rgba(120,80,20,.3),0 0 0 2px var(--g2),0 10px 24px rgba(60,40,10,.2)}
+.kq-aw{position:absolute;left:0;right:0;top:0;height:18px;border-radius:18px 18px 0 0;background:repeating-linear-gradient(90deg,#e4555f 0 18px,#fff6e8 18px 36px)}
+.kq-aw:after{content:"";position:absolute;left:0;right:0;top:18px;height:9px;background:radial-gradient(circle at 9px 0,#e4555f 9px,transparent 9.5px) 0 0/36px 9px repeat-x,radial-gradient(circle at 27px 0,#fff6e8 9px,transparent 9.5px) 0 0/36px 9px repeat-x}
+.kq-sg{position:absolute;left:50%;top:5px;transform:translateX(-50%);z-index:2;padding:2px 12px 3px 16px;border-radius:7px;background:linear-gradient(180deg,#8a5426,#6b3d17);color:#fde7c0;font-size:12px;font-weight:900;letter-spacing:4px;white-space:nowrap;box-shadow:0 3px 6px rgba(0,0,0,.25),inset 0 0 0 1px rgba(255,220,160,.35)}
+.kq-sts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.kq-st{display:flex;flex-direction:column;align-items:center;min-width:0;padding:0;border-radius:12px;transition:transform .14s ease}
+.kq-cr{position:relative;z-index:2;display:block;width:36px;margin:0 0 -8px}
+.kq-st.emp .kq-cr{opacity:.45}
+.kq-q{display:flex;gap:2px;margin-top:13px}
+.kq-q i{width:12px;height:15px;border-radius:3px;font-style:normal;font-size:10px;font-weight:900;line-height:15px;text-align:center;color:#fff;background:var(--c);box-shadow:inset 0 -1.5px 0 rgba(0,0,0,.2)}
+.kq-st.dk .kq-q i:not(.x){color:#3a2a05}
+.kq-q i.x{background:none;color:rgba(120,80,20,.4);box-shadow:inset 0 0 0 1px rgba(120,80,20,.3);text-decoration:line-through}
+.kq-st.on{animation:krTl 2.4s ease-in-out var(--lp,0s) infinite}
+.kq-st.on:active{transform:scale(.92)}
+.kq-acts{display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:8px;margin:0 0 12px}
+.kq-acts.c4{grid-template-columns:1.2fr 1fr 1fr 1fr;gap:6px}
+.kq-a{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;height:98px;padding:6px 2px 8px;border-radius:18px;color:var(--tx);background:var(--s1);box-shadow:inset 0 0 0 1px var(--e2),0 6px 14px rgba(0,0,0,.12);transition:transform .14s ease}
+.kq-a:active{transform:scale(.94)}
+.kq-a:disabled{opacity:.38}
+.kq-a>b{font-size:14px;font-weight:900;letter-spacing:.5px;white-space:nowrap}
+.kq-ai{position:relative;flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+.kq-a.roll{color:#2a1c05;background:var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 0 rgba(120,80,10,.35),0 8px 22px rgba(224,182,92,.35)}
+.kq-rl{display:flex;align-items:center;gap:5px}
+.kq-rl b{font-family:var(--serif);font-size:21px;font-weight:900;letter-spacing:3px;line-height:1.1}
+.kq-acts.c4 .kq-rl{gap:3px}
+.kq-acts.c4 .kq-rl b{font-size:18px;letter-spacing:1px}
+.kq-a.roll .kq-ai svg{width:68px;height:54px;overflow:visible}
+.kq-a2 .kq-sc{position:absolute;left:50%;top:50%;font-size:6.8px}
+.kq-a2 .kq-sc.dn{transform:translate(-28%,-54%) rotate(12deg)}
+.kq-a2 .kq-sc.up{transform:translate(-76%,-46%) rotate(-10deg)}
+.kq-fan{position:relative;width:64px;height:48px}
+.kq-fan>span{position:absolute;left:50%;bottom:0;margin-left:-11px;transform-origin:50% 130%;transform:rotate(var(--r))}
+.kq-fan .kq-cd{--w:22px}
+.kq-p2{display:flex;align-items:center}
+.kq-p2 .kr-crab{width:40px}
+.kq-p2 .kr-crab+.kr-crab{margin-left:-13px;transform:scaleX(-1)}
+.kq-sc{position:relative;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:.2em;width:5em;height:6.2em;flex:none;font-size:10px;border-radius:1.1em;color:#fff;vertical-align:middle;box-shadow:inset 0 0 0 .2em rgba(255,255,255,.75),0 .3em .8em rgba(0,0,0,.25)}
+.kq-sc.up{background:radial-gradient(130% 90% at 30% 12%,#9af0b8,#1fa457 52%,#0d6a33)}
+.kq-sc.dn{background:radial-gradient(130% 90% at 30% 12%,#ffb3bf,#e5284f 52%,#8f1131)}
+.kq-th{width:2.3em;height:2.3em;flex:none}
+.kq-sc.dn .kq-th{transform:rotate(180deg)}
+.kq-sc b{font-family:var(--serif);font-size:2.1em;font-weight:900;line-height:1;text-shadow:0 .08em 0 rgba(0,0,0,.3)}
+.kq-sc.sm{font-size:4.4px}
+.kq-sc.xs{font-size:3.5px;margin:0 4px}
+.kr-sp.kq-sc{position:absolute;inset:22% 17% 9%;width:auto;height:auto;font-size:7px;font-size:10.5cqw;border-radius:1.3em}
+.kr-sp.kq-sc.mine{box-shadow:inset 0 0 0 .2em rgba(255,255,255,.75),0 .3em .8em rgba(0,0,0,.25),0 0 0 2.5px var(--g2)}
+.kr-sp.gh{opacity:.4;box-shadow:inset 0 0 0 .2em rgba(255,255,255,.75)}
+.kr-sp .av{position:absolute;right:-7px;bottom:-7px;width:20px;height:20px;font-size:10px}
+.kq-spm{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 12px 10px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 2px #16a34a;margin:0 0 12px}
+.kq-sps{display:flex;justify-content:center;gap:22px;padding-top:6px}
+.kq-sx{display:flex;flex-direction:column;align-items:center;gap:7px}
+.kq-sx .kq-sc{font-size:15px}
+.kq-sx:not(.on) .kq-sc{opacity:.5;transform:scale(.86)}
+.kq-sx.on .kq-sc{transform:translateY(-4px) rotate(-3deg);box-shadow:inset 0 0 0 .2em rgba(255,255,255,.75),0 0 0 3px var(--g2),0 10px 20px rgba(0,0,0,.25)}
+.kq-sx:active .kq-sc{transform:scale(.9)}
+.kq-sx b{font-size:15px;font-weight:900}
+.kq-sx:not(.on) b{color:var(--tx3)}
+.kq-spt{font-size:14px;font-weight:800;color:var(--oktx)}
+.kq-spm .btn{align-self:stretch;margin:0}
+.kq-cd{--w:40px;position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;width:var(--w);height:calc(var(--w) * 1.4);border-radius:calc(var(--w) * .16);background:radial-gradient(120% 85% at 50% 35%,#fffdf6,#f1dfba);box-shadow:inset 0 0 0 calc(var(--w) * .075) var(--c),inset 0 0 0 calc(var(--w) * .11) #fff,0 calc(var(--w) * .06) calc(var(--w) * .16) rgba(0,0,0,.25)}
+.kq-cd:before,.kq-cd:after{content:"";position:absolute;width:calc(var(--w) * .13);height:calc(var(--w) * .13);border-radius:50%;background:var(--c)}
+.kq-cd:before{left:calc(var(--w) * .17);top:calc(var(--w) * .17)}
+.kq-cd:after{right:calc(var(--w) * .17);bottom:calc(var(--w) * .17)}
+.kq-cd .kr-crab{width:80%}
+.kq-cd.mine{box-shadow:inset 0 0 0 calc(var(--w) * .075) var(--c),inset 0 0 0 calc(var(--w) * .11) #fff,0 0 0 2px var(--g2),0 3px 8px rgba(0,0,0,.25)}
+.kq-cd.used,.kq-cd.no{background:none;box-shadow:none;outline:1.5px dashed rgba(var(--ink),.25);outline-offset:-1.5px}
+.kq-cd.no{outline:2px dashed rgba(0,0,0,.2);outline-offset:-2px}
+.kq-cd.used:before,.kq-cd.used:after,.kq-cd.no:before,.kq-cd.no:after{display:none}
+.kq-cb{--w:30px;position:relative;display:inline-block;flex:none;width:var(--w);height:calc(var(--w) * 1.4);border-radius:calc(var(--w) * .16);background:repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 3px,transparent 3px 6px),linear-gradient(160deg,#302a56,#16132a);box-shadow:inset 0 0 0 calc(var(--w) * .09) var(--c),inset 0 0 0 calc(var(--w) * .13) rgba(0,0,0,.35),0 2px 5px rgba(0,0,0,.3)}
+.kq-cb:after{content:"";position:absolute;left:50%;top:50%;width:calc(var(--w) * .38);height:calc(var(--w) * .28);transform:translate(-50%,-50%);border-radius:50%;background:var(--c);box-shadow:0 0 0 calc(var(--w) * .05) rgba(0,0,0,.3)}
+.kq-mats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 6px}
+.kq-mats.md{margin:0 0 4px}
+.kq-mat{position:relative;display:flex;align-items:center;gap:2px;min-width:0;min-height:94px;padding:8px 8px 8px 4px;border-radius:16px;text-align:left;transition:transform .14s ease,opacity .2s}
+.kq-mat.w{color:#3d2705;background:radial-gradient(120% 130% at 0% 0%,#fff6d6,#f2d27e 55%,#d8a645);box-shadow:inset 0 0 0 1.5px rgba(122,77,8,.4),0 6px 14px rgba(60,40,10,.16)}
+.kq-mat.l{color:#24164a;background:radial-gradient(120% 130% at 0% 0%,#f3eeff,#c9bbfb 55%,#9b88e4);box-shadow:inset 0 0 0 1.5px rgba(59,42,92,.4),0 6px 14px rgba(30,20,60,.16)}
+button.kq-mat:active{transform:scale(.96)}
+button.kq-mat:not(.on){opacity:.55}
+.kq-mat.w.on,.kq-mat.l.on{box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.25),0 0 0 3px var(--g2),0 8px 18px rgba(0,0,0,.2)}
+.kq-mi{display:flex;flex-direction:column;align-items:center;flex:none;width:58px}
+.kq-mi svg{width:36px;height:36px}
+.kq-mi b{font-family:var(--serif);font-size:16px;font-weight:900;letter-spacing:1px;line-height:1.25}
+.kq-mi small{font-size:11px;font-weight:900;opacity:.8;white-space:nowrap}
+.kq-pl{position:relative;flex:1;align-self:stretch;min-width:0;min-height:76px}
+.kq-pc{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translate(var(--x,0px),var(--y,0px)) rotate(var(--r,0deg))}
+.kq-pc .kq-cd,.kq-pc .kq-cb{--w:36px}
+.kq-pc.gh{z-index:2;animation:kqGh .45s cubic-bezier(.2,1.4,.4,1) backwards}
+.kq-pc.gh .kq-cd{box-shadow:inset 0 0 0 calc(var(--w) * .075) var(--c),inset 0 0 0 calc(var(--w) * .11) #fff,0 0 0 2.5px #fff,0 8px 16px rgba(0,0,0,.3)}
+@keyframes kqGh{from{opacity:0;transform:translate(-50%,-50%) translate(var(--x,0px),-40px) rotate(-16deg) scale(1.2)}}
+.kq-pn{position:absolute;right:-2px;bottom:-2px;z-index:3;display:flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:rgba(20,14,30,.8);color:#fff;font-size:12px;font-weight:900}
+.kq-hand{display:flex;justify-content:center;gap:8px;margin:8px 0 14px;padding-top:14px}
+.kq-hb{display:flex}
+.kq-hb .kq-cd{--w:50px}
+.kq-hb.sel .kq-cd{animation:kqLift .35s cubic-bezier(.2,1.5,.4,1) both;box-shadow:inset 0 0 0 calc(var(--w) * .075) var(--c),inset 0 0 0 calc(var(--w) * .11) #fff,0 0 0 3px var(--g2),0 12px 22px rgba(0,0,0,.3)}
+@keyframes kqLift{to{transform:translateY(-14px) rotate(-4deg)}}
+.kq-me{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:18px;background:var(--panel);box-shadow:inset 0 0 0 1px rgba(224,182,92,.45);margin:0 0 12px}
+.kq-mn{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:68px}
+.kq-coin{width:26px;height:26px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.2))}
+.kq-mn b{font-family:var(--serif);font-size:28px;font-weight:900;color:var(--g1);line-height:1}
+.kq-mr{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.kq-its{display:flex;flex-wrap:wrap;align-items:center;gap:5px;min-height:26px}
+.kq-its>small{font-size:12px;color:var(--tx3);font-weight:700}
+.kq-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;color:var(--tx2)}
+.kq-hd{display:flex;align-items:flex-end;gap:5px}
+.kq-hd .kq-cd{--w:21px}
+.kq-hd small{margin-left:3px;font-size:11px;color:var(--tx3);font-weight:700;white-space:nowrap}
+.kq-ic{display:inline-flex;vertical-align:middle;margin:0 2px}
+.kq-ic svg{width:20px;height:20px}
+.kr-fcd{display:flex;flex:none}
+.kr-fcd .kq-cd{--w:26px}
 /* 深色卡（身份卡、判官卡、封住嘅題目卡）入面嘅字固定淺色 */
 .rc-f,.rc-b.h,.rc-b.l,.rc-b.o,.idc{color:#f6f2e9}
 .rc-f .rc-s{color:#cdc6de}
@@ -3658,15 +3738,44 @@ const CR_GRID = [null, [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [2, 5], [3, 5], [
 const crSo = (n) => (n <= 1 ? 0 : Math.min(15, 54 / (n - 1)));   // 疊蟹：每隻比下面高幾多 %（疊得多就逼啲）
 const crMine = (v) => v.g === 'cr' && v.ph === 'play' && !!v.hx && v.hx.od[v.hx.ti] === ME.id && !v.hx.gx;
 const crDie = (d, n, sh, cls = '') => `<span class="kr-die ${cls}" style="--c:${d === 'x' ? '#a3a3ad' : CR_COL[d]};--pc:${d === 'x' ? (sh ? CR_COL[sh] : '#2b2733') : d === 'y' ? '#3a2a05' : '#fff'}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[n] && PIPS[n].includes(i) ? 'on' : ''}"></i>`).join('')}</span>`;
-const crTi = (c, v, cls = '') => `<span class="kr-ti${c === 'y' ? ' dk' : ''}${cls ? ' ' + cls : ''}" style="--c:${CR_COL[c]}">${v}</span>`;
+/* 道具外觀（2026-11-23-03）：押注牌係有缺口嘅票、觀眾牌係手指公卡、冠軍／包尾係蟹牌（背面係玩家顏色） */
+const CR_DK = { r: '#a61b1b', y: '#b88a06', g: '#15803d', b: '#1d4ed8', p: '#7e22ce' };   // 押注牌疊嘅側邊色
+const kqT = (col, inner, cls = '') => `<span class="kq-tk${cls ? ' ' + cls : ''}" style="--c:${col}">${inner}</span>`;
+const crTi = (c, v, cls = '') => kqT(CR_COL[c], v, [c === 'y' ? 'dk' : '', cls].filter(Boolean).join(' '));
+const kqDt = (inner, cls = '') => kqT('#64748b', ic('dice') + inner, cls);   // 骰票
+const KQ_THUMB = '<svg class="kq-th" viewBox="0 0 24 24"><path d="M2.5 10.5h4v10h-4z" fill="#fff"/><path d="M8 10.5l3.6-7.2c1.9 0 3 1.4 2.6 3.2L13.6 9h5.9a2.2 2.2 0 0 1 2.2 2.6l-1.4 7.4a2.6 2.6 0 0 1-2.6 2H8z" fill="#fff"/></svg>';
+const kqSp = (s, cls = '') => `<span class="kq-sc ${s > 0 ? 'up' : 'dn'}${cls ? ' ' + cls : ''}">${KQ_THUMB}<b>${s > 0 ? '+1' : '−1'}</b></span>`;
+const kqCard = (c, cls = '') => `<span class="kq-cd${cls ? ' ' + cls : ''}" style="--c:${CR_COL[c]}">${crabSvg(c)}</span>`;
+const kqBack = (col) => `<span class="kq-cb" style="--c:${col}"></span>`;
+const KQ_CUP = '<svg viewBox="0 0 40 40"><path d="M11 8H6.5a4.5 4.5 0 0 0 5.4 7.4M29 8h4.5a4.5 4.5 0 0 1-5.4 7.4" fill="none" stroke="#7a4d08" stroke-width="2.2" stroke-linecap="round"/><path d="M11 5h18v9.5a9 9 0 0 1-18 0z" fill="#f6c945" stroke="#7a4d08" stroke-width="2" stroke-linejoin="round"/><path d="M20 23.5v5" stroke="#7a4d08" stroke-width="2.6"/><path d="M12.5 35.5a7.5 7 0 0 1 15 0z" fill="#f6c945" stroke="#7a4d08" stroke-width="2" stroke-linejoin="round"/><path d="M15 8.5v5.2a5 5 0 0 0 2.4 4.2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".6"/><path d="M20 9.6l1.3 2.6 2.9.4-2.1 2 .5 2.9-2.6-1.4-2.6 1.4.5-2.9-2.1-2 2.9-.4z" fill="#fff6d6"/></svg>';
+const KQ_SNAIL = '<svg viewBox="0 0 42 40"><path d="M3 35c0-2.2 2-3.6 4.2-3.6H29c2.4 0 4-1.6 4-4v-7.6a3 3 0 0 1 6 0V28c0 4.2-3.4 7-7.6 7z" fill="#d9ccf7" stroke="#3b2a5c" stroke-width="2" stroke-linejoin="round"/><circle cx="18" cy="21" r="10.5" fill="#f59e7b" stroke="#3b2a5c" stroke-width="2"/><path d="M18 21.6a1.6 1.6 0 1 1 1.6-1.6 4.2 4.2 0 0 1-7.6 2.4 6.8 6.8 0 0 1 12.6-5.2" fill="none" stroke="#3b2a5c" stroke-width="1.8" stroke-linecap="round"/><path d="M34.4 17.2l-2-5.4M37.6 17.2l1.4-5.4" stroke="#3b2a5c" stroke-width="1.8" stroke-linecap="round"/><circle cx="32.2" cy="11" r="1.8" fill="#3b2a5c"/><circle cx="39.2" cy="11" r="1.8" fill="#3b2a5c"/><path d="M35 23.4q1 1 2 0" fill="none" stroke="#3b2a5c" stroke-width="1.4" stroke-linecap="round"/></svg>';
+const KQ_ROLL = `<svg viewBox="0 0 64 52"><g transform="translate(-3 0) rotate(-16 30 36)">${PAILG}</g><path d="M38 17l4 1.5M37 24l4-.5M40 11l3 2.5" stroke="#7a4d08" stroke-width="2" stroke-linecap="round" opacity=".7"/><g transform="rotate(18 52 13)"><rect x="43" y="4" width="18" height="18" rx="4.5" fill="#fff" stroke="#1b1424" stroke-width="2"/><circle cx="47.6" cy="8.6" r="1.9" fill="#1b1424"/><circle cx="52" cy="13" r="1.9" fill="#ef4444"/><circle cx="56.4" cy="17.4" r="1.9" fill="#1b1424"/></g></svg>`;
+const KQ_COIN = '<svg class="kq-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.4" fill="#f6c945" stroke="#7a4d08" stroke-width="1.6"/><circle cx="12" cy="12" r="7.2" fill="none" stroke="#c48a1c" stroke-width="1.1"/><path d="M14.4 9.4c-.5-.9-1.4-1.3-2.4-1.3-1.4 0-2.4.8-2.4 1.9 0 2.5 5 1.4 5 4 0 1.1-1.1 2-2.6 2-1.1 0-2-.4-2.6-1.3M12 6.6V8M12 16v1.4" fill="none" stroke="#7a4d08" stroke-width="1.6" stroke-linecap="round"/></svg>';
+const KQ_PX = [0, 7, -6, 4, -3, 8], KQ_PR = [-6, 7, -3, 10, -9, 3];
+/* 押注攤每隻蟹一疊票：最面嗰張大字；下面 4 格 5・3・2・2，拎咗嘅變空 */
+function kqStack(hx, c, can) {
+  const t = hx.lt[c], top = t[0], on = can && top, taken = CR_TILES.length - t.length;
+  const q = CR_TILES.map((x, i) => `<i class="${i < taken ? 'x' : ''}">${x}</i>`).join('');
+  const sh = Array.from({ length: Math.max(0, t.length - 1) }, (_, k) => `0 ${4 * k + 2}px 0 -${k + 1}px rgba(255,255,255,.85),0 ${4 * k + 4}px 0 -${k + 1}px ${CR_DK[c]}`).join(',');
+  return `<button class="kq-st${top ? '' : ' emp'}${on ? ' on' : ''}${c === 'y' ? ' dk' : ''}" style="--c:${CR_COL[c]}"${on ? ` data-act="cbet" data-x="${c}"` : ''}><span class="kq-cr">${crabSvg(c)}</span>${top ? `<span class="kq-tk lg${c === 'y' ? ' dk' : ''}" style="--c:${CR_COL[c]};box-shadow:${sh || 'none'}"><b>$${top}</b></span>` : '<span class="kq-tk lg no">冇</span>'}<span class="kq-q">${q}</span></button>`;
+}
+/* 冠軍／包尾牌墊：亂疊嘅蟹牌（背面係落注人顏色，自己嗰張見到蟹），右下角張數，左邊寫下一張押中幾錢 */
+function kqMat(v, w, arr, opt = {}) {
+  const me = ME.id, last = arr.slice(-6), off = arr.length - last.length;
+  let pile = last.map((e, i) => { const k = off + i, q = anA('kp:' + v.gid + ':' + w + k, 600, 'fly'); return `<span class="kq-pc" style="--x:${KQ_PX[k % 6]}px;--y:${-i * 1.5}px;--r:${KQ_PR[k % 6]}deg"><span class="kq-pi${q.c}"${q.s}>${e.id === me ? kqCard(e.c, 'mine') : kqBack(COLORS[((pOf(v, e.id) || {}).c || 0) % COLORS.length])}</span></span>`; }).join('');
+  if (opt.gh) pile += `<span class="kq-pc gh" style="--x:${arr.length ? 12 : 0}px;--y:-8px;--r:${arr.length ? 8 : -4}deg">${kqCard(opt.gh)}</span>`;
+  else if (!arr.length) pile = '<span class="kq-pc"><span class="kq-cd no"></span></span>';
+  const inner = `<span class="kq-mi">${w === 'w' ? KQ_CUP : KQ_SNAIL}<b>${w === 'w' ? '冠軍' : '包尾'}</b><small>押中 +$${CR_FIN[arr.length] || 1}</small></span><span class="kq-pl">${pile}${arr.length ? `<span class="kq-pn">${arr.length}</span>` : ''}</span>`;
+  return opt.btn ? `<button class="kq-mat ${w}${opt.on ? ' on' : ''}" data-act="cfw" data-x="${w}">${inner}</button>` : `<div class="kq-mat ${w}">${inner}</div>`;
+}
 const CR_T0 = 700, CR_HOP = 300;   // 擲骰 0.7 秒，之後每格跳 0.3 秒
 const crT0 = (e) => (e.ch ? 150 : CR_T0);   // 灰骰揀完黑白先行：骰已經擲過，唔使再等
 const crDur = (e) => crT0(e) + e.n * CR_HOP + (e.s ? 150 + CR_HOP : 0);
 function crEvText(v, e) {
   const n = `<b>${esc(nameOf(v, e.id))}</b>`;
   if (e.t === 'bet') return `${n} 押 ${crTi(e.c, '$' + e.v)}`;
-  if (e.t === 'spec') return `${n} 放${e.s > 0 ? '打氣' : '喝倒彩'}牌・第 ${e.p} 格`;
-  if (e.t === 'fin') return `${n} 落咗${e.w === 'w' ? '冠軍' : '包尾'}注`;
+  if (e.t === 'spec') return `${n} 放${kqSp(e.s, 'xs')}喺第 ${e.p} 格`;
+  if (e.t === 'fin') return `${n} 落咗<span class="kq-ic">${e.w === 'w' ? KQ_CUP : KQ_SNAIL}</span>${e.w === 'w' ? '冠軍' : '包尾'}注`;
   if (e.t === 'pair') return `${n} 同 <b>${esc(nameOf(v, e.x))}</b> 做拍檔`;
   if (e.t === 'gray') return `${n}${crDie('x', e.n, null, 'xs')}灰骰 ${e.n} 點・揀緊黑定白`;
   if (e.t === 'roll') return `${n}${e.auto ? '（超時）' : ''}${crDie(e.d, e.n, e.sh, 'xs')}${CR_NM[e.c]}${e.dir < 0 ? '倒行' : '行'} ${e.n} 格${e.u.length > 1 ? `・揹 ${e.u.length - 1} 隻` : ''}${e.s ? `・${e.s.s > 0 ? '打氣 +1' : '喝倒彩 −1'}，${esc(nameOf(v, e.s.o))} +$1` : ''}`;
@@ -3678,7 +3787,7 @@ function crBoard(v, mine) {
   for (let p = 1; p <= 16; p++) {
     const [r, c] = CR_GRID[p], stk = crStack(hx.bd, p), so = crSo(stk.length), t = crTileAt(hx, p);
     const ok = spm && crSpecOk(hx, ME.id, p) && !(P.sp && P.sp.p === p && P.sp.s === side);
-    const sp = t ? `<span class="kr-sp ${t.s > 0 ? 'up' : 'dn'}${t.o === ME.id ? ' mine' : ''}"><b>${t.s > 0 ? '+1' : '−1'}</b>${av(pOf(v, t.o), 'sm')}</span>` : '';
+    const sp = t ? `<span class="kr-sp kq-sc ${t.s > 0 ? 'up' : 'dn'}${t.o === ME.id ? ' mine' : ''}">${KQ_THUMB}<b>${t.s > 0 ? '+1' : '−1'}</b>${av(pOf(v, t.o), 'sm')}</span>` : ok ? `<span class="kr-sp kq-sc gh ${side > 0 ? 'up' : 'dn'}">${KQ_THUMB}<b>${side > 0 ? '+1' : '−1'}</b></span>` : '';
     const crabs = stk.map((x, i) => `<span class="kr-ck" data-crab="${x}" style="--i:${i};--so:${so}%">${crabSvg(x)}</span>`).join('');
     h += `<div class="kr-cell c${p}${ok ? ' ok' : ''}" data-cell="${p}" style="grid-area:${r}/${c}"${ok ? ` data-act="cspc" data-x="${p}"` : ''}><span class="kr-no">${p}</span>${sp}${crabs}</div>`;
   }
@@ -3709,27 +3818,31 @@ function vPlayCr(v) {
     const e = hx.log[0], dd = e.t === 'roll' ? crDur(e) : 0, q = anA('kg:' + v.gid + ':' + e.k, dd + 500, 'kr-lgi');
     h += `<div class="kr-log${q.c}" style="--dd:${dd}ms;${q.s ? q.s.slice(8, -1) : ''}">${crEvText(v, e)}</div>`;
   }
-  h += `<div class="kr-tls">${CR_C.map((c) => { const t = hx.lt[c], top = t[0], on = mine && !g && top; return `<button class="kr-tl${top ? '' : ' emp'}${on ? ' on' : ''}" style="--c:${CR_COL[c]}"${on ? ` data-act="cbet" data-x="${c}"` : ''}>${crabSvg(c)}<b>${top ? '$' + top : '冇'}</b><small>${t.length ? '剩 ' + t.length + ' 張' : '押晒'}</small></button>`; }).join('')}</div>`;
+  h += `<div class="kq-bth${mine && !g ? ' on' : ''}"><span class="kq-aw"></span><span class="kq-sg">押注</span><div class="kq-sts">${CR_C.map((c) => kqStack(hx, c, mine && !g)).join('')}</div></div>`;
   if (mine && !g) {
-    if (S.crM === 'spec') {
+    if (S.crM === 'spec') {   // 放觀眾牌：揀打氣定喝倒彩，再撳賽道發光嘅格
       const side = S.crSide || 1;
-      h += `<div class="kr-spm"><div class="seg">${[[1, '打氣 +1'], [-1, '喝倒彩 −1']].map((o) => `<button class="${side === o[0] ? 'on' : ''}" data-act="cside" data-x="${o[0]}">${o[1]}</button>`).join('')}</div><div class="kr-spt">撳賽道上發光嘅格</div><button class="btn ghost sm" data-act="cmc">取消</button></div>`;
-    } else {
+      h += `<div class="kq-spm"><div class="kq-sps">${[1, -1].map((x) => `<button class="kq-sx${side === x ? ' on' : ''}" data-act="cside" data-x="${x}">${kqSp(x)}<b>${x > 0 ? '打氣' : '喝倒彩'}</b></button>`).join('')}</div><div class="kq-spt">撳賽道上發光嘅格</div><button class="btn ghost sm" data-act="cmc">取消</button></div>`;
+    } else {   // 道具盤：擲骰、觀眾牌、冠軍／包尾、拍檔
       const canPair = hx.pair && !P.pa && hx.od.some((x) => crPairOk(hx, me, x));
-      h += `<button class="btn gold big" data-act="cdie">${ic('dice')}擲骰・骰票 +$1</button><div class="row kr-row"><button class="btn ghost sm" data-act="cspm">${ic('sign')}${P.sp ? '搬觀眾牌' : '觀眾牌'}</button><button class="btn ghost sm" data-act="cfinm" ${P.fc.length ? '' : 'disabled'}>${ic('flag')}冠軍／包尾</button>${hx.pair ? `<button class="btn ghost sm" data-act="cpairm" ${canPair ? '' : 'disabled'}>${ic('users')}拍檔</button>` : ''}</div>`;
+      h += `<div class="kq-acts${hx.pair ? ' c4' : ''}"><button class="kq-a roll" data-act="cdie"><span class="kq-ai">${KQ_ROLL}</span><span class="kq-rl"><b>擲骰</b>${kqT('#64748b', '+$1', 'sm')}</span></button>`
+        + `<button class="kq-a" data-act="cspm"><span class="kq-ai kq-a2">${kqSp(-1)}${kqSp(1)}</span><b>${P.sp ? '搬觀眾牌' : '觀眾牌'}</b></button>`
+        + `<button class="kq-a" data-act="cfinm" ${P.fc.length ? '' : 'disabled'}><span class="kq-ai"><span class="kq-fan">${P.fc.map((c, i) => `<span style="--r:${(i - (P.fc.length - 1) / 2) * 13}deg">${kqCard(c)}</span>`).join('')}</span></span><b>冠軍／包尾</b></button>`
+        + (hx.pair ? `<button class="kq-a" data-act="cpairm" ${canPair ? '' : 'disabled'}><span class="kq-ai kq-p2"><svg class="kr-crab" viewBox="0 0 40 28">${crabG('#fb923c')}</svg><svg class="kr-crab" viewBox="0 0 40 28">${crabG('#38bdf8')}</svg></span><b>拍檔</b></button>` : '')
+        + '</div>';
     }
   }
-  if (P) {
+  if (P) {   // 你嘅道具：錢、呢段嘅票、觀眾牌、拍檔、5 張蟹牌
     const pq = anA('km:' + v.gid + ':' + me + ':' + P.m, 600, 'pp');
-    const chips = P.lt.map(([c, x]) => crTi(c, x)).join('') + (P.pt ? `<span class="kr-pt">${ic('dice')}×${P.pt}</span>` : '') + (P.sp ? `<span class="kr-pt">${P.sp.s > 0 ? '打氣' : '喝倒彩'}・第 ${P.sp.p} 格</span>` : '') + (P.pa ? `<span class="kr-pt">拍檔 ${esc(nameOf(v, P.pa))}</span>` : '');
-    h += `<div class="kr-me"><div class="kr-money${pq.c}"${pq.s}>$${P.m}</div><div class="kr-mi"><div class="kr-chips">${chips || '<small>呢段未有票</small>'}</div><div class="kr-fc">${CR_C.map((c) => `<i class="${P.fc.includes(c) ? '' : 'used'}" style="--c:${CR_COL[c]}"></i>`).join('')}<small>冠軍／包尾牌</small></div></div></div>`;
+    const its = P.lt.map(([c, x], i) => { const q = anA('kmt:' + v.gid + ':' + hx.lg + ':' + i, 600, 'fly'); return `<span class="kq-chip${q.c}"${q.s}>${crTi(c, '$' + x)}</span>`; }).join('')
+      + (P.pt ? kqDt('×' + P.pt) : '') + (P.sp ? `<span class="kq-chip">${kqSp(P.sp.s, 'sm')}第 ${P.sp.p} 格</span>` : '') + (P.pa ? `<span class="kq-chip">${av(pOf(v, P.pa), 'sm')}拍檔</span>` : '');
+    h += `<div class="kq-me"><div class="kq-mn${pq.c}"${pq.s}>${KQ_COIN}<b>$${P.m}</b></div><div class="kq-mr"><div class="kq-its">${its || '<small>呢段未有票</small>'}</div><div class="kq-hd">${CR_C.map((c) => (P.fc.includes(c) ? kqCard(c) : '<span class="kq-cd used"></span>')).join('')}<small>蟹牌</small></div></div></div>`;
   } else h += '<div class="wait">觀戰中・下一場加入</div>';
-  const pile = (t, arr) => `<div class="kr-pile"><b>${t}</b><div class="kr-cds">${arr.length ? arr.map((e, i) => { const q = anA('kp:' + v.gid + ':' + t + i, 600, 'fly'); return e.id === me ? `<span class="kr-cdb mine${q.c}" style="--c:${CR_COL[e.c]};${q.s ? q.s.slice(8, -1) : ''}"></span>` : `<span class="kr-cdb${q.c}" style="--c:${COLORS[((pOf(v, e.id) || {}).c || 0) % COLORS.length]};${q.s ? q.s.slice(8, -1) : ''}"></span>`; }).join('') : '<small>未有人押</small>'}</div></div>`;
-  h += `<div class="kr-piles">${pile('冠軍注', hx.wb)}${pile('包尾注', hx.lb)}</div>`;
+  h += `<div class="kq-mats">${kqMat(v, 'w', hx.wb)}${kqMat(v, 'l', hx.lb)}</div>`;
   const rows = hx.od.map((id) => {
     const p = pOf(v, id), Q = hx.ps[id]; if (!p) return '';
     const q = anA('km:' + v.gid + ':' + id + ':' + Q.m, 600, 'pp');
-    const chips = Q.lt.map(([c, x]) => crTi(c, x, 'sm')).join('') + (Q.pt ? `<span class="kr-pt sm">${ic('dice')}×${Q.pt}</span>` : '') + (Q.pa ? `<span class="kr-pt sm">拍檔 ${esc(nameOf(v, Q.pa))}</span>` : '');
+    const chips = Q.lt.map(([c, x]) => crTi(c, '$' + x, 'sm')).join('') + (Q.pt ? kqDt('×' + Q.pt, 'sm') : '') + (Q.pa ? `<span class="kr-pt sm">拍檔 ${esc(nameOf(v, Q.pa))}</span>` : '');
     return `<div class="pr kr-pr${id === cur && live ? ' cur' : ''}${p.on ? '' : ' off'}">${av(p)}<span class="nm kr-nm"><span>${esc(p.n)}${id === me ? '（你）' : ''}</span>${chips ? `<span class="kr-chips">${chips}</span>` : ''}</span>${p.gone ? '<span class="tag">走咗</span>' : ''}<span class="sc${q.c}"${q.s}>$${Q.m}</span></div>`;
   }).join('');
   return h + `<div class="sh"><span>玩家</span></div><div class="plist">${rows}</div>`;
@@ -3740,7 +3853,7 @@ function vLegCr(v) {
   const rk = lr.rk.map((c, i) => `<div class="kr-rk${i < 2 ? ' t' + i : ''}" style="--r:${i * 80}ms">${crabSvg(c)}<b>${i + 1}</b><small>${pay[i]}</small></div>`).join('');
   const rows = hx.od.map((id) => {
     const p = pOf(v, id), R = lr.rows[id]; if (!p || !R) return '';
-    const it = R.it.map((x) => (x.t === 'b' ? `<span class="kr-it ${x.d > 0 ? 'p' : 'm'}">${crTi(x.c, x.v, 'sm')}${x.d > 0 ? '+' : ''}${x.d}</span>` : x.t === 'p' ? `<span class="kr-it p">${ic('dice')}+${x.d}</span>` : `<span class="kr-it p">拍檔${x.c ? crTi(x.c, x.v, 'sm') : ic('dice')}+${x.d}</span>`)).join('') + (R.sg ? `<span class="kr-it p">觀眾牌 +${R.sg}</span>` : '');
+    const it = R.it.map((x) => (x.t === 'b' ? `<span class="kr-it ${x.d > 0 ? 'p' : 'm'}">${crTi(x.c, '$' + x.v, 'sm')}${x.d > 0 ? '+' : ''}${x.d}</span>` : x.t === 'p' ? `<span class="kr-it p">${kqDt('', 'sm')}+${x.d}</span>` : `<span class="kr-it p">拍檔${x.c ? crTi(x.c, '$' + x.v, 'sm') : kqDt('', 'sm')}+${x.d}</span>`)).join('') + (R.sg ? `<span class="kr-it p">觀眾牌 +${R.sg}</span>` : '');
     const td = R.d + R.sg;
     return `<div class="pr${id === ME.id ? ' me' : ''}">${av(p)}<span class="nm kr-nm"><span>${esc(p.n)}</span><span class="kr-chips">${it || '<small>冇押</small>'}</span></span><span class="dl ${td > 0 ? 'p' : td < 0 ? 'm' : ''}">${td > 0 ? '+' : ''}${td}</span><span class="sc">$${R.m}</span></div>`;
   }).join('');
@@ -3754,7 +3867,7 @@ function vEndCr(v) {
   let h = '';
   if (fr) {
     h += `<div class="kr-win"><span class="kr-wc">${crabSvg(fr.win)}</span><div class="res"><div class="big">${CR_NM[fr.win]}衝線！</div><div class="tip">包尾：${CR_NM[fr.lose]}</div></div></div>`;
-    const pile = (t, arr) => `<div class="sh"><span>${t}</span><small>按落注次序</small></div><div class="plist">${arr.length ? arr.map((e) => { const p = pOf(v, e.id); return `<div class="pr">${av(p)}<span class="nm">${esc(p ? p.n : '?')}</span><span class="kr-fcd">${crabSvg(e.c)}</span><span class="dl ${e.d > 0 ? 'p' : 'm'}">${e.d > 0 ? '+' : ''}${e.d}</span></div>`; }).join('') : '<div class="wait">冇人押</div>'}</div>`;
+    const pile = (t, arr) => `<div class="sh"><span><span class="kq-ic">${t === '冠軍注' ? KQ_CUP : KQ_SNAIL}</span>${t}</span><small>按落注次序</small></div><div class="plist">${arr.length ? arr.map((e) => { const p = pOf(v, e.id); return `<div class="pr">${av(p)}<span class="nm">${esc(p ? p.n : '?')}</span><span class="kr-fcd">${kqCard(e.c)}</span><span class="dl ${e.d > 0 ? 'p' : 'm'}">${e.d > 0 ? '+' : ''}${e.d}</span></div>`; }).join('') : '<div class="wait">冇人押</div>'}</div>`;
     h += pile('冠軍注', fr.w) + pile('包尾注', fr.l);
   } else h += '<div class="res"><div class="big">提早完場</div></div>';
   const slot = (r, cls) => (r ? `<div class="pd ${cls}">${cls === 'p1' ? CROWN : ''}${av(r.p)}<div class="n2">${esc(r.p.n)}</div><div class="s2">$${r.p.sc}</div><div class="blk">${r.rank}</div></div>` : '<div class="pd"></div>');
@@ -3852,9 +3965,11 @@ function renderModal() {
       return `<button class="gli${on ? ' on' : ''}${ok ? '' : ' dim'}" data-act="gsel" data-x="${g}"><span class="gli-a">${G.art}</span><span class="gli-t"><b>${G.name}</b><small>${G.tags[0]}${ok ? '' : `・而家 ${onN} 人`}</small></span>${on ? ic('check') : ''}</button>`;
     }).join('') + '</div><button class="btn ghost" data-act="mclose">取消</button>';
   } else if (m.type === 'cfin' && S.view && crMine(S.view)) {
-    const v = S.view, P = v.hx.ps[ME.id];
-    const row = (w) => `<div class="kr-fcr">${CR_C.map((c) => (P.fc.includes(c) ? `<button class="kr-fcb" style="--c:${CR_COL[c]}" data-act="cfin" data-x="${w}${c}">${crabSvg(c)}</button>` : '<span class="kr-fcb used"></span>')).join('')}</div>`;
-    h = `<h3>冠軍／包尾注</h3><div class="cl">押全場冠軍・前面有 ${v.hx.wb.length} 張</div>${row('w')}<div class="cl">押全場包尾・前面有 ${v.hx.lb.length} 張</div>${row('l')}<div class="tip">越早押中越多：$8・$5・$3・$2・$1；押錯 −$1</div><button class="btn ghost" data-act="mclose">取消</button>`;
+    const v = S.view, hx = v.hx, P = hx.ps[ME.id], w = S.crFw === 'l' ? 'l' : 'w', c = P.fc.includes(S.crFc) ? S.crFc : null;
+    h = `<h3>冠軍／包尾注</h3><div class="kq-mats md">${kqMat(v, 'w', hx.wb, { btn: 1, on: w === 'w', gh: w === 'w' && c })}${kqMat(v, 'l', hx.lb, { btn: 1, on: w === 'l', gh: w === 'l' && c })}</div>
+      <div class="kq-hand">${CR_C.map((x) => (P.fc.includes(x) ? `<button class="kq-hb${x === c ? ' sel' : ''}" data-act="cfc" data-x="${x}">${kqCard(x)}</button>` : '<span class="kq-hb"><span class="kq-cd used"></span></span>')).join('')}</div>
+      <button class="btn gold" data-act="cfin" ${c ? '' : 'disabled'}>${c ? `押${CR_NM[c]}做全場${w === 'w' ? '冠軍' : '包尾'}` : '揀一張蟹牌'}</button>
+      <div class="tip">越早押中越多・押錯 −$1・每張蟹牌用一次</div><button class="btn ghost" data-act="mclose">取消</button>`;
   } else if (m.type === 'cpair' && S.view && crMine(S.view)) {
     const v = S.view, hx = v.hx, list = hx.od.filter((id) => crPairOk(hx, ME.id, id));
     h = `<h3>揀拍檔</h3><div class="plist">${list.length ? list.map((id) => `<button class="pr" data-act="cpair" data-x="${id}">${av(pOf(v, id))}<span class="nm">${esc(nameOf(v, id))}</span><span class="go">揀佢</span></button>`).join('') : '<div class="wait">冇人可以揀</div>'}</div><div class="tip">做到呢段完；結算時兩個人都加對方最好嗰張票</div><button class="btn ghost" data-act="mclose">取消</button>`;
@@ -3931,8 +4046,10 @@ document.addEventListener('click', (e) => {
     case 'cside': S.crSide = x === '-1' ? -1 : 1; render(); break;
     case 'cmc': S.crM = null; render(); break;
     case 'cspc': S.crM = null; act('cspec', [+x, S.crSide || 1]); break;
-    case 'cfinm': openModal({ type: 'cfin' }); break;
-    case 'cfin': if (v && v.hx && x) { const w = x[0], c = x.slice(1); confirmBox(`押${CR_NM[c]}全場${w === 'w' ? '冠軍' : '包尾'}？<small>呢張蟹牌用咗就冇。</small>`, '押', () => act('cfin', [w, c])); S.modal.krTk = v.hx.tk; } break;
+    case 'cfinm': S.crFw = 'w'; S.crFc = null; openModal({ type: 'cfin' }); break;
+    case 'cfw': S.crFw = x === 'l' ? 'l' : 'w'; renderModal(); break;
+    case 'cfc': S.crFc = x; renderModal(); break;
+    case 'cfin': if (v && v.hx && S.crFc) { const w = S.crFw === 'l' ? 'l' : 'w', c = S.crFc; S.crFc = null; closeModal(); act('cfin', [w, c]); } break;
     case 'cpairm': openModal({ type: 'cpair' }); break;
     case 'cpair': if (v && v.hx) { confirmBox(`同 ${esc(nameOf(v, x))} 做拍檔？<small>做到呢段完。</small>`, '做拍檔', () => act('cpair', x)); S.modal.krTk = v.hx.tk; } break;
     case 'cnext': act('cnext'); break;
