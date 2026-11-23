@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-23-01';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-23-02';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -625,6 +625,14 @@ button.gdd:active{transform:scale(.98)}
 .kr-row{margin:-2px 0 10px}
 .kr-row .btn{font-size:14px;gap:4px;padding:9px 4px;min-height:46px}
 .kr-row .ic{width:17px;height:17px}
+.kr-gx{padding:12px;border-radius:18px;margin:0 0 10px;background:radial-gradient(120% 100% at 50% 0%,rgba(255,200,90,.28),transparent 70%),var(--s1);box-shadow:inset 0 0 0 2px var(--g2)}
+.kr-gxt{display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--serif);font-size:18px;font-weight:900;margin:0 0 10px}
+.kr-gxr{display:flex;gap:10px}
+.kr-gxb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;border-radius:16px;background:var(--s1);box-shadow:inset 0 0 0 2px var(--e2),0 6px 14px rgba(0,0,0,.18);transition:transform .14s ease}
+.kr-gxb:active{transform:scale(.94)}
+.kr-gxb .kr-crab{width:64px}
+.kr-gxb b{font-family:var(--serif);font-size:19px;font-weight:900}
+.kr-gxb small{font-size:12px;color:var(--tx2);font-weight:700}
 .kr-spm{display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 2px #16a34a;margin:0 0 10px}
 .kr-spm .seg{margin:0}
 .kr-spt{text-align:center;font-size:14px;font-weight:800;color:var(--oktx)}
@@ -1897,6 +1905,7 @@ function hAct(id, t, x) {
     case 'cfin': if (crTurn(id) && Array.isArray(x) && (x[0] === 'w' || x[0] === 'l') && st.hx.ps[id].fc.includes(x[1])) crFin(id, x[0], x[1]); break;
     case 'cpair': if (crTurn(id) && crPairOk(st.hx, id, x)) crPair(id, x); break;
     case 'cnext': if (isH && st.g === 'cr' && st.ph === 'leg') crNewLeg(); break;
+    case 'cpick': if (st.g === 'cr' && st.ph === 'play' && st.hx && st.hx.gx && st.hx.gx.id === id) crGrey(x); break;
     // 拆彈危機
     case 'cut': if (st.g === 'cd' && st.ph === 'play' && id === st.hold && Array.isArray(x) && (x[0] !== id || (st.test && Object.keys(st.rl).filter(hOn).length === 1)) && st.hd[x[0]] && hOn(x[0])) cCut(id, x[0], +x[1]); break;
     // 誰是臥底
@@ -2389,12 +2398,11 @@ function crStart() {
   st.gid++;
   const bd = Array.from({ length: 20 }, () => []), d3 = () => 1 + Math.floor(Math.random() * 3);
   shuffle(CR_C).forEach((c) => { bd[d3()].push(c); });   // 起點：逐粒骰擲，1–3 格；後擲嘅疊上面
-  const x0 = CR_X[Math.floor(Math.random() * 2)];
-  bd[17 - d3()].push(x0); bd[17 - d3()].push(x0 === 'k' ? 'w' : 'k');   // 黑白蟹：灰骰 1 → 第 16 格、2 → 15、3 → 14
+  bd[17 - d3()].push('k'); bd[17 - d3()].push('w');   // 黑白蟹：灰骰擲兩次，分別由終點數返轉頭放黑蟹、白蟹：1 → 第 16 格、2 → 15、3 → 14
   const od = st.pl.map((p) => p.id), ps = {};
   od.forEach((id) => { ps[id] = crNew(); });
   st.pl.forEach((p) => { p.gone = 0; p.sc = CR_START; });
-  st.hx = { bd, by: CR_C.concat('x'), dc: [], lt: crLt(), ps, od, wb: [], lb: [], ti: Math.floor(Math.random() * od.length), lg: 1, tk: 1, ev: null, evk: 0, log: [], lr: null, fr: null, pair: od.length >= CR_PAIR ? 1 : 0 };
+  st.hx = { bd, by: CR_C.concat('x'), dc: [], lt: crLt(), ps, od, wb: [], lb: [], ti: Math.floor(Math.random() * od.length), lg: 1, tk: 1, ev: null, evk: 0, log: [], gx: null, lr: null, fr: null, pair: od.length >= CR_PAIR ? 1 : 0 };
   st.ph = 'play'; st.dl = Date.now() + CR_TURN_MS;
   st.jd = null; st.w = null; st.rl = {}; st.dt = {};
 }
@@ -2402,15 +2410,6 @@ const crCell = (p) => ((p - 1) % 16 + 16) % 16 + 1;   // 顯示用：第 17 格�
 const crStack = (bd, c) => bd[c].concat(bd[c + 16] || []);
 function crFind(bd, c) { for (let p = 1; p < bd.length; p++) { const i = bd[p].indexOf(c); if (i >= 0) return [p, i]; } return [0, -1]; }
 const crTileAt = (hx, p) => { for (const o of hx.od) { const s = hx.ps[o].sp; if (s && s.p === p) return { p, s: s.s, o }; } return null; };
-/* 灰骰：得一隻黑白蟹揹住賽跑蟹 → 郁佢；兩隻直接疊埋（中間冇賽跑蟹）→ 郁上面嗰隻；否則郁骰面顏色 */
-function crCrazy(bd, shown) {
-  const [pk, ik] = crFind(bd, 'k'), [pw, iw] = crFind(bd, 'w');
-  const carry = (p, i) => bd[p].slice(i + 1).some((c) => CR_C.includes(c));
-  const ck = carry(pk, ik), cw = carry(pw, iw);
-  if (ck !== cw) return ck ? 'k' : 'w';
-  if (pk === pw && Math.abs(ik - iw) === 1) return ik > iw ? 'k' : 'w';
-  return shown;
-}
 /* 郁蟹：連上面嘅蟹一齊行，落到有蟹嘅格就疊上面；黑白蟹倒行，過咗第 1 格去第 16 格。
  * 停喺觀眾牌：打氣再行 1 格疊上面，喝倒彩退 1 格塞落最底（黑白蟹方向相反）；牌主即刻 +$1 */
 function crMove(hx, c, n, dir) {
@@ -2434,7 +2433,7 @@ function crMove(hx, c, n, dir) {
 /* 名次：最前嗰格、疊喺最上面嘅排先；黑白蟹唔計 */
 function crRank(bd) { const r = []; for (let p = bd.length - 1; p >= 1; p--) for (let i = bd[p].length - 1; i >= 0; i--) if (CR_C.includes(bd[p][i])) r.push(bd[p][i]); return r; }
 const crCur = () => HS.hx.od[HS.hx.ti];
-const crTurn = (id) => HS.g === 'cr' && HS.ph === 'play' && !!HS.hx && crCur() === id;
+const crTurn = (id) => HS.g === 'cr' && HS.ph === 'play' && !!HS.hx && crCur() === id && !HS.hx.gx;   // 擲到灰骰未揀黑白之前，咩都唔做得
 function crLog(e) { const hx = HS.hx; hx.evk++; e.k = hx.evk; hx.ev = e; hx.log = [e, ...hx.log].slice(0, 3); }
 function crSync() { const hx = HS.hx; HS.pl.forEach((p) => { if (hx.ps[p.id]) p.sc = hx.ps[p.id].m; }); }
 function crNext() {
@@ -2452,15 +2451,31 @@ function crSpec(id, p, s) { const hx = HS.hx; hx.ps[id].sp = { p, s }; crLog({ t
 function crFin(id, w, c) { const hx = HS.hx, P = hx.ps[id]; P.fc = P.fc.filter((x) => x !== c); (w === 'w' ? hx.wb : hx.lb).push({ id, c }); crLog({ t: 'fin', id, w }); crNext(); }
 const crPairOk = (hx, id, x) => !!hx.pair && x !== id && !!hx.ps[x] && !!hx.ps[id] && !hx.ps[id].pa && !hx.ps[x].pa;
 function crPair(id, x) { const hx = HS.hx; hx.ps[id].pa = x; hx.ps[x].pa = id; crLog({ t: 'pair', id, x }); crNext(); }
-/* 擲骰：拎一張骰票，骰盅隨機出一粒骰（1–3）；出咗 5 粒就呢段結算；有賽跑蟹衝線就完場 */
+/* 擲骰：拎一張骰票，骰盅隨機出一粒未出過嘅骰（1–3）。
+ * 灰骰：擲嘅人揀黑蟹定白蟹倒行（Bill 2026-11-23：規則跟龐奇桌遊介紹「若骰出灰骰，則選擇要移動黑色還是白色駱駝」）；20 秒唔揀、或者超時自動擲到灰骰，就隨機揀 */
+const CR_PICK_MS = 20000 / SPEED;
 function crRoll(id, auto) {
   const st = HS, hx = st.hx;
   hx.ps[id].pt++;
   const d = hx.by.splice(Math.floor(Math.random() * hx.by.length), 1)[0], n = 1 + Math.floor(Math.random() * 3);
-  const sh = d === 'x' ? CR_X[Math.floor(Math.random() * 2)] : null;
-  const mv = d === 'x' ? crMove(hx, crCrazy(hx.bd, sh), n, -1) : crMove(hx, d, n, 1);
-  hx.dc.push({ d, n, sh });
-  crLog({ t: 'roll', id, d, n, sh, auto: auto ? 1 : 0, ...mv });
+  hx.dc.push({ d, n, sh: null });
+  if (d === 'x') {
+    hx.gx = { id, n, auto: auto ? 1 : 0 };
+    if (auto) { crGrey(CR_X[Math.floor(Math.random() * 2)]); return; }
+    crLog({ t: 'gray', id, n }); st.dl = Date.now() + CR_PICK_MS; return;
+  }
+  crLog({ t: 'roll', id, d, n, sh: null, auto: auto ? 1 : 0, ...crMove(hx, d, n, 1) });
+  crAfter();
+}
+function crGrey(c) {
+  const hx = HS.hx, g = hx.gx; if (!g || !CR_X.includes(c)) return;
+  hx.gx = null; hx.dc[hx.dc.length - 1].sh = c;
+  crLog({ t: 'roll', id: g.id, d: 'x', n: g.n, sh: c, auto: g.auto, ch: g.auto ? 0 : 1, ...crMove(hx, c, g.n, -1) });
+  crAfter();
+}
+/* 郁完蟹：有賽跑蟹衝線就完場；骰盅出咗 5 粒就呢段結算；否則到下一個人 */
+function crAfter() {
+  const st = HS, hx = st.hx;
   crSync();
   if (hx.bd.slice(17).some((a) => a.some((c) => CR_C.includes(c)))) { crLegScore(); crFinal(); return; }
   if (hx.dc.length >= 5) { crLegScore(); st.ph = 'leg'; st.dl = Date.now() + CR_LEG_MS; return; }
@@ -2497,7 +2512,7 @@ function crFinal() {
 }
 function crNewLeg() {
   const st = HS, hx = st.hx;
-  hx.lg++; hx.by = CR_C.concat('x'); hx.dc = []; hx.lt = crLt();
+  hx.lg++; hx.by = CR_C.concat('x'); hx.dc = []; hx.lt = crLt(); hx.gx = null;
   hx.od.forEach((id) => { const P = hx.ps[id]; P.lt = []; P.pt = 0; P.sp = null; P.pa = null; P.sg = 0; });
   st.ph = 'play'; crNext();
 }
@@ -2505,7 +2520,8 @@ function crTick(now) {
   const st = HS, hx = st.hx; if (!hx) return;
   if (st.ph === 'play') {
     const p = st.pl.find((q) => q.id === crCur());
-    if (!p || p.gone) crNext();
+    if (hx.gx) { if (now >= st.dl || !p || p.gone) crGrey(CR_X[Math.floor(Math.random() * 2)]); }   // 灰骰 20 秒唔揀：隨機
+    else if (!p || p.gone) crNext();
     else if (now >= st.dl) crRoll(p.id, 1);   // 60 秒唔揀：自動幫佢擲骰
   } else if (st.ph === 'leg' && now >= st.dl) crNewLeg();
 }
@@ -3108,10 +3124,11 @@ function fx(prevPh, had, v) {
     let wait = 0;
     if (e && !S.seen['ke' + v.gid + '-' + e.k]) {
       S.seen['ke' + v.gid + '-' + e.k] = 1;
-      if (had && e.t === 'roll') {
+      if (had && e.t === 'gray') { S.crA = { k: e.k + ':' + v.gid, t: now }; sfx('roll'); }
+      else if (had && e.t === 'roll') {
         S.crA = { k: e.k + ':' + v.gid, t: now }; wait = crDur(e);
-        sfx('roll');
-        for (let j = 1; j <= e.n; j++) setTimeout(() => sfx('hop'), CR_T0 + j * CR_HOP - 40);
+        if (!e.ch) sfx('roll');
+        for (let j = 1; j <= e.n; j++) setTimeout(() => sfx('hop'), crT0(e) + j * CR_HOP - 40);
         if (e.s) setTimeout(() => sfx('coin'), wait - 40);
         if (v.ph === 'leg' || v.ph === 'end') { S.crHold = now + wait + 700; setTimeout(render, wait + 730); }
       } else if (had) sfx(e.t === 'bet' || e.t === 'fin' ? 'coin' : 'tick');
@@ -3639,17 +3656,19 @@ const RULES_TT = `<div class="rules">
 /* ---------- 蟹仔大賽：畫面 ---------- */
 const CR_GRID = [null, [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [2, 5], [3, 5], [4, 5], [5, 5], [5, 4], [5, 3], [5, 2], [5, 1], [4, 1], [3, 1], [2, 1]];   // 第 p 格喺 [行, 列]：順時針行一圈，第 16 格同第 1 格中間係終點線
 const crSo = (n) => (n <= 1 ? 0 : Math.min(15, 54 / (n - 1)));   // 疊蟹：每隻比下面高幾多 %（疊得多就逼啲）
-const crMine = (v) => v.g === 'cr' && v.ph === 'play' && !!v.hx && v.hx.od[v.hx.ti] === ME.id;
-const crDie = (d, n, sh, cls = '') => `<span class="kr-die ${cls}" style="--c:${d === 'x' ? '#a3a3ad' : CR_COL[d]};--pc:${d === 'x' ? CR_COL[sh] : d === 'y' ? '#3a2a05' : '#fff'}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[n] && PIPS[n].includes(i) ? 'on' : ''}"></i>`).join('')}</span>`;
+const crMine = (v) => v.g === 'cr' && v.ph === 'play' && !!v.hx && v.hx.od[v.hx.ti] === ME.id && !v.hx.gx;
+const crDie = (d, n, sh, cls = '') => `<span class="kr-die ${cls}" style="--c:${d === 'x' ? '#a3a3ad' : CR_COL[d]};--pc:${d === 'x' ? (sh ? CR_COL[sh] : '#2b2733') : d === 'y' ? '#3a2a05' : '#fff'}">${Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[n] && PIPS[n].includes(i) ? 'on' : ''}"></i>`).join('')}</span>`;
 const crTi = (c, v, cls = '') => `<span class="kr-ti${c === 'y' ? ' dk' : ''}${cls ? ' ' + cls : ''}" style="--c:${CR_COL[c]}">${v}</span>`;
 const CR_T0 = 700, CR_HOP = 300;   // 擲骰 0.7 秒，之後每格跳 0.3 秒
-const crDur = (e) => CR_T0 + e.n * CR_HOP + (e.s ? 150 + CR_HOP : 0);
+const crT0 = (e) => (e.ch ? 150 : CR_T0);   // 灰骰揀完黑白先行：骰已經擲過，唔使再等
+const crDur = (e) => crT0(e) + e.n * CR_HOP + (e.s ? 150 + CR_HOP : 0);
 function crEvText(v, e) {
   const n = `<b>${esc(nameOf(v, e.id))}</b>`;
   if (e.t === 'bet') return `${n} 押 ${crTi(e.c, '$' + e.v)}`;
   if (e.t === 'spec') return `${n} 放${e.s > 0 ? '打氣' : '喝倒彩'}牌・第 ${e.p} 格`;
   if (e.t === 'fin') return `${n} 落咗${e.w === 'w' ? '冠軍' : '包尾'}注`;
   if (e.t === 'pair') return `${n} 同 <b>${esc(nameOf(v, e.x))}</b> 做拍檔`;
+  if (e.t === 'gray') return `${n}${crDie('x', e.n, null, 'xs')}灰骰 ${e.n} 點・揀緊黑定白`;
   if (e.t === 'roll') return `${n}${e.auto ? '（超時）' : ''}${crDie(e.d, e.n, e.sh, 'xs')}${CR_NM[e.c]}${e.dir < 0 ? '倒行' : '行'} ${e.n} 格${e.u.length > 1 ? `・揹 ${e.u.length - 1} 隻` : ''}${e.s ? `・${e.s.s > 0 ? '打氣 +1' : '喝倒彩 −1'}，${esc(nameOf(v, e.s.o))} +$1` : ''}`;
   return '';
 }
@@ -3669,26 +3688,29 @@ function crMid(v) {
   const hx = v.hx, e = hx.ev;
   const slots = [0, 1, 2, 3, 4].map((i) => { const d = hx.dc[i]; return d ? crDie(d.d, d.n, d.sh, 'sm') : '<span class="kr-ds"></span>'; }).join('');
   let big;
-  if (hx.dc.length && e && e.t === 'roll') {
-    const ra = S.crA && S.crA.k === e.k + ':' + v.gid ? Date.now() - S.crA.t : 1e9;
-    big = `<div class="kr-big${ra < 900 ? ' kr-roll' : ''}"${ra < 900 ? ` style="--et:-${ra}ms"` : ''}>${crDie(e.d, e.n, e.sh, 'lg')}</div>`;
+  if (hx.dc.length && e && (e.t === 'roll' || e.t === 'gray')) {
+    const ra = S.crA && S.crA.k === e.k + ':' + v.gid && !e.ch ? Date.now() - S.crA.t : 1e9;
+    big = `<div class="kr-big${ra < 900 ? ' kr-roll' : ''}"${ra < 900 ? ` style="--et:-${ra}ms"` : ''}>${e.t === 'gray' ? crDie('x', e.n, null, 'lg') : crDie(e.d, e.n, e.sh, 'lg')}</div>`;
   } else big = `<svg class="kr-pail" viewBox="8 4 44 50">${PAILG}</svg>`;
   return `<div class="kr-lg">第 ${hx.lg} 段</div>${big}<div class="kr-dl">${slots}</div><div class="kr-by">骰盅剩 ${hx.by.length} 粒</div>`;
 }
 function vPlayCr(v) {
-  const hx = v.hx, me = ME.id, P = hx.ps[me], cur = hx.od[hx.ti], live = v.ph === 'play', mine = live && cur === me, cp = pOf(v, cur);
+  const hx = v.hx, me = ME.id, P = hx.ps[me], cur = hx.od[hx.ti], live = v.ph === 'play', g = live ? hx.gx : null, mine = live && cur === me, cp = pOf(v, cur);
   let h = '';
   if (live) {
     const tq = anA('kt:' + v.gid + ':' + hx.tk, 500, 'pp');
-    h += `<div class="kr-turn${mine ? ' me' : ''}"><span class="kr-tav${tq.c}"${tq.s}>${av(cp)}</span><div class="kr-tw"><b>${mine ? '到你！' : esc(cp ? cp.n : '?')}</b><small>${mine ? '揀一樣做' : '揀緊<span class="ld"><i></i><i></i><i></i></span>'}</small></div>${ring('dl', CR_TURN_MS)}</div>`;
+    h += `<div class="kr-turn${mine ? ' me' : ''}"><span class="kr-tav${tq.c}"${tq.s}>${av(cp)}</span><div class="kr-tw"><b>${mine ? '到你！' : esc(cp ? cp.n : '?')}</b><small>${g ? (mine ? '揀黑蟹定白蟹' : '揀緊黑定白<span class="ld"><i></i><i></i><i></i></span>') : mine ? '揀一樣做' : '揀緊<span class="ld"><i></i><i></i><i></i></span>'}</small></div>${ring('dl', g ? CR_PICK_MS : CR_TURN_MS)}</div>`;
   } else h += `<div class="kr-turn"><div class="kr-tw"><b>${v.ph === 'end' ? '衝線！' : `第 ${hx.lg} 段完`}</b><small>結算緊<span class="ld"><i></i><i></i><i></i></span></small></div></div>`;
-  h += crBoard(v, mine);
+  h += crBoard(v, mine && !g);
+  if (g && mine) {   // 灰骰：自己揀黑蟹定白蟹倒行
+    h += `<div class="kr-gx"><div class="kr-gxt">${crDie('x', g.n, null, 'sm')}灰骰 ${g.n} 點：揀邊隻倒行</div><div class="kr-gxr">${CR_X.map((c) => { const [p, i] = crFind(hx.bd, c), up = hx.bd[p].length - i - 1; return `<button class="kr-gxb" data-act="cpick" data-x="${c}">${crabSvg(c)}<b>${CR_NM[c]}</b><small>第 ${p} 格${up ? `・揹 ${up} 隻` : ''}</small></button>`; }).join('')}</div></div>`;
+  }
   if (hx.log.length) {
     const e = hx.log[0], dd = e.t === 'roll' ? crDur(e) : 0, q = anA('kg:' + v.gid + ':' + e.k, dd + 500, 'kr-lgi');
     h += `<div class="kr-log${q.c}" style="--dd:${dd}ms;${q.s ? q.s.slice(8, -1) : ''}">${crEvText(v, e)}</div>`;
   }
-  h += `<div class="kr-tls">${CR_C.map((c) => { const t = hx.lt[c], top = t[0], on = mine && top; return `<button class="kr-tl${top ? '' : ' emp'}${on ? ' on' : ''}" style="--c:${CR_COL[c]}"${on ? ` data-act="cbet" data-x="${c}"` : ''}>${crabSvg(c)}<b>${top ? '$' + top : '冇'}</b><small>${t.length ? '剩 ' + t.length + ' 張' : '押晒'}</small></button>`; }).join('')}</div>`;
-  if (mine) {
+  h += `<div class="kr-tls">${CR_C.map((c) => { const t = hx.lt[c], top = t[0], on = mine && !g && top; return `<button class="kr-tl${top ? '' : ' emp'}${on ? ' on' : ''}" style="--c:${CR_COL[c]}"${on ? ` data-act="cbet" data-x="${c}"` : ''}>${crabSvg(c)}<b>${top ? '$' + top : '冇'}</b><small>${t.length ? '剩 ' + t.length + ' 張' : '押晒'}</small></button>`; }).join('')}</div>`;
+  if (mine && !g) {
     if (S.crM === 'spec') {
       const side = S.crSide || 1;
       h += `<div class="kr-spm"><div class="seg">${[[1, '打氣 +1'], [-1, '喝倒彩 −1']].map((o) => `<button class="${side === o[0] ? 'on' : ''}" data-act="cside" data-x="${o[0]}">${o[1]}</button>`).join('')}</div><div class="kr-spt">撳賽道上發光嘅格</div><button class="btn ghost sm" data-act="cmc">取消</button></div>`;
@@ -3745,7 +3767,7 @@ function vEndCr(v) {
 function crAnim(v) {
   const hx = v.hx, e = hx && hx.ev;
   if (!e || e.t !== 'roll' || !S.crA || S.crA.k !== e.k + ':' + v.gid) return;
-  const el = Date.now() - S.crA.t, tot = crDur(e);
+  const el = Date.now() - S.crA.t, tot = crDur(e), T0 = crT0(e);
   if (el >= tot) return;
   const R = {}; $$('.kr-cell').forEach((c) => { R[+c.dataset.cell] = c.getBoundingClientRect(); });
   if (!R[1]) return;
@@ -3754,17 +3776,17 @@ function crAnim(v) {
   const fin = crStack(hx.bd, crCell(e.q2));
   const kf = (pts, F) => pts.map(([t, [x, y], rot, ez]) => ({ offset: Math.min(1, t / tot), transform: `translate(${(x - F[0]).toFixed(1)}px,${(y - F[1]).toFixed(1)}px) rotate(${rot || 0}deg)`, easing: ez || 'linear' }));
   const up = 'cubic-bezier(.25,.7,.45,1)', dn = 'cubic-bezier(.55,0,.75,.3)', tilt = e.dir > 0 ? -12 : 12;
-  const t1 = CR_T0 + e.n * CR_HOP + 150;
+  const t1 = T0 + e.n * CR_HOP + 150;
   e.u.forEach((x, r) => {
     const node = $(`.kr-ck[data-crab="${x}"]`); if (!node) return;
     const F = pos(e.q2, fin.indexOf(x), fin.length);
     let prev = pos(e.f, e.i0 + r, e.n0);
-    const pts = [[0, prev], [CR_T0, prev, 0, up]];
+    const pts = [[0, prev], [T0, prev, 0, up]];
     const hop = (t0, to) => { pts.push([t0 + CR_HOP / 2, [(prev[0] + to[0]) / 2, Math.min(prev[1], to[1]) - H * 0.34], tilt, dn]); pts.push([t0 + CR_HOP, to, 0, up]); prev = to; };
     for (let j = 1; j <= e.n; j++) {
       const p = e.f + e.dir * j, land = j === e.n;
       const base = land ? e.nq : crStack(hx.bd, crCell(p)).filter((y) => !e.u.includes(y)).length;
-      hop(CR_T0 + (j - 1) * CR_HOP, land && !e.s ? F : pos(p, base + r, base + e.u.length));
+      hop(T0 + (j - 1) * CR_HOP, land && !e.s ? F : pos(p, base + r, base + e.u.length));
     }
     if (e.s) { pts.push([t1, prev, 0, up]); hop(t1, F); }
     pts[pts.length - 1][1] = F;
@@ -3785,7 +3807,7 @@ const RULES_CR = `<div class="rules">
   <h4>疊蟹</h4><p>蟹行到有蟹嘅格就疊上面。下面隻蟹行，上面嘅蟹會被揹住一齊行。<b>黑蟹</b>同<b>白蟹</b>倒住行，可以揹住賽跑蟹倒退；佢哋唔計名次。</p>
   <h4>輪到你：揀一樣做（60 秒唔揀，自動幫你擲骰）</h4><ol>
     <li><b>押注</b>：拎一隻蟹最面嗰張押注牌（$5、$3、$2、$2）。呢段完結時嗰隻蟹第一：收牌面；第二：+$1；其他：−$1。</li>
-    <li><b>擲骰</b>：拎一張骰票（呢段完 +$1），骰盅隨機出一粒骰，嗰隻蟹行 1–3 格。灰骰係黑白蟹：倒行；得一隻揹住賽跑蟹就郁佢，兩隻直接疊住就郁上面嗰隻。</li>
+    <li><b>擲骰</b>：拎一張骰票（呢段完 +$1），骰盅隨機出一粒骰，嗰隻蟹行 1–3 格。擲到灰骰：你揀黑蟹定白蟹倒行嗰個點數（20 秒唔揀就隨機）。</li>
     <li><b>觀眾牌</b>：放喺冇蟹嘅格（第 1 格唔得、唔可以貼住其他觀眾牌），揀打氣（+1）或者喝倒彩（−1）。蟹停喺度：打氣再行 1 格疊上面；喝倒彩退 1 格塞落最底；牌主即刻 +$1。之後可以搬或者反轉。</li>
     <li><b>冠軍／包尾注</b>：用一張蟹牌暗中押全場冠軍或者包尾。越早押中越多：$8、$5、$3、$2、$1，之後都係 $1；押錯 −$1。每張蟹牌用一次。</li>
     <li><b>拍檔</b>（6 人或以上）：同一個未有拍檔嘅人組隊到呢段完。結算時兩個人都會自動加對方最好嗰張票（押注牌或者骰票）。</li></ol>
@@ -3914,6 +3936,7 @@ document.addEventListener('click', (e) => {
     case 'cpairm': openModal({ type: 'cpair' }); break;
     case 'cpair': if (v && v.hx) { confirmBox(`同 ${esc(nameOf(v, x))} 做拍檔？<small>做到呢段完。</small>`, '做拍檔', () => act('cpair', x)); S.modal.krTk = v.hx.tk; } break;
     case 'cnext': act('cnext'); break;
+    case 'cpick': act('cpick', x); break;
     case 'xtheme': act('xtheme'); break;
     case 'theme': setTheme(x); renderModal(); break;
     case 'xhide': S.xsHide = !S.xsHide; render(); break;
@@ -4096,7 +4119,7 @@ fixView();
 })();
 
 /* 測試用（Playwright）：睇到而家狀態 */
-window.__bgr = { S, get HS() { return HS; }, ME, WORDS, render, cr: { crMove, crCrazy, crRank, crSpecOk, crLegScore } };
+window.__bgr = { S, get HS() { return HS; }, ME, WORDS, render, cr: { crMove, crRank, crSpecOk, crLegScore } };
 })();
 </script>
 </body>
