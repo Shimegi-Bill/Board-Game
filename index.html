@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-23-05';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-24-01';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -954,6 +954,184 @@ button.kq-mat:not(.on){opacity:.55}
 .kq-ic svg{width:20px;height:20px}
 .kr-fcd{display:flex;flex:none}
 .kr-fcd .kq-cd{--w:26px}
+/* 大宅目擊者（2026-11-23）：大宅平面圖（每人一間房、空房、地窖／牌堆）、角色卡插畫、手牌拖卡、雨景閃電、地窖鐵閘；全部只郁 transform、opacity（WEB-35） */
+.av.xs{width:18px;height:18px;font-size:10px;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.mwcd{position:relative;display:inline-block;width:36px;height:45px;flex:none;perspective:600px;vertical-align:middle}
+.mwci{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:rotateY(180deg)}
+.mwci.up{transform:none}
+.mwcd .mf,.mwcd .mb{position:absolute;inset:0;border-radius:6px;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:#15122a center/cover no-repeat;box-shadow:0 0 0 1px rgba(224,182,92,.55),0 3px 8px rgba(0,0,0,.45)}
+.mwcd .mb{transform:rotateY(180deg);background-image:var(--mwBK)}
+.mwcd .mf.G{background-image:var(--mwG)}.mwcd .mf.K{background-image:var(--mwK)}.mwcd .mf.A{background-image:var(--mwA)}.mwcd .mf.L{background-image:var(--mwL)}
+.mwcd .mf.R{background-image:var(--mwR)}.mwcd .mf.D{background-image:var(--mwD)}.mwcd .mf.B{background-image:var(--mwB)}.mwcd .mf.P{background-image:var(--mwP)}
+.mwcd .mf b{position:absolute;left:0;right:0;bottom:0;padding:2px 0 3px;text-align:center;font-family:var(--serif);font-size:8px;font-weight:900;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75) 45%);text-shadow:0 1px 2px #000;letter-spacing:0}
+.mwcd .mb i{position:absolute;left:0;right:0;bottom:0;padding:1px 0 2px;text-align:center;font-style:normal;font-size:8px;font-weight:900;color:#ffe9a8;background:rgba(10,8,20,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mwcd.big{width:108px;height:135px;perspective:900px}
+.mwcd.big .mf,.mwcd.big .mb{border-radius:12px;box-shadow:0 0 0 1.5px rgba(224,182,92,.7),0 10px 22px rgba(0,0,0,.45)}
+.mwcd.big .mf b{font-size:17px;letter-spacing:3px;text-indent:3px;padding:14px 0 7px}
+.mwcd.big .mb i{font-size:13px;padding:4px 0 5px}
+.mwcd.xl{position:absolute;inset:0;width:auto;height:auto;perspective:none;transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.mwcd.xl .mf,.mwcd.xl .mb{border-radius:18px;box-shadow:0 0 0 2.5px #c9963c,0 24px 50px rgba(0,0,0,.55)}
+.mwcd.xl .mf b{font-size:24px;letter-spacing:6px;text-indent:6px;padding:26px 0 12px}
+.mwcd.xl .mf:after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:60%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55) 50%,rgba(255,255,255,0));animation:cdSheen .65s cubic-bezier(.3,0,.2,1) .9s both}
+.mwcd.sm2{width:28px;height:35px}
+.mwcd.sm2 .mf b{display:none}
+/* 平面圖：深色大宅，每間房頂一條房色、圖示同房名 */
+.mwbd{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 0 14px;padding:8px;border-radius:20px;background:radial-gradient(120% 80% at 50% 0%,#2a2340,#110e1a 70%);box-shadow:inset 0 0 0 1px rgba(224,182,92,.45),inset 0 0 0 5px rgba(0,0,0,.25),0 14px 32px rgba(0,0,0,.3);overflow:hidden;color:#f6f2e9}
+.mwrm{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;padding:7px 4px 6px;border-radius:13px;background:linear-gradient(170deg,#2d2639,#1a1522);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 4px 10px rgba(0,0,0,.3);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+.mwrm:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--rc);opacity:.9}
+.mwrm.me{box-shadow:inset 0 0 0 1.5px rgba(247,228,168,.7),0 4px 10px rgba(0,0,0,.3)}
+.mwrm.off{opacity:.55}
+.mwrh{display:flex;align-items:center;justify-content:center;gap:3px;width:100%;font-family:var(--serif);font-size:12.5px;font-weight:900;letter-spacing:1px;color:#f3e6c4;white-space:nowrap}
+.mwri{display:flex;color:var(--rc)}.mwri .ic{width:14px;height:14px}
+.mwslot{height:50px;display:flex;align-items:center;justify-content:center;gap:4px}
+.mwwho{display:flex;align-items:center;justify-content:center;gap:4px;max-width:100%;font-size:12px;font-weight:700;color:#dcd4ea}
+.mwwho span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mwrm.me .mwwho span{color:#f7e4a8}
+.mwby{display:flex;align-items:center;gap:3px;max-width:100%;margin-top:1px;padding:1px 6px 1px 2px;border-radius:999px;background:rgba(224,182,92,.16);font-size:10px;font-weight:800;color:#f2d892}
+.mwby span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mwby .av.xs{width:14px;height:14px;font-size:8px}
+.mwemp{width:36px;height:45px;border-radius:6px;border:1.5px dashed rgba(255,255,255,.2)}
+.mwthk{width:36px;height:45px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#f7e4a8;background:rgba(224,182,92,.15);animation:breathe 1.2s ease-in-out var(--lp,0s) infinite}
+.mwthk .ic{width:20px;height:20px}
+.mwrm .drw{animation:mwDrw 1.2s ease-in-out var(--lp,0s) infinite}
+.mwrm .drw.d2{animation-delay:calc(var(--lp,0s) - .6s)}
+@keyframes mwDrw{0%,100%{transform:translate3d(0,0,0) rotate(-4deg)}50%{transform:translate3d(0,-5px,0) rotate(4deg)}}
+.mwrm.cur{box-shadow:inset 0 0 0 2px var(--rc),0 0 22px rgba(255,214,120,.25)}
+.mwrm.cur:after{content:"";position:absolute;inset:0;border-radius:13px;box-shadow:inset 0 0 0 2px #fff3cc;opacity:0;animation:mwCur 1.2s ease-in-out var(--lp,0s) infinite;pointer-events:none}
+@keyframes mwCur{0%,100%{opacity:0}50%{opacity:.7}}
+.mwrm.tg{cursor:pointer;box-shadow:inset 0 0 0 2px #f2d892,0 0 18px rgba(255,214,120,.35);animation:mwTg 1.2s ease-in-out var(--lp,0s) infinite}
+@keyframes mwTg{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+.mwbd.m-det .mwrm.tg{box-shadow:inset 0 0 0 2px #ff8a9a,0 0 18px rgba(255,90,110,.45)}
+.mwrm.tg:active{transform:scale(.95);animation:none}
+.mwrm.hov{animation:none;transform:scale(1.08);box-shadow:inset 0 0 0 3px #fff3cc,0 0 30px rgba(255,214,120,.7);z-index:2}
+.mwrm.vtd{box-shadow:inset 0 0 0 2.5px #8ff0c4,0 0 20px rgba(110,255,190,.35)}
+.mwmine{position:absolute;right:4px;top:6px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#3fe39d;color:#06301f;animation:pop .45s cubic-bezier(.2,1.5,.4,1) both}
+.mwmine .ic{width:13px;height:13px}
+.mwrm .land{animation:mwLand .4s cubic-bezier(.2,1.6,.4,1) calc(600ms + var(--et,0ms)) both}
+@keyframes mwLand{0%{opacity:0;transform:scale(1.9)}100%{opacity:1;transform:none}}
+.mwpop{position:absolute;left:50%;top:50%;width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;border:3px solid #ffe9a8;pointer-events:none;animation:mwPop .6s cubic-bezier(.15,.7,.3,1) both}
+@keyframes mwPop{0%{opacity:1;transform:scale(.3)}100%{opacity:0;transform:scale(1.6)}}
+.mwrm.rv .mwcd{z-index:1}
+.mwcd.rvl .mwci{animation:mwRvl .7s cubic-bezier(.2,.9,.3,1.1) var(--et,0ms) both}
+@keyframes mwRvl{0%{transform:rotateY(180deg) scale(1.6)}100%{transform:none}}
+.mwrm.ex{background:linear-gradient(180deg,rgba(20,16,30,.25),rgba(20,16,30,.8)),#1a1522 var(--mwE) center/cover no-repeat}
+.mwrm.cel{background:linear-gradient(180deg,rgba(20,16,30,.3),rgba(20,16,30,.75)),#1a1522 var(--mwC) center/cover no-repeat}
+.mwrm.dk{background:linear-gradient(170deg,#3a2a1a,#1a120c)}
+.mwpile{position:relative;width:44px;height:50px}
+.mwpile .mwcd{position:absolute;left:0;top:4px}
+.mwpile .mwcd.p2{left:4px;top:2px}.mwpile .mwcd.p3{left:8px;top:0}
+.mwvc{margin-left:2px;padding:0 5px;border-radius:999px;background:rgba(255,255,255,.14);font-family:var(--sans);font-size:10px;letter-spacing:0;color:#fff}
+.mwvc.top{background:#ff5a6e;color:#fff}
+.mwrm.lock{box-shadow:inset 0 0 0 2px #ff7a8c,0 0 22px rgba(255,90,110,.45)}
+.mwbars{position:absolute;inset:0;border-radius:13px;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 11px,rgba(40,40,52,.9) 11px 15px,rgba(150,150,170,.9) 15px 16px,rgba(0,0,0,0) 16px 22px);opacity:.85}
+.stage.enter .mwbars{animation:mwBars .5s cubic-bezier(.5,0,.3,1.4) calc(500ms + var(--et)) both}
+@keyframes mwBars{0%{transform:translate3d(0,-105%,0)}100%{transform:none}}
+/* 雨景：斜雨一路落、間中行雷白閃（4.8 秒一次，跟 --lp 對相位） */
+.mwbd.storm .mwrain,.mwbd.storm .mwflash{position:absolute;inset:0;pointer-events:none;z-index:3}
+.mwbd.storm .mwrain{inset:-60px -20px 0;background:repeating-linear-gradient(105deg,rgba(190,210,255,0) 0 18px,rgba(190,210,255,.18) 18px 19px,rgba(190,210,255,0) 19px 37px);animation:mwRain .6s linear infinite}
+@keyframes mwRain{from{transform:translate3d(0,0,0)}to{transform:translate3d(-10px,37px,0)}}
+.mwbd.storm .mwflash{background:radial-gradient(120% 80% at 30% 0%,rgba(235,240,255,.55),rgba(235,240,255,0) 70%);opacity:0;animation:mwFlash 9.6s linear var(--lp,0s) infinite}
+@keyframes mwFlash{0%,58%{opacity:0}59%{opacity:1}60%{opacity:.15}61.5%{opacity:.85}64%,100%{opacity:0}}
+/* 手牌：黏住畫面底，兩張大卡；拖住嗰張變透明（影子跟手指走） */
+.mwhand{position:sticky;bottom:calc(env(safe-area-inset-bottom) + 4px);z-index:5;margin:4px -4px 14px;padding:10px 10px 12px;border-radius:22px;background:radial-gradient(120% 120% at 50% 0%,#2e2646,#141020 75%);box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.6),0 -10px 30px rgba(0,0,0,.25),0 14px 30px rgba(0,0,0,.35);color:#f6f2e9}
+.mwht{text-align:center;font-size:14px;font-weight:800;color:#f2d892;margin-bottom:8px}
+.mwhs{display:flex;justify-content:center;gap:18px}
+.mwhc{display:flex;flex-direction:column;align-items:center;gap:6px;touch-action:none;cursor:grab;transition:transform .2s cubic-bezier(.2,1.4,.4,1)}
+.mwhc small{font-size:12px;font-weight:800;color:#cdc6de}
+.mwhc.sel{transform:translate3d(0,-14px,0) scale(1.05)}
+.mwhc.sel .mwcd .mf{box-shadow:0 0 0 3px #fff3cc,0 0 26px rgba(255,214,120,.75),0 14px 26px rgba(0,0,0,.5)}
+.mwhc.drag{opacity:.25}
+.mwhand.deal .mwhc{animation:mwDeal .7s cubic-bezier(.2,1.1,.35,1) calc(var(--i) * 110ms + var(--et,0ms)) both}
+.mwhand.deal .mwhc .mwci{animation:mwDealF .7s cubic-bezier(.3,.8,.3,1) calc(var(--i) * 110ms + 150ms + var(--et,0ms)) both}
+@keyframes mwDeal{0%{transform:translate3d(0,-260px,0) rotate(-28deg) scale(.5)}100%{transform:none}}
+@keyframes mwDealF{0%{transform:rotateY(180deg)}100%{transform:none}}
+.mwghost{position:fixed;left:0;top:0;z-index:40;width:108px;height:135px;pointer-events:none;will-change:transform;filter:drop-shadow(0 18px 24px rgba(0,0,0,.5))}
+.mwfly{position:fixed;left:0;top:0;z-index:40;width:108px;height:135px;pointer-events:none;will-change:transform}
+.mwsay{display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:12px 14px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.55)}
+.mwsay .mwav{width:44px;height:44px}
+.mwsay small{display:block;font-size:12px;font-weight:700;color:var(--tx3)}
+.mwsay b{display:block;font-family:var(--serif);font-size:18px;font-weight:900;color:var(--g1);margin-top:2px}
+.stage.enter .mwsay{animation:pop .5s cubic-bezier(.2,1.4,.4,1) calc(200ms + var(--et)) backwards}
+.mwav{display:inline-block;width:22px;height:22px;border-radius:50%;flex:none;vertical-align:middle;background:#15122a center 46%/235% auto no-repeat;box-shadow:0 0 0 1.5px rgba(224,182,92,.7)}
+.mwav.G{background-image:var(--mwG)}.mwav.K{background-image:var(--mwK)}.mwav.A{background-image:var(--mwA)}.mwav.L{background-image:var(--mwL)}
+.mwav.R{background-image:var(--mwR)}.mwav.D{background-image:var(--mwD)}.mwav.B{background-image:var(--mwB)}.mwav.P{background-image:var(--mwP)}
+.mwcomp{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin:0 0 10px}
+.mwcc{display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 3px;border-radius:999px;font-size:13px;font-weight:800;background:rgba(95,214,163,.12);color:var(--oktx)}
+.mwcc.K{background:rgba(255,112,131,.13);color:var(--badtx)}.mwcc.P{background:rgba(255,166,107,.16);color:#d0641a}
+.mwcc small{font-size:11px;opacity:.85}
+.mwab{display:flex;align-items:center;justify-content:center;gap:10px}
+.mwab .mwav{width:30px;height:30px}
+.mwabx{margin:0 0 14px;padding:12px;border-radius:18px;background:radial-gradient(120% 120% at 50% 0%,#3a4666,#151a2a 75%);text-align:center;color:#e6ecff;box-shadow:inset 0 0 0 1.5px rgba(200,210,235,.6)}
+.mwabx small{display:block;font-size:13px;font-weight:800;margin-bottom:8px}
+.mwabx>div{display:flex;justify-content:center;gap:14px}
+.mwabx.end{background:none;box-shadow:none;padding:0}
+.mwlaw{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 12px;padding:10px 12px;border-radius:16px;text-align:left;background:var(--s1);box-shadow:inset 0 0 0 1.5px rgba(142,176,255,.5)}
+.mwlaw .mwav{width:38px;height:38px}
+.mwlaw span{flex:1}.mwlaw b{display:block;font-size:16px}.mwlaw small{display:block;font-size:12px;color:var(--tx2);margin-top:2px}
+.mwlaw .ck{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 2px rgba(142,176,255,.6)}
+.mwlaw.on{box-shadow:inset 0 0 0 2px #8eb0ff,0 0 22px rgba(142,176,255,.35)}
+.mwlaw.on .ck{background:#8eb0ff;color:#0f1d3d}.mwlaw .ck .ic{width:16px;height:16px}
+.mwhb .sc2 .av{width:42px;height:42px}
+/* 身份卡：卡背係大宅卡背；翻開：左邊角色插畫、右邊名、陣營、能力、目擊 */
+.rc.mwrc{height:250px}
+.rc-f.cdf.mwf{background-image:var(--mwBK)}
+.rc-f.cdf.mwf .rc-t{font-size:17px}
+.rc-b.cdr.mw.G{background:radial-gradient(120% 110% at 85% 0%,#1f9a64,#062a1c 75%);box-shadow:inset 0 0 0 1.5px rgba(130,240,190,.8),0 16px 36px rgba(0,0,0,.45)}
+.rc-b.cdr.mw.K{background:radial-gradient(120% 110% at 85% 0%,#a52a42,#2a0712 75%);box-shadow:inset 0 0 0 1.5px rgba(255,140,160,.8),0 16px 36px rgba(0,0,0,.45)}
+.rc-b.cdr.mw.P{background:radial-gradient(120% 110% at 85% 0%,#c0601e,#2e1206 75%);box-shadow:inset 0 0 0 1.5px rgba(255,190,130,.85),0 16px 36px rgba(0,0,0,.45)}
+.rc-b.cdr.mw .cdart{width:42%}
+.rc-b.cdr.mw .rl{font-size:27px}
+.rc-b.cdr.mw .tp{font-size:12.5px;line-height:1.45;margin-top:2px}
+.mwtm{display:inline-block;align-self:flex-start;margin-top:3px;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:900;background:rgba(255,255,255,.16)}
+.mwtm.G{color:#b8ffd9}.mwtm.K{color:#ffc9d2}.mwtm.P{color:#ffd9b0}
+.memo.mw{margin-top:5px;padding:0;font-size:12px;line-height:1.55;list-style:none}
+.memo.mw li{display:flex;align-items:center;flex-wrap:wrap;gap:3px}
+.memo.mw .mwav{width:17px;height:17px}
+.cdart.mwG{background-image:var(--mwG)}.cdart.mwK{background-image:var(--mwK)}.cdart.mwA{background-image:var(--mwA)}.cdart.mwL{background-image:var(--mwL)}
+.cdart.mwR{background-image:var(--mwR)}.cdart.mwD{background-image:var(--mwD)}.cdart.mwB{background-image:var(--mwB)}.cdart.mwP{background-image:var(--mwP)}
+.cdwin.mg{background:radial-gradient(120% 120% at 75% 10%,#2fbf80,#062a1c 72%);box-shadow:inset 0 0 0 1.5px rgba(130,240,190,.8),0 16px 36px rgba(0,0,0,.3)}
+.cdwin.mk{background:radial-gradient(120% 120% at 75% 10%,#c2304a,#2a0712 72%);box-shadow:inset 0 0 0 1.5px rgba(255,140,160,.8),0 16px 36px rgba(0,0,0,.3)}
+.cdwin.mp{background:radial-gradient(120% 120% at 75% 10%,#e0782a,#2e1206 72%);box-shadow:inset 0 0 0 1.5px rgba(255,190,130,.85),0 16px 36px rgba(0,0,0,.3)}
+.cdwin.mw .big{font-size:30px}
+.cdwin.mg .big{color:#d8fff0}.cdwin.mk .big{color:#ffd7e4}.cdwin.mp .big{color:#fff0d0}
+.cdwin.mw .tip{font-size:13px;line-height:1.5}
+/* 關入地窖特效：閃電白閃、放大鏡掃過（偵探）、卡飛入翻開、鐵閘落、結果大字 */
+#cdfx.M .mwfl{inset:0;background:radial-gradient(130% 90% at 50% 0%,#fff,rgba(220,230,255,.6) 40%,rgba(200,215,255,0) 75%);opacity:0;animation:mwFl .7s linear both}
+@keyframes mwFl{0%{opacity:0}8%{opacity:1}16%{opacity:.2}26%{opacity:.85}100%{opacity:0}}
+#cdfx.M .mwlens{left:50%;top:42%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:8px solid #e8bd62;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(190,240,255,.15) 55%,rgba(110,210,235,.3));box-shadow:0 0 0 3px #6a4a14,0 10px 30px rgba(0,0,0,.4);animation:mwLens .5s cubic-bezier(.5,0,.3,1) both}
+#cdfx.M .mwlens:after{content:"";position:absolute;left:92px;top:92px;width:16px;height:64px;border-radius:8px;background:#7a4e24;transform:rotate(-45deg);transform-origin:8px 0}
+@keyframes mwLens{0%{opacity:0;transform:translate3d(-70vw,30px,0) rotate(-30deg)}30%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate3d(70vw,-30px,0) rotate(20deg)}}
+#cdfx.M .mwc3{width:176px;height:220px;margin:-110px 0 0 -88px}
+#cdfx.M .mwc3 .mwnm{position:absolute;left:0;right:0;top:100%;margin-top:8px;text-align:center;font-family:var(--serif);font-size:16px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+#cdfx.M .mwgate{left:50%;top:42%;width:min(92vw,470px);height:262px;margin:-131px 0 0 calc(min(92vw,470px) / -2);border-radius:14px;background:linear-gradient(180deg,#3a3a46,#1e1e26) top/100% 14px no-repeat,linear-gradient(180deg,#3a3a46,#1e1e26) 0 62%/100% 12px no-repeat,repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 26px,#2a2a32 26px 29px,#9a9aaa 29px 32px,#4a4a56 32px 36px,rgba(0,0,0,0) 36px 52px);box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;animation:mwGate .42s cubic-bezier(.6,0,.4,1.25) 1.02s both}
+#cdfx.M.none .mwgate{display:none}
+@keyframes mwGate{0%{opacity:1;transform:translate3d(0,-110vh,0)}100%{opacity:1;transform:none}}
+#cdfx.M .cap{top:calc(42% + 160px);animation-delay:1.2s}
+#cdfx.M .cap b{color:#ffe9a8}
+#cdfx.M .cap.c2{top:calc(42% - 190px);animation-delay:1.55s}
+#cdfx.M .cap.c2 b{font-size:40px}
+#cdfx.M.ok .cap.c2 b{color:#8ff0c4}#cdfx.M.bad .cap.c2 b{color:#ff9aac}#cdfx.M.pk .cap.c2 b{color:#ffcf8a}
+#cdfx.M.none .cap{top:40%}#cdfx.M.none .cap.c2{top:calc(40% + 90px)}
+#cdfx.M .halo{animation-delay:1.3s}
+#cdfx.M.ok .halo{background:radial-gradient(circle,rgba(110,255,190,.7),rgba(110,255,190,0) 62%)}
+#cdfx.M.bad .halo{background:radial-gradient(circle,rgba(255,70,90,.75),rgba(255,70,90,0) 62%)}
+#cdfx.M.pk .halo{background:radial-gradient(circle,rgba(255,170,80,.75),rgba(255,170,80,0) 62%)}
+#cdfx.M.B .halo{animation-delay:.5s;background:radial-gradient(circle,rgba(200,215,255,.6),rgba(200,215,255,0) 62%)}
+#cdfx.M.B .cap{top:calc(42% + 130px);animation-delay:.7s}
+#cdfx.M .burst{top:42%}
+#cdfx.out .mwgate,#cdfx.out .mwc3,#cdfx.out .mwfl{animation:cdOut .38s ease both}
+/* 大宅目擊者：房間設定揀特別角色 */
+.mwsp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 10px}
+.mwspb{display:flex;align-items:center;gap:8px;min-width:0;padding:8px 8px 8px 6px;border-radius:14px;text-align:left;background:rgba(var(--ink),.04);box-shadow:inset 0 0 0 1px var(--e1);transition:transform .15s ease}
+.mwspb .mwav{width:34px;height:34px}
+.mwspb span{flex:1;min-width:0}.mwspb b{display:block;font-size:15px}.mwspb small{display:block;font-size:11.5px;color:var(--tx3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mwspb .ck{width:22px;height:22px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 2px var(--e2)}
+.mwspb .ck .ic{width:14px;height:14px}
+.mwspb.on{background:rgba(224,182,92,.14);box-shadow:inset 0 0 0 1.5px var(--g2)}
+.mwspb.on .ck{background:var(--gold);color:#2a1c05;box-shadow:none}
+.mwspb:active{transform:scale(.96)}
+.mwspb.ro{pointer-events:none}
+.outs.mwo{display:block;margin:2px 0 0;white-space:normal;line-height:1.35}
 /* 深色卡（身份卡、判官卡、封住嘅題目卡）入面嘅字固定淺色 */
 .rc-f,.rc-b.h,.rc-b.l,.rc-b.o,.idc{color:#f6f2e9}
 .rc-f .rc-s{color:#cdc6de}
@@ -2178,6 +2356,13 @@ function hAct(id, t, x) {
     case 'cpick': if (st.g === 'cr' && st.ph === 'play' && st.hx && st.hx.gx && st.hx.gx.id === id) crGrey(x); break;
     // 拆彈危機
     case 'cut': if (st.g === 'cd' && st.ph === 'play' && id === st.hold && Array.isArray(x) && (x[0] !== id || (st.test && Object.keys(st.rl).filter(hOn).length === 1)) && st.hd[x[0]] && hOn(x[0])) cCut(id, x[0], +x[1]); break;
+    // 大宅目擊者（Bill 2026-11-23：拖卡入未揀卡嘅人間房；冇人就空房）
+    case 'mpass': if (st.g === 'mw' && st.ph === 'pick' && st.mx.cur === id && Array.isArray(x) && (x[0] === 0 || x[0] === 1)) { const left = mwLeft(); if (left.length ? left.includes(x[1]) : x[1] === 'E') mwPass(id, x[0], x[1]); } break;
+    case 'mdet': if (st.g === 'mw' && st.ph === 'talk' && st.rl[id] === 'D' && !st.mx.dv && mwTargets(id).includes(x)) { st.mx.dv = { by: id, to: x }; st.mx.rv[id] = 1; mwEnd([x], 'det'); } break;
+    case 'mbut': if (st.g === 'mw' && st.ph === 'talk' && st.rl[id] === 'B' && !st.mx.bu) { st.mx.bu = id; st.mx.rv[id] = 1; st.mx.ek++; st.mx.ev = { k: st.mx.ek, t: 'but', by: id }; } break;
+    case 'mvote': if (st.g === 'mw' && st.ph === 'vote' && Array.isArray(x) && mwVoters().includes(id) && !st.mx.vt[id] && mwTargets(id).includes(x[0])) { st.mx.vt[id] = x[0]; if (x[1] && st.rl[id] === 'L') st.mx.lw[id] = 1; if (mwVoters().every((q) => st.mx.vt[q])) mwTally(); } break;
+    case 'mskip': if (isH && st.g === 'mw') { if (st.ph === 'talk') mwVote(); else if (st.ph === 'vote') mwTally(); } break;
+    case 'mwr': if (isH && st.ph === 'lobby' && st.g === 'mw' && MW_SP.includes(x)) { const sp = String(st.cfg.s || ''); st.cfg.s = MW_SP.filter((c) => (c === x ? !sp.includes(c) : sp.includes(c))).join(''); } break;
     // 誰是臥底
     // Bill 2026-11-22：描述中途任何人可以發起投票，過半數同意就入投票
     case 'prop': if (((st.g === 'wd' && st.ph === 'desc') || (st.g === 'tt' && st.ph === 'day')) && !st.pr && wVoters().includes(id)) { st.pk2 = (st.pk2 || 0) + 1; st.pr = { by: id, y: [id], n: [], dl: Date.now() + PROP_MS, k: st.pk2 }; wPropCheck(); } break;
@@ -2197,16 +2382,16 @@ function hAct(id, t, x) {
     case 'pick': if (isJ && st.ph === 'judge' && st.rl[x] && !st.ex.includes(x)) hPick(x); break;
     case 'next': if ((isJ || isH) && st.ph === 'reveal' && hCanNext()) hNext(); break;
     // 房主專用
-    case 'start': if (isH && st.ph === 'lobby') { if (st.g === 'wd') wStart(false); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(false); else if (st.g === 'tt') tStart(false); else if (st.g === 'cr') crStart(); else hStart(); } break;
+    case 'start': if (isH && st.ph === 'lobby') { if (st.g === 'wd') wStart(false); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(false); else if (st.g === 'tt') tStart(false); else if (st.g === 'cr') crStart(); else if (st.g === 'mw') mwStart(false); else hStart(); } break;
     // 心水數字
     case 'xplay': if (st.g === 'xs' && st.ph === 'play' && st.hd && st.hd[id]) xPlay(id); break;
     case 'xnext': if (isH && st.g === 'xs' && st.ph === 'clear') { st.lv++; xDeal(); } break;
     case 'xtheme': if (isH && st.g === 'xs' && st.ph === 'play' && !st.pile.length) xTheme(); break;
     case 'cfg': if (isH && st.ph === 'lobby' && Array.isArray(x) && CFG_OPTS[x[0]] && (x[0] in GAMES[st.g].cfg) && CFG_OPTS[x[0]].some((o) => o[0] === x[1])) st.cfg[x[0]] = x[1]; break;
     case 'kick': if (isH && x !== st.host) hRemove(x, true); break;
-    case 'again': if (isH && st.ph === 'end') { if (st.g === 'wd') wStart(true); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(true); else if (st.g === 'tt') tStart(true); else if (st.g === 'cr') crStart(); else hLobby(); } break;
+    case 'again': if (isH && st.ph === 'end') { if (st.g === 'wd') wStart(true); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(true); else if (st.g === 'tt') tStart(true); else if (st.g === 'cr') crStart(); else if (st.g === 'mw') mwStart(true); else hLobby(); } break;
     case 'force': if (isH && st.ph === 'role') { if (st.g === 'wd') wDesc(null); else if (st.g === 'cd') st.ph = 'play'; else if (st.g === 'tt') tNight(); else hThink(); } break;
-    case 'redeal': if (isH && st.g === 'cr' && CR_PH.includes(st.ph)) crStart(); else if (isH && st.g === 'tt' && TT_PH.includes(st.ph)) tStart(true); else if (isH && st.g === 'cd' && CD_PH.includes(st.ph)) cStart(true); else if (isH && st.g === 'xs' && XS_PH.includes(st.ph)) xDeal(); else if (isH && st.g === 'wd' && WD_PH.includes(st.ph)) wStart(true); else if (isH && st.g === 'zdz' && PLAY_PH.includes(st.ph)) hRedeal(); break;
+    case 'redeal': if (isH && st.g === 'mw' && MW_PH.includes(st.ph)) mwStart(true); else if (isH && st.g === 'cr' && CR_PH.includes(st.ph)) crStart(); else if (isH && st.g === 'tt' && TT_PH.includes(st.ph)) tStart(true); else if (isH && st.g === 'cd' && CD_PH.includes(st.ph)) cStart(true); else if (isH && st.g === 'xs' && XS_PH.includes(st.ph)) xDeal(); else if (isH && st.g === 'wd' && WD_PH.includes(st.ph)) wStart(true); else if (isH && st.g === 'zdz' && PLAY_PH.includes(st.ph)) hRedeal(); break;
     case 'end': if (isH && st.ph !== 'lobby' && st.ph !== 'end') st.ph = 'end'; break;
     case 'close': if (isH) st.ph = 'closed'; break;
     default: break;
@@ -2795,16 +2980,113 @@ function crTick(now) {
     else if (now >= st.dl) crRoll(p.id, 1);   // 60 秒唔揀：自動幫佢擲骰
   } else if (st.ph === 'leg' && now >= st.dl) crNewLeg();
 }
+/* ============================================================
+ * 4g. 大宅目擊者（房主計算；目擊者之夜玩法，名、角色同外觀自己整，GAME-27）
+ *    Bill 2026-11-23 定：名「大宅目擊者」（暴風雨夜半山大宅，最後關入地窖）；房主開局前揀特別角色；
+ *    揀卡唔限時：第一個人抽 2 張、留 1 張，將另一張拖入一個未揀卡嘅人間房（全部人見到張卡背寫住邊個放），
+ *    收到嘅人再抽 1 張、揀 1 張……最後剩低嗰張放入空房；放卡嘅人口講「我見到 X 入咗 Y 房」（可以講大話）；
+ *    討論 5／10 分鐘、投票 1 分鐘，房主可以隨時跳過
+ *    pick 揀卡 → talk 討論（偵探、管家可以出手）→ vote 投票 → end
+ *    卡：人數 + 1 張（兇手一定有、房主揀嘅特別角色、其餘補住客）；有管家就多 2 張冇用嘅卡（兇手唔會冇用）
+ * ============================================================ */
+const MW_MAX = 8, MW_VOTE_MS = 60000 / SPEED;
+const MW_PH = ['pick', 'talk', 'vote'];
+const MW_SP = ['A', 'L', 'R', 'D', 'B', 'P'];
+const mwSide = (r) => (r === 'P' ? 'P' : r === 'K' || r === 'A' ? 'K' : 'G');
+const mwDeckN = (n, s) => n + 1 + (String(s || '').includes('B') ? 2 : 0);
+const mwFits = (n, s) => 1 + String(s || '').length <= mwDeckN(n, s);
+const MW_ORD = 'KAPDBLRG';
+const mwSort = (a, b) => MW_ORD.indexOf(a) - MW_ORD.indexOf(b);
+function mwStart(keep) {
+  const st = HS;
+  st.pl = st.pl.filter((p) => (p.on || p.id === st.host) && !p.gone);
+  for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
+  st.wt = [];
+  while (st.pl.length > gMax('mw')) { const p = st.pl.pop(); st.wt.unshift({ id: p.id, n: p.n, c: p.c, on: p.on }); }
+  const n = st.pl.length, s = String(st.cfg.s || '');
+  if (n < gMin('mw') || !mwFits(n, s)) { hLobby(); return; }
+  st.pl.forEach((p) => { p.gone = 0; if (!keep) p.sc = 0; });
+  st.gid++;
+  let all = ['K', ...s.split('')];
+  while (all.length < mwDeckN(n, s)) all.push('G');
+  let ab = [];
+  if (s.includes('B')) { const rest = shuffle(all.slice(1)); ab = rest.slice(0, 2); all = ['K', ...rest.slice(2)]; }
+  const ids = st.pl.map((p) => p.id);
+  st.mx = { comp: [...all, ...ab].sort(mwSort), ab, deck: shuffle(all), rm: {}, cur: null, hand: [], tr: [], log: {}, e: null, eBy: null, ek: 0, ev: null, tk: 0, rv: {}, bu: null, dv: null, vt: {}, lw: {}, tally: null, nul: null, law: null, lock: [], why: '', win: null };
+  ids.forEach((id, i) => { st.mx.rm[id] = i; st.mx.log[id] = {}; });
+  st.rl = {}; st.dt = {}; st.ok = {}; st.jd = null; st.w = null; st.dl = 0; st.dt0 = 0;
+  st.ph = 'pick';
+  mwTurn(ids[Math.floor(Math.random() * n)], null, null);
+}
+/* 輪到一個人揀：第一個人抽 2 張；之後嘅人 ＝ 收到嗰張 + 抽 1 張 */
+function mwTurn(id, from, card) {
+  const mx = HS.mx;
+  mx.cur = id; mx.tk++;
+  mx.hand = from ? [card, mx.deck.pop()] : [mx.deck.pop(), mx.deck.pop()];
+  mx.log[id] = from ? { from, got: card, drew: [mx.hand[1]] } : { from: null, got: null, drew: mx.hand.slice() };
+}
+/* 未揀卡、仲喺度嘅人（放卡只可以放入佢哋間房；冇人就放入空房） */
+const mwLeft = () => Object.keys(HS.mx.rm).filter((id) => !HS.rl[id] && id !== HS.mx.cur && hOn(id));
+function mwPass(id, i, to) {
+  const st = HS, mx = st.mx, give = mx.hand[i], keep = mx.hand[1 - i];
+  st.rl[id] = keep;
+  Object.assign(mx.log[id], { keep, pass: give, to });
+  mx.tr.push({ by: id, to });
+  mx.ek++; mx.ev = { k: mx.ek, t: 'pass', by: id, to };
+  mx.hand = [];
+  if (to === 'E') { mx.e = give; mx.eBy = id; mx.cur = null; mwTalk(); }
+  else mwTurn(to, id, give);
+}
+function mwTalk() { const st = HS; st.ph = 'talk'; st.dt0 = (st.cfg.u || 300) * 1000 / SPEED; st.dl = Date.now() + st.dt0; }
+function mwVote() { const st = HS; st.ph = 'vote'; st.mx.vt = {}; st.mx.lw = {}; st.dt0 = MW_VOTE_MS; st.dl = Date.now() + MW_VOTE_MS; }
+/* 可以投／可以關嘅房：其他有卡嘅人 + 空房（測試模式得一個人就連自己） */
+function mwTargets(id) {
+  const ids = Object.keys(HS.rl), one = HS.test && ids.filter(hOn).length === 1;
+  return ids.filter((t) => t !== id || one).concat(HS.mx.e ? ['E'] : []);
+}
+const mwVoters = () => Object.keys(HS.rl).filter((id) => hOn(id) && HS.mx.bu !== id);
+/* 計票：富豪一個人計 2 票；律師出手 → 佢投嗰間房嘅人嗰票唔計；最多票嘅房（平票就全部）關入地窖 */
+function mwTally() {
+  const st = HS, mx = st.mx, c = {}, vt = mx.vt;
+  const law = Object.keys(mx.lw).find((id) => mx.lw[id] && vt[id]) || null;
+  const nul = law && vt[law] !== 'E' ? vt[law] : null;
+  Object.keys(vt).forEach((v) => { if (v === nul) return; c[vt[v]] = (c[vt[v]] || 0) + (st.rl[v] === 'R' ? 2 : 1); });
+  const max = Math.max(0, ...Object.values(c));
+  mx.tally = c; mx.nul = nul; mx.law = law;
+  if (law) mx.rv[law] = 1;
+  mwEnd(max ? Object.keys(c).filter((t) => c[t] === max) : [], 'vote');
+}
+/* 完場：地窖有搗蛋鬼 → 搗蛋鬼一個人贏；有兇手 → 客人陣營贏；冇 → 兇手陣營贏。贏嘅每人 +1 分 */
+function mwEnd(top, why) {
+  const st = HS, mx = st.mx;
+  const cards = top.map((t) => (t === 'E' ? mx.e : st.rl[t]));
+  mx.lock = top; mx.why = why;
+  mx.win = cards.includes('P') ? 'P' : cards.includes('K') ? 'G' : 'K';
+  st.dt = {};
+  Object.keys(st.rl).forEach((id) => { if (mwSide(st.rl[id]) === mx.win) hAdd(id, 1); });
+  mx.ek++; mx.ev = { k: mx.ek, t: 'lock' };
+  st.ph = 'end'; st.dl = 0;
+}
+function mwTick(now) {
+  const st = HS, mx = st.mx; if (!mx) return;
+  if (st.ph === 'pick') {
+    // 揀緊卡嘅人走咗：幫佢隨機留一張、放入隨機一間房
+    const p = st.pl.find((q) => q.id === mx.cur);
+    if (mx.cur && (!p || p.gone)) { const left = mwLeft(); mwPass(mx.cur, Math.random() < 0.5 ? 0 : 1, left.length ? left[Math.floor(Math.random() * left.length)] : 'E'); }
+  } else if (st.ph === 'talk') { if (now >= st.dl) mwVote(); }
+  else if (st.ph === 'vote') { const vs = mwVoters(); if (now >= st.dl || (vs.length && vs.every((id) => mx.vt[id]))) mwTally(); }
+}
 /* 房主計時：準備完自動入發言、每人 30 秒、全部講完入判決、4 分鐘到就完 */
 setInterval(() => {
   if (!HS || !S.isHost || S.screen !== 'room') return;
   const st = HS, now = Date.now();
-  const sig = () => [st.ph, st.sp, st.ci, st.al ? st.al.length : 0, st.lk, st.win, st.hr, st.stolen, st.acc ? st.acc.length : 0, st.pr ? st.pr.k : 0, st.prr ? st.prr.k : 0, st.hx ? st.hx.evk + '.' + st.hx.ti + '.' + st.hx.lg : ''].join('|'), s0 = sig();
+  const sig = () => [st.ph, st.sp, st.ci, st.al ? st.al.length : 0, st.lk, st.win, st.hr, st.stolen, st.acc ? st.acc.length : 0, st.pr ? st.pr.k : 0, st.prr ? st.prr.k : 0, st.hx ? st.hx.evk + '.' + st.hx.ti + '.' + st.hx.lg : '', st.mx ? st.mx.ek + '.' + st.mx.tk + '.' + Object.keys(st.mx.vt).length : ''].join('|'), s0 = sig();
   if (st.g === 'wd') wTick(now);
   else if (st.g === 'xs') { /* 心水數字冇計時 */ }
   else if (st.g === 'cd') { if (st.ph === 'role') cCheckRole(); }
   else if (st.g === 'tt') tTick(now);
   else if (st.g === 'cr') crTick(now);
+  else if (st.g === 'mw') mwTick(now);
   else if (st.ph === 'role') hCheckRole();
   else if (st.ph === 'think' && now >= st.dl) hSpeak();
   else if (st.ph === 'speak') {
@@ -2830,6 +3112,7 @@ const CFG_OPTS = {
   d: [[0, '全部'], [1, '★'], [2, '★★'], [3, '★★★']],
   b: [[0, '唔要'], [1, '要']],
   t: [[0, '唔限時'], [300, '5 分鐘'], [600, '10 分鐘']],
+  u: [[300, '5 分鐘'], [600, '10 分鐘']],
 };
 
 async function enterRoom(code, host) {
@@ -2959,6 +3242,7 @@ setInterval(() => {
     else if (now - S.notInAt > 5000 && !S.hostGone) { fail(v.ph === 'lobby' ? `房間已滿（最多 ${MAX_SEATS} 人）` : '房間已滿'); return; }
   }
   if (S.pend && now - S.pendAt > 5000) { S.pend = 0; toast('房主未收到，請再撳一次'); render(); }
+  if (S.mwGhost && S.mwGhost.ok && now - S.mwGhost.ok > 6000) mwGhostBack();
   if (S.hostGone) renderBanner();
 }, 500);
 
@@ -3019,6 +3303,7 @@ const crabG = (col, mad) => `<g fill="none" stroke="#1b1424" stroke-width="1.6" 
 const crabSvg = (c) => `<svg class="kr-crab" viewBox="0 0 40 28">${crabG(CR_COL[c], CR_X.includes(c))}</svg>`;
 const PAILG = '<path d="M14 22h32l-4 30H18z" fill="#3b82f6" stroke="#1b1424" stroke-width="2" stroke-linejoin="round"/><path d="M12 19h36v6H12z" fill="#7dd3fc" stroke="#1b1424" stroke-width="2" stroke-linejoin="round"/><path d="M16 20c0-15 28-15 28 0" fill="none" stroke="#1b1424" stroke-width="2.4"/><path d="M21 31l1.5 15" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".45"/>';
 const GAMEART_CR = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gkS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#155e8c"/><stop offset="1" stop-color="#46b7da"/></linearGradient><linearGradient id="gkD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e3b4"/><stop offset="1" stop-color="#dcb46a"/></linearGradient></defs><rect width="400" height="150" fill="url(#gkS)"/><circle cx="330" cy="30" r="15" fill="#ffe27a"/><path d="M0 66 Q50 54 100 66 T200 66 T300 66 T400 66 V150 H0Z" fill="url(#gkD)"/><path d="M0 66 Q50 54 100 66 T200 66 T300 66 T400 66" fill="none" stroke="#fff" stroke-width="3" opacity=".75"/><g fill="#c99a4e" opacity=".35"><rect x="14" y="122" width="44" height="20" rx="6"/><rect x="64" y="122" width="44" height="20" rx="6"/><rect x="114" y="122" width="44" height="20" rx="6"/><rect x="214" y="122" width="44" height="20" rx="6"/><rect x="264" y="122" width="44" height="20" rx="6"/><rect x="314" y="122" width="44" height="20" rx="6"/></g><g transform="translate(352 60)"><rect width="3" height="58" fill="#5b4320"/><rect x="3" y="2" width="30" height="20" fill="#fff" stroke="#1b1424" stroke-width="1.5"/><g fill="#1b1424"><rect x="3" y="2" width="7.5" height="5"/><rect x="18" y="2" width="7.5" height="5"/><rect x="10.5" y="7" width="7.5" height="5"/><rect x="25.5" y="7" width="7.5" height="5"/><rect x="3" y="12" width="7.5" height="5"/><rect x="18" y="12" width="7.5" height="5"/><rect x="10.5" y="17" width="7.5" height="5"/><rect x="25.5" y="17" width="7.5" height="5"/></g></g><g transform="translate(26 58) scale(1.25)">${PAILG}</g><g transform="translate(150 90) scale(1.9)">${crabG(CR_COL.r)}</g><g transform="translate(150 70) scale(1.9)">${crabG(CR_COL.b)}</g><g transform="translate(150 50) scale(1.9)">${crabG(CR_COL.y)}</g><g transform="translate(262 92) scale(1.55)">${crabG(CR_COL.k, 1)}</g><g transform="translate(232 108) scale(.9)">${crabG(CR_COL.g)}</g></svg>`;
+const GAMEART_MW = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gmS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c2556"/><stop offset="1" stop-color="#0e0b1a"/></linearGradient><radialGradient id="gmM" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff6d8"/><stop offset=".45" stop-color="#f2dc9a" stop-opacity=".55"/><stop offset="1" stop-color="#f2dc9a" stop-opacity="0"/></radialGradient><radialGradient id="gmW" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd36a" stop-opacity=".6"/><stop offset="1" stop-color="#ffd36a" stop-opacity="0"/></radialGradient><linearGradient id="gmA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cc"/><stop offset=".5" stop-color="#e8bd62"/><stop offset="1" stop-color="#9a6a1c"/></linearGradient></defs><rect width="400" height="150" fill="url(#gmS)"/><circle cx="312" cy="38" r="52" fill="url(#gmM)"/><circle cx="312" cy="38" r="19" fill="#fbefc4"/><circle cx="305" cy="33" r="3.5" fill="#e8d496" opacity=".6"/><path d="M104 0l-16 36h12l-17 40 34-50H104l13-26z" fill="#fff8e0" opacity=".9"/><path d="M104 0l-16 36h12l-17 40 34-50H104l13-26z" fill="none" stroke="#bfe0ff" stroke-width="4" opacity=".3"/><g stroke="#c8d0ff" stroke-width="1.2" opacity=".3" stroke-linecap="round"><path d="M20 10l-4 18M60 30l-4 18M140 6l-4 18M180 40l-4 18M240 12l-4 18M270 60l-4 18M350 80l-4 18M380 20l-4 18M30 70l-4 18M120 90l-4 18M210 80l-4 18M330 120l-4 18"/></g><path d="M0 150V122q110-30 210-26t190 26v28z" fill="#0a0912"/><g fill="#100d1c"><path d="M118 118V86l18-18 18 18v32z"/><path d="M150 118V70l50-36 50 36v48z"/><path d="M248 118V64l10-10v-18l8-18 8 18v18l10 10v54z"/><rect x="168" y="38" width="8" height="22"/><path d="M196 36l4-16 4 16z"/></g><g fill="url(#gmW)"><circle cx="172" cy="80" r="15"/><circle cx="228" cy="96" r="15"/><circle cx="266" cy="74" r="13"/><circle cx="132" cy="96" r="12"/></g><g fill="#ffd36a"><rect x="168" y="74" width="8" height="12" rx="1.5"/><rect x="224" y="90" width="8" height="12" rx="1.5"/><rect x="263" y="68" width="6" height="11" rx="3"/><rect x="129" y="91" width="6" height="10" rx="1.5"/><rect x="195" y="102" width="10" height="16" rx="5"/></g><rect x="186" y="74" width="8" height="12" rx="1.5" fill="#1a1428"/><circle cx="188.6" cy="80" r="1.4" fill="#ff3b55"/><circle cx="192" cy="80" r="1.4" fill="#ff3b55"/><g transform="translate(56 92) rotate(-28)"><circle r="22" fill="#bfefff" fill-opacity=".18" stroke="url(#gmA)" stroke-width="6"/><path d="M-12 -10a16 16 0 0 1 10-7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/><rect x="-5" y="24" width="10" height="34" rx="5" fill="#7a4e24"/></g><g transform="translate(348 104)"><rect x="-14" y="-18" width="28" height="36" rx="4" fill="#15122a" stroke="url(#gmA)" stroke-width="2.4"/><path d="M-6 -2a6 6 0 1 1 12 0c0 3-2 4-3 5v3h-6v-3c-1-1-3-2-3-5z" fill="url(#gmA)"/></g></svg>`;
 const GAMES = {
   zdz: { name: '真定作', min: 3, art: GAMEART, cfg: { r: 1, d: 0 }, tags: ['3–10 人', '一局 15–30 分鐘', '派對・講大話'],
     desc: '冷門題目得一個人知真正意思，其他人作。判官估邊個講真話。' },
@@ -3032,6 +3317,8 @@ const GAMES = {
     desc: '擲骰決定幾點醒，偷撻賊趁夜偷蛋撻。天光投票揪出佢。' },
   cr: { name: '蟹仔大賽', min: 3, max: 8, art: GAMEART_CR, cfg: {}, tags: ['3–8 人', '一局 30–45 分鐘', '賽跑・押注'],
     desc: '五隻蟹疊住跑，黑白兩隻倒住行。押中邊隻贏，最多錢勝。' },
+  mw: { name: '大宅目擊者', min: 3, max: 8, art: GAMEART_MW, cfg: { u: 300, s: 'AR' }, tags: ['3–8 人', '一局 10–15 分鐘', '推理・講大話'],
+    desc: '暴風雨夜大宅有人被殺。傳卡、目擊、投票，將兇手關入地窖。' },
 };
 const CROWN = `<svg viewBox="0 0 84 60" class="crown"><defs><linearGradient id="crG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".5" stop-color="#e0b65c"/><stop offset="1" stop-color="#b8862f"/></linearGradient></defs><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="url(#crG)" stroke="#8a5f1c" stroke-width="1.5" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#c3913a"/><circle cx="42" cy="34" r="5" fill="#ff7083"/><circle cx="22" cy="40" r="4" fill="#9cc2ff"/><circle cx="62" cy="40" r="4" fill="#5fd6a3"/></svg>`;
 
@@ -3041,9 +3328,10 @@ function scrKey(v) {
   if (!v) return 'conn';
   if (v.ph === 'lobby') return v.code + '|lobby';
   const krh = v.g === 'cr' && Date.now() < (S.crHold || 0);   // 蟹仔大賽：最後一步行完先轉結算畫面
-  return [v.code, v.g, v.gid, krh ? 'play' : v.ph, v.rd, v.rr, v.lv, v.cr, v.hr, v.tie, v.g === 'cd' && v.ph === 'end' && Date.now() < (S.cdHold || 0) ? 'h' : '', v.g === 'cr' && v.hx ? v.hx.lg : ''].join('|');
+  return [v.code, v.g, v.gid, krh ? 'play' : v.ph, v.rd, v.rr, v.lv, v.cr, v.hr, v.tie, (v.g === 'cd' && v.ph === 'end' && Date.now() < (S.cdHold || 0)) || (v.g === 'mw' && v.ph === 'end' && Date.now() < (S.mwHold || 0)) ? 'h' : '', v.g === 'cr' && v.hx ? v.hx.lg : ''].join('|');
 }
 function render() {
+  if (S.mwDrag && S.mwDrag.on) return;   // 大宅目擊者：拖緊卡唔好重畫（手指下面嗰張卡會冇咗）
   const app = $('#app'), now = Date.now();
   const sk = scrKey(S.view);
   if (sk !== S.scrK) { S.scrK = sk; S.scrAt = now; }
@@ -3056,6 +3344,9 @@ function render() {
     top = vTop(v) + '<div id="banner"></div>';
     h = '';
     if (v.ph === 'lobby') h += vLobby(v);
+    else if (v.g === 'mw' && v.mx && v.ph === 'end' && Date.now() < (S.mwHold || 0)) h += vPlayMw(v, 1);
+    else if (v.g === 'mw' && v.mx && v.ph === 'end') h += vEndMw(v);
+    else if (v.g === 'mw' && v.mx && MW_PH.includes(v.ph)) h += vPlayMw(v);
     else if (v.g === 'cr' && v.hx && (v.ph === 'play' || ((v.ph === 'leg' || v.ph === 'end') && Date.now() < (S.crHold || 0)))) h += vPlayCr(v);
     else if (v.g === 'cr' && v.hx && v.ph === 'leg') h += vLegCr(v);
     else if (v.g === 'cr' && v.ph === 'end') h += vEndCr(v);
@@ -3149,6 +3440,7 @@ function vLobby(v) {
   const G = GAMES[v.g] || GAMES.zdz;
   const tmin = v.test ? 1 : G.min, tmax = v.test ? 0 : G.max;
   if (host && tmax && onN > tmax) btn = `<button class="btn gold big" disabled>${G.name}最多 ${G.max} 人</button>`;
+  else if (host && v.g === 'mw' && onN >= tmin && !mwFits(onN, v.cfg.s)) btn = '<button class="btn gold big" disabled>特別角色太多</button>';
   else if (host) btn = onN >= tmin ? `<button class="btn gold big" data-act="start">開始${G.name}（${onN} 人）</button>` : `<button class="btn gold big" disabled>${G.name}最少 ${G.min} 人先開始到</button>`;
   else btn = '<div class="wait">等房主開始遊戲<span class="ld"><i></i><i></i><i></i></span></div>';
   const digits = String(v.code).split('').map((d, i) => `<span style="--k:${i}">${esc(d)}</span>`).join('');
@@ -3156,7 +3448,14 @@ function vLobby(v) {
   const gsel = host ? `<button class="gdd" data-act="gpick">${ginner}${ic('down')}</button>` : `<div class="gdd">${ginner}</div>`;
   const nU = onN >= 7 ? 2 : 1;
   const cdN = CD_ROLES[Math.min(8, Math.max(4, onN))];
-  const opts = v.g === 'cr'
+  const mwS = String(v.cfg.s || ''), mwN = mwDeckN(onN, mwS);
+  const MW_T2 = { A: '兇手嗰邊', L: '令一個人嘅票唔計', R: '一個人計兩票', D: '自己揀人關入地窖', B: '睇兩張冇用嘅卡', P: '想俾人關，自己一邊' };
+  const opts = v.g === 'mw'
+    ? `<div class="cl">討論時間</div>${seg('u', v.cfg.u, host)}
+      <div class="cl">特別角色（兇手一定有，唔夠就補住客）</div><div class="mwsp">${MW_SP.map((t) => { const on = mwS.includes(t); return `<button class="mwspb${on ? ' on' : ''}${host ? '' : ' ro'}"${host ? ` data-act="mwr" data-x="${t}"` : ''}>${mwAv(t)}<span><b>${MW_ROLE[t]}</b><small>${MW_T2[t]}</small></span><i class="ck">${on ? ic('check') : ''}</i></button>`; }).join('')}</div>
+      <div class="cl">${onN < 3 ? '要 3–8 人' : onN > 8 ? '最多 8 人' : mwFits(onN, mwS) ? `而家 ${onN} 人：${mwN} 張卡（兇手 1・特別 ${mwS.length}・住客 ${mwN - 1 - mwS.length}）${mwS.includes('B') ? '，其中 2 張冇用' : ''}` : `${onN} 人最多揀 ${onN + (mwS.includes('B') ? 2 : 0)} 個特別角色`}</div>
+      <div class="cl">每局流程</div><div class="flow"><span>傳卡揀身份</span><i>›</i><span>討論 ${v.cfg.u / 60} 分鐘</span><i>›</i><span>投票 1 分鐘</span><i>›</i><span>關入地窖</span></div>`
+    : v.g === 'cr'
     ? `<div class="cl">每段流程</div><div class="flow"><span>輪流揀一樣：押注／擲骰／觀眾牌／總注</span><i>›</i><span>出咗 5 粒骰就結算</span><i>›</i><span>有蟹衝線完場</span></div>
       <div class="cl">每人起始 $3・每步 60 秒・${onN >= 6 ? '今次可以組拍檔' : '6 人以上可以組拍檔'}</div>`
     : v.g === 'tt'
@@ -3388,6 +3687,23 @@ function fx(prevPh, had, v) {
         zdBurst(v, v.bu);
       }
     }
+  }
+  if (v.g === 'mw') {
+    const mx = v.mx; if (!mx) return;
+    if (v.ph === 'pick' && !S.seen['mw0' + v.gid]) { S.seen['mw0' + v.gid] = 1; S.hold = false; S.mwSel = null; S.mwMode = null; S.mwLaw = false; if (had) { sweep('大宅目擊者', '暴風雨夜', 'night'); sfx('thunder'); } }
+    const ev = mx.ev;
+    if (ev && !S.seen['me' + v.gid + '-' + ev.k]) {
+      S.seen['me' + v.gid + '-' + ev.k] = 1;
+      if (had && ev.t === 'pass') requestAnimationFrame(() => mwFly(v, ev));
+      else if (had && ev.t === 'but') { if (ev.by === ME.id) mwButFx(v); else { sweep('管家出手', nameOf(v, ev.by)); sfx('flick'); } }
+      else if (had && ev.t === 'lock') { S.mwHold = Date.now() + 3150; setTimeout(render, 3180); requestAnimationFrame(() => mwLockFx(v)); }
+      if (ev.t !== 'pass') mwGhostGone();
+    }
+    if (v.ph === 'pick' && mx.cur === ME.id && !S.seen['mt' + v.gid + '-' + mx.tk]) { S.seen['mt' + v.gid + '-' + mx.tk] = 1; S.mwSel = null; if (had) setTimeout(() => { sweep('到你揀卡！', '拖一張入房'); sfx('good'); }, mx.tk > 1 ? 720 : 1600); }
+    if (v.ph === 'talk' && !S.seen['mk' + v.gid]) { S.seen['mk' + v.gid] = 1; S.hold = false; if (had) setTimeout(() => { sweep('討論', `${Math.round((v.dt0 || 300000) * SPEED / 60000)} 分鐘・可以講大話`); sfx('thunder'); }, 720); }
+    if (v.ph === 'vote' && !S.seen['mv' + v.gid]) { S.seen['mv' + v.gid] = 1; S.mwMode = null; if (had) sweep('投票！', '1 分鐘', 'red'); }
+    if (v.ph === 'end' && !S.seen['e' + v.gid]) { S.seen['e' + v.gid] = 1; S.mwMode = null; if (had && prevPh !== 'end') setTimeout(() => { if (mx.win) { confetti(); sfx('win'); } }, ev && ev.t === 'lock' ? 3200 : 0); }
+    return;
   }
   if (v.g === 'cr') {
     const hx = v.hx; if (!hx) return;
@@ -4154,7 +4470,309 @@ ${rays(180, 55, 30, 30, 240, 0.05, '#e8bd62', 0.1)}
 
   return { J, H, L, FR, SEAL, CN, MT, SC, GV, ST };
 })();
-(() => { const rs = document.documentElement.style, put = (pre, A) => { for (const k in A) rs.setProperty(pre + k, "url('data:image/svg+xml;charset=utf-8," + encodeURIComponent(A[k]).replace(/'/g, '%27') + "')"); }; put('--cd', CD_ART); put('--zd', ZD_ART); })();
+const MW_ART = (() => {
+  const X = (s) => '<svg xmlns="http://www.w3.org/2000/svg" ' + s + '</svg>';
+  const r1 = (n) => Math.round(n * 10) / 10;
+  // 固定亂數（每次畫出嚟一樣）
+  const rnd = (seed) => { let s = seed; return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; };
+  const rain = (seed, n, col, op, x0 = 0, x1 = 160, y0 = 0, y1 = 200) => { const R = rnd(seed); let o = ''; for (let i = 0; i < n; i++) { const x = x0 + R() * (x1 - x0), y = y0 + R() * (y1 - y0), l = 8 + R() * 14; o += `M${r1(x)} ${r1(y)}l${r1(-l * 0.22)} ${r1(l)}`; } return `<path d="${o}" stroke="${col}" stroke-width="1" stroke-linecap="round" opacity="${op}"/>`; };
+  const sparks = (seed, n, cx, cy, rr, col, op) => { const R = rnd(seed); let o = ''; for (let i = 0; i < n; i++) { const a = R() * Math.PI * 2, d = rr * (0.3 + R() * 0.7), s = 0.8 + R() * 1.8; const x = cx + Math.cos(a) * d, y = cy + Math.sin(a) * d; o += `<path d="M${r1(x)} ${r1(y - s * 2)}L${r1(x + s * 0.5)} ${r1(y)}L${r1(x)} ${r1(y + s * 2)}L${r1(x - s * 0.5)} ${r1(y)}Z"/>`; } return `<g fill="${col}" opacity="${op}">${o}</g>`; };
+  const bolt = (x, y, s, op) => `<g transform="translate(${x} ${y}) scale(${s})" opacity="${op}"><path d="M0 0L-9 26L-1 25L-10 52L12 18L3 19L11 0Z" fill="#fff8e0"/><path d="M0 0L-9 26L-1 25L-10 52L12 18L3 19L11 0Z" fill="none" stroke="#bfe0ff" stroke-width="3" opacity=".35"/></g>`;
+  const SKIN = '<radialGradient id="sk" cx="42%" cy="36%" r="70%"><stop offset="0" stop-color="#ffe7cf"/><stop offset=".6" stop-color="#f6c49b"/><stop offset="1" stop-color="#d9976b"/></radialGradient>';
+  const FACE = 'M56 96C56 74 66 64 80 64C94 64 104 74 104 96C104 116 94 128 80 128C66 128 56 116 56 96Z';
+  const EARS = '<ellipse cx="55.5" cy="99" rx="4.5" ry="7.5" fill="url(#sk)"/><ellipse cx="104.5" cy="99" rx="4.5" ry="7.5" fill="url(#sk)"/>';
+  const eye = (x, y, dx = 0) => `<ellipse cx="${x}" cy="${y}" rx="3.1" ry="3.9" fill="#2a1a12"/><circle cx="${x + 1 + dx}" cy="${y - 1.3}" r="1.2" fill="#fff"/>`;
+  const NECK = '<rect x="72" y="124" width="16" height="18" fill="#e8b48a"/><path d="M72 128q8 6 16 0v6q-8 5-16 0z" fill="#c98a62" opacity=".6"/>';
+  const BODY = 'M-4 204V182c0-20 22-32 48-36l14-3h44l14 3c26 4 48 16 48 36v22z';
+  const bg = (c) => `<radialGradient id="g" cx="50%" cy="24%" r="90%"><stop offset="0" stop-color="${c[0]}"/><stop offset=".38" stop-color="${c[1]}"/><stop offset=".78" stop-color="${c[2]}"/><stop offset="1" stop-color="${c[3]}"/></radialGradient>`;
+  const AU = '<linearGradient id="au" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cc"/><stop offset=".45" stop-color="#e8bd62"/><stop offset="1" stop-color="#9a6a1c"/></linearGradient>';
+  const vig = '<radialGradient id="vg" cx="50%" cy="45%" r="75%"><stop offset=".62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/></radialGradient>';
+  const VIG = '<rect width="160" height="200" fill="url(#vg)"/>';
+
+  /* 住客：西裝背心、紅煲呔、擔心樣、攞住燭台；後面窗外落大雨行雷 */
+  const G = X(`viewBox="0 0 160 200"><defs>${SKIN}${bg(['#f0b45e', '#93501f', '#3e1c0b', '#190a04'])}${AU}${vig}
+<linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c4f86"/><stop offset="1" stop-color="#0d1a36"/></linearGradient>
+<linearGradient id="vs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a4a2c"/><stop offset="1" stop-color="#2e170b"/></linearGradient>
+<radialGradient id="fl" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6c8" stop-opacity=".95"/><stop offset=".35" stop-color="#ffc35a" stop-opacity=".55"/><stop offset="1" stop-color="#ff9a2a" stop-opacity="0"/></radialGradient>
+<linearGradient id="hr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a4126"/><stop offset="1" stop-color="#2e1a0e"/></linearGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+<g opacity=".1" stroke="#ffd9a0" stroke-width=".8" fill="none"><path d="M0 20L20 0M0 60L60 0M0 100L100 0M20 120L140 0M60 120L160 20M100 120L160 60"/><path d="M160 20L140 0M160 60L100 0M160 100L60 0M140 120L20 0M100 120L0 20M60 120L0 60"/></g>
+<path d="M14 88V40Q14 18 36 18Q58 18 58 40V88Z" fill="#2a1508"/><path d="M18 86V41Q18 22 36 22Q54 22 54 41V86Z" fill="url(#gl)"/>
+${bolt(40, 26, 0.62, 0.9)}${rain(7, 26, '#bcd6ff', 0.55, 18, 54, 22, 86)}
+<path d="M36 22V86M18 54H54" stroke="#2a1508" stroke-width="3"/><path d="M12 88h48v5H12z" fill="#4a2a14"/>
+<circle cx="122" cy="104" r="46" fill="url(#fl)"/>
+<path d="${BODY}" fill="url(#vs)"/>
+<path d="M58 143l22 24 22-24-7-2-15 17-15-17z" fill="#f6efe2"/>
+<path d="M64 143l16 52 16-52" fill="none" stroke="#1d0e06" stroke-width="2" opacity=".5"/>
+<g fill="#e8bd62"><circle cx="80" cy="176" r="2"/><circle cx="80" cy="188" r="2"/></g>
+<path d="M70 146l10 4 10-4-2 8-8-3-8 3z" fill="#c3203d"/><circle cx="80" cy="150" r="2.4" fill="#8e1228"/>
+${NECK}
+${EARS}<path d="${FACE}" fill="url(#sk)"/>
+<path d="M54 92Q52 62 80 60Q106 62 106 88Q100 74 86 72Q72 76 60 72Q56 80 54 92Z" fill="url(#hr)"/>
+<path d="M60 72q10-8 26-4" fill="none" stroke="#9a6a44" stroke-width="1.4" opacity=".6"/>
+<path d="M63 90l11-3.5M97 90l-11-3.5" stroke="#3a2214" stroke-width="2.6" stroke-linecap="round"/>
+${eye(69, 99, 1.2)}${eye(91, 99, 1.2)}
+<ellipse cx="80" cy="115" rx="3.4" ry="2.8" fill="#6a2a20"/>
+<path d="M107 80q3 6 0 9q-3-3 0-9z" fill="#9fd0ff" opacity=".9"/>
+<ellipse cx="64" cy="108" rx="5" ry="2.6" fill="#ff8a7a" opacity=".3"/><ellipse cx="96" cy="108" rx="5" ry="2.6" fill="#ff8a7a" opacity=".3"/>
+<rect x="117" y="104" width="10" height="38" rx="2" fill="#fbf1da"/><path d="M117 108h10" stroke="#e8d6b0" stroke-width="1.5"/>
+<path d="M122 104q-1-2 0-3" stroke="#3a2214" stroke-width="1"/>
+<path d="M122 84q-7 9-3 15q3 4 6 0q4-6-3-15z" fill="#ffb43a"/><path d="M122 90q-3 5-1 8q1 2 3 0q1-4-2-8z" fill="#fff6c8"/>
+<ellipse cx="122" cy="143" rx="15" ry="4.5" fill="url(#au)"/><path d="M110 143q12 16 24 0" fill="#b8862f"/>
+<path d="M112 160q10-10 22 0q2 10-11 12q-13-2-11-12z" fill="url(#sk)"/><path d="M116 158q6-4 12 0" stroke="#c98a62" stroke-width="1" fill="none"/>
+${VIG}`);
+
+  /* 兇手：闊邊帽遮住半塊面、一對紅眼、乾衫衣領企起、手揸匕首；紅黑底、閃電同大雨 */
+  const K = X(`viewBox="0 0 160 200"><defs>${bg(['#b8202f', '#5c0a16', '#1f0408', '#0a0204'])}${vig}
+<linearGradient id="ct" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e161b"/><stop offset="1" stop-color="#0b0406"/></linearGradient>
+<linearGradient id="ht" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2228"/><stop offset="1" stop-color="#100608"/></linearGradient>
+<radialGradient id="fc" cx="50%" cy="80%" r="70%"><stop offset="0" stop-color="#4a2a2e"/><stop offset="1" stop-color="#140709"/></radialGradient>
+<radialGradient id="ey" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff0f0"/><stop offset=".3" stop-color="#ff4a5a"/><stop offset="1" stop-color="#ff1a30" stop-opacity="0"/></radialGradient>
+<linearGradient id="bl" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8a96a8"/><stop offset=".5" stop-color="#f2f6ff"/><stop offset="1" stop-color="#aab6c8"/></linearGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+${bolt(30, 6, 1.05, 0.85)}${bolt(140, 20, 0.6, 0.5)}
+${rain(11, 46, '#ffb0b8', 0.35)}
+<ellipse cx="80" cy="64" rx="70" ry="46" fill="#ff3048" opacity=".12"/>
+<path d="M-4 204V170c0-16 18-30 40-34l10-30 34 34 34-34 10 30c22 4 40 18 40 34v34z" fill="url(#ct)"/>
+<path d="M46 106l34 34 34-34" fill="none" stroke="#ff5a6a" stroke-width="1.6" opacity=".55"/>
+<path d="M36 136l10-30M124 136l-10-30" stroke="#ff5a6a" stroke-width="1.4" opacity=".4"/>
+<path d="M58 104C58 80 66 70 80 70C94 70 102 80 102 104C102 122 92 134 80 134C68 134 58 122 58 104Z" fill="url(#fc)"/>
+<path d="M44 72Q44 30 80 28Q116 30 116 72Z" fill="url(#ht)"/>
+<path d="M50 62q30-8 60 0" stroke="#7a1020" stroke-width="5" fill="none"/>
+<ellipse cx="80" cy="74" rx="62" ry="11" fill="url(#ht)"/><path d="M18 74q62 22 124 0" fill="none" stroke="#ff5a6a" stroke-width="1.4" opacity=".5"/>
+<path d="M30 72q50-14 100 0" stroke="#5a3a40" stroke-width="1.2" fill="none" opacity=".7"/>
+<g transform="rotate(10 69 96)"><ellipse cx="69" cy="96" rx="11" ry="7" fill="url(#ey)"/><ellipse cx="69" cy="96" rx="4.4" ry="1.7" fill="#fff4f4"/></g>
+<g transform="rotate(-10 91 96)"><ellipse cx="91" cy="96" rx="11" ry="7" fill="url(#ey)"/><ellipse cx="91" cy="96" rx="4.4" ry="1.7" fill="#fff4f4"/></g>
+<path d="M68 116q12 7 24 0" fill="none" stroke="#ff4a5a" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+<g transform="rotate(28 126 142)"><rect x="122" y="88" width="8" height="46" rx="1" fill="url(#bl)"/><path d="M122 88l4-12 4 12z" fill="#f2f6ff"/><path d="M126 80v52" stroke="#fff" stroke-width=".8" opacity=".7"/><rect x="113" y="134" width="26" height="5" rx="2.5" fill="#c99a3a"/><rect x="122" y="139" width="8" height="16" rx="3" fill="#2a1418"/></g>
+<path d="M104 150q8-14 22-6q8 8-2 18q-14 6-20-12z" fill="#160a0c"/>
+<path d="M126 74l3-7 3 7 7 3-7 3-3 7-3-7-7-3z" fill="#fff" opacity=".95"/>
+${VIG}`);
+
+  /* 幫兇：連帽斗篷、黑色眼罩、奸笑、一隻手指擺嘴邊「噓」、另一隻手吊住條古銅鎖匙；紫紅底同霧 */
+  const A = X(`viewBox="0 0 160 200"><defs>${SKIN}${bg(['#9a46a0', '#4c1854', '#200824', '#0c0410'])}${AU}${vig}
+<linearGradient id="hd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a2a66"/><stop offset="1" stop-color="#1a0a20"/></linearGradient>
+<linearGradient id="mk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a44"/><stop offset="1" stop-color="#0a060e"/></linearGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+<g fill="#e9d2ff" opacity=".1"><ellipse cx="30" cy="186" rx="50" ry="12"/><ellipse cx="130" cy="192" rx="56" ry="12"/><ellipse cx="80" cy="198" rx="70" ry="10"/></g>
+${sparks(5, 14, 80, 60, 70, '#f0c8ff', 0.35)}
+<path d="M-4 204V178c0-18 22-30 46-34h76c24 4 46 16 46 34v26z" fill="#2a0e32"/>
+<path d="M-4 178c0-18 22-30 46-34h76c24 4 46 16 46 34" fill="none" stroke="#c88ad8" stroke-width="1.2" opacity=".45"/>
+<path d="M36 150Q30 74 80 52Q130 74 124 150Q104 160 80 160Q56 160 36 150Z" fill="url(#hd)"/>
+<path d="M36 150Q30 74 80 52Q130 74 124 150" fill="none" stroke="#e0b0f0" stroke-width="1.6" opacity=".55"/>
+<path d="M80 52q-6 30 0 26" fill="none" stroke="#1a0a20" stroke-width="1.4" opacity=".6"/>
+<path d="M50 140C48 98 60 74 80 74C100 74 112 98 110 140Q96 150 80 150Q64 150 50 140Z" fill="#12061a"/>
+${NECK}
+<path d="M60 100C60 82 68 76 80 76C92 76 100 82 100 100C100 118 92 128 80 128C68 128 60 118 60 100Z" fill="url(#sk)"/>
+<path d="M58 92q22-10 44 0l-2 12q-8 4-14 0q-6-4-12 0q-6 4-14 0z" fill="url(#mk)"/>
+<path d="M58 92q22-10 44 0" fill="none" stroke="#c88ad8" stroke-width="1" opacity=".6"/>
+<ellipse cx="70" cy="98" rx="4" ry="2.6" fill="#fff"/><ellipse cx="90" cy="98" rx="4" ry="2.6" fill="#fff"/>
+<circle cx="71.5" cy="98" r="1.8" fill="#1a0a20"/><circle cx="91.5" cy="98" r="1.8" fill="#1a0a20"/>
+<path d="M66 113q7 5 14-1" fill="none" stroke="#7a2a3a" stroke-width="2" stroke-linecap="round"/>
+<path d="M78 111l3 1" stroke="#7a2a3a" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M78 160q-6-18 2-26q6-3 8 2l1 6q12-2 14 10q2 12-12 14q-12 0-13-6z" fill="url(#sk)"/>
+<rect x="84" y="102" width="6" height="36" rx="3" fill="url(#sk)"/><path d="M85 104.5h4" stroke="#c98a62" stroke-width="1"/><path d="M84 124q3 2 6 0" stroke="#c98a62" stroke-width=".8" fill="none"/>
+<g transform="rotate(-8 30 152)"><circle cx="30" cy="132" r="7" fill="none" stroke="url(#au)" stroke-width="3"/><rect x="28.3" y="138" width="3.5" height="30" fill="url(#au)"/><path d="M31.5 156h6v4h-6zM31.5 163h8v4h-8z" fill="url(#au)"/></g>
+<path d="M16 170q12-14 26-6q6 10-6 16q-14 2-20-10z" fill="url(#sk)"/>
+${sparks(17, 6, 30, 140, 16, '#fff3cc', 0.9)}
+${VIG}`);
+
+  /* 律師：白色大律師假髮、黑袍白領帶、揚起一邊眉、手揸紅繩文件；深藍底、石柱同天秤 */
+  const L = X(`viewBox="0 0 160 200"><defs>${SKIN}${bg(['#4a6cc0', '#1c3270', '#0b1638', '#050a1c'])}${AU}${vig}
+<linearGradient id="gw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2a38"/><stop offset="1" stop-color="#08080e"/></linearGradient>
+<linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d6d0c2"/></linearGradient>
+<linearGradient id="pp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8dcc0"/><stop offset=".5" stop-color="#fff9ea"/><stop offset="1" stop-color="#d8c8a2"/></linearGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+<g fill="#cfe0ff" opacity=".09"><rect x="6" y="20" width="14" height="180"/><rect x="2" y="14" width="22" height="8"/><rect x="140" y="20" width="14" height="180"/><rect x="136" y="14" width="22" height="8"/></g>
+<g fill="none" stroke="#e8bd62" stroke-width="1.6" opacity=".35"><path d="M120 22v22M106 28h28M106 28l-6 12h12zM134 28l-6 12h12z"/><path d="M100 40q6 5 12 0M128 40q6 5 12 0"/></g>
+<path d="${BODY}" fill="url(#gw)"/>
+<path d="M44 146l10 58M116 146l-10 58" stroke="#3a3a4c" stroke-width="2" opacity=".7"/>
+<path d="M60 140l20 12 20-12-4-4-16 9-16-9z" fill="#f4f0e6"/>
+<path d="M75 150h4v20l-2 3-2-3zM81 150h4v20l-2 3-2-3z" fill="#fbfaf6" stroke="#cfc8b8" stroke-width=".6"/>
+${NECK}
+${EARS}<path d="${FACE}" fill="url(#sk)"/>
+<path d="M54 92Q50 56 80 54Q110 56 106 92Q104 74 96 68Q80 62 64 68Q56 74 54 92Z" fill="url(#wg)"/>
+<g fill="url(#wg)" stroke="#b8b0a0" stroke-width=".8">${[0, 1, 2].map((i) => `<rect x="44" y="${82 + i * 10}" width="16" height="9" rx="4.5"/><rect x="100" y="${82 + i * 10}" width="16" height="9" rx="4.5"/>`).join('')}</g>
+<g fill="none" stroke="#b8b0a0" stroke-width=".9">${[0, 1, 2, 3].map((i) => `<path d="M${62 + i * 9} 64q4-4 8 0"/>`).join('')}<path d="M58 74q22-8 44 0"/></g>
+<path d="M62 87q6-6 13-3M97 89l-11-2" stroke="#4a3020" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+${eye(69, 98)}${eye(91, 99)}
+<path d="M72 115q8 5 16-2" fill="none" stroke="#7a3a2a" stroke-width="2" stroke-linecap="round"/>
+<g transform="rotate(-24 122 160)"><rect x="98" y="150" width="50" height="16" rx="8" fill="url(#pp)"/><ellipse cx="148" cy="158" rx="4" ry="8" fill="#e8dcc0"/><rect x="118" y="149" width="6" height="18" fill="#c3203d"/><path d="M121 166l-5 12M121 166l5 12" stroke="#c3203d" stroke-width="3" stroke-linecap="round"/></g>
+<path d="M104 172q8-12 20-6q6 10-4 16q-12 2-16-10z" fill="url(#sk)"/>
+${VIG}`);
+
+  /* 富豪：高帽、單片眼鏡連金鏈、捲鬚、毛領紅大褸、金袋錶；綠金底、金幣同放射光 */
+  const R = X(`viewBox="0 0 160 200"><defs>${SKIN}${bg(['#2ea870', '#0f5e3e', '#063222', '#02180f'])}${AU}${vig}
+<linearGradient id="ht" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34303c"/><stop offset="1" stop-color="#0a080e"/></linearGradient>
+<linearGradient id="cf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a2236"/><stop offset="1" stop-color="#3a0812"/></linearGradient>
+<radialGradient id="co" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff3cc"/><stop offset=".55" stop-color="#e8bd62"/><stop offset="1" stop-color="#9a6a1c"/></radialGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+<g fill="#ffe08a" opacity=".1">${Array.from({ length: 12 }, (_, i) => { const a = i / 12 * Math.PI * 2, b = a + 0.18; return `<path d="M80 80L${r1(80 + Math.cos(a) * 160)} ${r1(80 + Math.sin(a) * 160)}L${r1(80 + Math.cos(b) * 160)} ${r1(80 + Math.sin(b) * 160)}Z"/>`; }).join('')}</g>
+${sparks(9, 18, 80, 80, 80, '#ffe9a8', 0.6)}
+<path d="${BODY}" fill="url(#cf)"/>
+<g fill="#f6f0e4">${[30, 40, 50, 60, 100, 110, 120, 130].map((x, i) => `<circle cx="${x}" cy="${150 - Math.abs(x - 80) * 0.1 + (i % 2) * 3}" r="9"/>`).join('')}<circle cx="44" cy="160" r="8"/><circle cx="116" cy="160" r="8"/></g>
+<path d="M68 150h24v54H68z" fill="#f6efe2"/><path d="M76 152l4 6 4-6" fill="#2a0a12"/>
+<path d="M92 176q10 4 12 14" fill="none" stroke="url(#au)" stroke-width="1.6"/><circle cx="104" cy="192" r="6" fill="url(#co)"/><circle cx="104" cy="192" r="3.5" fill="#fff7e0" opacity=".8"/>
+${NECK}
+${EARS}<path d="M54 96C54 72 65 64 80 64C95 64 106 72 106 96C106 118 95 130 80 130C65 130 54 118 54 96Z" fill="url(#sk)"/>
+<rect x="58" y="20" width="44" height="48" rx="3" fill="url(#ht)"/><rect x="58" y="54" width="44" height="8" fill="#c99a3a"/>
+<ellipse cx="80" cy="68" rx="34" ry="7" fill="url(#ht)"/><path d="M62 24v28" stroke="#6a6478" stroke-width="2" opacity=".6"/>
+<path d="M62 88q6-4 13-1M98 88q-6-4-13-1" stroke="#5a3a20" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+${eye(69, 98)}
+<circle cx="91" cy="98" r="8" fill="#bfe8ff" fill-opacity=".25" stroke="url(#au)" stroke-width="2.4"/><ellipse cx="91" cy="98" rx="3.3" ry="4.1" fill="#2a1a12"/><circle cx="92.2" cy="96.6" r="1.3" fill="#fff"/>
+<path d="M96 92a8 8 0 0 1 2 5" stroke="#fff" stroke-width="1.2" fill="none" opacity=".8"/>
+<path d="M98 104q6 10 2 24q-2 8 4 16" fill="none" stroke="url(#au)" stroke-width="1.2"/>
+<ellipse cx="64" cy="110" rx="6" ry="3" fill="#ff7a6a" opacity=".38"/><ellipse cx="96" cy="110" rx="6" ry="3" fill="#ff7a6a" opacity=".38"/>
+<path d="M80 109q-8-4-15 2q-6 4-10-2q2 8 10 7q8-1 15-5q7 4 15 5q8 1 10-7q-4 6-10 2q-7-6-15-2z" fill="#4a2a14"/>
+<path d="M74 119q6 3 12 0" fill="none" stroke="#7a3a2a" stroke-width="1.8" stroke-linecap="round"/>
+<g>${[[20, 186], [34, 190], [27, 178], [132, 188], [144, 182], [138, 172]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="9" ry="4" fill="#9a6a1c"/><ellipse cx="${x}" cy="${y - 2}" rx="9" ry="4" fill="url(#co)"/>`).join('')}</g>
+${VIG}`);
+
+  /* 偵探：啡色紳士帽、米色乾衫、舉起放大鏡（鏡入面隻眼放大）、另一隻眼瞇埋；藍綠底、腳印 */
+  const D = X(`viewBox="0 0 160 200"><defs>${SKIN}${bg(['#33a8ac', '#106068', '#062c36', '#02141a'])}${AU}${vig}
+<linearGradient id="tc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8b984"/><stop offset="1" stop-color="#7a5a30"/></linearGradient>
+<linearGradient id="ht" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5e34"/><stop offset="1" stop-color="#3a2410"/></linearGradient>
+<radialGradient id="ln" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset=".5" stop-color="#bfefff" stop-opacity=".2"/><stop offset="1" stop-color="#6ad0e8" stop-opacity=".35"/></radialGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+<g fill="#bff4f0" opacity=".14">${[[18, 170, -20], [30, 146, -14], [22, 120, -24], [36, 96, -16], [26, 70, -22]].map(([x, y, a]) => `<g transform="rotate(${a} ${x} ${y})"><ellipse cx="${x}" cy="${y}" rx="4.5" ry="7"/><ellipse cx="${x}" cy="${y + 10}" rx="3.5" ry="3"/></g>`).join('')}</g>
+<path d="${BODY}" fill="url(#tc)"/>
+<path d="M52 144l28 26 28-26-8 40-20-12-20 12z" fill="#b8955e"/><path d="M66 146l14 12 14-12-14 30z" fill="#f4efe4"/><path d="M76 152h8l-1 12h-6z" fill="#2a5a4a"/>
+<path d="M44 146l8 24M116 146l-8 24" stroke="#6a4a24" stroke-width="2" opacity=".6"/>
+${NECK}
+${EARS}<path d="${FACE}" fill="url(#sk)"/>
+<path d="M54 74Q56 40 80 38Q104 40 106 74Z" fill="url(#ht)"/><path d="M56 66h48v7H56z" fill="#2a1a0a"/>
+<ellipse cx="80" cy="74" rx="40" ry="7.5" fill="url(#ht)"/><path d="M42 74q38 10 76 0" fill="none" stroke="#c99a5a" stroke-width="1.2" opacity=".6"/>
+<path d="M62 50q8-6 16-4" stroke="#b88a54" stroke-width="1.6" fill="none" opacity=".7"/>
+<path d="M62 92l12-2" stroke="#3a2214" stroke-width="2.8" stroke-linecap="round"/>
+<path d="M63 100q6-4 12 0" stroke="#2a1a12" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M72 117q8-3 14 1" fill="none" stroke="#7a3a2a" stroke-width="2" stroke-linecap="round"/>
+<g><path d="M104 112l26 38" stroke="#3a2410" stroke-width="7" stroke-linecap="round"/><path d="M104 112l26 38" stroke="#7a4e24" stroke-width="4" stroke-linecap="round"/>
+<circle cx="93" cy="97" r="18" fill="url(#sk)"/>
+<ellipse cx="93" cy="98" rx="7" ry="8.6" fill="#fff"/><circle cx="94" cy="98" r="5.4" fill="#2f6a5c"/><circle cx="94" cy="98" r="3" fill="#0e1a18"/><circle cx="96" cy="95.5" r="1.8" fill="#fff"/>
+<path d="M84 86q9-5 18 0" stroke="#3a2214" stroke-width="3.6" stroke-linecap="round" fill="none"/>
+<circle cx="93" cy="97" r="18" fill="url(#ln)"/>
+<circle cx="93" cy="97" r="19" fill="none" stroke="url(#au)" stroke-width="4"/><circle cx="93" cy="97" r="21" fill="none" stroke="#6a4a14" stroke-width="1"/>
+<path d="M80 88a16 16 0 0 1 10-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".85"/></g>
+<path d="M118 150q10-6 18 2q4 10-6 14q-12 2-12-16z" fill="url(#sk)"/>
+${VIG}`);
+
+  /* 管家：梳得好貼服嘅頭、灰白鬢角、閉眼微笑、黑燕尾服煲呔、白手套托住銀托盤（蓋住嘅銀罩同鈴）；銀藍底 */
+  const B = X(`viewBox="0 0 160 200"><defs>${SKIN}${bg(['#93a4c4', '#4c5d80', '#232c44', '#10141f'])}${vig}
+<linearGradient id="tx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2c38"/><stop offset="1" stop-color="#0a0b10"/></linearGradient>
+<linearGradient id="sv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#c8d2e2"/><stop offset="1" stop-color="#6a7890"/></linearGradient>
+<linearGradient id="hr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a42"/><stop offset="1" stop-color="#14141a"/></linearGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+<g fill="#ffffff" opacity=".05">${[0, 1, 2, 3, 4, 5, 6, 7].map((i) => `<rect x="${i * 22}" y="0" width="9" height="200"/>`).join('')}</g>
+<path d="${BODY}" fill="url(#tx)"/>
+<path d="M62 142l18 50 18-50z" fill="#f6f4f0"/><path d="M66 142l14 6 14-6-3 10-11 4-11-4z" fill="#ffffff" stroke="#c8ccd6" stroke-width=".6"/>
+<path d="M70 148l10 4 10-4-2 8-8-3-8 3z" fill="#0c0c12"/><circle cx="80" cy="152" r="2.2" fill="#2a2a34"/>
+<path d="M64 158l16 22 16-22v40H64z" fill="#6a6e7c"/><g fill="#c8ccd6"><circle cx="80" cy="184" r="1.6"/><circle cx="80" cy="194" r="1.6"/></g>
+<path d="M54 146l12 52M106 146l-12 52" stroke="#3a3c4a" stroke-width="2" opacity=".8"/>
+${NECK}
+${EARS}<path d="${FACE}" fill="url(#sk)"/>
+<path d="M54 90Q52 60 80 58Q108 60 106 90Q104 74 96 70Q84 66 62 72Q56 78 54 90Z" fill="url(#hr)"/>
+<path d="M64 70q14-8 34-2" fill="none" stroke="#8a8a96" stroke-width="1.4" opacity=".6"/><path d="M60 76l8-6" stroke="#8a8a96" stroke-width="1" opacity=".5"/>
+<path d="M54 90q0 8 3 12M106 90q0 8-3 12" stroke="#c8c8d0" stroke-width="3.4" stroke-linecap="round"/>
+<path d="M63 90l11-1M97 90l-11-1" stroke="#9a9aa6" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M64 99q5 4 10 0M86 99q5 4 10 0" stroke="#2a1a12" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+<path d="M66 106l4-1M94 106l-4-1" stroke="#c98a62" stroke-width="1" opacity=".7"/>
+<path d="M72 114q8 6 16 0" fill="none" stroke="#7a3a2a" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="124" cy="108" rx="30" ry="6" fill="url(#sv)"/><ellipse cx="124" cy="106" rx="30" ry="5" fill="none" stroke="#ffffff" stroke-width="1" opacity=".8"/>
+<path d="M102 106q0-30 22-30q22 0 22 30z" fill="url(#sv)"/><circle cx="124" cy="73" r="3.5" fill="url(#sv)"/>
+<path d="M110 98q0-14 12-18" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".85"/>
+<path d="M110 204L114 146Q122 132 140 136L150 204Z" fill="url(#tx)"/><path d="M114 146Q122 132 140 136" fill="none" stroke="#5a5c6c" stroke-width="1.2"/>
+<path d="M114 140q12-10 26-4l-1 7q-12-5-24 3z" fill="#f6f4f0"/>
+<path d="M106 114q2 14 18 18q16-2 20-16q-4-6-10-4q-6 1-10 0q-10-2-18 2z" fill="#fbfbfd"/>
+<path d="M112 118q8 4 14 3M114 124q8 3 14 1" stroke="#c8ccd6" stroke-width="1" fill="none"/>
+<path d="M134 113q6-2 8 4" stroke="#c8ccd6" stroke-width="1" fill="none"/>
+${VIG}`);
+
+  /* 搗蛋鬼：爆炸頭、雀斑、露齒大笑、V 字眉、間條衫吊帶褲、手揸一串點着咗嘅炮仗（火花）；橙紅底 */
+  const P = X(`viewBox="0 0 160 200"><defs>${SKIN}${bg(['#ffa040', '#bc4c14', '#4c1a08', '#1e0a04'])}${AU}${vig}
+<linearGradient id="hr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a2a"/><stop offset="1" stop-color="#a8300c"/></linearGradient>
+<linearGradient id="fc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e01a2a"/><stop offset=".5" stop-color="#ff5a5a"/><stop offset="1" stop-color="#a80a18"/></linearGradient>
+<radialGradient id="sp" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#fff2a0"/><stop offset="1" stop-color="#ffb000" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="160" height="200" fill="url(#g)"/>
+${sparks(3, 26, 80, 80, 90, '#ffe9a8', 0.55)}
+<path d="${BODY}" fill="#2f8a4e"/>
+<g fill="#f2d84a">${[0, 1, 2, 3, 4].map((i) => `<path d="M-4 ${156 + i * 10}h168v4H-4z"/>`).join('')}</g>
+<path d="M54 146l8 58M106 146l-8 58" stroke="#3a1a64" stroke-width="7"/><circle cx="58" cy="168" r="3" fill="#e8bd62"/><circle cx="102" cy="168" r="3" fill="#e8bd62"/>
+${NECK}
+${EARS}<path d="${FACE}" fill="url(#sk)"/>
+<path d="M50 88l-6-10 10-2-6-12 12 2-2-14 12 8 4-14 8 12 8-12 4 14 12-8-2 14 12-2-6 12 10 2-6 10q-6-14-26-16q-20 0-28 4q-12 4-16 14z" fill="url(#hr)"/>
+<path d="M61 86l13 6M99 86l-13 6" stroke="#6a2a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M65 98q4-3 8 0" stroke="#2a1a12" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+${eye(91, 99)}
+<g fill="#c8703a" opacity=".55"><circle cx="64" cy="108" r="1.2"/><circle cx="68" cy="110" r="1.2"/><circle cx="61" cy="111" r="1.2"/><circle cx="96" cy="108" r="1.2"/><circle cx="100" cy="110" r="1.2"/><circle cx="93" cy="111" r="1.2"/></g>
+<path d="M66 112q14 16 28 0q-14 4-28 0z" fill="#6a1a1a"/><path d="M68 113q12 3 24 0v3q-12 3-24 0z" fill="#fff"/><path d="M74 121q6 3 12 0q-6-3-12 0z" fill="#ff7a8a"/>
+<path d="M132 66q4-8 8-12" fill="none" stroke="#5a3a20" stroke-width="1.6"/>
+<circle cx="141" cy="52" r="17" fill="url(#sp)"/>
+${sparks(13, 16, 141, 52, 19, '#fff', 0.95)}
+<path d="M132 66Q138 100 126 142" fill="none" stroke="#5a3a20" stroke-width="1.4" opacity=".85"/>
+<g>${[0, 1, 2, 3, 4].map((i) => `<g transform="translate(${133 + (i % 2 ? 6 : -4) - i * 0.8} ${74 + i * 13}) rotate(${i % 2 ? 26 : -26})"><rect x="-4.5" y="-7.5" width="9" height="15" rx="1.5" fill="url(#fc)"/><rect x="-4.5" y="-7.5" width="9" height="2.6" fill="#f2d84a"/><rect x="-4.5" y="4.9" width="9" height="2.6" fill="#f2d84a"/></g>`).join('')}</g>
+<path d="M112 152q6-14 20-10q8 6 2 16q-12 8-22-6z" fill="url(#sk)"/><path d="M118 146q6-2 10 1" stroke="#c98a62" stroke-width="1" fill="none"/>
+${VIG}`);
+
+  /* 卡背：暴風雨夜，山上大宅剪影、月亮、閃電、亮燈嘅窗、金色雙框同中間鎖匙孔眼徽章 */
+  const BK = X(`viewBox="0 0 160 200"><defs>${AU}
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2452"/><stop offset=".6" stop-color="#151230"/><stop offset="1" stop-color="#08070f"/></linearGradient>
+<radialGradient id="wg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffd36a" stop-opacity=".45"/><stop offset="1" stop-color="#ffd36a" stop-opacity="0"/></radialGradient>
+<radialGradient id="mn" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6d8"/><stop offset=".55" stop-color="#f2dc9a" stop-opacity=".9"/><stop offset="1" stop-color="#f2dc9a" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="160" height="200" fill="url(#sky)"/>
+<circle cx="112" cy="64" r="34" fill="url(#mn)" opacity=".55"/><circle cx="112" cy="64" r="15" fill="#fbefc4"/><circle cx="106" cy="60" r="3" fill="#e8d496" opacity=".6"/><circle cx="117" cy="70" r="2" fill="#e8d496" opacity=".6"/>
+${bolt(38, 18, 0.9, 0.75)}
+${rain(21, 40, '#c8d0ff', 0.3)}
+<path d="M0 200V164q40-14 80-14t80 14v36z" fill="#0a0912"/><g fill="url(#au)" opacity=".8"><path d="M58 176h44M64 181h32" stroke="url(#au)" stroke-width="1"/><circle cx="80" cy="176" r="2.4"/></g>
+<g fill="#0e0c18"><path d="M24 154V120l14-16 14 16v34z"/><path d="M46 154V102l34-30 34 30v52z"/><path d="M108 154V108l9-8v-20l6-14 6 14v20l9 8v46z"/><rect x="60" y="70" width="6" height="18"/><path d="M76 72l4-14 4 14z"/><rect x="36" y="96" width="4" height="12"/></g>
+<g fill="#ffd36a"><rect x="58" y="108" width="6" height="9" rx="1"/><rect x="72" y="108" width="6" height="9" rx="1" opacity=".35"/><rect x="88" y="124" width="6" height="9" rx="1"/><rect x="34" y="128" width="5" height="8" rx="1"/><rect x="120" y="92" width="5" height="8" rx="2.5"/><rect x="72" y="128" width="6" height="9" rx="1" opacity=".35"/></g>
+<g fill="url(#wg)"><circle cx="61" cy="112" r="12"/><circle cx="91" cy="128" r="12"/><circle cx="122" cy="96" r="10"/></g>
+<rect x="76" y="140" width="8" height="14" rx="4" fill="#ffd36a" opacity=".7"/>
+<g fill="#c8d0ff" opacity=".1"><ellipse cx="40" cy="160" rx="50" ry="6"/><ellipse cx="124" cy="164" rx="50" ry="6"/></g>
+<rect x="6" y="6" width="148" height="188" rx="10" fill="none" stroke="url(#au)" stroke-width="2.4"/>
+<rect x="11" y="11" width="138" height="178" rx="7" fill="none" stroke="url(#au)" stroke-width="1" opacity=".7"/>
+<g fill="url(#au)">${[[11, 11, 0], [149, 11, 90], [149, 189, 180], [11, 189, 270]].map(([x, y, a]) => `<path transform="translate(${x} ${y}) rotate(${a})" d="M0 0h16q-8 2-10 6q-4 2-6 10z"/>`).join('')}</g>
+<g transform="translate(80 40)"><path d="M-26 0Q0 -20 26 0Q0 20 -26 0Z" fill="#15122a" stroke="url(#au)" stroke-width="2.2"/><circle r="9" fill="url(#au)"/><circle cy="-2" r="3.2" fill="#15122a"/><path d="M-2 0h4l1.6 6h-7.2z" fill="#15122a"/></g>`);
+
+  /* 地窖：石牆拱門、鐵枝、鐵鏈、金色大鎖 */
+  const C = X(`viewBox="0 0 160 120"><defs>${AU}
+<linearGradient id="st" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4658"/><stop offset="1" stop-color="#1e1c26"/></linearGradient>
+<linearGradient id="ir" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2a2a30"/><stop offset=".5" stop-color="#8a8a96"/><stop offset="1" stop-color="#2a2a30"/></linearGradient>
+<radialGradient id="dk" cx="50%" cy="70%" r="70%"><stop offset="0" stop-color="#2a0a10"/><stop offset="1" stop-color="#050306"/></radialGradient>
+</defs>
+<rect width="160" height="120" fill="url(#st)"/>
+<g fill="none" stroke="#14121a" stroke-width="1.6" opacity=".8">${[0, 1, 2, 3, 4, 5].map((r) => `<path d="M0 ${r * 20 + 20}H160"/>` + [0, 1, 2, 3, 4].map((c) => `<path d="M${c * 36 + (r % 2 ? 18 : 0)} ${r * 20}v20"/>`).join('')).join('')}</g>
+<path d="M36 120V54Q36 18 80 18Q124 18 124 54V120Z" fill="#100c12"/><path d="M42 120V56Q42 26 80 26Q118 26 118 56V120Z" fill="url(#dk)"/>
+<path d="M36 54Q36 18 80 18Q124 18 124 54" fill="none" stroke="#6a6478" stroke-width="3"/>
+<g fill="url(#ir)">${[50, 62, 74, 86, 98, 110].map((x) => `<rect x="${x - 2.5}" y="${x < 60 || x > 100 ? 40 : 28}" width="5" height="${x < 60 || x > 100 ? 80 : 92}" rx="2"/>`).join('')}</g>
+<g fill="#3a3a44"><rect x="42" y="58" width="76" height="6" rx="2"/><rect x="42" y="96" width="76" height="6" rx="2"/></g>
+<path d="M70 66q10 14 20 0" fill="none" stroke="#9a9aa6" stroke-width="2.4" stroke-dasharray="4 3"/>
+<rect x="70" y="72" width="20" height="16" rx="3" fill="url(#au)"/><path d="M74 72v-6a6 6 0 0 1 12 0v6" fill="none" stroke="url(#au)" stroke-width="3"/><circle cx="80" cy="79" r="2.4" fill="#5a3a10"/><rect x="79" y="80" width="2" height="5" fill="#5a3a10"/>`);
+
+  /* 空房：月光由窗射入、半開嘅門透光、空凳、蜘蛛網 */
+  const E = X(`viewBox="0 0 160 120"><defs>
+<linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3050"/><stop offset="1" stop-color="#15121e"/></linearGradient>
+<linearGradient id="bm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".5"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="160" height="120" fill="url(#wl)"/><rect y="88" width="160" height="32" fill="#1e1828"/>
+<g stroke="#2a2238" stroke-width="1">${[0, 1, 2, 3, 4, 5, 6, 7].map((i) => `<path d="M${i * 22} 88l-10 32"/>`).join('')}</g>
+<rect x="100" y="22" width="40" height="66" fill="#0c0a12"/><path d="M104 26h20v62h-20z" fill="#ffe2a0" opacity=".85"/>
+<path d="M124 26l12 6v62l-12-6z" fill="#5a3e2a"/><circle cx="133" cy="60" r="1.6" fill="#e8bd62"/>
+<path d="M104 88L60 120H130L124 88z" fill="url(#bm)"/>
+<g fill="#0e0b14"><rect x="36" y="66" width="28" height="4" rx="1"/><rect x="38" y="70" width="3" height="20"/><rect x="59" y="70" width="3" height="20"/><rect x="38" y="44" width="3" height="24"/><rect x="38" y="44" width="22" height="3"/></g>
+<g fill="none" stroke="#c8c0e0" stroke-width=".6" opacity=".55"><path d="M0 0L26 18M0 10L22 22M10 0L24 20M0 0q12 8 4 18M0 0q16 2 18 10"/><path d="M4 6q4 2 8 0M7 12q5 2 10-1M12 18q5 1 10-2"/></g>`);
+
+  return { G, K, A, L, R, D, B, P, BK, C, E };
+})();
+(() => { const rs = document.documentElement.style, put = (pre, A) => { for (const k in A) rs.setProperty(pre + k, "url('data:image/svg+xml;charset=utf-8," + encodeURIComponent(A[k]).replace(/'/g, '%27') + "')"); }; put('--cd', CD_ART); put('--zd', ZD_ART); put('--mw', MW_ART); })();
 function wireCard(t, cls = '', attrs = '') {
   if (!t) return `<span class="wcd ${cls}" ${attrs}><span class="f3 bk"></span></span>`;
   return `<span class="wcd face ${t} ${cls}" ${attrs}><span class="f3 fr"><b class="wl">${WIRE[t][0]}</b></span><span class="f3 bk"></span></span>`;
@@ -4375,6 +4993,334 @@ const RULES_CD = `<div class="rules">
     <li>剪到炸彈，或者 4 輪完都未剪晒：<b>炸彈客贏</b>。</li>
     <li>贏嗰隊每人 +1 分，一局一局累計。</li></ul>
 </div>`;
+/* ---------- 大宅目擊者：畫面 ---------- */
+const MW_ROLE = { G: '住客', K: '兇手', A: '幫兇', L: '律師', R: '富豪', D: '偵探', B: '管家', P: '搗蛋鬼' };
+const MW_TIP = { G: '將兇手關入地窖', K: '唔好俾人關入地窖', A: '幫兇手避過地窖', L: '投票時出手：你投嗰間房嘅人，佢嗰票唔計', R: '投票時你一個人計兩票', D: '討論時出手：自己揀一間房關入地窖', B: '討論時出手：睇兩張冇用嘅卡，之後冇得投票', P: '俾人關入地窖就你一個人贏' };
+const MW_TEAM = { G: '客人陣營', K: '兇手陣營', P: '自己一邊' };
+const MW_RM = [['書房', 'book'], ['琴房', 'music'], ['溫室', 'leaf'], ['飯廳', 'dine'], ['畫廊', 'frame'], ['閣樓', 'attic'], ['鐘樓', 'clock'], ['撞球室', 'ball']];
+const MW_RC = ['#e0a868', '#8eb0ff', '#72d6a0', '#ff9494', '#d2a6f2', '#f0d070', '#72d8d8', '#ffaa70'];
+const MW_IC = {
+  book: '<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19"/>',
+  music: '<path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/>',
+  leaf: '<path d="M12 21v-8"/><path d="M12 13c0-4.5 3-7.5 8-7.5 0 4.5-3 7.5-8 7.5z"/><path d="M12 15.5C12 12 9.5 9.5 5 9.5c0 3.5 2.5 6 7 6z"/><path d="M8 21h8"/>',
+  dine: '<path d="M7 3v7M5 3v4.5a2 2 0 0 0 4 0V3M7 10v11"/><path d="M17 21V3c-2.2 1.5-3 4.5-3 8h3"/>',
+  frame: '<rect x="4" y="5" width="16" height="14" rx="1.5"/><path d="M4 16l5-5 4 4 2.5-2.5L20 17"/><circle cx="15.5" cy="9" r="1"/>',
+  attic: '<path d="M3 11l9-7 9 7"/><path d="M6 9.5V20h12V9.5"/><circle cx="12" cy="13" r="2.5"/><path d="M12 10.5v5M9.5 13h5"/>',
+  clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  ball: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="11" r="3.4"/><path d="M12 8.6v4.8"/>',
+  door: '<path d="M6 21V3h10v18"/><path d="M3 21h18"/><path d="M16 3l3 2v14l-3 2"/><path d="M13 12h.01"/>',
+  cell: '<path d="M5 21V10a7 7 0 0 1 14 0v11"/><path d="M9 21V5.5M15 21V5.5M5 21h14M5 14h14"/>',
+};
+const mwIc = (n) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${MW_IC[n] || ''}</svg>`;
+const mwAv = (r) => `<i class="mwav ${r}"></i>`;
+const mwRoomOf = (v, id) => (id === 'E' ? '空房' : MW_RM[(v.mx.rm[id] || 0) % 8][0]);
+const mwWho = (v, id) => (id === 'E' ? '空房' : `${esc(nameOf(v, id))}（${mwRoomOf(v, id)}）`);
+const mwCardOf = (v, t) => (t === 'E' ? v.mx.e : v.rl[t]);
+/* 卡：t ＝ 角色（冇 ＝ 背面）；by ＝ 卡背寫住邊個放（Bill 2026-11-23） */
+function mwCard(t, cls = '', attrs = '', by = '') {
+  return `<span class="mwcd ${cls}" ${attrs}><span class="mwci${t ? ' up' : ''}"><span class="mf ${t || ''}">${t ? `<b>${MW_ROLE[t]}</b>` : ''}</span><span class="mb">${by ? `<i>${esc(by)} 放</i>` : ''}</span></span></span>`;
+}
+/* 客人計：揀卡嗰陣可以放入邊間房（未揀卡、仲喺度嘅人；冇就空房）；偵探／投票可以揀邊間房 */
+function mwTgV(v, mode) {
+  const mx = v.mx, on = (id) => { const p = pOf(v, id); return p && p.on && !p.gone; };
+  if (mode === 'pick') { const l = Object.keys(mx.rm).filter((id) => !v.rl[id] && id !== mx.cur && on(id)); return l.length ? l : ['E']; }
+  if (mode === 'det' || mode === 'vote') {
+    const ids = Object.keys(v.rl), one = v.test && ids.filter(on).length === 1;
+    return ids.filter((t) => t !== ME.id || one).concat(mx.e ? ['E'] : []);
+  }
+  return [];
+}
+/* 大宅平面圖：每人一間房（房名、圖示、卡、邊個放卡入嚟）＋ 空房 ＋（討論之後）地窖 */
+function mwBoard(v, mode, hold) {
+  const mx = v.mx, end = v.ph === 'end' && !hold, ids = Object.keys(mx.rm).sort((a, b) => mx.rm[a] - mx.rm[b]);
+  const tg = new Set(mwTgV(v, mode)), dragOver = S.mwDrag && S.mwDrag.on ? S.mwDrag.over : null;
+  const lock = end ? mx.lock : [], tl = end && mx.tally ? mx.tally : {};
+  const vchip = (t) => (end && tl[t] ? `<span class="mwvc${lock.includes(t) ? ' top' : ''}">${tl[t]} 票</span>` : '');
+  const myV = v.ph === 'vote' ? mx.vt[ME.id] : null;
+  const ev = mx.ev && mx.ev.t === 'pass' ? mx.ev : null;
+  const fa = ev ? an('mp' + v.gid + '-' + ev.k, 1200) : '';
+  const tiles = ids.map((id) => {
+    const p = pOf(v, id), i = mx.rm[id], R = MW_RM[i % 8], log = mx.log[id] || {}, me = id === ME.id;
+    const r = v.rl[id], cur = v.ph === 'pick' && mx.cur === id;
+    let slot;
+    if (cur) {
+      const got = log.from ? mwCard(null, 'in' + (fa && ev.to === id ? ' land' : ''), fa && ev.to === id ? `style="${fa}"` : '', nameOf(v, log.from)) : '';
+      slot = me ? `${got}<span class="mwthk">${ic('eye')}</span>` : `${got}${mwCard(null, 'drw')}${log.from ? '' : mwCard(null, 'drw d2')}`;
+    } else if (r) {
+      const up = end || mx.rv[id], q = mx.rv[id] && !end ? anA('mr' + v.gid + '-' + id, 900, 'rvl') : { c: '', s: '' };
+      slot = mwCard(up ? r : null, q.c, q.s);
+    } else slot = '<span class="mwemp"></span>';
+    const by = log.from && !cur ? `<div class="mwby">${av(pOf(v, log.from), 'xs')}<span>${esc(nameOf(v, log.from))} 放</span></div>` : '';
+    const isT = tg.has(id), act = isT && mode ? ` data-act="mroom" data-x="${id}"` : '';
+    const cls = `mwrm${me ? ' me' : ''}${cur ? ' cur' : ''}${isT ? ' tg' : ''}${dragOver === id ? ' hov' : ''}${myV === id ? ' vtd' : ''}${lock.includes(id) ? ' lock' : ''}${p && !p.on ? ' off' : ''}${mx.rv[id] && !end ? ' rv' : ''}`;
+    return `<div class="${cls}" data-mwroom="${id}" data-pid="${id}" style="--rc:${MW_RC[i % 8]}"${act}><div class="mwrh"><i class="mwri">${mwIc(R[1])}</i><b>${R[0]}</b>${vchip(id)}</div><div class="mwslot">${slot}</div><div class="mwwho">${av(p, 'xs')}<span>${esc(p ? p.n : '?')}</span></div>${by}${lock.includes(id) ? '<i class="mwbars"></i>' : ''}${myV === id ? `<i class="mwmine">${ic('check')}</i>` : ''}</div>`;
+  }).join('');
+  const eT = tg.has('E'), eAct = eT && mode ? ' data-act="mroom" data-x="E"' : '';
+  const eSlot = mx.e ? mwCard(end ? mx.e : null, fa && ev.to === 'E' ? 'land' : '', fa && ev.to === 'E' ? `style="${fa}"` : '', nameOf(v, mx.eBy)) : '<span class="mwemp"></span>';
+  const eTile = `<div class="mwrm ex${eT ? ' tg' : ''}${dragOver === 'E' ? ' hov' : ''}${myV === 'E' ? ' vtd' : ''}${lock.includes('E') ? ' lock' : ''}" data-mwroom="E" style="--rc:#c8c0e0"${eAct}><div class="mwrh"><i class="mwri">${mwIc('door')}</i><b>空房</b>${vchip('E')}</div><div class="mwslot">${eSlot}</div><div class="mwwho"><span>${mx.e ? esc(nameOf(v, mx.eBy)) + ' 放' : '最後一張'}</span></div>${lock.includes('E') ? '<i class="mwbars"></i>' : ''}${myV === 'E' ? `<i class="mwmine">${ic('check')}</i>` : ''}</div>`;
+  let third;
+  if (v.ph === 'pick') third = `<div class="mwrm dk"><div class="mwrh"><i class="mwri">${ic('dice')}</i><b>牌堆</b></div><div class="mwslot">${mx.deck.length ? `<span class="mwpile">${mwCard(null)}${mx.deck.length > 1 ? mwCard(null, 'p2') : ''}${mx.deck.length > 2 ? mwCard(null, 'p3') : ''}</span>` : '<span class="mwemp"></span>'}</div><div class="mwwho"><span>剩 ${mx.deck.length} 張</span></div></div>`;
+  else third = `<div class="mwrm cel${end && lock.length ? ' full' : ''}"><div class="mwrh"><i class="mwri">${mwIc('cell')}</i><b>地窖</b></div><div class="mwslot">${end && lock.length ? lock.slice(0, 3).map((t) => mwCard(mwCardOf(v, t), 'sm2')).join('') : ''}</div><div class="mwwho"><span>${end ? (lock.length ? `關咗 ${lock.length} 個` : '冇人') : '關兇手'}</span></div></div>`;
+  return `<div class="mwbd${v.ph === 'talk' || v.ph === 'vote' ? ' storm' : ''}${mode ? ' m-' + mode : ''}">${v.ph === 'talk' || v.ph === 'vote' ? '<i class="mwrain"></i><i class="mwflash"></i>' : ''}${tiles}${eTile}${third}</div>`;
+}
+/* 你嘅目擊：抽到、收到、留低、放咗去邊（管家出手後再加冇用嘅卡） */
+function mwMemo(v) {
+  const mx = v.mx, L = mx.log[ME.id] || {}, out = [];
+  const nm = (t) => `${mwAv(t)}<b>${MW_ROLE[t]}</b>`;
+  if (L.from) out.push(`收到 ${nm(L.got)}（${esc(nameOf(v, L.from))} 放）`);
+  if (L.drew) out.push(`抽到 ${L.drew.map(nm).join(' ')}`);
+  if (L.pass) out.push(`放咗 ${nm(L.pass)} 入${L.to === 'E' ? '空房' : ` ${esc(nameOf(v, L.to))} 嘅${mwRoomOf(v, L.to)}`}`);
+  if (mx.bu === ME.id) out.push(`冇用嘅卡 ${mx.ab.map(nm).join(' ')}`);
+  return out.length ? `<ul class="memo mw">${out.map((t) => `<li>${t}</li>`).join('')}</ul>` : '';
+}
+function vMwCard(v) {
+  const r = v.rl[ME.id]; if (!r) return '';
+  const side = mwSide(r);
+  const back = `<div class="rc-b cdr mw ${side}"><i class="cdart mw${r}"></i><div class="cdtx"><div class="rl">${MW_ROLE[r]}</div><div class="mwtm ${side}">${MW_TEAM[side]}</div><div class="tp">${MW_TIP[r]}</div>${mwMemo(v)}</div></div>`;
+  const front = `<div class="rc-f cdf mwf"><div class="emb"></div><div class="rc-t">撳住睇身份同目擊</div></div>`;
+  return `<div class="rc mwrc${S.hold ? ' show' : ''}" data-hold><div class="rc-i">${front}${back}</div></div>`;
+}
+/* 今局有咩卡（公開）：兇手、特別角色、住客；有管家就講明有 2 張冇用 */
+function mwComp(v) {
+  const c = {}; v.mx.comp.forEach((t) => { c[t] = (c[t] || 0) + 1; });
+  const chips = Object.keys(c).sort(mwSort).map((t) => `<span class="mwcc ${mwSide(t)}">${mwAv(t)}${MW_ROLE[t]}${c[t] > 1 ? `<small>×${c[t]}</small>` : ''}</span>`).join('');
+  return `<div class="mwcomp">${chips}</div>${v.mx.ab.length ? '<div class="tip" style="margin-top:-2px">入面有 2 張冇用（管家睇到）</div>' : ''}`;
+}
+/* 揀卡：兩張手牌，拖一張入房（或者撳卡再撳房），留低嗰張係你嘅身份 */
+function mwHand(v) {
+  const mx = v.mx, L = mx.log[ME.id] || {}, q = anA('mh' + v.gid + '-' + mx.tk, 1000, 'deal');
+  const toE = mwTgV(v, 'pick')[0] === 'E';
+  const cards = mx.hand.map((t, i) => `<div class="mwhc${S.mwSel === i ? ' sel' : ''}" data-mwc="${i}" style="--i:${i}">${mwCard(t, 'big')}<small>${i === 0 && L.from ? `${esc(nameOf(v, L.from))} 放` : '新抽'}</small></div>`).join('');
+  return `<div class="mwhand${q.c}"${q.s}><div class="mwht">${S.mwSel != null ? `撳一間${toE ? '' : '發光嘅'}房放入去` : `拖一張入${toE ? '空房' : '房'}・留低嗰張係你`}</div><div class="mwhs">${cards}</div></div>`;
+}
+const MW_STEPS = [['pick', '揀卡'], ['talk', '討論'], ['vote', '投票']];
+function vPlayMw(v, hold) {
+  const mx = v.mx, me = ME.id, meIn = mx.rm[me] != null, r = v.rl[me], host = v.host === me, ph = hold ? 'vote' : v.ph;
+  const n = Object.keys(mx.rm).length;
+  let h = `<div class="rh"><div class="rn">${ph === 'pick' ? `揀卡 <b>${Object.keys(v.rl).length + 1}</b> ／ ${n}` : ph === 'talk' ? '暴風雨夜' : '投票'}</div><div class="ichip">${n} 人・${mx.comp.length} 張卡</div></div>${stepsHtml(MW_STEPS, ph)}`;
+  if (ph === 'pick') {
+    const myTurn = mx.cur === me, cp = pOf(v, mx.cur);
+    const pulse = anA('mc' + v.gid + '-' + mx.tk, 700, 'pulse');
+    h += `<div class="holdbar mwhb${myTurn ? ' me' : ''}${pulse.c}"${pulse.s}><span class="sc2">${myTurn ? ic('eye') : av(cp)}</span><div><div class="t1">${myTurn ? '到你揀卡！' : `${esc(cp ? cp.n : '')} 揀緊卡`}</div></div></div>`;
+    h += mwBoard(v, myTurn ? 'pick' : '');
+    const L = mx.log[me] || {};
+    if (meIn && L.pass && !myTurn) h += `<div class="mwsay">${mwAv(L.pass)}<div><small>同大家講（可以講大話）</small><b>「我見到${MW_ROLE[L.pass]}入咗${L.to === 'E' ? '空房' : mwRoomOf(v, L.to)}！」</b></div></div>`;
+    if (myTurn) h += mwHand(v);
+    else if (meIn && r) h += '<div class="sh"><span>你嘅身份</span></div>' + vMwCard(v);
+    else if (!meIn) h += '<div class="wait">觀戰中・下一局加入</div>';
+    return h;
+  }
+  if (ph === 'talk') {
+    const det = S.mwMode === 'D' && r === 'D' && !mx.dv;
+    h += `<div class="tmr">${ring('dl', v.dt0 || 1)}<div style="flex:1;min-width:0"><div class="tl">討論</div><div class="ts">${det ? '撳一間房關入地窖' : '講你見到咩・可以講大話'}</div></div>${host ? '<button class="sb gold" data-act="mskip">投票</button>' : ''}</div>`;
+    h += mwBoard(v, det ? 'det' : '');
+    if (r === 'D' && !mx.dv) h += det ? '<button class="btn ghost" data-act="mdetx">取消</button>' : `<button class="btn red big mwab" data-act="mdet">${mwAv('D')}偵探出手</button>`;
+    if (r === 'B' && !mx.bu) h += `<button class="btn gold big mwab" data-act="mbut">${mwAv('B')}管家出手</button>`;
+    if (mx.bu === me) h += `<div class="mwabx"><small>冇用嘅卡</small><div>${mx.ab.map((t) => mwCard(t, 'big')).join('')}</div></div>`;
+    h += '<div class="sh"><span>今局嘅卡</span></div>' + mwComp(v);
+    if (meIn && r) h += '<div class="sh"><span>你嘅身份同目擊</span></div>' + vMwCard(v);
+    return h;
+  }
+  // vote（同埋完場前嘅關地窖動畫）
+  const voters = Object.keys(v.rl).filter((id) => { const p = pOf(v, id); return p && p.on && !p.gone && mx.bu !== id; });
+  const can = !hold && voters.includes(me) && !mx.vt[me];
+  h += `<div class="tmr">${hold ? '<div class="ring"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/></svg><b>0</b></div>' : ring('dl', MW_VOTE_MS)}<div style="flex:1;min-width:0"><div class="tl">兇手喺邊間房？</div><div class="ts">${mx.vt[me] ? '已投' : mx.bu === me ? '管家冇得投' : r === 'R' ? '你計兩票' : '最多票嘅房關入地窖'}</div></div>${host && !hold ? '<button class="sb gold" data-act="mskip">開票</button>' : ''}</div>`;
+  if (can && r === 'L') h += `<button class="mwlaw${S.mwLaw ? ' on' : ''}" data-act="mlaw">${mwAv('L')}<span><b>律師出手</b><small>${S.mwLaw ? '你投嗰間房嘅人，佢嗰票唔計' : '撳一下開'}</small></span><i class="ck">${S.mwLaw ? ic('check') : ''}</i></button>`;
+  h += mwBoard(v, can ? 'vote' : '', hold);
+  h += `<div class="sh"><span>已投票</span><small>${voters.filter((id) => mx.vt[id]).length}／${voters.length}</small></div><div class="okl">${okChips(v, voters, mx.vt)}</div>`;
+  if (meIn && r) h += '<div class="sh"><span>你嘅身份同目擊</span></div>' + vMwCard(v);
+  return h;
+}
+function vEndMw(v) {
+  const mx = v.mx, host = v.host === ME.id;
+  const W = { G: ['客人贏！', 'mg', 'G'], K: ['兇手贏！', 'mk', 'K'], P: ['搗蛋鬼贏！', 'mp', 'P'] }[mx.win];
+  const kid = Object.keys(v.rl).find((id) => v.rl[id] === 'K');
+  const who = mx.lock.map((t) => `<b>${t === 'E' ? '空房' : esc(nameOf(v, t))}</b>（${MW_ROLE[mwCardOf(v, t)]}）`).join('、');
+  const why = !mx.win ? '' : mx.why === 'det' ? `偵探 ${esc(nameOf(v, mx.dv.by))} 出手：${who} 關入地窖` : mx.lock.length ? `${who} 關入地窖` : '冇人投票，冇人關入地窖';
+  const kw = kid ? `兇手係 <b>${esc(nameOf(v, kid))}</b>（${mwRoomOf(v, kid)}）` : '兇手張卡喺空房';
+  const head = W ? `<div class="cdwin mw ${W[1]}"><i class="rays"></i><i class="cdart mw${W[2]}"></i><div class="wt"><div class="big">${W[0]}</div><div class="tip">${why}</div><div class="who2">${kw}</div></div></div>` : `<div class="res"><div class="big" style="font-size:36px">提早完場</div><div class="tip">${kw}</div></div>`;
+  const tl = mx.tally || {};
+  const rows = ranked(v).map(({ p, rank }) => {
+    const t = v.rl[p.id], d = v.dt[p.id], nv = tl[p.id] || 0;
+    const tags = t ? `<span class="rtag sm ${mwSide(t) === 'G' ? 'C' : 'U'}">${MW_ROLE[t]}</span>` : '';
+    const ex = [];
+    if (nv) ex.push(`${nv} 票`);
+    if (mx.law === p.id && mx.nul) ex.push(`令 ${esc(nameOf(v, mx.nul))} 嗰票唔計`);
+    if (t === 'R' && mx.vt[p.id]) ex.push('計兩票');
+    return `<div class="pr${p.id === ME.id ? ' me' : ''}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}${ex.length ? `<small class="outs mwo">${ex.join('・')}</small>` : ''}</span>${tags}${d ? `<span class="dl p">+${d}</span>` : ''}<span class="sc">${p.sc} 分</span></div>`;
+  }).join('');
+  const abx = mx.ab.length ? `<div class="sh"><span>冇用嘅卡</span></div><div class="mwabx end"><div>${mx.ab.map((t) => mwCard(t, 'big')).join('')}</div></div>` : '';
+  return `${head}${mwBoard(v, '')}${abx}
+    <div class="sh"><span>身份同累計分數</span></div><div class="plist">${rows}</div>
+    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
+    <button class="btn ghost" data-act="leave">離開房間</button>`;
+}
+const RULES_MW = `<div class="rules">
+  <h4>故事</h4><p>暴風雨夜，半山大宅嘅主人俾人殺咗。兇手就喺客人入面。每人守住大宅一間房，大家要搵出兇手，將佢關入地窖。</p>
+  <h4>卡</h4><p>卡數 ＝ 人數 + 1：一定有<b>兇手</b>，其他係房主揀嘅特別角色，唔夠就補<b>住客</b>。今局有咩卡全部人都睇到，但唔知喺邊個手上。房主揀咗<b>管家</b>就再多 2 張卡，開局抽走唔用（兇手一定用）。</p>
+  <h4>揀卡（唔限時）</h4><ol>
+    <li>隨機一個人先：抽 2 張，留 1 張做自己身份，將另一張拖入一個未揀卡嘅人間房。</li>
+    <li>全部人見到張卡背寫住邊個放；放卡嘅人口講「我見到 XX 入咗 YY 房」（可以講大話）。</li>
+    <li>收到卡嘅人再抽 1 張，喺兩張入面留 1 張，再將另一張放入另一個未揀卡嘅人間房。</li>
+    <li>最後一個人將剩低嗰張放入<b>空房</b>。</li></ol>
+  <h4>討論（5 或者 10 分鐘）</h4><p>講你見到咩、收到咩，可以講大話。房主可以隨時開始投票。</p>
+  <h4>投票（1 分鐘）</h4><p>每人投一間房（其他人間房或者空房）。最多票嘅房（平票就全部）入面張卡關入<b>地窖</b>。房主可以隨時開票。</p>
+  <h4>角色</h4><ul>
+    <li><b>住客</b>：冇能力。客人陣營。</li>
+    <li><b>兇手</b>：唔好俾人關入地窖。<b>幫兇</b>同兇手一邊。</li>
+    <li><b>律師</b>：投票時可以出手，佢投嗰間房嘅人，嗰個人嘅票唔計。</li>
+    <li><b>富豪</b>：投票時一個人計兩票。</li>
+    <li><b>偵探</b>：討論時可以出手，自己揀一間房即刻關入地窖，遊戲即刻完。</li>
+    <li><b>管家</b>：討論時可以出手，睇兩張冇用嘅卡，之後冇得投票。</li>
+    <li><b>搗蛋鬼</b>：自己一邊，俾人關入地窖就自己一個人贏。</li></ul>
+  <h4>勝負</h4><ul>
+    <li>地窖有搗蛋鬼：<b>搗蛋鬼</b>一個人贏。</li>
+    <li>否則地窖有兇手：<b>客人陣營</b>（住客、律師、富豪、偵探、管家）贏。</li>
+    <li>兇手冇俾人關：<b>兇手同幫兇</b>贏。</li>
+    <li>贏嘅每人 +1 分，一局一局累計。</li></ul>
+</div>`;
+/* 放卡飛行（2026-11-23）：張卡（背面寫住邊個放）由放卡嘅人（或者自己拖到嘅位）呈弧線飛入目標房，半空轉一圈，落地閃光 */
+function mwFly(v, ev) {
+  const H = innerHeight, tgt = $(`.mwrm[data-mwroom="${ev.to}"] .mwslot`), mine = ev.by === ME.id, g = mine && S.mwGhost ? S.mwGhost.el : null;
+  const pop = () => { const tr = $(`.mwrm[data-mwroom="${ev.to}"]`); if (tr) { const b = document.createElement('i'); b.className = 'mwpop'; tr.appendChild(b); setTimeout(() => b.remove(), 700); } sfx('tick'); };
+  if (g && tgt) {
+    // 自己拖落去嗰張：由停喺房上面嘅位縮入房
+    const B = tgt.getBoundingClientRect();
+    S.mwGhost = null;
+    g.animate([{ transform: getComputedStyle(g).transform }, { transform: `translate3d(${B.left + B.width / 2 - 54}px,${B.top + B.height / 2 - 67.5}px,0) scale(${36 / 108})` }], { duration: 320, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+    sfx('flick');
+    setTimeout(() => { g.remove(); pop(); }, 600);
+    return;
+  }
+  const sr = $(`.mwrm[data-mwroom="${ev.by}"] .mwslot`);
+  const A = mine && S.mwFrom ? S.mwFrom : sr ? sr.getBoundingClientRect() : null;
+  S.mwFrom = null;
+  if (!tgt || !A) { mwGhostGone(); return; }
+  const B = tgt.getBoundingClientRect();
+  const el = document.createElement('div'); el.className = 'mwfly';
+  el.innerHTML = mwCard(null, 'big', '', nameOf(v, ev.by));
+  document.body.appendChild(el);
+  mwGhostGone();
+  const w = 108, x0 = A.left + A.width / 2 - w / 2, y0 = A.top + A.height / 2 - 67.5, x1 = B.left + B.width / 2 - w / 2, y1 = B.top + B.height / 2 - 67.5;
+  const k0 = Math.min(1.1, A.width / w), k1 = 36 / w, mx = (x0 + x1) / 2, my = Math.min(y0, y1) - Math.min(140, H * 0.18);
+  el.animate([
+    { transform: `translate3d(${x0}px,${y0}px,0) scale(${k0}) rotate(0deg)`, easing: 'cubic-bezier(.3,.1,.4,1)' },
+    { transform: `translate3d(${mx}px,${my}px,0) scale(${(k0 + k1) / 2 + 0.15}) rotate(${x1 < x0 ? -200 : 200}deg)`, offset: 0.5, easing: 'cubic-bezier(.5,0,.25,1)' },
+    { transform: `translate3d(${x1}px,${y1}px,0) scale(${k1}) rotate(${x1 < x0 ? -360 : 360}deg)` }
+  ], { duration: 640, fill: 'forwards' });
+  sfx('flick');
+  setTimeout(() => { el.remove(); pop(); }, 640);
+}
+/* 拖卡用嘅影子卡 */
+function mwGhostGone() { if (S.mwGhost) { const e = S.mwGhost.el; S.mwGhost = null; if (e) e.remove(); } }
+function mwGhostBack() {
+  const gh = S.mwGhost; if (!gh) return;
+  S.mwGhost = null;
+  const hc = $(`.mwhc[data-mwc="${gh.i}"]`), r = hc && hc.getBoundingClientRect(), A = gh.el.getBoundingClientRect();
+  if (!r) { gh.el.remove(); return; }
+  gh.el.animate([{ transform: `translate3d(${A.left}px,${A.top}px,0) scale(${A.width / 108})` }, { transform: `translate3d(${r.left}px,${r.top}px,0) scale(${r.width / 108})` }], { duration: 260, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'forwards' });
+  setTimeout(() => { gh.el.remove(); render(); }, 270);
+}
+function mwPassAsk(i, to) {
+  const v = S.view; if (!v || !v.mx || v.ph !== 'pick' || v.mx.cur !== ME.id) return;
+  const give = v.mx.hand[i], keep = v.mx.hand[1 - i], hc = $(`.mwhc[data-mwc="${i}"]`);
+  S.mwFrom = !S.mwGhost && hc ? hc.getBoundingClientRect() : null;
+  confirmBox(`將${MW_ROLE[give]}放入${to === 'E' ? '空房' : ` ${esc(nameOf(v, to))} 嘅${mwRoomOf(v, to)}`}？<small>你留低${MW_ROLE[keep]}做身份。</small>`, '放入', () => { if (S.mwGhost) S.mwGhost.ok = Date.now(); S.mwSel = null; act('mpass', [i, to]); });
+}
+/* 關入地窖（2026-11-23）：閃電白閃 → 被關嘅卡由房飛去中間、半空翻開（插畫）→ 鐵閘由上面閘落（震畫面、鐵聲）
+ * → 大字「關入地窖！」→ 結果（綠：捉到兇手；紅：兇手走甩；橙：搗蛋鬼得逞）→ 3 秒收（下面轉做結果畫面） */
+function mwLockFx(v) {
+  cdT.forEach(clearTimeout); cdT = [];
+  const old = $('#cdfx'); if (old) old.remove();
+  const mx = v.mx, at = (ms, fn) => cdT.push(setTimeout(fn, ms)), L = mx.lock.slice(0, 3), det = mx.why === 'det';
+  const res = { G: ['捉到兇手！', 'ok'], K: ['兇手走甩！', 'bad'], P: ['搗蛋鬼得逞！', 'pk'] }[mx.win] || ['', ''];
+  const el = document.createElement('div'); el.id = 'cdfx'; el.className = 'M ' + res[1] + (L.length ? '' : ' none');
+  const lines = Array.from({ length: 12 }, (_, i) => `<i style="--a:${Math.round(i * 30 + cdR(0, 22))}deg;--w:${Math.round(cdR(70, 150))}px;--dl:${Math.round(cdR(60, 260))}ms"></i>`).join('');
+  const cards = L.map((t, j) => `<div class="card3 mwc3" style="--j:${j - (L.length - 1) / 2}">${mwCard(mwCardOf(v, t), 'xl')}<b class="mwnm">${t === 'E' ? '空房' : esc(nameOf(v, t))}</b></div>`).join('');
+  const sub = L.length ? L.map((t) => `${t === 'E' ? '空房' : esc(nameOf(v, t))}（${MW_ROLE[mwCardOf(v, t)]}）`).join('、') : '冇人夠票';
+  el.innerHTML = `<b class="dim"></b><b class="mwfl"></b>${det ? '<b class="mwlens"></b>' : ''}<b class="lines">${lines}</b><b class="halo"></b>${cards}<b class="mwgate"></b><div class="cap"><b>${L.length ? '關入地窖！' : '冇人關入地窖'}</b><small>${sub}</small></div><div class="cap c2"><b>${res[0]}</b></div>`;
+  document.body.appendChild(el);
+  sfx('thunder');
+  const W = innerWidth, H = innerHeight, cy = H * 0.42, d0 = det ? 380 : 120;
+  el.querySelectorAll('.mwc3').forEach((c, j) => {
+    const t = L[j], row = $(`.mwrm[data-mwroom="${t}"] .mwslot`), rr = row && row.getBoundingClientRect();
+    const off = (j - (L.length - 1) / 2) * Math.min(150, W / (L.length + 0.4)), sc = L.length > 1 ? 0.78 : 1;
+    const sx = rr ? rr.left + rr.width / 2 - W / 2 : off, sy = rr ? Math.max(-H, Math.min(H, rr.top + rr.height / 2 - cy)) : H * 0.4;
+    c.animate([
+      { transform: `translate3d(${sx}px,${sy}px,0) scale(.2) rotateY(180deg) rotateZ(-20deg)`, easing: 'cubic-bezier(.3,.6,.35,1)' },
+      { transform: `translate3d(${(sx + off) * 0.4}px,${sy * 0.3 - 60}px,0) scale(${sc * 0.85}) rotateY(150deg) rotateZ(-6deg)`, offset: 0.45, easing: 'cubic-bezier(.2,.75,.3,1)' },
+      { transform: `translate3d(${off}px,0,0) scale(${sc * 1.1}) rotateY(-14deg) rotateZ(2deg)`, offset: 0.82, easing: 'cubic-bezier(.35,0,.3,1)' },
+      { transform: `translate3d(${off}px,0,0) scale(${sc}) rotateY(0deg) rotateZ(0deg)` }
+    ], { duration: 760, delay: d0 + j * 90, fill: 'both' });
+  });
+  if (L.length) at(d0 + 120, () => sfx('flick'));
+  at(d0 + 980, () => { shakeApp(); sfx('clank'); });
+  at(d0 + 1500, () => { cdBurst(el, el.querySelector('.mwgate'), mx.win === 'G' ? 'D' : 'X', mx.win === 'G' ? ['#8ff0c4', '#ffffff', '#ffe08a', '#3fe39d'] : mx.win === 'P' ? ['#ffd28a', '#ffffff', '#ff8a3c', '#7ae07a'] : ['#ff8a9a', '#ffffff', '#ffb36b']); sfx(mx.win === 'G' ? 'good' : 'bad'); });
+  at(2900, () => el.classList.add('out'));
+  at(3350, () => el.remove());
+}
+/* 管家出手：自己部機兩張冇用嘅卡喺中間翻開 */
+function mwButFx(v) {
+  cdT.forEach(clearTimeout); cdT = [];
+  const old = $('#cdfx'); if (old) old.remove();
+  const at = (ms, fn) => cdT.push(setTimeout(fn, ms));
+  const el = document.createElement('div'); el.id = 'cdfx'; el.className = 'M B';
+  el.innerHTML = `<b class="dim"></b><b class="halo"></b>${v.mx.ab.map((t, j) => `<div class="card3 mwc3" style="--j:${j - 0.5}">${mwCard(t, 'xl')}</div>`).join('')}<div class="cap"><b>冇用嘅卡</b><small>呢兩個角色今局冇人做</small></div>`;
+  document.body.appendChild(el);
+  const W = innerWidth;
+  el.querySelectorAll('.mwc3').forEach((c, j) => {
+    const off = (j - 0.5) * Math.min(150, W / 2.4);
+    c.animate([
+      { transform: 'translate3d(0,220px,0) scale(.3) rotateY(180deg)', easing: 'cubic-bezier(.2,.75,.3,1)' },
+      { transform: `translate3d(${off}px,0,0) scale(.86) rotateY(-12deg)`, offset: 0.78, easing: 'cubic-bezier(.35,0,.3,1)' },
+      { transform: `translate3d(${off}px,0,0) scale(.78) rotateY(0deg)` }
+    ], { duration: 720, delay: j * 120, fill: 'both' });
+  });
+  sfx('swish');
+  at(2600, () => el.classList.add('out'));
+  at(3050, () => el.remove());
+}
+/* 大宅目擊者：拖卡入房（Bill 2026-11-23）。撳住手牌拖去發光嘅房；冇拖（撳一下）＝ 揀咗張卡，再撳房 */
+document.addEventListener('pointerdown', (e) => {
+  const c = e.target.closest && e.target.closest('[data-mwc]'), v = S.view;
+  if (!c || !v || v.g !== 'mw' || v.ph !== 'pick' || !v.mx || v.mx.cur !== ME.id || S.mwGhost || S.modal) return;
+  const cd = c.querySelector('.mwcd') || c, r = cd.getBoundingClientRect();
+  S.mwDrag = { i: +c.dataset.mwc, x0: e.clientX, y0: e.clientY, dx: e.clientX - r.left, dy: e.clientY - r.top, on: false, over: null, el: null, src: c };
+  try { c.setPointerCapture(e.pointerId); } catch (er) { /* 略過 */ }
+});
+window.addEventListener('pointermove', (e) => {
+  const d = S.mwDrag; if (!d) return;
+  if (!d.on) {
+    if (Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 8) return;
+    const v = S.view; if (!v || !v.mx || !v.mx.hand[d.i]) { S.mwDrag = null; return; }
+    d.on = true; S.mwSel = null;
+    const g = document.createElement('div'); g.className = 'mwghost';
+    g.innerHTML = mwCard(v.mx.hand[d.i], 'big');
+    document.body.appendChild(g); d.el = g; d.src.classList.add('drag');
+    $$('.mwhc.sel').forEach((x) => x.classList.remove('sel'));
+    sfx('flick');
+  }
+  d.el.style.transform = `translate3d(${e.clientX - d.dx}px,${e.clientY - d.dy}px,0) scale(1.06) rotate(${Math.max(-12, Math.min(12, (e.clientX - d.x0) / 10)).toFixed(1)}deg)`;
+  const t = document.elementFromPoint(e.clientX, e.clientY), tr = t && t.closest && t.closest('.mwrm.tg');
+  const over = tr ? tr.dataset.mwroom : null;
+  if (over !== d.over) { $$('.mwrm.hov').forEach((x) => x.classList.remove('hov')); d.over = over; if (tr) { tr.classList.add('hov'); sfx('tick'); } }
+});
+function mwUp() {
+  const d = S.mwDrag; if (!d) return;
+  S.mwDrag = null;
+  if (!d.on) { S.mwSel = S.mwSel === d.i ? null : d.i; render(); return; }
+  $$('.mwrm.hov').forEach((x) => x.classList.remove('hov'));
+  const g = d.el;
+  if (d.over) {
+    const slot = $(`.mwrm[data-mwroom="${d.over}"] .mwslot`), B = slot && slot.getBoundingClientRect();
+    S.mwGhost = { el: g, i: d.i, to: d.over, ok: 0 };
+    if (B) g.animate([{ transform: g.style.transform }, { transform: `translate3d(${B.left + B.width / 2 - 54}px,${B.top + B.height / 2 - 67.5 - 24}px,0) scale(.6) rotate(-6deg)` }], { duration: 260, easing: 'cubic-bezier(.2,.8,.3,1.2)', fill: 'forwards' });
+    render();
+    mwPassAsk(d.i, d.over);
+  } else { S.mwGhost = { el: g, i: d.i }; render(); mwGhostBack(); }
+}
+window.addEventListener('pointerup', mwUp);
+window.addEventListener('pointercancel', mwUp);
 /* ---------- 邊個偷咗蛋撻：畫面 ---------- */
 const TT_ROLE = { S: '夜更伙記', T: '偷撻賊', A: '共犯' };
 const PIPS = { 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8] };
@@ -4730,9 +5676,9 @@ function closeModal() { S.modal = null; renderModal(); }
 function confirmBox(text, ok, fn, opts = {}) { openModal({ type: 'confirm', text, ok, fn, bad: !!opts.bad, ph: S.view ? S.view.ph : null }); }
 function renderModal() {
   const el = $('#modal'), m = S.modal;
-  if (!m) { el.classList.remove('show'); el.innerHTML = ''; el.dataset.mt = ''; S.mh = ''; return; }
+  if (!m) { el.classList.remove('show'); el.innerHTML = ''; el.dataset.mt = ''; S.mh = ''; if (S.mwGhost && !S.mwGhost.ok) setTimeout(() => { if (S.mwGhost && !S.mwGhost.ok && !S.modal) mwGhostBack(); }, 0); return; }
   let h = '';
-  if (m.type === 'rules') h = m.g === 'cr' ? `<h3>蟹仔大賽・玩法</h3>${RULES_CR}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
+  if (m.type === 'rules') h = m.g === 'mw' ? `<h3>大宅目擊者・玩法</h3>${RULES_MW}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cr' ? `<h3>蟹仔大賽・玩法</h3>${RULES_CR}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
   else if (m.type === 'confirm') h = `<div class="cfm">${m.text}</div><div class="row"><button class="btn ghost" data-act="mclose">取消</button><button class="btn ${m.bad ? 'red' : 'gold'}" data-act="mok">${m.ok}</button></div>`;
   else if (m.type === 'join') {
     const c = S.kp;
@@ -4770,11 +5716,11 @@ function renderModal() {
     const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}${p.gone ? '<span class="tag">走咗</span>' : !p.on ? '<span class="tag">離線</span>' : ''}<span class="sc">${v.g === 'cr' ? '$' + p.sc : p.sc + ' 分'}</span></div>`).join('');
     const wt = v.wt.length ? `<div class="sh"><span>等緊下一局</span><small>${v.wt.length} 人</small></div><div class="plist">${v.wt.map((p) => `<div class="pr">${av(p)}<span class="nm">${esc(p.n)}</span></div>`).join('')}</div>` : '';
     let hb = '';
-    const wd = v.g === 'wd', xs = v.g === 'xs', cd = v.g === 'cd', tt = v.g === 'tt', cr = v.g === 'cr';
+    const wd = v.g === 'wd', xs = v.g === 'xs', cd = v.g === 'cd', tt = v.g === 'tt', cr = v.g === 'cr', mw = v.g === 'mw';
     if (host && v.ph === 'role') hb += `<button class="btn ghost" data-act="force">${tt ? '唔等，即刻天黑' : cd ? '唔等，即刻開始' : wd ? '唔等，即刻開始描述' : '唔等，即刻出題'}</button>`;
-    if (host && (cr ? CR_PH : tt ? TT_PH : cd ? CD_PH : xs ? XS_PH : wd ? WD_PH : PLAY_PH).includes(v.ph)) hb += `<button class="btn ghost" data-act="redeal">${cr ? '重新開始呢場（全部人返 $3）' : tt ? '重新開始呢局（重新派身份同骰）' : cd ? '重新開始呢局（重新派身份同線）' : xs ? '重新派呢關（換數字同題目）' : wd ? '重新派詞語（呢局重新開始）' : '重新派呢輪（換題同身份）'}</button>`;
+    if (host && (mw ? MW_PH : cr ? CR_PH : tt ? TT_PH : cd ? CD_PH : xs ? XS_PH : wd ? WD_PH : PLAY_PH).includes(v.ph)) hb += `<button class="btn ghost" data-act="redeal">${mw ? '重新開始呢局（重新傳卡）' : cr ? '重新開始呢場（全部人返 $3）' : tt ? '重新開始呢局（重新派身份同骰）' : cd ? '重新開始呢局（重新派身份同線）' : xs ? '重新派呢關（換數字同題目）' : wd ? '重新派詞語（呢局重新開始）' : '重新派呢輪（換題同身份）'}</button>`;
     if (host && v.ph !== 'lobby' && v.ph !== 'end') hb += '<button class="btn ghost" data-act="endgame">即刻完場</button>';
-    h = `<h3>${v.g === 'cr' ? `蟹仔大賽・第 ${v.hx ? v.hx.lg : 1} 段` : v.g === 'tt' ? '邊個偷咗蛋撻・分數' : v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
+    h = `<h3>${v.g === 'mw' ? '大宅目擊者・分數' : v.g === 'cr' ? `蟹仔大賽・第 ${v.hx ? v.hx.lg : 1} 段` : v.g === 'tt' ? '邊個偷咗蛋撻・分數' : v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
 ${hb}<button class="btn gold" data-act="mclose">返去</button>`;
   } else { S.modal = null; el.classList.remove('show'); return; }
   const mb = el.querySelector('.mb');
@@ -4836,6 +5782,20 @@ document.addEventListener('click', (e) => {
     case 'cpair': if (v && v.hx) { confirmBox(`同 ${esc(nameOf(v, x))} 做拍檔？<small>做到呢段完。</small>`, '做拍檔', () => act('cpair', x)); S.modal.krTk = v.hx.tk; } break;
     case 'cnext': act('cnext'); break;
     case 'cpick': act('cpick', x); break;
+    case 'mwr': act('mwr', x); break;
+    case 'mroom': {
+      if (!v || !v.mx) break;
+      const wh = x === 'E' ? '空房' : ` ${esc(nameOf(v, x))}（${mwRoomOf(v, x)}）`;
+      if (v.ph === 'pick') { if (S.mwSel != null) mwPassAsk(S.mwSel, x); else toast('先揀一張手牌'); }
+      else if (v.ph === 'talk' && S.mwMode === 'D') confirmBox(`將${wh}關入地窖？<small>偵探出手，遊戲即刻完。</small>`, '關入地窖', () => { S.mwMode = null; act('mdet', x); }, { bad: true });
+      else if (v.ph === 'vote') { const law = S.mwLaw && v.rl[ME.id] === 'L' ? 1 : 0; confirmBox(`投${wh}？<small>${law ? (x === 'E' ? '律師出手：空房冇人，冇票唔計。' : `律師出手：${esc(nameOf(v, x))} 嗰票唔計。`) : ''}投咗唔改得。</small>`, '投佢', () => act('mvote', [x, law])); }
+      break;
+    }
+    case 'mdet': S.mwMode = 'D'; render(); break;
+    case 'mdetx': S.mwMode = null; render(); break;
+    case 'mbut': confirmBox('管家出手？<small>你會睇到兩張冇用嘅卡；全部人會知你係管家，你之後冇得投票。</small>', '出手', () => act('mbut')); break;
+    case 'mlaw': S.mwLaw = !S.mwLaw; render(); break;
+    case 'mskip': if (v) confirmBox(v.ph === 'talk' ? '即刻開始投票？' : '即刻開票？<small>未投嘅人當冇投。</small>', v.ph === 'talk' ? '開始投票' : '開票', () => act('mskip')); break;
     case 'xtheme': act('xtheme'); break;
     case 'theme': setTheme(x); renderModal(); break;
     case 'xhide': S.xsHide = !S.xsHide; render(); break;
@@ -4853,7 +5813,7 @@ document.addEventListener('click', (e) => {
     case 'pick': if (v) confirmBox(`確定 ${esc(nameOf(v, x))} 係老實人？`, '確定', () => act('pick', x)); break;
     case 'next': act('next'); break;
     case 'again': act('again'); break;
-    case 'redeal': closeModal(); if (v && v.g === 'cr') confirmBox('重新開始呢場？<small>全部人返 $3，重新排蟹。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'tt') confirmBox('重新開始呢局？<small>會重新派身份同骰。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'cd') confirmBox('重新開始呢局？<small>會重新派身份同線。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'xs') confirmBox('重新派呢關？<small>會換過數字同題目，命唔變。</small>', '重新派', () => act('redeal')); else if (v && v.g === 'wd') confirmBox('重新派詞語？<small>呢局重新開始，會換過詞語同身份。</small>', '重新派', () => act('redeal')); else confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal')); break;
+    case 'redeal': closeModal(); if (v && v.g === 'mw') confirmBox('重新開始呢局？<small>會重新洗牌，由頭傳卡。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'cr') confirmBox('重新開始呢場？<small>全部人返 $3，重新排蟹。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'tt') confirmBox('重新開始呢局？<small>會重新派身份同骰。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'cd') confirmBox('重新開始呢局？<small>會重新派身份同線。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'xs') confirmBox('重新派呢關？<small>會換過數字同題目，命唔變。</small>', '重新派', () => act('redeal')); else if (v && v.g === 'wd') confirmBox('重新派詞語？<small>呢局重新開始，會換過詞語同身份。</small>', '重新派', () => act('redeal')); else confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal')); break;
     case 'endgame': closeModal(); confirmBox('即刻完場？<small>會用而家嘅分數排名。</small>', '完場', () => act('end'), { bad: true }); break;
     case 'snd': SND.on = x == null ? !SND.on : x === '1'; LS.set('bgr_snd', SND.on); if (!SND.on) closeAudio(); renderModal(); break;
     case 'settings': openModal({ type: 'settings' }); break;
@@ -4945,6 +5905,8 @@ function sfx(k) {
     else if (k === 'beep') { [0, 0.11, 0.22].forEach((t) => tone(1760, t, 0.06, 'square', 0.05)); }
     else if (k === 'flick') { noise(0, 0.05, 'bandpass', 2200, 1.2, 0.35); }
     else if (k === 'knock') { noise(0, 0.09, 'bandpass', 900, 2, 1); tone(160, 0, 0.16, 'triangle', 0.25); noise(0.1, 0.06, 'bandpass', 1300, 2, 0.45); }
+    else if (k === 'thunder') { noise(0, 0.12, 'highpass', 1800, 0.7, 0.35); noise(0.05, 1.8, 'lowpass', 260, 0.6, 0.85); tone(52, 0.05, 1.4, 'sine', 0.22); }
+    else if (k === 'clank') { noise(0, 0.14, 'bandpass', 2600, 4, 0.7); tone(196, 0, 0.3, 'square', 0.07); tone(294, 0.01, 0.34, 'square', 0.05); tone(1480, 0.02, 0.5, 'triangle', 0.05); noise(0.16, 0.3, 'lowpass', 400, 0.7, 0.5); }
     else if (k === 'stamp') { noise(0, 0.12, 'lowpass', 380, 0.8, 0.85); tone(90, 0, 0.18, 'sine', 0.3); }
     else if (k === 'win') { [523, 659, 784, 1046].forEach((f, i) => tone(f, i * 0.13, 0.35)); }
     else if (k === 'roll') { for (let i = 0; i < 7; i++) tone(180 + Math.random() * 380, i * 0.075, 0.045, 'square', 0.035); }
@@ -4986,7 +5948,7 @@ document.addEventListener('dblclick', (e) => e.preventDefault());
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 document.addEventListener('selectstart', (e) => { if (!e.target.closest || !e.target.closest('input')) e.preventDefault(); });
 /* iPhone 撳實出透明放大鏡（Bill 2026-11-22）：撳住身份卡要擋 touchstart；pointerdown／pointerup 照樣收到 */
-document.addEventListener('touchstart', (e) => { if (e.target.closest && e.target.closest('[data-hold]')) e.preventDefault(); }, { passive: false });
+document.addEventListener('touchstart', (e) => { if (e.target.closest && e.target.closest('[data-hold],[data-mwc]')) e.preventDefault(); }, { passive: false });
 document.addEventListener('wheel', (e) => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
 document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target && e.target.id === 'apw') { e.preventDefault(); const b = $('#modal [data-act=apw]'); if (b) b.click(); } });
