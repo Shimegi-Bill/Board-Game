@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-24-01';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-24-02';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -961,6 +961,10 @@ button.kq-mat:not(.on){opacity:.55}
 .mwci.up{transform:none}
 .mwcd .mf,.mwcd .mb{position:absolute;inset:0;border-radius:6px;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:#15122a center/cover no-repeat;box-shadow:0 0 0 1px rgba(224,182,92,.55),0 3px 8px rgba(0,0,0,.45)}
 .mwcd .mb{transform:rotateY(180deg);background-image:var(--mwBK)}
+.mwcd .mf{transform:rotateY(0deg)}
+/* 正面向上、唔使翻嘅卡：卡背收埋（iPhone 重畫新卡嗰格會先畫卡背，2026-11-24 Bill 見到閃）；派牌、翻牌、特效大卡先要卡背 */
+.mwci.up>.mb{visibility:hidden}
+.mwhand.deal .mwci>.mb,.mwcd.rvl .mwci>.mb,.mwcd.xl .mwci>.mb{visibility:visible}
 .mwcd .mf.G{background-image:var(--mwG)}.mwcd .mf.K{background-image:var(--mwK)}.mwcd .mf.A{background-image:var(--mwA)}.mwcd .mf.L{background-image:var(--mwL)}
 .mwcd .mf.R{background-image:var(--mwR)}.mwcd .mf.D{background-image:var(--mwD)}.mwcd .mf.B{background-image:var(--mwB)}.mwcd .mf.P{background-image:var(--mwP)}
 .mwcd .mf b{position:absolute;left:0;right:0;bottom:0;padding:2px 0 3px;text-align:center;font-family:var(--serif);font-size:8px;font-weight:900;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75) 45%);text-shadow:0 1px 2px #000;letter-spacing:0}
@@ -987,6 +991,16 @@ button.kq-mat:not(.on){opacity:.55}
 .mwwho{display:flex;align-items:center;justify-content:center;gap:4px;max-width:100%;font-size:12px;font-weight:700;color:#dcd4ea}
 .mwwho span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mwrm.me .mwwho span{color:#f7e4a8}
+.mwrm.mk{cursor:pointer}.mwrm.mk:active{transform:scale(.96)}
+.mwrm.mk .mwwho{padding:1px 7px 1px 2px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(242,216,146,.38)}
+.mwrm.mk.ex .mwwho{padding-left:7px}
+.mwmks{position:absolute;left:3px;top:28px;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:3px;pointer-events:none}
+.mwmks.r{left:auto;right:3px;align-items:flex-end}
+.mwmk{display:flex;align-items:center;gap:1px;height:17px;padding:0 4px 0 0;border-radius:999px;background:rgba(10,8,20,.86);box-shadow:inset 0 0 0 1.5px rgba(143,240,196,.75);font-family:var(--serif);font-size:10.5px;font-weight:900;font-style:normal;line-height:1;color:#c9f5df}
+.mwmk.K{box-shadow:inset 0 0 0 1.5px rgba(255,138,154,.85);color:#ffc6ce}.mwmk.P{box-shadow:inset 0 0 0 1.5px rgba(255,180,110,.9);color:#ffd6ad}
+.mwmk .mwav{width:17px;height:17px;box-shadow:none}
+.mwmk.nw{animation:mwMk .42s cubic-bezier(.2,1.6,.4,1) var(--et,0ms) both}
+@keyframes mwMk{0%{opacity:0;transform:scale(.2)}100%{opacity:1;transform:none}}
 .mwby{display:flex;align-items:center;gap:3px;max-width:100%;margin-top:1px;padding:1px 6px 1px 2px;border-radius:999px;background:rgba(224,182,92,.16);font-size:10px;font-weight:800;color:#f2d892}
 .mwby span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mwby .av.xs{width:14px;height:14px;font-size:8px}
@@ -1005,7 +1019,8 @@ button.kq-mat:not(.on){opacity:.55}
 .mwrm.tg:active{transform:scale(.95);animation:none}
 .mwrm.hov{animation:none;transform:scale(1.08);box-shadow:inset 0 0 0 3px #fff3cc,0 0 30px rgba(255,214,120,.7);z-index:2}
 .mwrm.vtd{box-shadow:inset 0 0 0 2.5px #8ff0c4,0 0 20px rgba(110,255,190,.35)}
-.mwmine{position:absolute;right:4px;top:6px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#3fe39d;color:#06301f;animation:pop .45s cubic-bezier(.2,1.5,.4,1) both}
+.mwmine{position:absolute;right:4px;top:6px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#3fe39d;color:#06301f}
+.mwmine.nw{animation:pop .45s cubic-bezier(.2,1.5,.4,1) var(--et,0ms) both}
 .mwmine .ic{width:13px;height:13px}
 .mwrm .land{animation:mwLand .4s cubic-bezier(.2,1.6,.4,1) calc(600ms + var(--et,0ms)) both}
 @keyframes mwLand{0%{opacity:0;transform:scale(1.9)}100%{opacity:1;transform:none}}
@@ -1033,19 +1048,24 @@ button.kq-mat:not(.on){opacity:.55}
 .mwbd.storm .mwflash{background:radial-gradient(120% 80% at 30% 0%,rgba(235,240,255,.55),rgba(235,240,255,0) 70%);opacity:0;animation:mwFlash 9.6s linear var(--lp,0s) infinite}
 @keyframes mwFlash{0%,58%{opacity:0}59%{opacity:1}60%{opacity:.15}61.5%{opacity:.85}64%,100%{opacity:0}}
 /* 手牌：黏住畫面底，兩張大卡；拖住嗰張變透明（影子跟手指走） */
-.mwhand{position:sticky;bottom:calc(env(safe-area-inset-bottom) + 4px);z-index:5;margin:4px -4px 14px;padding:10px 10px 12px;border-radius:22px;background:radial-gradient(120% 120% at 50% 0%,#2e2646,#141020 75%);box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.6),0 -10px 30px rgba(0,0,0,.25),0 14px 30px rgba(0,0,0,.35);color:#f6f2e9}
-.mwht{text-align:center;font-size:14px;font-weight:800;color:#f2d892;margin-bottom:8px}
+#mwhh{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 6px);z-index:6;padding:0 12px;pointer-events:none}
+.mwhsp{height:226px}
+.mwhand{position:relative;max-width:528px;margin:0 auto;pointer-events:auto;padding:10px 10px 12px;border-radius:22px;background:radial-gradient(120% 120% at 50% 0%,#2e2646,#141020 75%);box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.6),0 -10px 30px rgba(0,0,0,.25),0 14px 30px rgba(0,0,0,.35);color:#f6f2e9}
+.mwht{text-align:center;font-size:14px;font-weight:800;color:#f2d892;margin-bottom:12px}
 .mwhs{display:flex;justify-content:center;gap:18px}
 .mwhc{display:flex;flex-direction:column;align-items:center;gap:6px;touch-action:none;cursor:grab;transition:transform .2s cubic-bezier(.2,1.4,.4,1)}
 .mwhc small{font-size:12px;font-weight:800;color:#cdc6de}
-.mwhc.sel{transform:translate3d(0,-14px,0) scale(1.05)}
+.mwhc.sel{transform:translate3d(0,-8px,0) scale(1.04)}
 .mwhc.sel .mwcd .mf{box-shadow:0 0 0 3px #fff3cc,0 0 26px rgba(255,214,120,.75),0 14px 26px rgba(0,0,0,.5)}
 .mwhc.drag{opacity:.25}
-.mwhand.deal .mwhc{animation:mwDeal .7s cubic-bezier(.2,1.1,.35,1) calc(var(--i) * 110ms + var(--et,0ms)) both}
-.mwhand.deal .mwhc .mwci{animation:mwDealF .7s cubic-bezier(.3,.8,.3,1) calc(var(--i) * 110ms + 150ms + var(--et,0ms)) both}
+.mwhand.deal .mwhc{animation:mwDeal .7s cubic-bezier(.2,1.1,.35,1) calc(var(--i) * 110ms + var(--et,0ms)) backwards}
+.mwhand.deal .mwhc .mwci{animation:mwDealF .7s cubic-bezier(.3,.8,.3,1) calc(var(--i) * 110ms + 150ms + var(--et,0ms)) backwards}
 @keyframes mwDeal{0%{transform:translate3d(0,-260px,0) rotate(-28deg) scale(.5)}100%{transform:none}}
 @keyframes mwDealF{0%{transform:rotateY(180deg)}100%{transform:none}}
 .mwghost{position:fixed;left:0;top:0;z-index:40;width:108px;height:135px;pointer-events:none;will-change:transform;filter:drop-shadow(0 18px 24px rgba(0,0,0,.5))}
+.mwgt{position:absolute;left:50%;bottom:calc(100% + 10px);display:flex;align-items:center;gap:5px;padding:5px 12px 5px 6px;border-radius:999px;white-space:nowrap;background:#fff3cc;color:#2a1c05;font-size:15px;font-weight:900;box-shadow:0 6px 18px rgba(0,0,0,.45);transform:translateX(-50%) scale(var(--is,1));transform-origin:50% 100%;opacity:0;transition:opacity .12s}
+.mwghost.on .mwgt{opacity:1}
+.mwgt .av{width:22px;height:22px;font-size:11px}.mwgt .mwri{color:#7a5a1c}.mwgt .mwri .ic{width:16px;height:16px}
 .mwfly{position:fixed;left:0;top:0;z-index:40;width:108px;height:135px;pointer-events:none;will-change:transform}
 .mwsay{display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:12px 14px;border-radius:18px;background:var(--s1);box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.55)}
 .mwsay .mwav{width:44px;height:44px}
@@ -1072,6 +1092,16 @@ button.kq-mat:not(.on){opacity:.55}
 .mwlaw.on{box-shadow:inset 0 0 0 2px #8eb0ff,0 0 22px rgba(142,176,255,.35)}
 .mwlaw.on .ck{background:#8eb0ff;color:#0f1d3d}.mwlaw .ck .ic{width:16px;height:16px}
 .mwhb .sc2 .av{width:42px;height:42px}
+#modal.clr{background:rgba(5,4,10,.22);-webkit-backdrop-filter:none;backdrop-filter:none}
+.mwmkh{display:flex;align-items:center;justify-content:center;gap:9px;margin:2px 0 2px;font-family:var(--serif);font-size:21px;font-weight:900}
+.mwmkh .av{width:34px;height:34px}.mwmkh small{font-family:var(--sans);font-size:13px;font-weight:800;color:var(--tx2)}
+.mwmkh .mwri{color:var(--g1)}.mwmkh .mwri .ic{width:26px;height:26px}
+.mwrg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0 14px}
+.mwrb{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px 8px;border-radius:16px;background:rgba(var(--ink),.04);box-shadow:inset 0 0 0 1px var(--e1);font-size:13.5px;font-weight:800;color:var(--tx);transition:transform .14s ease}
+.mwrb .mwav{width:46px;height:46px}.mwrb:active{transform:scale(.94)}
+.mwrb.on{background:rgba(224,182,92,.16);box-shadow:inset 0 0 0 2px var(--g1),0 0 18px rgba(224,182,92,.3)}
+.mwrb .ck{position:absolute;right:5px;top:5px;width:20px;height:20px;border-radius:50%;display:none;align-items:center;justify-content:center;background:var(--g1);color:#2a1c05}
+.mwrb.on .ck{display:flex}.mwrb .ck .ic{width:13px;height:13px}
 /* 身份卡：卡背係大宅卡背；翻開：左邊角色插畫、右邊名、陣營、能力、目擊 */
 .rc.mwrc{height:250px}
 .rc-f.cdf.mwf{background-image:var(--mwBK)}
@@ -1165,6 +1195,7 @@ html[data-theme="cream"] #banner{background:rgba(210,59,85,.1);color:#9b1f37}
 </head>
 <body>
 <div id="app"></div>
+<div id="mwhh"></div>
 <div id="modal"></div>
 <div id="fx"></div>
 <div id="sw"></div>
@@ -3382,6 +3413,7 @@ function render() {
   } else S.gfocus = false;
   renderBanner();
   renderModal();
+  mwHandSync();
   tickCd();
   if (S.screen === 'room' && S.view && S.view.g === 'cr') crAnim(S.view);
 }
@@ -5033,10 +5065,11 @@ function mwTgV(v, mode) {
 /* 大宅平面圖：每人一間房（房名、圖示、卡、邊個放卡入嚟）＋ 空房 ＋（討論之後）地窖 */
 function mwBoard(v, mode, hold) {
   const mx = v.mx, end = v.ph === 'end' && !hold, ids = Object.keys(mx.rm).sort((a, b) => mx.rm[a] - mx.rm[b]);
-  const tg = new Set(mwTgV(v, mode)), dragOver = S.mwDrag && S.mwDrag.on ? S.mwDrag.over : null;
+  const tg = new Set(mwTgV(v, mode)), dragOver = S.mwDrag && S.mwDrag.on ? S.mwDrag.over : S.mwGhost && S.mwGhost.to ? S.mwGhost.to : null;
+  const mkOk = !end && !hold && MW_PH.includes(v.ph);   // 玩家標記：遊戲中、唔係揀緊房（拖卡、偵探、投票）嗰陣撳房就開
   const lock = end ? mx.lock : [], tl = end && mx.tally ? mx.tally : {};
+  const myV = v.ph === 'vote' ? mx.vt[ME.id] : null, mvq = myV ? anA('mv' + v.gid + '-' + myV, 450, 'nw') : { c: '', s: '' };
   const vchip = (t) => (end && tl[t] ? `<span class="mwvc${lock.includes(t) ? ' top' : ''}">${tl[t]} 票</span>` : '');
-  const myV = v.ph === 'vote' ? mx.vt[ME.id] : null;
   const ev = mx.ev && mx.ev.t === 'pass' ? mx.ev : null;
   const fa = ev ? an('mp' + v.gid + '-' + ev.k, 1200) : '';
   const tiles = ids.map((id) => {
@@ -5051,17 +5084,36 @@ function mwBoard(v, mode, hold) {
       slot = mwCard(up ? r : null, q.c, q.s);
     } else slot = '<span class="mwemp"></span>';
     const by = log.from && !cur ? `<div class="mwby">${av(pOf(v, log.from), 'xs')}<span>${esc(nameOf(v, log.from))} 放</span></div>` : '';
-    const isT = tg.has(id), act = isT && mode ? ` data-act="mroom" data-x="${id}"` : '';
-    const cls = `mwrm${me ? ' me' : ''}${cur ? ' cur' : ''}${isT ? ' tg' : ''}${dragOver === id ? ' hov' : ''}${myV === id ? ' vtd' : ''}${lock.includes(id) ? ' lock' : ''}${p && !p.on ? ' off' : ''}${mx.rv[id] && !end ? ' rv' : ''}`;
-    return `<div class="${cls}" data-mwroom="${id}" data-pid="${id}" style="--rc:${MW_RC[i % 8]}"${act}><div class="mwrh"><i class="mwri">${mwIc(R[1])}</i><b>${R[0]}</b>${vchip(id)}</div><div class="mwslot">${slot}</div><div class="mwwho">${av(p, 'xs')}<span>${esc(p ? p.n : '?')}</span></div>${by}${lock.includes(id) ? '<i class="mwbars"></i>' : ''}${myV === id ? `<i class="mwmine">${ic('check')}</i>` : ''}</div>`;
+    const isT = tg.has(id), mk = mkOk && !me && !(isT && mode), act = isT && mode ? ` data-act="mroom" data-x="${id}"` : mk ? ` data-act="mmk" data-x="${id}"` : '';
+    const cls = `mwrm${me ? ' me' : ''}${mk ? ' mk' : ''}${cur ? ' cur' : ''}${isT ? ' tg' : ''}${dragOver === id ? ' hov' : ''}${myV === id ? ' vtd' : ''}${lock.includes(id) ? ' lock' : ''}${p && !p.on ? ' off' : ''}${mx.rv[id] && !end ? ' rv' : ''}`;
+    return `<div class="${cls}" data-mwroom="${id}" data-pid="${id}" style="--rc:${MW_RC[i % 8]}"${act}><div class="mwrh"><i class="mwri">${mwIc(R[1])}</i><b>${R[0]}</b>${vchip(id)}</div><div class="mwslot">${slot}</div><div class="mwwho">${av(p, 'xs')}<span>${esc(p ? p.n : '?')}</span></div>${by}${mkOk ? mwMarkHtml(v, id) : ''}${lock.includes(id) ? '<i class="mwbars"></i>' : ''}${myV === id ? `<i class="mwmine${mvq.c}"${mvq.s}>${ic('check')}</i>` : ''}</div>`;
   }).join('');
-  const eT = tg.has('E'), eAct = eT && mode ? ' data-act="mroom" data-x="E"' : '';
+  const eT = tg.has('E'), eMk = mkOk && !(eT && mode), eAct = eT && mode ? ' data-act="mroom" data-x="E"' : eMk ? ' data-act="mmk" data-x="E"' : '';
   const eSlot = mx.e ? mwCard(end ? mx.e : null, fa && ev.to === 'E' ? 'land' : '', fa && ev.to === 'E' ? `style="${fa}"` : '', nameOf(v, mx.eBy)) : '<span class="mwemp"></span>';
-  const eTile = `<div class="mwrm ex${eT ? ' tg' : ''}${dragOver === 'E' ? ' hov' : ''}${myV === 'E' ? ' vtd' : ''}${lock.includes('E') ? ' lock' : ''}" data-mwroom="E" style="--rc:#c8c0e0"${eAct}><div class="mwrh"><i class="mwri">${mwIc('door')}</i><b>空房</b>${vchip('E')}</div><div class="mwslot">${eSlot}</div><div class="mwwho"><span>${mx.e ? esc(nameOf(v, mx.eBy)) + ' 放' : '最後一張'}</span></div>${lock.includes('E') ? '<i class="mwbars"></i>' : ''}${myV === 'E' ? `<i class="mwmine">${ic('check')}</i>` : ''}</div>`;
+  const eTile = `<div class="mwrm ex${eMk ? ' mk' : ''}${eT ? ' tg' : ''}${dragOver === 'E' ? ' hov' : ''}${myV === 'E' ? ' vtd' : ''}${lock.includes('E') ? ' lock' : ''}" data-mwroom="E" style="--rc:#c8c0e0"${eAct}><div class="mwrh"><i class="mwri">${mwIc('door')}</i><b>空房</b>${vchip('E')}</div><div class="mwslot">${eSlot}</div><div class="mwwho"><span>${mx.e ? esc(nameOf(v, mx.eBy)) + ' 放' : '最後一張'}</span></div>${mkOk ? mwMarkHtml(v, 'E') : ''}${lock.includes('E') ? '<i class="mwbars"></i>' : ''}${myV === 'E' ? `<i class="mwmine${mvq.c}"${mvq.s}>${ic('check')}</i>` : ''}</div>`;
   let third;
   if (v.ph === 'pick') third = `<div class="mwrm dk"><div class="mwrh"><i class="mwri">${ic('dice')}</i><b>牌堆</b></div><div class="mwslot">${mx.deck.length ? `<span class="mwpile">${mwCard(null)}${mx.deck.length > 1 ? mwCard(null, 'p2') : ''}${mx.deck.length > 2 ? mwCard(null, 'p3') : ''}</span>` : '<span class="mwemp"></span>'}</div><div class="mwwho"><span>剩 ${mx.deck.length} 張</span></div></div>`;
   else third = `<div class="mwrm cel${end && lock.length ? ' full' : ''}"><div class="mwrh"><i class="mwri">${mwIc('cell')}</i><b>地窖</b></div><div class="mwslot">${end && lock.length ? lock.slice(0, 3).map((t) => mwCard(mwCardOf(v, t), 'sm2')).join('') : ''}</div><div class="mwwho"><span>${end ? (lock.length ? `關咗 ${lock.length} 個` : '冇人') : '關兇手'}</span></div></div>`;
   return `<div class="mwbd${v.ph === 'talk' || v.ph === 'vote' ? ' storm' : ''}${mode ? ' m-' + mode : ''}">${v.ph === 'talk' || v.ph === 'vote' ? '<i class="mwrain"></i><i class="mwflash"></i>' : ''}${tiles}${eTile}${third}</div>`;
+}
+/* 玩家標記（Bill 2026-11-24）：撳一間房（玩家名）揀角色，標記喺嗰間房，記住佢講自己係咩、有人見到咩角色入咗呢間房；
+ * 淨係自己部機（S.mwMk，存 localStorage，跟房號＋第幾局，新一局清走）；每間房最多 3 個，再加就踢走最舊 */
+function mwMarks(v) {
+  const k = v.code + '|' + v.gid;
+  if (!S.mwMk || S.mwMk.k !== k) { const o = LS.get('bgr_mwmk'); S.mwMk = o && o.k === k && o.m ? o : { k, m: {} }; }
+  return S.mwMk.m;
+}
+function mwMarkSave() { LS.set('bgr_mwmk', S.mwMk); }
+function mwMarkToggle(v, id, r) {
+  const m = mwMarks(v), old = m[id] || [], L = old.filter((x) => x[0] !== r);
+  if (L.length === old.length) { L.push([r, Date.now()]); while (L.length > 3) L.shift(); }
+  if (L.length) m[id] = L; else delete m[id];
+  mwMarkSave();
+}
+function mwMarkHtml(v, id) {
+  const L = mwMarks(v)[id]; if (!L || !L.length) return '';
+  const now = Date.now(), chip = ([r, t]) => { const e = now - t, nw = e >= 0 && e < 420; return `<i class="mwmk ${mwSide(r)}${nw ? ' nw' : ''}"${nw ? ` style="--et:-${e}ms"` : ''}>${mwAv(r)}${MW_ROLE[r][0]}</i>`; };
+  return `<span class="mwmks">${L.slice(0, 2).map(chip).join('')}</span>${L[2] ? `<span class="mwmks r">${chip(L[2])}</span>` : ''}`;
 }
 /* 你嘅目擊：抽到、收到、留低、放咗去邊（管家出手後再加冇用嘅卡） */
 function mwMemo(v) {
@@ -5087,11 +5139,25 @@ function mwComp(v) {
   return `<div class="mwcomp">${chips}</div>${v.mx.ab.length ? '<div class="tip" style="margin-top:-2px">入面有 2 張冇用（管家睇到）</div>' : ''}`;
 }
 /* 揀卡：兩張手牌，拖一張入房（或者撳卡再撳房），留低嗰張係你嘅身份 */
+function mwHint(v) {
+  const toE = mwTgV(v, 'pick')[0] === 'E';
+  return S.mwSel != null ? `撳一間${toE ? '' : '發光嘅'}房放入去` : `拖一張入${toE ? '空房' : '房'}・留低嗰張係你`;
+}
 function mwHand(v) {
   const mx = v.mx, L = mx.log[ME.id] || {}, q = anA('mh' + v.gid + '-' + mx.tk, 1000, 'deal');
-  const toE = mwTgV(v, 'pick')[0] === 'E';
-  const cards = mx.hand.map((t, i) => `<div class="mwhc${S.mwSel === i ? ' sel' : ''}" data-mwc="${i}" style="--i:${i}">${mwCard(t, 'big')}<small>${i === 0 && L.from ? `${esc(nameOf(v, L.from))} 放` : '新抽'}</small></div>`).join('');
-  return `<div class="mwhand${q.c}"${q.s}><div class="mwht">${S.mwSel != null ? `撳一間${toE ? '' : '發光嘅'}房放入去` : `拖一張入${toE ? '空房' : '房'}・留低嗰張係你`}</div><div class="mwhs">${cards}</div></div>`;
+  const cards = mx.hand.map((t, i) => `<div class="mwhc" data-mwc="${i}" style="--i:${i}">${mwCard(t, 'big')}<small>${i === 0 && L.from ? `${esc(nameOf(v, L.from))} 放` : '新抽'}</small></div>`).join('');
+  return `<div class="mwhand${q.c}"${q.s}><div class="mwht">${mwHint(v)}</div><div class="mwhs">${cards}</div></div>`;
+}
+/* 手牌唔跟住成個畫面重畫（2026-11-24）：iPhone 每次新建張卡嗰格會閃卡背；淨係轉人、換卡先重建，其他只改 class 同提示字 */
+function mwHandSync() {
+  const host = $('#mwhh'); if (!host) return;
+  const v = S.view, on = S.screen === 'room' && v && v.g === 'mw' && v.mx && v.ph === 'pick' && v.mx.cur === ME.id && v.mx.rm[ME.id] != null && v.mx.hand && v.mx.hand.length === 2;
+  if (!on) { if (S.mwHK) { host.innerHTML = ''; S.mwHK = ''; } return; }
+  const L = v.mx.log[ME.id] || {}, k = [v.code, v.gid, v.mx.tk, v.mx.hand.join(','), L.from || ''].join('|');
+  if (k !== S.mwHK) { S.mwHK = k; host.innerHTML = mwHand(v); setTimeout(() => { const hd = host.querySelector('.mwhand.deal'); if (hd && S.mwHK === k) hd.classList.remove('deal'); }, 1100); }
+  const dg = S.mwGhost && S.mwGhost.el ? S.mwGhost.i : S.mwDrag && S.mwDrag.on ? S.mwDrag.i : -1;
+  host.querySelectorAll('.mwhc').forEach((c) => { const i = +c.dataset.mwc; c.classList.toggle('sel', S.mwSel === i && dg < 0); c.classList.toggle('drag', dg === i); });
+  const t = host.querySelector('.mwht'), tx = mwHint(v); if (t && t.textContent !== tx) t.textContent = tx;
 }
 const MW_STEPS = [['pick', '揀卡'], ['talk', '討論'], ['vote', '投票']];
 function vPlayMw(v, hold) {
@@ -5105,15 +5171,19 @@ function vPlayMw(v, hold) {
     h += mwBoard(v, myTurn ? 'pick' : '');
     const L = mx.log[me] || {};
     if (meIn && L.pass && !myTurn) h += `<div class="mwsay">${mwAv(L.pass)}<div><small>同大家講（可以講大話）</small><b>「我見到${MW_ROLE[L.pass]}入咗${L.to === 'E' ? '空房' : mwRoomOf(v, L.to)}！」</b></div></div>`;
-    if (myTurn) h += mwHand(v);
-    else if (meIn && r) h += '<div class="sh"><span>你嘅身份</span></div>' + vMwCard(v);
-    else if (!meIn) h += '<div class="wait">觀戰中・下一局加入</div>';
+    if (myTurn) h += '<div class="mwhsp"></div>';
+    else {
+      if (!Object.keys(mwMarks(v)).length) h += '<div class="tip">撳一間房，標記佢講咩角色</div>';
+      if (meIn && r) h += '<div class="sh"><span>你嘅身份</span></div>' + vMwCard(v);
+      else if (!meIn) h += '<div class="wait">觀戰中・下一局加入</div>';
+    }
     return h;
   }
   if (ph === 'talk') {
     const det = S.mwMode === 'D' && r === 'D' && !mx.dv;
     h += `<div class="tmr">${ring('dl', v.dt0 || 1)}<div style="flex:1;min-width:0"><div class="tl">討論</div><div class="ts">${det ? '撳一間房關入地窖' : '講你見到咩・可以講大話'}</div></div>${host ? '<button class="sb gold" data-act="mskip">投票</button>' : ''}</div>`;
     h += mwBoard(v, det ? 'det' : '');
+    if (!det && !Object.keys(mwMarks(v)).length) h += '<div class="tip">撳一間房，標記佢講咩角色</div>';
     if (r === 'D' && !mx.dv) h += det ? '<button class="btn ghost" data-act="mdetx">取消</button>' : `<button class="btn red big mwab" data-act="mdet">${mwAv('D')}偵探出手</button>`;
     if (r === 'B' && !mx.bu) h += `<button class="btn gold big mwab" data-act="mbut">${mwAv('B')}管家出手</button>`;
     if (mx.bu === me) h += `<div class="mwabx"><small>冇用嘅卡</small><div>${mx.ab.map((t) => mwCard(t, 'big')).join('')}</div></div>`;
@@ -5164,6 +5234,7 @@ const RULES_MW = `<div class="rules">
     <li>收到卡嘅人再抽 1 張，喺兩張入面留 1 張，再將另一張放入另一個未揀卡嘅人間房。</li>
     <li>最後一個人將剩低嗰張放入<b>空房</b>。</li></ol>
   <h4>討論（5 或者 10 分鐘）</h4><p>講你見到咩、收到咩，可以講大話。房主可以隨時開始投票。</p>
+  <h4>標記</h4><p>撳一間房（玩家名），揀角色標記喺嗰間房：記低佢話自己係咩、有人話見到咩入咗呢間房。每間房最多 3 個，淨係你自己見到，新一局清走。</p>
   <h4>投票（1 分鐘）</h4><p>每人投一間房（其他人間房或者空房）。最多票嘅房（平票就全部）入面張卡關入<b>地窖</b>。房主可以隨時開票。</p>
   <h4>角色</h4><ul>
     <li><b>住客</b>：冇能力。客人陣營。</li>
@@ -5215,17 +5286,51 @@ function mwFly(v, ev) {
 function mwGhostGone() { if (S.mwGhost) { const e = S.mwGhost.el; S.mwGhost = null; if (e) e.remove(); } }
 function mwGhostBack() {
   const gh = S.mwGhost; if (!gh) return;
-  S.mwGhost = null;
-  const hc = $(`.mwhc[data-mwc="${gh.i}"]`), r = hc && hc.getBoundingClientRect(), A = gh.el.getBoundingClientRect();
-  if (!r) { gh.el.remove(); return; }
-  gh.el.animate([{ transform: `translate3d(${A.left}px,${A.top}px,0) scale(${A.width / 108})` }, { transform: `translate3d(${r.left}px,${r.top}px,0) scale(${r.width / 108})` }], { duration: 260, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'forwards' });
+  S.mwGhost = null; S.mwSel = null;
+  const hc = $(`.mwhc[data-mwc="${gh.i}"] .mwcd`), r = hc && hc.getBoundingClientRect();
+  if (!r || !gh.el) { if (gh.el) gh.el.remove(); render(); return; }
+  gh.el.classList.remove('on');
+  gh.el.animate([{ transform: getComputedStyle(gh.el).transform }, { transform: `translate3d(${r.left + r.width / 2 - 54}px,${r.top + r.height / 2 - 67.5}px,0) scale(${r.width / 108})` }], { duration: 260, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'forwards' });
   setTimeout(() => { gh.el.remove(); render(); }, 270);
+}
+/* 放落房：影子卡縮細停喺嗰間房嘅卡位（房名、玩家名唔會俾卡遮住；Bill 2026-11-24），等確認 */
+function mwGhostPark(g, to, from) {
+  const slot = $(`.mwrm[data-mwroom="${to}"] .mwslot`), B = slot && slot.getBoundingClientRect(); if (!B) return;
+  const k = Math.min(0.42, B.height / 135);
+  g.animate([{ transform: from }, { transform: `translate3d(${B.left + B.width / 2 - 54}px,${B.top + B.height / 2 - 67.5}px,0) scale(${k}) rotate(-5deg)` }], { duration: 300, easing: 'cubic-bezier(.2,.8,.3,1.15)', fill: 'forwards' });
+}
+/* 撳卡再撳房：手牌嗰張飛去房嘅卡位停低，同拖落去一樣等確認 */
+function mwPark(i, to) {
+  const v = S.view, hc = $(`.mwhc[data-mwc="${i}"] .mwcd`);
+  if (!v || !v.mx || !hc || S.mwGhost || !v.mx.hand[i]) return;
+  const A = hc.getBoundingClientRect(), g = document.createElement('div'); g.className = 'mwghost';
+  g.innerHTML = mwCard(v.mx.hand[i], 'big');
+  const t0 = `translate3d(${A.left + A.width / 2 - 54}px,${A.top + A.height / 2 - 67.5}px,0) scale(${A.width / 108})`;
+  g.style.transform = t0; document.body.appendChild(g);
+  S.mwGhost = { el: g, i, to, ok: 0 };
+  render();
+  mwGhostPark(g, to, t0);
+  sfx('flick');
+}
+/* 拖緊：影子卡以手指撳住嗰點縮放（入到房縮細、上面出「放入邊度」） */
+function mwTgTag(v, to) { return to === 'E' ? `<i class="mwri">${mwIc('door')}</i>放入空房` : `${av(pOf(v, to))}放入 ${esc(nameOf(v, to))} 嘅${mwRoomOf(v, to)}`; }
+function mwGhostPos(d) {
+  const s = d.s, rot = Math.max(-12, Math.min(12, (d.fx - d.x0) / 10)) * (d.over ? 0.35 : 1), a = rot * Math.PI / 180;
+  const gx = d.dx - 54, gy = d.dy - 67.5, cx = d.fx - s * (gx * Math.cos(a) - gy * Math.sin(a)), cy = d.fy - s * (gx * Math.sin(a) + gy * Math.cos(a));
+  d.el.style.transform = `translate3d(${(cx - 54).toFixed(1)}px,${(cy - 67.5).toFixed(1)}px,0) scale(${s.toFixed(3)}) rotate(${rot.toFixed(1)}deg)`;
+  d.el.style.setProperty('--is', (1 / s).toFixed(3));
+}
+function mwDragTick() {
+  const d = S.mwDrag; if (!d || !d.on || !d.el) return;
+  const t = d.over ? 0.6 : 1.06;
+  if (Math.abs(t - d.s) > 0.003) { d.s += (t - d.s) * 0.3; mwGhostPos(d); }
+  requestAnimationFrame(mwDragTick);
 }
 function mwPassAsk(i, to) {
   const v = S.view; if (!v || !v.mx || v.ph !== 'pick' || v.mx.cur !== ME.id) return;
   const give = v.mx.hand[i], keep = v.mx.hand[1 - i], hc = $(`.mwhc[data-mwc="${i}"]`);
   S.mwFrom = !S.mwGhost && hc ? hc.getBoundingClientRect() : null;
-  confirmBox(`將${MW_ROLE[give]}放入${to === 'E' ? '空房' : ` ${esc(nameOf(v, to))} 嘅${mwRoomOf(v, to)}`}？<small>你留低${MW_ROLE[keep]}做身份。</small>`, '放入', () => { if (S.mwGhost) S.mwGhost.ok = Date.now(); S.mwSel = null; act('mpass', [i, to]); });
+  confirmBox(`將${MW_ROLE[give]}放入${to === 'E' ? '空房' : ` ${esc(nameOf(v, to))} 嘅${mwRoomOf(v, to)}`}？<small>你留低${MW_ROLE[keep]}做身份。</small>`, '放入', () => { if (S.mwGhost) S.mwGhost.ok = Date.now(); S.mwSel = null; act('mpass', [i, to]); }, { clr: 1 });
 }
 /* 關入地窖（2026-11-23）：閃電白閃 → 被關嘅卡由房飛去中間、半空翻開（插畫）→ 鐵閘由上面閘落（震畫面、鐵聲）
  * → 大字「關入地窖！」→ 結果（綠：捉到兇手；紅：兇手走甩；橙：搗蛋鬼得逞）→ 3 秒收（下面轉做結果畫面） */
@@ -5293,29 +5398,34 @@ window.addEventListener('pointermove', (e) => {
   if (!d.on) {
     if (Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 8) return;
     const v = S.view; if (!v || !v.mx || !v.mx.hand[d.i]) { S.mwDrag = null; return; }
-    d.on = true; S.mwSel = null;
+    d.on = true; S.mwSel = null; d.s = 1.06;
     const g = document.createElement('div'); g.className = 'mwghost';
-    g.innerHTML = mwCard(v.mx.hand[d.i], 'big');
-    document.body.appendChild(g); d.el = g; d.src.classList.add('drag');
-    $$('.mwhc.sel').forEach((x) => x.classList.remove('sel'));
+    g.innerHTML = mwCard(v.mx.hand[d.i], 'big') + '<b class="mwgt"></b>';
+    document.body.appendChild(g); d.el = g;
+    mwHandSync();
     sfx('flick');
+    requestAnimationFrame(mwDragTick);
   }
-  d.el.style.transform = `translate3d(${e.clientX - d.dx}px,${e.clientY - d.dy}px,0) scale(1.06) rotate(${Math.max(-12, Math.min(12, (e.clientX - d.x0) / 10)).toFixed(1)}deg)`;
+  d.fx = e.clientX; d.fy = e.clientY;
   const t = document.elementFromPoint(e.clientX, e.clientY), tr = t && t.closest && t.closest('.mwrm.tg');
   const over = tr ? tr.dataset.mwroom : null;
-  if (over !== d.over) { $$('.mwrm.hov').forEach((x) => x.classList.remove('hov')); d.over = over; if (tr) { tr.classList.add('hov'); sfx('tick'); } }
+  if (over !== d.over) {
+    $$('.mwrm.hov').forEach((x) => x.classList.remove('hov')); d.over = over;
+    d.el.classList.toggle('on', !!over);
+    if (tr) { const gt = d.el.querySelector('.mwgt'); if (gt && S.view) gt.innerHTML = mwTgTag(S.view, over); tr.classList.add('hov'); sfx('tick'); }
+  }
+  mwGhostPos(d);
 });
 function mwUp() {
   const d = S.mwDrag; if (!d) return;
   S.mwDrag = null;
-  if (!d.on) { S.mwSel = S.mwSel === d.i ? null : d.i; render(); return; }
+  if (!d.on) { S.mwSel = S.mwSel === d.i ? null : d.i; sfx('tick'); mwHandSync(); return; }   // 撳一下：唔重畫，只改 class（唔會閃卡背）
   $$('.mwrm.hov').forEach((x) => x.classList.remove('hov'));
-  const g = d.el;
+  const g = d.el; g.classList.remove('on');
   if (d.over) {
-    const slot = $(`.mwrm[data-mwroom="${d.over}"] .mwslot`), B = slot && slot.getBoundingClientRect();
     S.mwGhost = { el: g, i: d.i, to: d.over, ok: 0 };
-    if (B) g.animate([{ transform: g.style.transform }, { transform: `translate3d(${B.left + B.width / 2 - 54}px,${B.top + B.height / 2 - 67.5 - 24}px,0) scale(.6) rotate(-6deg)` }], { duration: 260, easing: 'cubic-bezier(.2,.8,.3,1.2)', fill: 'forwards' });
     render();
+    mwGhostPark(g, d.over, g.style.transform);
     mwPassAsk(d.i, d.over);
   } else { S.mwGhost = { el: g, i: d.i }; render(); mwGhostBack(); }
 }
@@ -5673,10 +5783,10 @@ const RULES = `<div class="rules">
 </div>`;
 function openModal(m) { S.modal = m; renderModal(); }
 function closeModal() { S.modal = null; renderModal(); }
-function confirmBox(text, ok, fn, opts = {}) { openModal({ type: 'confirm', text, ok, fn, bad: !!opts.bad, ph: S.view ? S.view.ph : null }); }
+function confirmBox(text, ok, fn, opts = {}) { openModal({ type: 'confirm', text, ok, fn, bad: !!opts.bad, clr: !!opts.clr, ph: S.view ? S.view.ph : null }); }
 function renderModal() {
   const el = $('#modal'), m = S.modal;
-  if (!m) { el.classList.remove('show'); el.innerHTML = ''; el.dataset.mt = ''; S.mh = ''; if (S.mwGhost && !S.mwGhost.ok) setTimeout(() => { if (S.mwGhost && !S.mwGhost.ok && !S.modal) mwGhostBack(); }, 0); return; }
+  if (!m) { el.classList.remove('show', 'clr'); el.innerHTML = ''; el.dataset.mt = ''; S.mh = ''; if (S.mwGhost && !S.mwGhost.ok) setTimeout(() => { if (S.mwGhost && !S.mwGhost.ok && !S.modal) mwGhostBack(); }, 0); return; }
   let h = '';
   if (m.type === 'rules') h = m.g === 'mw' ? `<h3>大宅目擊者・玩法</h3>${RULES_MW}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cr' ? `<h3>蟹仔大賽・玩法</h3>${RULES_CR}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
   else if (m.type === 'confirm') h = `<div class="cfm">${m.text}</div><div class="row"><button class="btn ghost" data-act="mclose">取消</button><button class="btn ${m.bad ? 'red' : 'gold'}" data-act="mok">${m.ok}</button></div>`;
@@ -5722,11 +5832,16 @@ function renderModal() {
     if (host && v.ph !== 'lobby' && v.ph !== 'end') hb += '<button class="btn ghost" data-act="endgame">即刻完場</button>';
     h = `<h3>${v.g === 'mw' ? '大宅目擊者・分數' : v.g === 'cr' ? `蟹仔大賽・第 ${v.hx ? v.hx.lg : 1} 段` : v.g === 'tt' ? '邊個偷咗蛋撻・分數' : v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
 ${hb}<button class="btn gold" data-act="mclose">返去</button>`;
-  } else { S.modal = null; el.classList.remove('show'); return; }
+  } else if (m.type === 'mwmk' && S.view && S.view.g === 'mw' && S.view.mx && MW_PH.includes(S.view.ph) && (m.id === 'E' || S.view.mx.rm[m.id] != null)) {
+    const v = S.view, id = m.id, p = id === 'E' ? null : pOf(v, id), L = (mwMarks(v)[id] || []).map((x) => x[0]);
+    const roles = [...new Set(v.mx.comp)].sort(mwSort);
+    h = `<div class="mwmkh">${id === 'E' ? `<i class="mwri">${mwIc('door')}</i>` : av(p)}<b>${id === 'E' ? '空房' : esc(nameOf(v, id))}</b>${id === 'E' ? '' : `<small>${mwRoomOf(v, id)}</small>`}</div><div class="tip" style="margin:2px 6px 0">記低佢講咩角色・最多 3 個・淨係你見到</div><div class="mwrg">${roles.map((r) => `<button class="mwrb ${mwSide(r)}${L.includes(r) ? ' on' : ''}" data-act="mmkr" data-x="${r}">${mwAv(r)}<span>${MW_ROLE[r]}</span><i class="ck">${ic('check')}</i></button>`).join('')}</div><div class="row"><button class="btn ghost" data-act="mmkc"${L.length ? '' : ' disabled'}>清除</button><button class="btn gold" data-act="mclose">完成</button></div>`;
+  } else { S.modal = null; el.classList.remove('show', 'clr'); return; }
   const mb = el.querySelector('.mb');
   if (mb && el.classList.contains('show') && el.dataset.mt === m.type) { if (S.mh === h) return; const st0 = mb.scrollTop; mb.innerHTML = h; mb.scrollTop = st0; }
   else el.innerHTML = `<div class="mb">${h}</div>`;
   el.dataset.mt = m.type; S.mh = h;
+  el.classList.toggle('clr', !!m.clr || m.type === 'mwmk');
   el.classList.add('show');
 }
 
@@ -5786,11 +5901,14 @@ document.addEventListener('click', (e) => {
     case 'mroom': {
       if (!v || !v.mx) break;
       const wh = x === 'E' ? '空房' : ` ${esc(nameOf(v, x))}（${mwRoomOf(v, x)}）`;
-      if (v.ph === 'pick') { if (S.mwSel != null) mwPassAsk(S.mwSel, x); else toast('先揀一張手牌'); }
+      if (v.ph === 'pick') { if (S.mwSel != null) { mwPark(S.mwSel, x); mwPassAsk(S.mwSel, x); } else toast('先揀一張手牌'); }
       else if (v.ph === 'talk' && S.mwMode === 'D') confirmBox(`將${wh}關入地窖？<small>偵探出手，遊戲即刻完。</small>`, '關入地窖', () => { S.mwMode = null; act('mdet', x); }, { bad: true });
       else if (v.ph === 'vote') { const law = S.mwLaw && v.rl[ME.id] === 'L' ? 1 : 0; confirmBox(`投${wh}？<small>${law ? (x === 'E' ? '律師出手：空房冇人，冇票唔計。' : `律師出手：${esc(nameOf(v, x))} 嗰票唔計。`) : ''}投咗唔改得。</small>`, '投佢', () => act('mvote', [x, law])); }
       break;
     }
+    case 'mmk': if (v && v.mx) { openModal({ type: 'mwmk', id: x }); sfx('tick'); } break;
+    case 'mmkr': if (v && v.mx && S.modal && S.modal.type === 'mwmk') { mwMarkToggle(v, S.modal.id, x); sfx('tick'); render(); } break;
+    case 'mmkc': if (v && v.mx && S.modal && S.modal.type === 'mwmk') { delete mwMarks(v)[S.modal.id]; mwMarkSave(); render(); } break;
     case 'mdet': S.mwMode = 'D'; render(); break;
     case 'mdetx': S.mwMode = null; render(); break;
     case 'mbut': confirmBox('管家出手？<small>你會睇到兩張冇用嘅卡；全部人會知你係管家，你之後冇得投票。</small>', '出手', () => act('mbut')); break;
