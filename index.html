@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-25-02';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-25-03';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -5279,7 +5279,10 @@ const RULES_MW = `<div class="rules">
     <li>贏嘅每人 +1 分，一局一局累計。</li></ul>
 </div>`;
 /* 放卡飛行（2026-11-23）：張卡（背面寫住邊個放）由放卡嘅人（或者自己拖到嘅位）呈弧線飛入目標房，半空轉一圈，落地閃光 */
+/* 特效量房位置之前先完咗畫面入場動畫：轉畫面頭 0.5 秒 .stage.enter 將內容向右移 48px、斜 8 度，即刻量會歪（Bill 2026-11-25 截圖偵探紅框、射燈向右歪咗） */
+function mwSettle() { const st = $('.stage.enter'); if (st) st.classList.remove('enter'); }
 function mwFly(v, ev) {
+  mwSettle();
   const H = innerHeight, tgt = $(`.mwrm[data-mwroom="${ev.to}"] .mwslot`), mine = ev.by === ME.id, g = mine && S.mwGhost ? S.mwGhost.el : null;
   const pop = () => { const tr = $(`.mwrm[data-mwroom="${ev.to}"]`); if (tr) { const b = document.createElement('i'); b.className = 'mwpop'; tr.appendChild(b); setTimeout(() => b.remove(), 700); } sfx('tick'); };
   if (g && tgt) {
@@ -5366,6 +5369,7 @@ function mwPassAsk(i, to) {
  * → 大字「關入地窖！」→ 結果（綠：捉到兇手；紅：兇手走甩；橙：搗蛋鬼得逞）→ 3 秒收（下面轉做結果畫面） */
 function mwLockFx(v) {
   cdT.forEach(clearTimeout); cdT = [];
+  mwSettle();
   const old = $('#cdfx'); if (old) old.remove();
   const mx = v.mx, at = (ms, fn) => cdT.push(setTimeout(fn, ms)), L = mx.lock.slice(0, 3), det = mx.why === 'det' && !!mx.dv;
   const res = { G: ['捉到兇手！', 'ok'], K: ['兇手走甩！', 'bad'], P: ['搗蛋鬼得逞！', 'pk'] }[mx.win] || ['', ''];
@@ -5403,13 +5407,13 @@ const MW_DET_MS = 2600, MW_DET_HOLD = 900;
 const mwLockMs = (v) => 3150 + (v.mx && v.mx.why === 'det' && v.mx.dv ? MW_DET_MS + MW_DET_HOLD : 0);
 function mwDetFx(el, v, P, W, H) {
   const to = v.mx.dv.to, tl = $(`.mwrm[data-mwroom="${to}"]`), r = tl && tl.getBoundingClientRect();
-  const ok = r && r.bottom > 40 && r.top < H - 40;
+  const ok = r && r.bottom > 40 && r.top < H - 40, rw = ok ? tl.offsetWidth : 0, rh = ok ? tl.offsetHeight : 0;   // 大細用 offset（唔計發光脈動放大）
   const x = ok ? r.left + r.width / 2 : W / 2, y = ok ? r.top + r.height / 2 : H * 0.42;
   el.style.setProperty('--sx', x.toFixed(0) + 'px'); el.style.setProperty('--sy', y.toFixed(0) + 'px');
   const o = (ms) => Math.min(1, ms / P);
   el.querySelector('.mwspot').animate([{ opacity: 0, easing: 'ease-out' }, { opacity: 1, offset: o(350) }, { opacity: 1, offset: o(P - 250), easing: 'ease-in' }, { opacity: 0 }], { duration: P + 150, fill: 'both' });
   const dh = el.querySelector('.mwdh');
-  dh.style.top = (y < H * 0.5 ? Math.min(H - 190, y + (ok ? r.height / 2 : 60) + 34) : Math.max(24, y - (ok ? r.height / 2 : 60) - 190)) + 'px';
+  dh.style.top = (y < H * 0.5 ? Math.min(H - 190, y + (ok ? rh / 2 : 60) + 34) : Math.max(24, y - (ok ? rh / 2 : 60) - 190)) + 'px';
   // 曲線寫喺每格（WEB-29），成段 linear，先會真係停住
   dh.animate([{ opacity: 0, transform: 'scale(1.7)', easing: 'cubic-bezier(.2,1.3,.35,1)' }, { opacity: 1, transform: 'none', offset: o(600) }, { opacity: 1, transform: 'none', offset: o(P - 350), easing: 'ease-in' }, { opacity: 0, transform: 'translate3d(0,-14px,0)' }], { duration: P, fill: 'both' });
   const lx = x - 60, ly = y - 60, ln = el.querySelector('.mwlens');
@@ -5425,7 +5429,7 @@ function mwDetFx(el, v, P, W, H) {
     { opacity: 0, transform: `translate3d(${lx}px,${ly - 30}px,0) scale(1.5)` }
   ], { duration: P, fill: 'both' });
   const rg = el.querySelector('.mwring');
-  if (ok) { Object.assign(rg.style, { left: r.left - 4 + 'px', top: r.top - 4 + 'px', width: r.width + 8 + 'px', height: r.height + 8 + 'px' }); }
+  if (ok) { Object.assign(rg.style, { left: x - rw / 2 - 4 + 'px', top: y - rh / 2 - 4 + 'px', width: rw + 8 + 'px', height: rh + 8 + 'px' }); }
   else rg.style.display = 'none';
   rg.animate([{ opacity: 0, transform: 'scale(1.25)', easing: 'cubic-bezier(.2,1.4,.4,1)' }, { opacity: 1, transform: 'none', offset: 0.25 }, { opacity: 0.35, offset: 0.45 }, { opacity: 1, offset: 0.65 }, { opacity: 0.35, offset: 0.82 }, { opacity: 1 }], { duration: P - 1700, delay: 1700, fill: 'both' });
   cdT.push(setTimeout(() => sfx('flick'), 120), setTimeout(() => sfx('knock'), 1700), setTimeout(() => sfx('tick'), 1950));
