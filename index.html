@@ -2514,7 +2514,7 @@ function hAct(id, t, x) {
     // 畫中有話（說書人口講提示；3 人時每人放 2 張）
     case 'dtell': if (st.g === 'dx' && st.ph === 'tell' && st.dx.st === id && st.dx.hand[id].includes(x)) dxTell(x); break;
     case 'dpick': if (st.g === 'dx' && st.ph === 'pick' && id !== st.dx.st && dxLive().includes(id) && !st.dx.sub[id] && Array.isArray(x) && x.length === st.dx.per && new Set(x).size === x.length && x.every((c) => st.dx.hand[id].includes(c))) dxPick(id, x); break;
-    case 'dvote': if (st.g === 'dx' && st.ph === 'vote' && dxLive().includes(id) && !st.dx.vt[id] && dxCanVote(id, x)) { st.dx.vt[id] = x; dxCheckVote(); } break;
+    case 'dvote': if (st.g === 'dx' && st.ph === 'vote' && dxLive().includes(id) && st.dx.vt[id] == null && dxCanVote(id, x)) { st.dx.vt[id] = x; dxCheckVote(); } break;
     case 'dnext': if (st.g === 'dx' && st.ph === 'show' && dxLive().includes(id)) { st.dx.rdy[id] = 1; if (isH && x) dxAfter(); else dxCheckNext(); } break;
     case 'dskip': if (isH && st.g === 'dx') { if (st.ph === 'tell') dxRound(false); else if (st.ph === 'pick') { dxNeed().forEach((q) => { if (st.ph === 'pick' && !st.dx.sub[q]) dxPick(q, dxRand(st.dx.hand[q], st.dx.per)); }); if (st.ph === 'pick') dxVote(); } else if (st.ph === 'vote') dxScore(); } break;
     case 'mwr': if (isH && st.ph === 'lobby' && st.g === 'mw' && MW_SP.includes(x)) { const sp = String(st.cfg.s || ''); st.cfg.s = MW_SP.filter((c) => (c === x ? !sp.includes(c) : sp.includes(c))).join(''); } break;
@@ -3309,7 +3309,8 @@ function dxVote() {
   dxCheckVote();
 }
 const dxCanVote = (id, c) => { const dx = HS.dx; return id !== dx.st && dx.tb.includes(c) && !(dx.sub[id] || []).includes(c); };
-function dxCheckVote() { const st = HS; if (st.ph === 'vote' && dxNeed().every((id) => st.dx.vt[id])) dxScore(); }
+/* 卡號由 0 起：「投咗未」一定要用 != null，唔可以當真假（投 0 號卡會當冇投，2026-11-25 8 人測試卡住） */
+function dxCheckVote() { const st = HS; if (st.ph === 'vote' && dxNeed().every((id) => st.dx.vt[id] != null)) dxScore(); }
 /* 計分（照原版）；gain 每人：b 基本分（2／3）、x 每票 +1 */
 function dxScore() {
   const st = HS, dx = st.dx, own = {}, g = {};
@@ -3364,7 +3365,7 @@ function dxTick(now) {
     if (st.ph === 'pick' && st.dl && now >= st.dl) dxNeed().forEach((id) => { if (st.ph === 'pick' && !dx.sub[id]) dxPick(id, dxRand(dx.hand[id], dx.per)); });   // 時間到：幫未揀嘅人隨機揀
     dxCheckPick();
   } else if (st.ph === 'vote') {
-    dxBots(now, (id) => { if (st.ph === 'vote' && id !== dx.st && !dx.vt[id]) { const ok = dx.tb.filter((c) => dxCanVote(id, c)); if (ok.length) { dx.vt[id] = dxRand(ok, 1)[0]; dxCheckVote(); } } });
+    dxBots(now, (id) => { if (st.ph === 'vote' && id !== dx.st && dx.vt[id] == null) { const ok = dx.tb.filter((c) => dxCanVote(id, c)); if (ok.length) { dx.vt[id] = dxRand(ok, 1)[0]; dxCheckVote(); } } });
     if (st.ph === 'vote' && st.dl && now >= st.dl) dxScore();   // 時間到：未投嘅當冇投
     else dxCheckVote();
   } else if (st.ph === 'show') {
@@ -6043,11 +6044,11 @@ function vPlayDx(v) {
     if (inG && (isSt || done)) h += '<div class="sh"><span>你嘅手牌</span></div>' + dxHand(v, '');
     if (host && !v.dl && need.some((id) => !dx.sub[id])) h += '<button class="btn ghost" data-act="dxsk">唔等，幫未揀嘅人隨機揀</button>';
   } else if (ph === 'vote') {
-    const voters = dxNeedV(v), can = inG && !isSt && !dx.vt[me];
-    h += timer(isSt ? '大家投緊票' : dx.vt[me] ? '已投票' : `邊張係 ${sn} 嘅？`, isSt ? '你唔使投，睇住就得' : dx.vt[me] ? '等其他人投' : '撳卡放大再投；唔可以投自己張');
+    const voters = dxNeedV(v), myV = dx.vt[me] != null, can = inG && !isSt && !myV, vd = Object.fromEntries(Object.keys(dx.vt).map((q) => [q, 1]));
+    h += timer(isSt ? '大家投緊票' : myV ? '已投票' : `邊張係 ${sn} 嘅？`, isSt ? '你唔使投，睇住就得' : myV ? '等其他人投' : '撳卡放大再投；唔可以投自己張');
     h += dxTable(v, 'vote');
-    h += `<div class="sh"><span>已投票</span><small>${voters.filter((id) => dx.vt[id]).length}／${voters.length}</small></div><div class="okl">${okChips(v, voters, dx.vt)}</div>`;
-    if (host && !v.dl && voters.some((id) => !dx.vt[id])) h += '<button class="btn ghost" data-act="dxsk">唔等，即刻開票</button>';
+    h += `<div class="sh"><span>已投票</span><small>${voters.filter((id) => vd[id]).length}／${voters.length}</small></div><div class="okl">${okChips(v, voters, vd)}</div>`;
+    if (host && !v.dl && voters.some((id) => !vd[id])) h += '<button class="btn ghost" data-act="dxsk">唔等，即刻開票</button>';
     if (!can && inG) h += '<div class="sh"><span>你嘅手牌</span></div>' + dxHand(v, '');
   } else if (ph === 'show') {
     const nv = Object.keys(dx.vt).length, n = dx.hit.length;
@@ -6090,7 +6091,7 @@ function dxZoom() {
   if (S.dxZ.k === 'h') {
     if (v.ph === 'tell' && dx.st === me) btn = `<button class="btn gold big" data-act="dxtell" data-x="${c}">揀呢張，放低</button>`;
     else if (v.ph === 'pick' && dx.st !== me && dx.ord.includes(me) && !dx.sub[me]) btn = dx.per === 2 ? `<button class="btn gold big" data-act="dxsel" data-x="${c}">${(S.dxSel || []).includes(c) ? '唔揀呢張' : `揀呢張（${(S.dxSel || []).length}／2）`}</button>` : `<button class="btn gold big" data-act="dxpk" data-x="${c}">揀呢張，放落枱</button>`;
-  } else if (v.ph === 'vote' && dx.st !== me && dx.ord.includes(me) && !dx.vt[me]) {
+  } else if (v.ph === 'vote' && dx.st !== me && dx.ord.includes(me) && dx.vt[me] == null) {
     btn = (dx.sub[me] || []).includes(c) ? '<button class="btn gold big" disabled>呢張係你嘅</button>' : `<button class="btn gold big" data-act="dxvt" data-x="${c}">投 ${i + 1} 號</button>`;
   }
   const lab = S.dxZ.k === 't' ? `第 ${i + 1} 張` : `手牌 ${i + 1}／${L.length}`;
@@ -6780,7 +6781,7 @@ document.addEventListener('click', (e) => {
     case 'dxzc': S.dxZ = null; dxZoom(); break;
     case 'dxtell': S.dxZ = null; dxZoom(); act('dtell', +x); break;
     case 'dxpk': S.dxZ = null; dxZoom(); act('dpick', [+x]); break;
-    case 'dxsel': if (v && v.dx) { const c = +x, h = v.dx.hand[ME.id] || [], sl = (S.dxSel || []).filter((q) => h.includes(q)); S.dxSel = sl.includes(c) ? sl.filter((q) => q !== c) : sl.length < 2 ? [...sl, c] : sl; sfx('tick'); if (S.dxSel.length === 2) S.dxZ = null; render(); } break;
+    case 'dxsel': if (v && v.dx) { const c = +x, h = v.dx.hand[ME.id] || [], sl = (S.dxSel || []).filter((q) => h.includes(q)); S.dxSel = sl.includes(c) ? sl.filter((q) => q !== c) : sl.length < 2 ? [...sl, c] : sl; sfx('tick'); S.dxZ = null; render(); } break;   // 揀完一張就收埋放大畫面，返手牌見到剔號再揀下一張
     case 'dxpk2': if (v && v.dx && S.dxSel && S.dxSel.length === 2) { act('dpick', S.dxSel.slice()); S.dxSel = []; } break;
     case 'dxvt': S.dxZ = null; dxZoom(); act('dvote', +x); break;
     case 'dxnx': act('dnext', 0); break;
