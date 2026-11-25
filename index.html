@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-24-02';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-25-01';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -956,28 +956,34 @@ button.kq-mat:not(.on){opacity:.55}
 .kr-fcd .kq-cd{--w:26px}
 /* 大宅目擊者（2026-11-23）：大宅平面圖（每人一間房、空房、地窖／牌堆）、角色卡插畫、手牌拖卡、雨景閃電、地窖鐵閘；全部只郁 transform、opacity（WEB-35） */
 .av.xs{width:18px;height:18px;font-size:10px;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
-.mwcd{position:relative;display:inline-block;width:36px;height:45px;flex:none;perspective:600px;vertical-align:middle}
-.mwci{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:rotateY(180deg)}
+.mwcd{--cw:36px;--ch:45px;position:relative;display:inline-block;width:var(--cw);height:var(--ch);flex:none;perspective:600px;vertical-align:middle}
+/* 卡面大細寫死（--cw、--ch），唔靠 inset:0 撐：iPhone 房入面張細卡卡面高咗、遮住下面玩家名（Bill 2026-11-25 截圖，Chromium 正常） */
+.mwci{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:rotateY(180deg)}
 .mwci.up{transform:none}
-.mwcd .mf,.mwcd .mb{position:absolute;inset:0;border-radius:6px;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:#15122a center/cover no-repeat;box-shadow:0 0 0 1px rgba(224,182,92,.55),0 3px 8px rgba(0,0,0,.45)}
+.mwcd .mf,.mwcd .mb{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);border-radius:6px;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:#15122a center/cover no-repeat;box-shadow:0 0 0 1px rgba(224,182,92,.55),0 3px 8px rgba(0,0,0,.45)}
 .mwcd .mb{transform:rotateY(180deg);background-image:var(--mwBK)}
 .mwcd .mf{transform:rotateY(0deg)}
 /* 正面向上、唔使翻嘅卡：卡背收埋（iPhone 重畫新卡嗰格會先畫卡背，2026-11-24 Bill 見到閃）；派牌、翻牌、特效大卡先要卡背 */
 .mwci.up>.mb{visibility:hidden}
 .mwhand.deal .mwci>.mb,.mwcd.rvl .mwci>.mb,.mwcd.xl .mwci>.mb{visibility:visible}
-.mwcd .mf.G{background-image:var(--mwG)}.mwcd .mf.K{background-image:var(--mwK)}.mwcd .mf.A{background-image:var(--mwA)}.mwcd .mf.L{background-image:var(--mwL)}
+.mwcd .mf.G{background-image:var(--mwG)}.mwcd .mf.U{background-image:var(--mwU)}.mwcd .mf.H{background-image:var(--mwH)}.mwcd .mf.K{background-image:var(--mwK)}.mwcd .mf.A{background-image:var(--mwA)}.mwcd .mf.L{background-image:var(--mwL)}
 .mwcd .mf.R{background-image:var(--mwR)}.mwcd .mf.D{background-image:var(--mwD)}.mwcd .mf.B{background-image:var(--mwB)}.mwcd .mf.P{background-image:var(--mwP)}
 .mwcd .mf b{position:absolute;left:0;right:0;bottom:0;padding:2px 0 3px;text-align:center;font-family:var(--serif);font-size:8px;font-weight:900;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75) 45%);text-shadow:0 1px 2px #000;letter-spacing:0}
 .mwcd .mb i{position:absolute;left:0;right:0;bottom:0;padding:1px 0 2px;text-align:center;font-style:normal;font-size:8px;font-weight:900;color:#ffe9a8;background:rgba(10,8,20,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mwcd.big{width:108px;height:135px;perspective:900px}
+.mwcd.big{--cw:108px;--ch:135px;perspective:900px}
 .mwcd.big .mf,.mwcd.big .mb{border-radius:12px;box-shadow:0 0 0 1.5px rgba(224,182,92,.7),0 10px 22px rgba(0,0,0,.45)}
 .mwcd.big .mf b{font-size:17px;letter-spacing:3px;text-indent:3px;padding:14px 0 7px}
 .mwcd.big .mb i{font-size:13px;padding:4px 0 5px}
-.mwcd.xl{position:absolute;inset:0;width:auto;height:auto;perspective:none;transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.mwcd.xl{--cw:100%;--ch:100%;position:absolute;inset:0;width:auto;height:auto;perspective:none;transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
 .mwcd.xl .mf,.mwcd.xl .mb{border-radius:18px;box-shadow:0 0 0 2.5px #c9963c,0 24px 50px rgba(0,0,0,.55)}
 .mwcd.xl .mf b{font-size:24px;letter-spacing:6px;text-indent:6px;padding:26px 0 12px}
 .mwcd.xl .mf:after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:60%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55) 50%,rgba(255,255,255,0));animation:cdSheen .65s cubic-bezier(.3,0,.2,1) .9s both}
-.mwcd.sm2{width:28px;height:35px}
+.mwcd.sm2{--cw:28px;--ch:35px}
+/* 房入面、牌堆、地窖靜止嘅卡唔用 3D（平面：背面向上就收埋正面）；翻牌（rvl）先用 3D */
+.mwslot .mwcd:not(.rvl){perspective:none}
+.mwslot .mwcd:not(.rvl) .mwci{transform:none;transform-style:flat;-webkit-transform-style:flat}
+.mwslot .mwcd:not(.rvl) .mf,.mwslot .mwcd:not(.rvl) .mb{transform:none}
+.mwslot .mwcd:not(.rvl) .mwci:not(.up)>.mf{visibility:hidden}
 .mwcd.sm2 .mf b{display:none}
 /* 平面圖：深色大宅，每間房頂一條房色、圖示同房名 */
 .mwbd{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 0 14px;padding:8px;border-radius:20px;background:radial-gradient(120% 80% at 50% 0%,#2a2340,#110e1a 70%);box-shadow:inset 0 0 0 1px rgba(224,182,92,.45),inset 0 0 0 5px rgba(0,0,0,.25),0 14px 32px rgba(0,0,0,.3);overflow:hidden;color:#f6f2e9}
@@ -999,6 +1005,10 @@ button.kq-mat:not(.on){opacity:.55}
 .mwmk{display:flex;align-items:center;gap:1px;height:17px;padding:0 4px 0 0;border-radius:999px;background:rgba(10,8,20,.86);box-shadow:inset 0 0 0 1.5px rgba(143,240,196,.75);font-family:var(--serif);font-size:10.5px;font-weight:900;font-style:normal;line-height:1;color:#c9f5df}
 .mwmk.K{box-shadow:inset 0 0 0 1.5px rgba(255,138,154,.85);color:#ffc6ce}.mwmk.P{box-shadow:inset 0 0 0 1.5px rgba(255,180,110,.9);color:#ffd6ad}
 .mwmk .mwav{width:17px;height:17px;box-shadow:none}
+.mwmk.mwqG{color:#ffe07a}.mwmk.mwqU{color:#a8ccff}.mwmk.mwqH{color:#ffa89c}
+/* 住客頭像圈用返自己顏色（細頭像都分得出黃、藍、紅）；標記細牌唔要圈 */
+i.mwav.G{box-shadow:0 0 0 2px #f2c230}i.mwav.U{box-shadow:0 0 0 2px #5a96f0}i.mwav.H{box-shadow:0 0 0 2px #ee5560}
+.mwmk i.mwav{box-shadow:none}
 .mwmk.nw{animation:mwMk .42s cubic-bezier(.2,1.6,.4,1) var(--et,0ms) both}
 @keyframes mwMk{0%{opacity:0;transform:scale(.2)}100%{opacity:1;transform:none}}
 .mwby{display:flex;align-items:center;gap:3px;max-width:100%;margin-top:1px;padding:1px 6px 1px 2px;border-radius:999px;background:rgba(224,182,92,.16);font-size:10px;font-weight:800;color:#f2d892}
@@ -1073,7 +1083,7 @@ button.kq-mat:not(.on){opacity:.55}
 .mwsay b{display:block;font-family:var(--serif);font-size:18px;font-weight:900;color:var(--g1);margin-top:2px}
 .stage.enter .mwsay{animation:pop .5s cubic-bezier(.2,1.4,.4,1) calc(200ms + var(--et)) backwards}
 .mwav{display:inline-block;width:22px;height:22px;border-radius:50%;flex:none;vertical-align:middle;background:#15122a center 46%/235% auto no-repeat;box-shadow:0 0 0 1.5px rgba(224,182,92,.7)}
-.mwav.G{background-image:var(--mwG)}.mwav.K{background-image:var(--mwK)}.mwav.A{background-image:var(--mwA)}.mwav.L{background-image:var(--mwL)}
+.mwav.G{background-image:var(--mwG)}.mwav.U{background-image:var(--mwU)}.mwav.H{background-image:var(--mwH)}.mwav.K{background-image:var(--mwK)}.mwav.A{background-image:var(--mwA)}.mwav.L{background-image:var(--mwL)}
 .mwav.R{background-image:var(--mwR)}.mwav.D{background-image:var(--mwD)}.mwav.B{background-image:var(--mwB)}.mwav.P{background-image:var(--mwP)}
 .mwcomp{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin:0 0 10px}
 .mwcc{display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 3px;border-radius:999px;font-size:13px;font-weight:800;background:rgba(95,214,163,.12);color:var(--oktx)}
@@ -1117,7 +1127,7 @@ button.kq-mat:not(.on){opacity:.55}
 .memo.mw{margin-top:5px;padding:0;font-size:12px;line-height:1.55;list-style:none}
 .memo.mw li{display:flex;align-items:center;flex-wrap:wrap;gap:3px}
 .memo.mw .mwav{width:17px;height:17px}
-.cdart.mwG{background-image:var(--mwG)}.cdart.mwK{background-image:var(--mwK)}.cdart.mwA{background-image:var(--mwA)}.cdart.mwL{background-image:var(--mwL)}
+.cdart.mwG{background-image:var(--mwG)}.cdart.mwU{background-image:var(--mwU)}.cdart.mwH{background-image:var(--mwH)}.cdart.mwK{background-image:var(--mwK)}.cdart.mwA{background-image:var(--mwA)}.cdart.mwL{background-image:var(--mwL)}
 .cdart.mwR{background-image:var(--mwR)}.cdart.mwD{background-image:var(--mwD)}.cdart.mwB{background-image:var(--mwB)}.cdart.mwP{background-image:var(--mwP)}
 .cdwin.mg{background:radial-gradient(120% 120% at 75% 10%,#2fbf80,#062a1c 72%);box-shadow:inset 0 0 0 1.5px rgba(130,240,190,.8),0 16px 36px rgba(0,0,0,.3)}
 .cdwin.mk{background:radial-gradient(120% 120% at 75% 10%,#c2304a,#2a0712 72%);box-shadow:inset 0 0 0 1.5px rgba(255,140,160,.8),0 16px 36px rgba(0,0,0,.3)}
@@ -1126,29 +1136,40 @@ button.kq-mat:not(.on){opacity:.55}
 .cdwin.mg .big{color:#d8fff0}.cdwin.mk .big{color:#ffd7e4}.cdwin.mp .big{color:#fff0d0}
 .cdwin.mw .tip{font-size:13px;line-height:1.5}
 /* 關入地窖特效：閃電白閃、放大鏡掃過（偵探）、卡飛入翻開、鐵閘落、結果大字 */
-#cdfx.M .mwfl{inset:0;background:radial-gradient(130% 90% at 50% 0%,#fff,rgba(220,230,255,.6) 40%,rgba(200,215,255,0) 75%);opacity:0;animation:mwFl .7s linear both}
+#cdfx.M .mwfl{inset:0;background:radial-gradient(130% 90% at 50% 0%,#fff,rgba(220,230,255,.6) 40%,rgba(200,215,255,0) 75%);opacity:0;animation:mwFl .7s linear var(--d0,0ms) both}
 @keyframes mwFl{0%{opacity:0}8%{opacity:1}16%{opacity:.2}26%{opacity:.85}100%{opacity:0}}
 #cdfx.M .mwlens{left:50%;top:42%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:8px solid #e8bd62;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(190,240,255,.15) 55%,rgba(110,210,235,.3));box-shadow:0 0 0 3px #6a4a14,0 10px 30px rgba(0,0,0,.4);animation:mwLens .5s cubic-bezier(.5,0,.3,1) both}
 #cdfx.M .mwlens:after{content:"";position:absolute;left:92px;top:92px;width:16px;height:64px;border-radius:8px;background:#7a4e24;transform:rotate(-45deg);transform-origin:8px 0}
 @keyframes mwLens{0%{opacity:0;transform:translate3d(-70vw,30px,0) rotate(-30deg)}30%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate3d(70vw,-30px,0) rotate(20deg)}}
 #cdfx.M .mwc3{width:176px;height:220px;margin:-110px 0 0 -88px}
 #cdfx.M .mwc3 .mwnm{position:absolute;left:0;right:0;top:100%;margin-top:8px;text-align:center;font-family:var(--serif);font-size:16px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8)}
-#cdfx.M .mwgate{left:50%;top:42%;width:min(92vw,470px);height:262px;margin:-131px 0 0 calc(min(92vw,470px) / -2);border-radius:14px;background:linear-gradient(180deg,#3a3a46,#1e1e26) top/100% 14px no-repeat,linear-gradient(180deg,#3a3a46,#1e1e26) 0 62%/100% 12px no-repeat,repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 26px,#2a2a32 26px 29px,#9a9aaa 29px 32px,#4a4a56 32px 36px,rgba(0,0,0,0) 36px 52px);box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;animation:mwGate .42s cubic-bezier(.6,0,.4,1.25) 1.02s both}
+#cdfx.M .mwgate{left:50%;top:42%;width:min(92vw,470px);height:262px;margin:-131px 0 0 calc(min(92vw,470px) / -2);border-radius:14px;background:linear-gradient(180deg,#3a3a46,#1e1e26) top/100% 14px no-repeat,linear-gradient(180deg,#3a3a46,#1e1e26) 0 62%/100% 12px no-repeat,repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 26px,#2a2a32 26px 29px,#9a9aaa 29px 32px,#4a4a56 32px 36px,rgba(0,0,0,0) 36px 52px);box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;animation:mwGate .42s cubic-bezier(.6,0,.4,1.25) calc(1.02s + var(--d0,0ms)) both}
 #cdfx.M.none .mwgate{display:none}
 @keyframes mwGate{0%{opacity:1;transform:translate3d(0,-110vh,0)}100%{opacity:1;transform:none}}
-#cdfx.M .cap{top:calc(42% + 160px);animation-delay:1.2s}
+#cdfx.M .cap{top:calc(42% + 160px);animation-delay:calc(1.2s + var(--d0,0ms))}
 #cdfx.M .cap b{color:#ffe9a8}
-#cdfx.M .cap.c2{top:calc(42% - 190px);animation-delay:1.55s}
+#cdfx.M .cap.c2{top:calc(42% - 190px);animation-delay:calc(1.55s + var(--d0,0ms))}
 #cdfx.M .cap.c2 b{font-size:40px}
 #cdfx.M.ok .cap.c2 b{color:#8ff0c4}#cdfx.M.bad .cap.c2 b{color:#ff9aac}#cdfx.M.pk .cap.c2 b{color:#ffcf8a}
 #cdfx.M.none .cap{top:40%}#cdfx.M.none .cap.c2{top:calc(40% + 90px)}
-#cdfx.M .halo{animation-delay:1.3s}
+#cdfx.M .halo{animation-delay:calc(1.3s + var(--d0,0ms))}
 #cdfx.M.ok .halo{background:radial-gradient(circle,rgba(110,255,190,.7),rgba(110,255,190,0) 62%)}
 #cdfx.M.bad .halo{background:radial-gradient(circle,rgba(255,70,90,.75),rgba(255,70,90,0) 62%)}
 #cdfx.M.pk .halo{background:radial-gradient(circle,rgba(255,170,80,.75),rgba(255,170,80,0) 62%)}
 #cdfx.M.B .halo{animation-delay:.5s;background:radial-gradient(circle,rgba(200,215,255,.6),rgba(200,215,255,0) 62%)}
 #cdfx.M.B .cap{top:calc(42% + 130px);animation-delay:.7s}
 #cdfx.M .burst{top:42%}
+/* 偵探出手（--d0 ＝ 出場時間）：射燈照住嗰間房、放大鏡飛過去搵、紅框閃，之後先關入地窖 */
+#cdfx.M .dim{animation-delay:var(--d0,0ms)}
+#cdfx.M .lines i{animation-delay:calc(var(--dl) + var(--d0,0ms))}
+#cdfx.M .mwspot{inset:0;background:radial-gradient(circle at var(--sx) var(--sy),rgba(5,4,10,0) 0,rgba(5,4,10,0) 70px,rgba(5,4,10,.74) 165px);opacity:0}
+#cdfx.M .mwlens.go{left:0;top:0;margin:0;animation:none;opacity:0;z-index:2}
+#cdfx.M .mwring{border-radius:14px;box-shadow:inset 0 0 0 3px #ff8a9a,0 0 0 3px rgba(255,138,154,.35),0 0 30px rgba(255,90,110,.75);opacity:0}
+#cdfx.M .mwdh{position:absolute;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;color:#fff;opacity:0}
+#cdfx.M .mwdh .mwav{width:78px;height:78px;box-shadow:0 0 0 3px #e8bd62,0 0 34px rgba(255,214,120,.55)}
+#cdfx.M .mwdh b{font-family:var(--serif);font-size:34px;font-weight:900;letter-spacing:5px;text-indent:5px;color:#ffe9a8;text-shadow:0 3px 16px rgba(0,0,0,.7)}
+#cdfx.M .mwdh small{font-size:16px;font-weight:800;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+#cdfx.out .mwdh,#cdfx.out .mwspot,#cdfx.out .mwring,#cdfx.out .mwlens{animation:cdOut .38s ease both}
 #cdfx.out .mwgate,#cdfx.out .mwc3,#cdfx.out .mwfl{animation:cdOut .38s ease both}
 /* 大宅目擊者：房間設定揀特別角色 */
 .mwsp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 10px}
@@ -3026,7 +3047,9 @@ const MW_SP = ['A', 'L', 'R', 'D', 'B', 'P'];
 const mwSide = (r) => (r === 'P' ? 'P' : r === 'K' || r === 'A' ? 'K' : 'G');
 const mwDeckN = (n, s) => n + 1 + (String(s || '').includes('B') ? 2 : 0);
 const mwFits = (n, s) => 1 + String(s || '').length <= mwDeckN(n, s);
-const MW_ORD = 'KAPDBLRG';
+const MW_ORD = 'KAPDBLRGUH';
+/* 住客三種顏色輪住補：黃 G、藍 U、紅 H（第 4 張再嚟黃）；Bill 2026-11-25「客人有三隻唔同顏色」 */
+const MW_GU = 'GUH';
 const mwSort = (a, b) => MW_ORD.indexOf(a) - MW_ORD.indexOf(b);
 function mwStart(keep) {
   const st = HS;
@@ -3039,7 +3062,7 @@ function mwStart(keep) {
   st.pl.forEach((p) => { p.gone = 0; if (!keep) p.sc = 0; });
   st.gid++;
   let all = ['K', ...s.split('')];
-  while (all.length < mwDeckN(n, s)) all.push('G');
+  for (let gi = 0; all.length < mwDeckN(n, s); gi++) all.push(MW_GU[gi % 3]);
   let ab = [];
   if (s.includes('B')) { const rest = shuffle(all.slice(1)); ab = rest.slice(0, 2); all = ['K', ...rest.slice(2)]; }
   const ids = st.pl.map((p) => p.id);
@@ -3728,7 +3751,7 @@ function fx(prevPh, had, v) {
       S.seen['me' + v.gid + '-' + ev.k] = 1;
       if (had && ev.t === 'pass') requestAnimationFrame(() => mwFly(v, ev));
       else if (had && ev.t === 'but') { if (ev.by === ME.id) mwButFx(v); else { sweep('管家出手', nameOf(v, ev.by)); sfx('flick'); } }
-      else if (had && ev.t === 'lock') { S.mwHold = Date.now() + 3150; setTimeout(render, 3180); requestAnimationFrame(() => mwLockFx(v)); }
+      else if (had && ev.t === 'lock') { const hd = mwLockMs(v); S.mwHold = Date.now() + hd; setTimeout(render, hd + 30); requestAnimationFrame(() => mwLockFx(v)); }
       if (ev.t !== 'pass') mwGhostGone();
     }
     if (v.ph === 'pick' && mx.cur === ME.id && !S.seen['mt' + v.gid + '-' + mx.tk]) { S.seen['mt' + v.gid + '-' + mx.tk] = 1; S.mwSel = null; if (had) setTimeout(() => { sweep('到你揀卡！', '拖一張入房'); sfx('good'); }, mx.tk > 1 ? 720 : 1600); }
@@ -4802,7 +4825,12 @@ ${rain(21, 40, '#c8d0ff', 0.3)}
 <g fill="#0e0b14"><rect x="36" y="66" width="28" height="4" rx="1"/><rect x="38" y="70" width="3" height="20"/><rect x="59" y="70" width="3" height="20"/><rect x="38" y="44" width="3" height="24"/><rect x="38" y="44" width="22" height="3"/></g>
 <g fill="none" stroke="#c8c0e0" stroke-width=".6" opacity=".55"><path d="M0 0L26 18M0 10L22 22M10 0L24 20M0 0q12 8 4 18M0 0q16 2 18 10"/><path d="M4 6q4 2 8 0M7 12q5 2 10-1M12 18q5 1 10-2"/></g>`);
 
-  return { G, K, A, L, R, D, B, P, BK, C, E };
+  /* 住客三色（黃、藍、紅）：背景、背心、煲呔換色，其他一樣 */
+  const gc = (bgc, vs, tie) => [['#f0b45e', bgc[0]], ['#93501f', bgc[1]], ['#3e1c0b', bgc[2]], ['#190a04', bgc[3]], ['#7a4a2c', vs[0]], ['#2e170b', vs[1]], ['#c3203d', tie[0]], ['#8e1228', tie[1]]].reduce((o, [a, b]) => o.split(a).join(b), G);
+  const GY = gc(['#ffe27e', '#c48c1c', '#4e3008', '#1e1204'], ['#e2b43c', '#6a4a0e'], ['#ffd640', '#a87a0a']);
+  const U = gc(['#a4cfff', '#3a6abc', '#132a5a', '#070e22'], ['#4a80e4', '#16305e'], ['#86bcff', '#2458b0']);
+  const H = gc(['#ffa898', '#c4443e', '#521414', '#200606'], ['#da444c', '#5a0e16'], ['#ff7070', '#a01828']);
+  return { G: GY, U, H, K, A, L, R, D, B, P, BK, C, E };
 })();
 (() => { const rs = document.documentElement.style, put = (pre, A) => { for (const k in A) rs.setProperty(pre + k, "url('data:image/svg+xml;charset=utf-8," + encodeURIComponent(A[k]).replace(/'/g, '%27') + "')"); }; put('--cd', CD_ART); put('--zd', ZD_ART); put('--mw', MW_ART); })();
 function wireCard(t, cls = '', attrs = '') {
@@ -5026,8 +5054,8 @@ const RULES_CD = `<div class="rules">
     <li>贏嗰隊每人 +1 分，一局一局累計。</li></ul>
 </div>`;
 /* ---------- 大宅目擊者：畫面 ---------- */
-const MW_ROLE = { G: '住客', K: '兇手', A: '幫兇', L: '律師', R: '富豪', D: '偵探', B: '管家', P: '搗蛋鬼' };
-const MW_TIP = { G: '將兇手關入地窖', K: '唔好俾人關入地窖', A: '幫兇手避過地窖', L: '投票時出手：你投嗰間房嘅人，佢嗰票唔計', R: '投票時你一個人計兩票', D: '討論時出手：自己揀一間房關入地窖', B: '討論時出手：睇兩張冇用嘅卡，之後冇得投票', P: '俾人關入地窖就你一個人贏' };
+const MW_ROLE = { G: '黃住客', U: '藍住客', H: '紅住客', K: '兇手', A: '幫兇', L: '律師', R: '富豪', D: '偵探', B: '管家', P: '搗蛋鬼' };
+const MW_TIP = { G: '將兇手關入地窖', U: '將兇手關入地窖', H: '將兇手關入地窖', K: '唔好俾人關入地窖', A: '幫兇手避過地窖', L: '投票時出手：你投嗰間房嘅人，佢嗰票唔計', R: '投票時你一個人計兩票', D: '討論時出手：自己揀一間房關入地窖', B: '討論時出手：睇兩張冇用嘅卡，之後冇得投票', P: '俾人關入地窖就你一個人贏' };
 const MW_TEAM = { G: '客人陣營', K: '兇手陣營', P: '自己一邊' };
 const MW_RM = [['書房', 'book'], ['琴房', 'music'], ['溫室', 'leaf'], ['飯廳', 'dine'], ['畫廊', 'frame'], ['閣樓', 'attic'], ['鐘樓', 'clock'], ['撞球室', 'ball']];
 const MW_RC = ['#e0a868', '#8eb0ff', '#72d6a0', '#ff9494', '#d2a6f2', '#f0d070', '#72d8d8', '#ffaa70'];
@@ -5112,7 +5140,7 @@ function mwMarkToggle(v, id, r) {
 }
 function mwMarkHtml(v, id) {
   const L = mwMarks(v)[id]; if (!L || !L.length) return '';
-  const now = Date.now(), chip = ([r, t]) => { const e = now - t, nw = e >= 0 && e < 420; return `<i class="mwmk ${mwSide(r)}${nw ? ' nw' : ''}"${nw ? ` style="--et:-${e}ms"` : ''}>${mwAv(r)}${MW_ROLE[r][0]}</i>`; };
+  const now = Date.now(), chip = ([r, t]) => { const e = now - t, nw = e >= 0 && e < 420; return `<i class="mwmk ${mwSide(r)}${MW_GU.includes(r) ? ' mwq' + r : ''}${nw ? ' nw' : ''}"${nw ? ` style="--et:-${e}ms"` : ''}>${mwAv(r)}${MW_ROLE[r][0]}</i>`; };
   return `<span class="mwmks">${L.slice(0, 2).map(chip).join('')}</span>${L[2] ? `<span class="mwmks r">${chip(L[2])}</span>` : ''}`;
 }
 /* 你嘅目擊：抽到、收到、留低、放咗去邊（管家出手後再加冇用嘅卡） */
@@ -5161,7 +5189,7 @@ function mwHandSync() {
 }
 const MW_STEPS = [['pick', '揀卡'], ['talk', '討論'], ['vote', '投票']];
 function vPlayMw(v, hold) {
-  const mx = v.mx, me = ME.id, meIn = mx.rm[me] != null, r = v.rl[me], host = v.host === me, ph = hold ? 'vote' : v.ph;
+  const mx = v.mx, me = ME.id, meIn = mx.rm[me] != null, r = v.rl[me], host = v.host === me, ph = hold ? (mx.why === 'det' ? 'talk' : 'vote') : v.ph;   // 偵探出手嘅關地窖動畫：下面留住討論畫面
   const n = Object.keys(mx.rm).length;
   let h = `<div class="rh"><div class="rn">${ph === 'pick' ? `揀卡 <b>${Object.keys(v.rl).length + 1}</b> ／ ${n}` : ph === 'talk' ? '暴風雨夜' : '投票'}</div><div class="ichip">${n} 人・${mx.comp.length} 張卡</div></div>${stepsHtml(MW_STEPS, ph)}`;
   if (ph === 'pick') {
@@ -5180,12 +5208,12 @@ function vPlayMw(v, hold) {
     return h;
   }
   if (ph === 'talk') {
-    const det = S.mwMode === 'D' && r === 'D' && !mx.dv;
-    h += `<div class="tmr">${ring('dl', v.dt0 || 1)}<div style="flex:1;min-width:0"><div class="tl">討論</div><div class="ts">${det ? '撳一間房關入地窖' : '講你見到咩・可以講大話'}</div></div>${host ? '<button class="sb gold" data-act="mskip">投票</button>' : ''}</div>`;
-    h += mwBoard(v, det ? 'det' : '');
-    if (!det && !Object.keys(mwMarks(v)).length) h += '<div class="tip">撳一間房，標記佢講咩角色</div>';
+    const det = !hold && S.mwMode === 'D' && r === 'D' && !mx.dv;
+    h += `<div class="tmr">${hold ? '<div class="ring"><svg viewBox="0 0 64 64"><circle class="rt" cx="32" cy="32" r="29"/></svg><b>0</b></div>' : ring('dl', v.dt0 || 1)}<div style="flex:1;min-width:0"><div class="tl">${hold ? '偵探出手' : '討論'}</div><div class="ts">${hold ? '揀咗嘅房關入地窖' : det ? '撳一間房關入地窖' : '講你見到咩・可以講大話'}</div></div>${host && !hold ? '<button class="sb gold" data-act="mskip">投票</button>' : ''}</div>`;
+    h += mwBoard(v, det ? 'det' : '', hold);
+    if (!hold && !det && !Object.keys(mwMarks(v)).length) h += '<div class="tip">撳一間房，標記佢講咩角色</div>';
     if (r === 'D' && !mx.dv) h += det ? '<button class="btn ghost" data-act="mdetx">取消</button>' : `<button class="btn red big mwab" data-act="mdet">${mwAv('D')}偵探出手</button>`;
-    if (r === 'B' && !mx.bu) h += `<button class="btn gold big mwab" data-act="mbut">${mwAv('B')}管家出手</button>`;
+    if (r === 'B' && !mx.bu && !hold) h += `<button class="btn gold big mwab" data-act="mbut">${mwAv('B')}管家出手</button>`;
     if (mx.bu === me) h += `<div class="mwabx"><small>冇用嘅卡</small><div>${mx.ab.map((t) => mwCard(t, 'big')).join('')}</div></div>`;
     h += '<div class="sh"><span>今局嘅卡</span></div>' + mwComp(v);
     if (meIn && r) h += '<div class="sh"><span>你嘅身份同目擊</span></div>' + vMwCard(v);
@@ -5227,7 +5255,7 @@ function vEndMw(v) {
 }
 const RULES_MW = `<div class="rules">
   <h4>故事</h4><p>暴風雨夜，半山大宅嘅主人俾人殺咗。兇手就喺客人入面。每人守住大宅一間房，大家要搵出兇手，將佢關入地窖。</p>
-  <h4>卡</h4><p>卡數 ＝ 人數 + 1：一定有<b>兇手</b>，其他係房主揀嘅特別角色，唔夠就補<b>住客</b>。今局有咩卡全部人都睇到，但唔知喺邊個手上。房主揀咗<b>管家</b>就再多 2 張卡，開局抽走唔用（兇手一定用）。</p>
+  <h4>卡</h4><p>卡數 ＝ 人數 + 1：一定有<b>兇手</b>，其他係房主揀嘅特別角色，唔夠就補<b>住客</b>（黃、藍、紅輪流，第 4 張再嚟黃）。今局有咩卡全部人都睇到，但唔知喺邊個手上。房主揀咗<b>管家</b>就再多 2 張卡，開局抽走唔用（兇手一定用）。</p>
   <h4>揀卡（唔限時）</h4><ol>
     <li>隨機一個人先：抽 2 張，留 1 張做自己身份，將另一張拖入一個未揀卡嘅人間房。</li>
     <li>全部人見到張卡背寫住邊個放；放卡嘅人口講「我見到 XX 入咗 YY 房」（可以講大話）。</li>
@@ -5237,7 +5265,7 @@ const RULES_MW = `<div class="rules">
   <h4>標記</h4><p>撳一間房（玩家名），揀角色標記喺嗰間房：記低佢話自己係咩、有人話見到咩入咗呢間房。每間房最多 3 個，淨係你自己見到，新一局清走。</p>
   <h4>投票（1 分鐘）</h4><p>每人投一間房（其他人間房或者空房）。最多票嘅房（平票就全部）入面張卡關入<b>地窖</b>。房主可以隨時開票。</p>
   <h4>角色</h4><ul>
-    <li><b>住客</b>：冇能力。客人陣營。</li>
+    <li><b>住客</b>（黃、藍、紅三種顏色）：冇能力。客人陣營。顏色方便講「我見到藍住客入咗琴房」。</li>
     <li><b>兇手</b>：唔好俾人關入地窖。<b>幫兇</b>同兇手一邊。</li>
     <li><b>律師</b>：投票時可以出手，佢投嗰間房嘅人，嗰個人嘅票唔計。</li>
     <li><b>富豪</b>：投票時一個人計兩票。</li>
@@ -5257,7 +5285,7 @@ function mwFly(v, ev) {
   if (g && tgt) {
     // 自己拖落去嗰張：由停喺房上面嘅位縮入房
     const B = tgt.getBoundingClientRect();
-    S.mwGhost = null;
+    S.mwGhost = null; mwHovOff();
     g.animate([{ transform: getComputedStyle(g).transform }, { transform: `translate3d(${B.left + B.width / 2 - 54}px,${B.top + B.height / 2 - 67.5}px,0) scale(${36 / 108})` }], { duration: 320, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
     sfx('flick');
     setTimeout(() => { g.remove(); pop(); }, 600);
@@ -5283,7 +5311,9 @@ function mwFly(v, ev) {
   setTimeout(() => { el.remove(); pop(); }, 640);
 }
 /* 拖卡用嘅影子卡 */
-function mwGhostGone() { if (S.mwGhost) { const e = S.mwGhost.el; S.mwGhost = null; if (e) e.remove(); } }
+function mwGhostGone() { if (S.mwGhost) { const e = S.mwGhost.el; S.mwGhost = null; if (e) e.remove(); mwHovOff(); } }
+/* 影子卡收走之後，間房嘅發光（hov）唔使等下次重畫先走（Bill 2026-11-25：放完卡空房喺討論時仲發光） */
+function mwHovOff() { if (!(S.mwDrag && S.mwDrag.on)) $$('.mwrm.hov').forEach((e) => e.classList.remove('hov')); }
 function mwGhostBack() {
   const gh = S.mwGhost; if (!gh) return;
   S.mwGhost = null; S.mwSel = null;
@@ -5337,16 +5367,19 @@ function mwPassAsk(i, to) {
 function mwLockFx(v) {
   cdT.forEach(clearTimeout); cdT = [];
   const old = $('#cdfx'); if (old) old.remove();
-  const mx = v.mx, at = (ms, fn) => cdT.push(setTimeout(fn, ms)), L = mx.lock.slice(0, 3), det = mx.why === 'det';
+  const mx = v.mx, at = (ms, fn) => cdT.push(setTimeout(fn, ms)), L = mx.lock.slice(0, 3), det = mx.why === 'det' && !!mx.dv;
   const res = { G: ['捉到兇手！', 'ok'], K: ['兇手走甩！', 'bad'], P: ['搗蛋鬼得逞！', 'pk'] }[mx.win] || ['', ''];
   const el = document.createElement('div'); el.id = 'cdfx'; el.className = 'M ' + res[1] + (L.length ? '' : ' none');
   const lines = Array.from({ length: 12 }, (_, i) => `<i style="--a:${Math.round(i * 30 + cdR(0, 22))}deg;--w:${Math.round(cdR(70, 150))}px;--dl:${Math.round(cdR(60, 260))}ms"></i>`).join('');
   const cards = L.map((t, j) => `<div class="card3 mwc3" style="--j:${j - (L.length - 1) / 2}">${mwCard(mwCardOf(v, t), 'xl')}<b class="mwnm">${t === 'E' ? '空房' : esc(nameOf(v, t))}</b></div>`).join('');
   const sub = L.length ? L.map((t) => `${t === 'E' ? '空房' : esc(nameOf(v, t))}（${MW_ROLE[mwCardOf(v, t)]}）`).join('、') : '冇人夠票';
-  el.innerHTML = `<b class="dim"></b><b class="mwfl"></b>${det ? '<b class="mwlens"></b>' : ''}<b class="lines">${lines}</b><b class="halo"></b>${cards}<b class="mwgate"></b><div class="cap"><b>${L.length ? '關入地窖！' : '冇人關入地窖'}</b><small>${sub}</small></div><div class="cap c2"><b>${res[0]}</b></div>`;
+  const P = det ? MW_DET_MS : 0;
+  if (det) el.style.setProperty('--d0', P + 'ms');
+  el.innerHTML = `${det ? `<b class="mwspot"></b><b class="mwring"></b><b class="mwlens go"></b><div class="mwdh">${mwAv('D')}<b>偵探出手！</b><small>${esc(nameOf(v, mx.dv.by))} 揀咗 ${mwWho(v, mx.dv.to)}</small></div>` : ''}<b class="dim"></b><b class="mwfl"></b><b class="lines">${lines}</b><b class="halo"></b>${cards}<b class="mwgate"></b><div class="cap"><b>${L.length ? '關入地窖！' : '冇人關入地窖'}</b><small>${sub}</small></div><div class="cap c2"><b>${res[0]}</b></div>`;
   document.body.appendChild(el);
-  sfx('thunder');
-  const W = innerWidth, H = innerHeight, cy = H * 0.42, d0 = det ? 380 : 120;
+  const W = innerWidth, H = innerHeight, cy = H * 0.42, d0 = P + 120;
+  if (det) mwDetFx(el, v, P, W, H); else sfx('thunder');
+  if (det) at(P, () => sfx('thunder'));
   el.querySelectorAll('.mwc3').forEach((c, j) => {
     const t = L[j], row = $(`.mwrm[data-mwroom="${t}"] .mwslot`), rr = row && row.getBoundingClientRect();
     const off = (j - (L.length - 1) / 2) * Math.min(150, W / (L.length + 0.4)), sc = L.length > 1 ? 0.78 : 1;
@@ -5361,8 +5394,41 @@ function mwLockFx(v) {
   if (L.length) at(d0 + 120, () => sfx('flick'));
   at(d0 + 980, () => { shakeApp(); sfx('clank'); });
   at(d0 + 1500, () => { cdBurst(el, el.querySelector('.mwgate'), mx.win === 'G' ? 'D' : 'X', mx.win === 'G' ? ['#8ff0c4', '#ffffff', '#ffe08a', '#3fe39d'] : mx.win === 'P' ? ['#ffd28a', '#ffffff', '#ff8a3c', '#7ae07a'] : ['#ff8a9a', '#ffffff', '#ffb36b']); sfx(mx.win === 'G' ? 'good' : 'bad'); });
-  at(2900, () => el.classList.add('out'));
-  at(3350, () => el.remove());
+  const t1 = P + 2900 + (det ? MW_DET_HOLD : 0);
+  at(t1, () => el.classList.add('out'));
+  at(t1 + 450, () => el.remove());
+}
+/* 偵探出手出場（全部人部機都見到）：射燈照住揀咗嗰間房、偵探頭像同「偵探出手！」、放大鏡由左邊飛入去搵、搵到紅框閃兩下 */
+const MW_DET_MS = 2600, MW_DET_HOLD = 900;
+const mwLockMs = (v) => 3150 + (v.mx && v.mx.why === 'det' && v.mx.dv ? MW_DET_MS + MW_DET_HOLD : 0);
+function mwDetFx(el, v, P, W, H) {
+  const to = v.mx.dv.to, tl = $(`.mwrm[data-mwroom="${to}"]`), r = tl && tl.getBoundingClientRect();
+  const ok = r && r.bottom > 40 && r.top < H - 40;
+  const x = ok ? r.left + r.width / 2 : W / 2, y = ok ? r.top + r.height / 2 : H * 0.42;
+  el.style.setProperty('--sx', x.toFixed(0) + 'px'); el.style.setProperty('--sy', y.toFixed(0) + 'px');
+  const o = (ms) => Math.min(1, ms / P);
+  el.querySelector('.mwspot').animate([{ opacity: 0, easing: 'ease-out' }, { opacity: 1, offset: o(350) }, { opacity: 1, offset: o(P - 250), easing: 'ease-in' }, { opacity: 0 }], { duration: P + 150, fill: 'both' });
+  const dh = el.querySelector('.mwdh');
+  dh.style.top = (y < H * 0.5 ? Math.min(H - 190, y + (ok ? r.height / 2 : 60) + 34) : Math.max(24, y - (ok ? r.height / 2 : 60) - 190)) + 'px';
+  // 曲線寫喺每格（WEB-29），成段 linear，先會真係停住
+  dh.animate([{ opacity: 0, transform: 'scale(1.7)', easing: 'cubic-bezier(.2,1.3,.35,1)' }, { opacity: 1, transform: 'none', offset: o(600) }, { opacity: 1, transform: 'none', offset: o(P - 350), easing: 'ease-in' }, { opacity: 0, transform: 'translate3d(0,-14px,0)' }], { duration: P, fill: 'both' });
+  const lx = x - 60, ly = y - 60, ln = el.querySelector('.mwlens');
+  ln.animate([
+    { opacity: 0, transform: `translate3d(-170px,${ly + 70}px,0) rotate(-30deg)`, easing: 'cubic-bezier(.3,.1,.3,1)' },
+    { opacity: 1, transform: `translate3d(${(lx - 170) * 0.7}px,${ly + 40}px,0) rotate(-20deg)`, offset: o(400), easing: 'cubic-bezier(.2,.6,.3,1)' },
+    { opacity: 1, transform: `translate3d(${lx}px,${ly}px,0) rotate(-4deg)`, offset: o(1000), easing: 'ease-in-out' },
+    { opacity: 1, transform: `translate3d(${lx + 16}px,${ly - 10}px,0) rotate(4deg)`, offset: o(1250), easing: 'ease-in-out' },
+    { opacity: 1, transform: `translate3d(${lx - 12}px,${ly + 8}px,0) rotate(-3deg)`, offset: o(1500), easing: 'ease-in-out' },
+    { opacity: 1, transform: `translate3d(${lx}px,${ly}px,0) scale(1)`, offset: o(1700), easing: 'cubic-bezier(.2,1.6,.4,1)' },
+    { opacity: 1, transform: `translate3d(${lx}px,${ly}px,0) scale(1.22)`, offset: o(1900), easing: 'ease-out' },
+    { opacity: 1, transform: `translate3d(${lx}px,${ly}px,0) scale(1.05)`, offset: o(P - 300), easing: 'ease-in' },
+    { opacity: 0, transform: `translate3d(${lx}px,${ly - 30}px,0) scale(1.5)` }
+  ], { duration: P, fill: 'both' });
+  const rg = el.querySelector('.mwring');
+  if (ok) { Object.assign(rg.style, { left: r.left - 4 + 'px', top: r.top - 4 + 'px', width: r.width + 8 + 'px', height: r.height + 8 + 'px' }); }
+  else rg.style.display = 'none';
+  rg.animate([{ opacity: 0, transform: 'scale(1.25)', easing: 'cubic-bezier(.2,1.4,.4,1)' }, { opacity: 1, transform: 'none', offset: 0.25 }, { opacity: 0.35, offset: 0.45 }, { opacity: 1, offset: 0.65 }, { opacity: 0.35, offset: 0.82 }, { opacity: 1 }], { duration: P - 1700, delay: 1700, fill: 'both' });
+  cdT.push(setTimeout(() => sfx('flick'), 120), setTimeout(() => sfx('knock'), 1700), setTimeout(() => sfx('tick'), 1950));
 }
 /* 管家出手：自己部機兩張冇用嘅卡喺中間翻開 */
 function mwButFx(v) {
