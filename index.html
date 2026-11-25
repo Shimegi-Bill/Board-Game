@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-25-01';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-25-02';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -957,34 +957,34 @@ button.kq-mat:not(.on){opacity:.55}
 /* 大宅目擊者（2026-11-23）：大宅平面圖（每人一間房、空房、地窖／牌堆）、角色卡插畫、手牌拖卡、雨景閃電、地窖鐵閘；全部只郁 transform、opacity（WEB-35） */
 .av.xs{width:18px;height:18px;font-size:10px;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
 .mwcd{--cw:36px;--ch:45px;position:relative;display:inline-block;width:var(--cw);height:var(--ch);flex:none;perspective:600px;vertical-align:middle}
-/* 卡面大細寫死（--cw、--ch），唔靠 inset:0 撐：iPhone 房入面張細卡卡面高咗、遮住下面玩家名（Bill 2026-11-25 截圖，Chromium 正常） */
+/* 卡面 class 叫 mwfr（正面）、mwbk（背面）：以前叫 .mf／.mb，.mb 撞咗彈出框嘅 .mb（padding 底加 env(safe-area-inset-bottom)、up 動畫），iPhone 張 45px 細卡撐到 72px 遮住玩家名，up 動畫又令卡背翻過嚟閃（Bill 2026-11-24、11-25 截圖；Chromium 安全區係 0 所以正常） */
 .mwci{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transform:rotateY(180deg)}
 .mwci.up{transform:none}
-.mwcd .mf,.mwcd .mb{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);border-radius:6px;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:#15122a center/cover no-repeat;box-shadow:0 0 0 1px rgba(224,182,92,.55),0 3px 8px rgba(0,0,0,.45)}
-.mwcd .mb{transform:rotateY(180deg);background-image:var(--mwBK)}
-.mwcd .mf{transform:rotateY(0deg)}
+.mwcd .mwfr,.mwcd .mwbk{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);border-radius:6px;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:#15122a center/cover no-repeat;box-shadow:0 0 0 1px rgba(224,182,92,.55),0 3px 8px rgba(0,0,0,.45)}
+.mwcd .mwbk{transform:rotateY(180deg);background-image:var(--mwBK)}
+.mwcd .mwfr{transform:rotateY(0deg)}
 /* 正面向上、唔使翻嘅卡：卡背收埋（iPhone 重畫新卡嗰格會先畫卡背，2026-11-24 Bill 見到閃）；派牌、翻牌、特效大卡先要卡背 */
-.mwci.up>.mb{visibility:hidden}
-.mwhand.deal .mwci>.mb,.mwcd.rvl .mwci>.mb,.mwcd.xl .mwci>.mb{visibility:visible}
-.mwcd .mf.G{background-image:var(--mwG)}.mwcd .mf.U{background-image:var(--mwU)}.mwcd .mf.H{background-image:var(--mwH)}.mwcd .mf.K{background-image:var(--mwK)}.mwcd .mf.A{background-image:var(--mwA)}.mwcd .mf.L{background-image:var(--mwL)}
-.mwcd .mf.R{background-image:var(--mwR)}.mwcd .mf.D{background-image:var(--mwD)}.mwcd .mf.B{background-image:var(--mwB)}.mwcd .mf.P{background-image:var(--mwP)}
-.mwcd .mf b{position:absolute;left:0;right:0;bottom:0;padding:2px 0 3px;text-align:center;font-family:var(--serif);font-size:8px;font-weight:900;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75) 45%);text-shadow:0 1px 2px #000;letter-spacing:0}
-.mwcd .mb i{position:absolute;left:0;right:0;bottom:0;padding:1px 0 2px;text-align:center;font-style:normal;font-size:8px;font-weight:900;color:#ffe9a8;background:rgba(10,8,20,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mwci.up>.mwbk{visibility:hidden}
+.mwhand.deal .mwci>.mwbk,.mwcd.rvl .mwci>.mwbk,.mwcd.xl .mwci>.mwbk{visibility:visible}
+.mwcd .mwfr.G{background-image:var(--mwG)}.mwcd .mwfr.U{background-image:var(--mwU)}.mwcd .mwfr.H{background-image:var(--mwH)}.mwcd .mwfr.K{background-image:var(--mwK)}.mwcd .mwfr.A{background-image:var(--mwA)}.mwcd .mwfr.L{background-image:var(--mwL)}
+.mwcd .mwfr.R{background-image:var(--mwR)}.mwcd .mwfr.D{background-image:var(--mwD)}.mwcd .mwfr.B{background-image:var(--mwB)}.mwcd .mwfr.P{background-image:var(--mwP)}
+.mwcd .mwfr b{position:absolute;left:0;right:0;bottom:0;padding:2px 0 3px;text-align:center;font-family:var(--serif);font-size:8px;font-weight:900;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.75) 45%);text-shadow:0 1px 2px #000;letter-spacing:0}
+.mwcd .mwbk i{position:absolute;left:0;right:0;bottom:0;padding:1px 0 2px;text-align:center;font-style:normal;font-size:8px;font-weight:900;color:#ffe9a8;background:rgba(10,8,20,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mwcd.big{--cw:108px;--ch:135px;perspective:900px}
-.mwcd.big .mf,.mwcd.big .mb{border-radius:12px;box-shadow:0 0 0 1.5px rgba(224,182,92,.7),0 10px 22px rgba(0,0,0,.45)}
-.mwcd.big .mf b{font-size:17px;letter-spacing:3px;text-indent:3px;padding:14px 0 7px}
-.mwcd.big .mb i{font-size:13px;padding:4px 0 5px}
+.mwcd.big .mwfr,.mwcd.big .mwbk{border-radius:12px;box-shadow:0 0 0 1.5px rgba(224,182,92,.7),0 10px 22px rgba(0,0,0,.45)}
+.mwcd.big .mwfr b{font-size:17px;letter-spacing:3px;text-indent:3px;padding:14px 0 7px}
+.mwcd.big .mwbk i{font-size:13px;padding:4px 0 5px}
 .mwcd.xl{--cw:100%;--ch:100%;position:absolute;inset:0;width:auto;height:auto;perspective:none;transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
-.mwcd.xl .mf,.mwcd.xl .mb{border-radius:18px;box-shadow:0 0 0 2.5px #c9963c,0 24px 50px rgba(0,0,0,.55)}
-.mwcd.xl .mf b{font-size:24px;letter-spacing:6px;text-indent:6px;padding:26px 0 12px}
-.mwcd.xl .mf:after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:60%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55) 50%,rgba(255,255,255,0));animation:cdSheen .65s cubic-bezier(.3,0,.2,1) .9s both}
+.mwcd.xl .mwfr,.mwcd.xl .mwbk{border-radius:18px;box-shadow:0 0 0 2.5px #c9963c,0 24px 50px rgba(0,0,0,.55)}
+.mwcd.xl .mwfr b{font-size:24px;letter-spacing:6px;text-indent:6px;padding:26px 0 12px}
+.mwcd.xl .mwfr:after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:60%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55) 50%,rgba(255,255,255,0));animation:cdSheen .65s cubic-bezier(.3,0,.2,1) .9s both}
 .mwcd.sm2{--cw:28px;--ch:35px}
 /* 房入面、牌堆、地窖靜止嘅卡唔用 3D（平面：背面向上就收埋正面）；翻牌（rvl）先用 3D */
 .mwslot .mwcd:not(.rvl){perspective:none}
 .mwslot .mwcd:not(.rvl) .mwci{transform:none;transform-style:flat;-webkit-transform-style:flat}
-.mwslot .mwcd:not(.rvl) .mf,.mwslot .mwcd:not(.rvl) .mb{transform:none}
-.mwslot .mwcd:not(.rvl) .mwci:not(.up)>.mf{visibility:hidden}
-.mwcd.sm2 .mf b{display:none}
+.mwslot .mwcd:not(.rvl) .mwfr,.mwslot .mwcd:not(.rvl) .mwbk{transform:none}
+.mwslot .mwcd:not(.rvl) .mwci:not(.up)>.mwfr{visibility:hidden}
+.mwcd.sm2 .mwfr b{display:none}
 /* 平面圖：深色大宅，每間房頂一條房色、圖示同房名 */
 .mwbd{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 0 14px;padding:8px;border-radius:20px;background:radial-gradient(120% 80% at 50% 0%,#2a2340,#110e1a 70%);box-shadow:inset 0 0 0 1px rgba(224,182,92,.45),inset 0 0 0 5px rgba(0,0,0,.25),0 14px 32px rgba(0,0,0,.3);overflow:hidden;color:#f6f2e9}
 .mwrm{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;padding:7px 4px 6px;border-radius:13px;background:linear-gradient(170deg,#2d2639,#1a1522);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 4px 10px rgba(0,0,0,.3);overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
@@ -999,7 +999,7 @@ button.kq-mat:not(.on){opacity:.55}
 .mwrm.me .mwwho span{color:#f7e4a8}
 .mwrm.mk{cursor:pointer}.mwrm.mk:active{transform:scale(.96)}
 .mwrm.mk .mwwho{padding:1px 7px 1px 2px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(242,216,146,.38)}
-.mwrm.mk.ex .mwwho{padding-left:7px}
+.mwrm.mk.mwex .mwwho{padding-left:7px}
 .mwmks{position:absolute;left:3px;top:28px;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:3px;pointer-events:none}
 .mwmks.r{left:auto;right:3px;align-items:flex-end}
 .mwmk{display:flex;align-items:center;gap:1px;height:17px;padding:0 4px 0 0;border-radius:999px;background:rgba(10,8,20,.86);box-shadow:inset 0 0 0 1.5px rgba(143,240,196,.75);font-family:var(--serif);font-size:10.5px;font-weight:900;font-style:normal;line-height:1;color:#c9f5df}
@@ -1039,14 +1039,14 @@ i.mwav.G{box-shadow:0 0 0 2px #f2c230}i.mwav.U{box-shadow:0 0 0 2px #5a96f0}i.mw
 .mwrm.rv .mwcd{z-index:1}
 .mwcd.rvl .mwci{animation:mwRvl .7s cubic-bezier(.2,.9,.3,1.1) var(--et,0ms) both}
 @keyframes mwRvl{0%{transform:rotateY(180deg) scale(1.6)}100%{transform:none}}
-.mwrm.ex{background:linear-gradient(180deg,rgba(20,16,30,.25),rgba(20,16,30,.8)),#1a1522 var(--mwE) center/cover no-repeat}
+.mwrm.mwex{background:linear-gradient(180deg,rgba(20,16,30,.25),rgba(20,16,30,.8)),#1a1522 var(--mwE) center/cover no-repeat}
 .mwrm.cel{background:linear-gradient(180deg,rgba(20,16,30,.3),rgba(20,16,30,.75)),#1a1522 var(--mwC) center/cover no-repeat}
 .mwrm.dk{background:linear-gradient(170deg,#3a2a1a,#1a120c)}
 .mwpile{position:relative;width:44px;height:50px}
 .mwpile .mwcd{position:absolute;left:0;top:4px}
 .mwpile .mwcd.p2{left:4px;top:2px}.mwpile .mwcd.p3{left:8px;top:0}
 .mwvc{margin-left:2px;padding:0 5px;border-radius:999px;background:rgba(255,255,255,.14);font-family:var(--sans);font-size:10px;letter-spacing:0;color:#fff}
-.mwvc.top{background:#ff5a6e;color:#fff}
+.mwvc.mwtop{background:#ff5a6e;color:#fff}
 .mwrm.lock{box-shadow:inset 0 0 0 2px #ff7a8c,0 0 22px rgba(255,90,110,.45)}
 .mwbars{position:absolute;inset:0;border-radius:13px;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 11px,rgba(40,40,52,.9) 11px 15px,rgba(150,150,170,.9) 15px 16px,rgba(0,0,0,0) 16px 22px);opacity:.85}
 .stage.enter .mwbars{animation:mwBars .5s cubic-bezier(.5,0,.3,1.4) calc(500ms + var(--et)) both}
@@ -1066,7 +1066,7 @@ i.mwav.G{box-shadow:0 0 0 2px #f2c230}i.mwav.U{box-shadow:0 0 0 2px #5a96f0}i.mw
 .mwhc{display:flex;flex-direction:column;align-items:center;gap:6px;touch-action:none;cursor:grab;transition:transform .2s cubic-bezier(.2,1.4,.4,1)}
 .mwhc small{font-size:12px;font-weight:800;color:#cdc6de}
 .mwhc.sel{transform:translate3d(0,-8px,0) scale(1.04)}
-.mwhc.sel .mwcd .mf{box-shadow:0 0 0 3px #fff3cc,0 0 26px rgba(255,214,120,.75),0 14px 26px rgba(0,0,0,.5)}
+.mwhc.sel .mwcd .mwfr{box-shadow:0 0 0 3px #fff3cc,0 0 26px rgba(255,214,120,.75),0 14px 26px rgba(0,0,0,.5)}
 .mwhc.drag{opacity:.25}
 .mwhand.deal .mwhc{animation:mwDeal .7s cubic-bezier(.2,1.1,.35,1) calc(var(--i) * 110ms + var(--et,0ms)) backwards}
 .mwhand.deal .mwhc .mwci{animation:mwDealF .7s cubic-bezier(.3,.8,.3,1) calc(var(--i) * 110ms + 150ms + var(--et,0ms)) backwards}
@@ -5078,7 +5078,7 @@ const mwWho = (v, id) => (id === 'E' ? '空房' : `${esc(nameOf(v, id))}（${mwR
 const mwCardOf = (v, t) => (t === 'E' ? v.mx.e : v.rl[t]);
 /* 卡：t ＝ 角色（冇 ＝ 背面）；by ＝ 卡背寫住邊個放（Bill 2026-11-23） */
 function mwCard(t, cls = '', attrs = '', by = '') {
-  return `<span class="mwcd ${cls}" ${attrs}><span class="mwci${t ? ' up' : ''}"><span class="mf ${t || ''}">${t ? `<b>${MW_ROLE[t]}</b>` : ''}</span><span class="mb">${by ? `<i>${esc(by)} 放</i>` : ''}</span></span></span>`;
+  return `<span class="mwcd ${cls}" ${attrs}><span class="mwci${t ? ' up' : ''}"><span class="mwfr ${t || ''}">${t ? `<b>${MW_ROLE[t]}</b>` : ''}</span><span class="mwbk">${by ? `<i>${esc(by)} 放</i>` : ''}</span></span></span>`;
 }
 /* 客人計：揀卡嗰陣可以放入邊間房（未揀卡、仲喺度嘅人；冇就空房）；偵探／投票可以揀邊間房 */
 function mwTgV(v, mode) {
@@ -5097,7 +5097,7 @@ function mwBoard(v, mode, hold) {
   const mkOk = !end && !hold && MW_PH.includes(v.ph);   // 玩家標記：遊戲中、唔係揀緊房（拖卡、偵探、投票）嗰陣撳房就開
   const lock = end ? mx.lock : [], tl = end && mx.tally ? mx.tally : {};
   const myV = v.ph === 'vote' ? mx.vt[ME.id] : null, mvq = myV ? anA('mv' + v.gid + '-' + myV, 450, 'nw') : { c: '', s: '' };
-  const vchip = (t) => (end && tl[t] ? `<span class="mwvc${lock.includes(t) ? ' top' : ''}">${tl[t]} 票</span>` : '');
+  const vchip = (t) => (end && tl[t] ? `<span class="mwvc${lock.includes(t) ? ' mwtop' : ''}">${tl[t]} 票</span>` : '');
   const ev = mx.ev && mx.ev.t === 'pass' ? mx.ev : null;
   const fa = ev ? an('mp' + v.gid + '-' + ev.k, 1200) : '';
   const tiles = ids.map((id) => {
@@ -5118,7 +5118,7 @@ function mwBoard(v, mode, hold) {
   }).join('');
   const eT = tg.has('E'), eMk = mkOk && !(eT && mode), eAct = eT && mode ? ' data-act="mroom" data-x="E"' : eMk ? ' data-act="mmk" data-x="E"' : '';
   const eSlot = mx.e ? mwCard(end ? mx.e : null, fa && ev.to === 'E' ? 'land' : '', fa && ev.to === 'E' ? `style="${fa}"` : '', nameOf(v, mx.eBy)) : '<span class="mwemp"></span>';
-  const eTile = `<div class="mwrm ex${eMk ? ' mk' : ''}${eT ? ' tg' : ''}${dragOver === 'E' ? ' hov' : ''}${myV === 'E' ? ' vtd' : ''}${lock.includes('E') ? ' lock' : ''}" data-mwroom="E" style="--rc:#c8c0e0"${eAct}><div class="mwrh"><i class="mwri">${mwIc('door')}</i><b>空房</b>${vchip('E')}</div><div class="mwslot">${eSlot}</div><div class="mwwho"><span>${mx.e ? esc(nameOf(v, mx.eBy)) + ' 放' : '最後一張'}</span></div>${mkOk ? mwMarkHtml(v, 'E') : ''}${lock.includes('E') ? '<i class="mwbars"></i>' : ''}${myV === 'E' ? `<i class="mwmine${mvq.c}"${mvq.s}>${ic('check')}</i>` : ''}</div>`;
+  const eTile = `<div class="mwrm mwex${eMk ? ' mk' : ''}${eT ? ' tg' : ''}${dragOver === 'E' ? ' hov' : ''}${myV === 'E' ? ' vtd' : ''}${lock.includes('E') ? ' lock' : ''}" data-mwroom="E" style="--rc:#c8c0e0"${eAct}><div class="mwrh"><i class="mwri">${mwIc('door')}</i><b>空房</b>${vchip('E')}</div><div class="mwslot">${eSlot}</div><div class="mwwho"><span>${mx.e ? esc(nameOf(v, mx.eBy)) + ' 放' : '最後一張'}</span></div>${mkOk ? mwMarkHtml(v, 'E') : ''}${lock.includes('E') ? '<i class="mwbars"></i>' : ''}${myV === 'E' ? `<i class="mwmine${mvq.c}"${mvq.s}>${ic('check')}</i>` : ''}</div>`;
   let third;
   if (v.ph === 'pick') third = `<div class="mwrm dk"><div class="mwrh"><i class="mwri">${ic('dice')}</i><b>牌堆</b></div><div class="mwslot">${mx.deck.length ? `<span class="mwpile">${mwCard(null)}${mx.deck.length > 1 ? mwCard(null, 'p2') : ''}${mx.deck.length > 2 ? mwCard(null, 'p3') : ''}</span>` : '<span class="mwemp"></span>'}</div><div class="mwwho"><span>剩 ${mx.deck.length} 張</span></div></div>`;
   else third = `<div class="mwrm cel${end && lock.length ? ' full' : ''}"><div class="mwrh"><i class="mwri">${mwIc('cell')}</i><b>地窖</b></div><div class="mwslot">${end && lock.length ? lock.slice(0, 3).map((t) => mwCard(mwCardOf(v, t), 'sm2')).join('') : ''}</div><div class="mwwho"><span>${end ? (lock.length ? `關咗 ${lock.length} 個` : '冇人') : '關兇手'}</span></div></div>`;
