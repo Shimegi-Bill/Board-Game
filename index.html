@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-25-03';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-25-04';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -1212,6 +1212,103 @@ html[data-theme="cream"] .av{box-shadow:0 0 0 2px rgba(255,255,255,.9),0 0 0 3px
 html[data-theme="cream"] .stp.done i{color:#8a5a0e}
 html[data-theme="cream"] .seg{background:rgba(var(--ink),.07)}
 html[data-theme="cream"] #banner{background:rgba(210,59,85,.1);color:#9b1f37}
+/* 畫中有話（2026-11-25）：卡 2:3、奶油色畫框；手牌 3 欄；枱面卡背疊；投票翻牌（2D scaleX，唔用 3D，WEB-40）；揭曉；分數路；撳卡放大。class 全部 dx 開頭（WEB-44） */
+.dxcd{position:relative;display:block;width:100%;aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:#1b1630;box-shadow:0 0 0 1px rgba(224,182,92,.55),0 4px 12px rgba(0,0,0,.35)}
+.dxcd .dxbk,.dxcd .dxfr{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:inherit}
+.dxcd .dxbk{background:#1b1630 var(--dxBK) center/cover no-repeat}
+.dxcd .dxfr{background-color:#2a2440;background-position:center;background-size:cover;background-repeat:no-repeat;box-shadow:inset 0 0 0 3px #f4ead6,inset 0 0 0 4px rgba(150,110,40,.55)}
+.dxcd.dxsm{width:44px;border-radius:6px}
+.dxcd.dxbig{border-radius:16px;box-shadow:0 0 0 2px rgba(224,182,92,.85),0 20px 50px rgba(0,0,0,.6)}
+.dxcd.dxbig .dxfr{box-shadow:inset 0 0 0 6px #f4ead6,inset 0 0 0 7.5px rgba(150,110,40,.6)}
+/* 手牌：3 欄，撳卡放大；揀咗嘅卡升起、金光、綠剔 */
+.dxhd{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 14px}
+.dxhc{position:relative;display:block;width:100%;padding:0;border:0;background:none;border-radius:10px;transition:transform .18s ease}
+.dxhc:active{transform:scale(.96)}
+.dxhd.dxcan .dxhc .dxcd{box-shadow:0 0 0 1.5px rgba(242,216,146,.85),0 0 14px rgba(255,214,120,.3),0 4px 12px rgba(0,0,0,.35)}
+.dxhc.dxsel{transform:translate3d(0,-7px,0)}
+.dxhc.dxsel .dxcd,.dxhd.dxcan .dxhc.dxsel .dxcd{box-shadow:0 0 0 3px #fff3cc,0 0 22px rgba(255,214,120,.75),0 10px 20px rgba(0,0,0,.4)}
+.dxck{position:absolute;right:-5px;top:-5px;z-index:2;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#3fe39d;color:#06301f;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.dxck .ic{width:15px;height:15px}
+.dxhc.dxdeal{animation:dxDeal .55s cubic-bezier(.2,1,.3,1) calc(var(--i) * 70ms + var(--et,0ms)) backwards}
+@keyframes dxDeal{0%{opacity:0;transform:translate3d(0,46px,0) rotate(-8deg) scale(.7)}100%{opacity:1;transform:none}}
+/* 揀卡時枱面：卡背由上面跌落嚟疊住 */
+.dxtbl{display:flex;align-items:center;justify-content:center;gap:18px;min-height:100px;margin:0 0 6px;padding:12px;border-radius:18px;background:radial-gradient(120% 110% at 50% 0%,#2e2650,#15122a);box-shadow:inset 0 0 0 1px rgba(224,182,92,.4);color:#f3e6c4}
+.dxpile{position:relative;width:64px;height:76px}
+.dxpc{position:absolute;left:10px;top:4px;transform:translate3d(var(--x),0,0) rotate(var(--r))}
+.dxpc.dxin{animation:dxDrop .5s cubic-bezier(.2,1.3,.4,1) var(--et,0ms) backwards}
+@keyframes dxDrop{0%{opacity:0;transform:translate3d(var(--x),-70px,0) rotate(calc(var(--r) - 24deg)) scale(1.35)}100%{opacity:1;transform:translate3d(var(--x),0,0) rotate(var(--r))}}
+.dxpe{position:absolute;left:10px;top:4px;width:44px;height:66px;border-radius:7px;border:1.5px dashed rgba(255,255,255,.25)}
+.dxpn{font-size:15px;font-weight:800}.dxpn b{font-family:var(--serif);font-size:28px;color:#ffe9a8;margin-right:2px}
+/* 投票、揭曉：枱面 */
+.dxtb{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 10px}
+.dxtb.dx3c{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.dxtc{position:relative;display:block;width:100%;padding:0;border:0;background:none;border-radius:10px}
+.dxtc:active{transform:scale(.97)}
+.dxno{position:absolute;left:6px;top:6px;z-index:2;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:rgba(10,8,20,.82);color:#ffe9a8;font-family:var(--serif);font-size:13px;font-weight:900;line-height:22px;text-align:center;box-shadow:inset 0 0 0 1px rgba(224,182,92,.6)}
+.dxmine{position:absolute;left:50%;bottom:8px;z-index:2;transform:translateX(-50%);padding:2px 10px;border-radius:999px;background:rgba(10,8,20,.85);color:#c9f5df;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(143,240,196,.7)}
+.dxmyv{position:absolute;right:6px;top:6px;z-index:2;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#3fe39d;color:#06301f}
+.dxmyv .ic{width:15px;height:15px}
+.dxtc.dxmy .dxcd{box-shadow:0 0 0 3px #8ff0c4,0 0 20px rgba(110,255,190,.45)}
+.dxtc.dxdl{animation:dxIn .5s cubic-bezier(.2,1,.3,1) calc(var(--i) * 90ms + var(--et,0ms)) backwards}
+@keyframes dxIn{0%{opacity:0;transform:translate3d(0,-34px,0) scale(.6) rotate(6deg)}100%{opacity:1;transform:none}}
+.dxtc.dxdl .dxfr{animation:dxFlipF .5s linear calc(700ms + var(--i) * 140ms + var(--et,0ms)) backwards}
+.dxtc.dxdl .dxbk{animation:dxFlipB .5s linear calc(700ms + var(--i) * 140ms + var(--et,0ms)) backwards}
+@keyframes dxFlipF{0%,50%{transform:scaleX(0);animation-timing-function:ease-out}100%{transform:none}}
+@keyframes dxFlipB{0%{transform:none;animation-timing-function:ease-in}50%,100%{transform:scaleX(0)}}
+.dxtc.dxsc .dxcd{box-shadow:0 0 0 3px #f2c230,0 0 26px rgba(255,200,80,.75)}
+.dxtc.dxrv.dxsc .dxcd{animation:dxGlow 1.1s cubic-bezier(.2,1.4,.4,1) calc(250ms + var(--et,0ms)) backwards}
+@keyframes dxGlow{0%{transform:none}35%{transform:scale(1.08)}100%{transform:none}}
+.dxow{position:absolute;left:4px;right:4px;bottom:4px;z-index:2;display:flex;align-items:center;justify-content:center;gap:3px;padding:2px 7px 2px 2px;border-radius:999px;background:rgba(10,8,20,.86);color:#f3e6c4;font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden}
+.dxow em{font-style:normal;overflow:hidden;text-overflow:ellipsis}
+.dxstr{position:absolute;left:50%;top:-7px;z-index:3;transform:translateX(-50%);padding:2px 9px;border-radius:999px;background:var(--gold);color:#2a1c05;font-size:11px;font-weight:900;letter-spacing:1px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.dxtc.dxrv .dxstr{animation:slam .5s cubic-bezier(.2,1.5,.35,1) calc(250ms + var(--et,0ms)) backwards}
+.dxow.dxsto{box-shadow:inset 0 0 0 1px rgba(242,194,48,.8)}
+.dxvs{position:absolute;left:4px;right:4px;top:36%;z-index:2;display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+.dxvs i{display:block}
+.dxvs .av{box-shadow:0 0 0 2px #fff3cc,0 2px 6px rgba(0,0,0,.5)}
+.dxtc.dxrv .dxvs i{animation:pop .42s cubic-bezier(.2,1.5,.4,1) calc(800ms + var(--j) * 120ms + var(--et,0ms)) backwards}
+.dxtc.dxrv .dxow{animation:pop .42s cubic-bezier(.2,1.5,.4,1) calc(350ms + var(--i) * 80ms + var(--et,0ms)) backwards}
+/* 揭曉大字 */
+.dxres{margin:0 0 12px;padding:12px 14px;border-radius:18px;text-align:center;background:var(--s1);box-shadow:inset 0 0 0 1px var(--e1)}
+.dxres b{display:block;font-family:var(--serif);font-size:25px;font-weight:900;letter-spacing:2px}
+.dxres small{display:block;margin-top:3px;font-size:13px;color:var(--tx2)}
+.dxres.dxpop{animation:slam .6s cubic-bezier(.2,1.5,.35,1) var(--et,0ms) backwards}
+.pr .dl.dxx{background:rgba(156,194,255,.18);color:#9cc2ff}
+/* 說書人條、冇時限時嘅頭像 */
+.holdbar.dxsb.me{box-shadow:inset 0 0 0 1.5px #f2d892,0 0 18px rgba(255,214,120,.25)}
+.dxsav{display:flex}.dxsav .av{width:48px;height:48px;font-size:20px}
+/* 分數路：石仔蛇形，每行 11 粒；棋子係頭像色 */
+.dxtr{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));grid-template-rows:repeat(var(--rows),32px);gap:6px 3px;margin:0 0 12px;padding:12px 8px;border-radius:18px;background:radial-gradient(130% 120% at 50% 0%,#2a2348,#120f1f);box-shadow:inset 0 0 0 1px rgba(224,182,92,.4)}
+.dxstn{position:relative;display:flex;align-items:center;justify-content:center;align-self:center;justify-self:center;width:100%;max-width:28px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.17),rgba(255,255,255,.04));box-shadow:inset 0 0 0 1px rgba(255,255,255,.13)}
+.dxstn small{font-size:10px;font-weight:800;color:rgba(243,230,196,.55)}
+.dxstn.dxm5{box-shadow:inset 0 0 0 1.5px rgba(224,182,92,.6)}
+.dxstn.dxgoal{background:radial-gradient(circle at 40% 35%,#ffe9a8,#c3913a);box-shadow:0 0 12px rgba(255,214,120,.55)}
+.dxstn.dxgoal small{color:#2a1c05}
+.dxtk{position:absolute;left:50%;top:50%;z-index:1;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--c);color:#fff;font-size:10px;font-style:normal;font-weight:900;box-shadow:0 0 0 1.5px #fff,0 2px 5px rgba(0,0,0,.5);transform:translate3d(calc((var(--j) - (var(--n) - 1) / 2) * 7px),calc((var(--j) - (var(--n) - 1) / 2) * -5px),0)}
+.dxtk.dxme{z-index:2;box-shadow:0 0 0 2px #ffe9a8,0 0 10px rgba(255,214,120,.85)}
+/* 撳卡放大 */
+#dxz{position:fixed;inset:0;z-index:25;display:none;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top) + 12px) 16px calc(env(safe-area-inset-bottom) + 14px)}
+#dxz.dxon{display:flex}
+.dxzbg{position:absolute;inset:0;background:rgba(6,5,12,.84);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.dxzw{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:420px}
+.dxzh{display:flex;align-items:center;justify-content:space-between;width:100%;color:#f3e6c4;font-weight:800}
+.dxzc{width:min(78vw,calc((var(--app-h,100vh) - 250px) * .6667),380px)}
+#dxz.dxon .dxzc{animation:dxZin .32s cubic-bezier(.2,1.2,.4,1) both}
+#dxz.dxon .dxzc.dxsw{animation:dxSw .22s ease-out both}
+@keyframes dxZin{0%{opacity:0;transform:scale(.6)}100%{opacity:1;transform:none}}
+@keyframes dxSw{0%{opacity:.25;transform:scale(.95)}100%{opacity:1;transform:none}}
+.dxzo{color:#f3e6c4;font-size:14px;font-weight:700}
+.dxzn{display:flex;align-items:center;gap:14px}
+.dxnxt .ic{transform:scaleX(-1)}
+.dxdots{display:flex;gap:6px}.dxdots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25)}.dxdots i.dxon{background:#ffe9a8}
+.dxzw .btn{width:100%;margin:0}
+/* 完場橫額插畫 */
+.gart.dxga{position:relative;aspect-ratio:400/150;overflow:hidden;background:radial-gradient(90% 130% at 50% 100%,#f39062 0%,#88407a 45%,#291a4d 100%)}
+.gdd-a .gart.dxga,.gli-a .gart.dxga{aspect-ratio:auto}
+.dxgc{position:absolute;left:50%;top:50%;width:24%;aspect-ratio:2/3;margin-left:-12%;border-radius:6px;background:#2a2440 var(--a) center/cover no-repeat;box-shadow:0 0 0 2px #e0b65c,0 6px 14px rgba(0,0,0,.45);transform:translate3d(var(--x),-46%,0) rotate(var(--r))}
+.cdwin.dx{background:radial-gradient(120% 120% at 75% 10%,#7a5cc8,#1a1236 72%);box-shadow:inset 0 0 0 1.5px rgba(242,216,146,.8),0 16px 36px rgba(0,0,0,.3)}
+.cdwin.dx .big{color:#ffe9a8}
+.cdwin .cdart.dxwart{background:#1a1236 var(--dxW) center/cover no-repeat}
 </style>
 </head>
 <body>
@@ -2381,7 +2478,7 @@ function hOnPeers(peers) {
     }
   }
   for (const p of [...HS.pl, ...HS.wt]) {
-    if (p.id === ME.id) continue;
+    if (p.id === ME.id || p.bot) continue;   // 電腦玩家（畫中有話測試模式）一直喺線
     const on = seen.has(p.id) ? 1 : 0;
     if (p.on !== on) { p.on = on; ch = true; }
   }
@@ -2414,6 +2511,12 @@ function hAct(id, t, x) {
     case 'mbut': if (st.g === 'mw' && st.ph === 'talk' && st.rl[id] === 'B' && !st.mx.bu) { st.mx.bu = id; st.mx.rv[id] = 1; st.mx.ek++; st.mx.ev = { k: st.mx.ek, t: 'but', by: id }; } break;
     case 'mvote': if (st.g === 'mw' && st.ph === 'vote' && Array.isArray(x) && mwVoters().includes(id) && !st.mx.vt[id] && mwTargets(id).includes(x[0])) { st.mx.vt[id] = x[0]; if (x[1] && st.rl[id] === 'L') st.mx.lw[id] = 1; if (mwVoters().every((q) => st.mx.vt[q])) mwTally(); } break;
     case 'mskip': if (isH && st.g === 'mw') { if (st.ph === 'talk') mwVote(); else if (st.ph === 'vote') mwTally(); } break;
+    // 畫中有話（說書人口講提示；3 人時每人放 2 張）
+    case 'dtell': if (st.g === 'dx' && st.ph === 'tell' && st.dx.st === id && st.dx.hand[id].includes(x)) dxTell(x); break;
+    case 'dpick': if (st.g === 'dx' && st.ph === 'pick' && id !== st.dx.st && dxLive().includes(id) && !st.dx.sub[id] && Array.isArray(x) && x.length === st.dx.per && new Set(x).size === x.length && x.every((c) => st.dx.hand[id].includes(c))) dxPick(id, x); break;
+    case 'dvote': if (st.g === 'dx' && st.ph === 'vote' && dxLive().includes(id) && !st.dx.vt[id] && dxCanVote(id, x)) { st.dx.vt[id] = x; dxCheckVote(); } break;
+    case 'dnext': if (st.g === 'dx' && st.ph === 'show' && dxLive().includes(id)) { st.dx.rdy[id] = 1; if (isH && x) dxAfter(); else dxCheckNext(); } break;
+    case 'dskip': if (isH && st.g === 'dx') { if (st.ph === 'tell') dxRound(false); else if (st.ph === 'pick') { dxNeed().forEach((q) => { if (st.ph === 'pick' && !st.dx.sub[q]) dxPick(q, dxRand(st.dx.hand[q], st.dx.per)); }); if (st.ph === 'pick') dxVote(); } else if (st.ph === 'vote') dxScore(); } break;
     case 'mwr': if (isH && st.ph === 'lobby' && st.g === 'mw' && MW_SP.includes(x)) { const sp = String(st.cfg.s || ''); st.cfg.s = MW_SP.filter((c) => (c === x ? !sp.includes(c) : sp.includes(c))).join(''); } break;
     // 誰是臥底
     // Bill 2026-11-22：描述中途任何人可以發起投票，過半數同意就入投票
@@ -2434,16 +2537,16 @@ function hAct(id, t, x) {
     case 'pick': if (isJ && st.ph === 'judge' && st.rl[x] && !st.ex.includes(x)) hPick(x); break;
     case 'next': if ((isJ || isH) && st.ph === 'reveal' && hCanNext()) hNext(); break;
     // 房主專用
-    case 'start': if (isH && st.ph === 'lobby') { if (st.g === 'wd') wStart(false); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(false); else if (st.g === 'tt') tStart(false); else if (st.g === 'cr') crStart(); else if (st.g === 'mw') mwStart(false); else hStart(); } break;
+    case 'start': if (isH && st.ph === 'lobby') { if (st.g === 'wd') wStart(false); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(false); else if (st.g === 'tt') tStart(false); else if (st.g === 'cr') crStart(); else if (st.g === 'mw') mwStart(false); else if (st.g === 'dx') dxStart(false); else hStart(); } break;
     // 心水數字
     case 'xplay': if (st.g === 'xs' && st.ph === 'play' && st.hd && st.hd[id]) xPlay(id); break;
     case 'xnext': if (isH && st.g === 'xs' && st.ph === 'clear') { st.lv++; xDeal(); } break;
     case 'xtheme': if (isH && st.g === 'xs' && st.ph === 'play' && !st.pile.length) xTheme(); break;
     case 'cfg': if (isH && st.ph === 'lobby' && Array.isArray(x) && CFG_OPTS[x[0]] && (x[0] in GAMES[st.g].cfg) && CFG_OPTS[x[0]].some((o) => o[0] === x[1])) st.cfg[x[0]] = x[1]; break;
     case 'kick': if (isH && x !== st.host) hRemove(x, true); break;
-    case 'again': if (isH && st.ph === 'end') { if (st.g === 'wd') wStart(true); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(true); else if (st.g === 'tt') tStart(true); else if (st.g === 'cr') crStart(); else if (st.g === 'mw') mwStart(true); else hLobby(); } break;
+    case 'again': if (isH && st.ph === 'end') { if (st.g === 'wd') wStart(true); else if (st.g === 'xs') xStart(); else if (st.g === 'cd') cStart(true); else if (st.g === 'tt') tStart(true); else if (st.g === 'cr') crStart(); else if (st.g === 'mw') mwStart(true); else if (st.g === 'dx') dxStart(true); else hLobby(); } break;
     case 'force': if (isH && st.ph === 'role') { if (st.g === 'wd') wDesc(null); else if (st.g === 'cd') st.ph = 'play'; else if (st.g === 'tt') tNight(); else hThink(); } break;
-    case 'redeal': if (isH && st.g === 'mw' && MW_PH.includes(st.ph)) mwStart(true); else if (isH && st.g === 'cr' && CR_PH.includes(st.ph)) crStart(); else if (isH && st.g === 'tt' && TT_PH.includes(st.ph)) tStart(true); else if (isH && st.g === 'cd' && CD_PH.includes(st.ph)) cStart(true); else if (isH && st.g === 'xs' && XS_PH.includes(st.ph)) xDeal(); else if (isH && st.g === 'wd' && WD_PH.includes(st.ph)) wStart(true); else if (isH && st.g === 'zdz' && PLAY_PH.includes(st.ph)) hRedeal(); break;
+    case 'redeal': if (isH && st.g === 'mw' && MW_PH.includes(st.ph)) mwStart(true); else if (isH && st.g === 'dx' && DX_PH.includes(st.ph)) dxStart(true); else if (isH && st.g === 'cr' && CR_PH.includes(st.ph)) crStart(); else if (isH && st.g === 'tt' && TT_PH.includes(st.ph)) tStart(true); else if (isH && st.g === 'cd' && CD_PH.includes(st.ph)) cStart(true); else if (isH && st.g === 'xs' && XS_PH.includes(st.ph)) xDeal(); else if (isH && st.g === 'wd' && WD_PH.includes(st.ph)) wStart(true); else if (isH && st.g === 'zdz' && PLAY_PH.includes(st.ph)) hRedeal(); break;
     case 'end': if (isH && st.ph !== 'lobby' && st.ph !== 'end') st.ph = 'end'; break;
     case 'close': if (isH) st.ph = 'closed'; break;
     default: break;
@@ -2535,7 +2638,7 @@ function hRedeal() {
 }
 function hLobby() {
   const st = HS;
-  st.pl = st.pl.filter((p) => !p.gone);
+  st.pl = st.pl.filter((p) => !p.gone && !p.bot);
   for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
   st.wt = [];
   st.ph = 'lobby'; st.jd = null; st.rl = {}; st.w = null; st.ord = []; st.ok = {}; st.dl = 0; st.sp = null; st.sdl = 0;
@@ -2803,6 +2906,7 @@ function cCut(by, to, i) {
  *    role 睇身份同骰 → night 凌晨 1–6 點逐個鐘醒 → acc 賊揀共犯（5 人以上）→ day 討論 → vote 投票 → end
  * ============================================================ */
 const TT_MAX = 8, HOUR_MIN = 5000 / SPEED, HOUR_MAX = 14000 / SPEED, ACC_MS = 25000 / SPEED;
+const HOUR_EMPTY = [5000 / SPEED, 12000 / SPEED];   // 冇人醒嘅鐘：隨機等 5–12 秒先跳（Bill 2026-11-25：固定秒數會俾人估到冇人醒）
 const TT_PH = ['role', 'night', 'acc', 'day', 'vote'];
 function tStart(keep) {
   const st = HS;
@@ -2835,6 +2939,7 @@ function tHour() {
     return;
   }
   const now = Date.now(); st.hmin = now + HOUR_MIN; st.dl = now + HOUR_MAX;
+  st.hq = now + HOUR_EMPTY[0] + Math.random() * (HOUR_EMPTY[1] - HOUR_EMPTY[0]);
 }
 const tAwake = () => HS.al.filter((id) => HS.dice[id] === HS.hr);
 const tThief = () => Object.keys(HS.rl).find((id) => HS.rl[id] === 'T');
@@ -2874,7 +2979,8 @@ function tTick(now) {
     const thiefUp = aw.includes(th);
     if (thiefUp && !st.stolen && now >= st.dl) tSteal();
     const done = aw.every((id) => st.hd[id] && (id !== th || st.stolen));
-    if ((now >= st.hmin && done) || now >= st.dl) { if (tAwake().includes(th)) tSteal(); tHour(); }
+    const t0 = aw.length ? st.hmin : (st.hq || st.hmin);   // 有人醒：最少 5 秒、全部瞓返就跳；冇人醒：隨機秒數
+    if ((now >= t0 && done) || now >= st.dl) { if (tAwake().includes(th)) tSteal(); tHour(); }
   } else if (st.ph === 'acc') { if (st.acc.length >= st.accN || now >= st.dl || !hOn(tThief())) tAccDone(); }
   else if (st.ph === 'day') {
     if (st.dl && now >= st.dl) tVote();
@@ -3130,17 +3236,154 @@ function mwTick(now) {
   } else if (st.ph === 'talk') { if (now >= st.dl) mwVote(); }
   else if (st.ph === 'vote') { const vs = mwVoters(); if (now >= st.dl || (vs.length && vs.every((id) => mx.vt[id]))) mwTally(); }
 }
+/* ============================================================
+ * 4h. 畫中有話（房主計算；妙語說書人（Dixit）玩法，名同 84 張插畫自己整，GAME-27）
+ *    Bill 2026-11-25 定：名「畫中有話」；說書人只係口講提示；插畫夢幻加香港元素；房主揀時限同目標分
+ *    tell 說書人揀一張卡（唔限時）→ pick 其他人揀卡（3 人每人 2 張）→ vote 投票（唔可以投自己）
+ *    → show 揭曉計分（全部人撳「下一輪」）→ 下一個說書人
+ *    計分：全部人或者冇人估中說書人張卡：說書人 0，其他人 +2；否則說書人同估中嘅人 +3；
+ *          唔係說書人：自己張卡每得 1 票 +1
+ *    完場：有人夠目標分，或者冇牌補（84 張抽晒）；最高分嘅人房間分數 +1
+ *    測試模式唔夠 3 人：加電腦玩家（隨機揀卡、投票）
+ * ============================================================ */
+const DX_N = 84;
+const DX_PH = ['tell', 'pick', 'vote', 'show'];
+const dxHandN = (n) => (n === 3 ? 7 : 6);
+const dxPerN = (n) => (n === 3 ? 2 : 1);
+const DX_BOT = ['電腦甲', '電腦乙', '電腦丙'];
+function dxStart(keep) {
+  const st = HS;
+  st.pl = st.pl.filter((p) => (p.on || p.id === st.host) && !p.gone && !p.bot);
+  for (const w of st.wt) if (st.pl.length < MAX_SEATS) st.pl.push({ id: w.id, n: w.n, c: w.c, sc: 0, on: w.on });
+  st.wt = [];
+  while (st.pl.length > gMax('dx')) { const p = st.pl.pop(); st.wt.unshift({ id: p.id, n: p.n, c: p.c, on: p.on }); }
+  if (st.test) for (let i = 0; st.pl.length < 3; i++) st.pl.push({ id: 'bt' + (i + 1), n: DX_BOT[i], c: hFreeColor(), sc: 0, on: 1, bot: 1 });
+  const n = st.pl.length;
+  if (n < gMin('dx') || n < 3) { hLobby(); return; }
+  st.pl.forEach((p) => { p.gone = 0; if (!keep) p.sc = 0; });
+  st.gid++;
+  const ord = st.pl.map((p) => p.id), hs = dxHandN(n), deck = shuffle(Array.from({ length: DX_N }, (_, i) => i)), hand = {}, pt = {};
+  ord.forEach((id) => { hand[id] = deck.splice(0, hs); pt[id] = 0; });
+  st.dx = { deck, hand, ord, si: Math.floor(Math.random() * n), st: null, rd: 0, sub: {}, tb: [], vt: {}, rdy: {}, pt, gain: null, own: null, sc: null, hit: [], ek: 0, ev: null, hs, per: dxPerN(n), tgt: st.cfg.z || 30, win: [], why: '', bt: {} };
+  st.rl = {}; st.dt = {}; st.ok = {}; st.jd = null; st.w = null; st.dl = 0; st.dt0 = 0;
+  dxRound(true);
+}
+const dxLive = () => HS.dx.ord.filter((id) => { const p = HS.pl.find((q) => q.id === id); return p && !p.gone; });
+/* 要做嘢嘅人：仲喺度（離線嘅唔等） */
+const dxNeed = () => dxLive().filter((id) => id !== HS.dx.st && hOn(id));
+function dxRound(first) {
+  const st = HS, dx = st.dx, n = dx.ord.length;
+  if (dxLive().length < 3) { dxEnd('few'); return; }
+  let s = null;
+  for (let k = 0; k < n && !s; k++) {
+    if (!(first && k === 0)) dx.si = (dx.si + 1) % n;
+    const id = dx.ord[dx.si], p = st.pl.find((q) => q.id === id);
+    if (p && !p.gone) s = id;
+  }
+  dx.rd++; dx.st = s; dx.sub = {}; dx.tb = []; dx.vt = {}; dx.rdy = {}; dx.gain = null; dx.own = null; dx.sc = null; dx.hit = []; dx.bt = {};
+  st.rd = dx.rd; st.ph = 'tell'; st.dl = 0; st.dt0 = 0;
+  dx.ek++; dx.ev = { k: dx.ek, t: 'rd' };
+}
+function dxLimit() { const st = HS, t = (st.cfg.k || 0) * 1000 / SPEED; st.dt0 = t; st.dl = t ? Date.now() + t : 0; }
+function dxTell(card) {
+  const st = HS, dx = st.dx, h = dx.hand[dx.st];
+  dx.sub[dx.st] = [card]; h.splice(h.indexOf(card), 1);
+  st.ph = 'pick'; dx.bt = {}; dxLimit();
+  dx.ek++; dx.ev = { k: dx.ek, t: 'tell' };
+  dxCheckPick();
+}
+function dxPick(id, cards) {
+  const dx = HS.dx, h = dx.hand[id];
+  dx.sub[id] = cards.slice(); cards.forEach((c) => h.splice(h.indexOf(c), 1));
+  dx.ek++; dx.ev = { k: dx.ek, t: 'sub', by: id };
+  dxCheckPick();
+}
+function dxCheckPick() { const st = HS; if (st.ph === 'pick' && dxNeed().every((id) => st.dx.sub[id])) dxVote(); }
+function dxVote() {
+  const st = HS, dx = st.dx, all = [];
+  Object.keys(dx.sub).forEach((id) => all.push(...dx.sub[id]));
+  if (all.length < 2) { dxAfter(); return; }   // 冇其他人放卡（全部離線）：呢輪作廢
+  dx.tb = shuffle(all); dx.vt = {}; dx.bt = {};
+  st.ph = 'vote'; dxLimit();
+  dx.ek++; dx.ev = { k: dx.ek, t: 'deal' };
+  dxCheckVote();
+}
+const dxCanVote = (id, c) => { const dx = HS.dx; return id !== dx.st && dx.tb.includes(c) && !(dx.sub[id] || []).includes(c); };
+function dxCheckVote() { const st = HS; if (st.ph === 'vote' && dxNeed().every((id) => st.dx.vt[id])) dxScore(); }
+/* 計分（照原版）；gain 每人：b 基本分（2／3）、x 每票 +1 */
+function dxScore() {
+  const st = HS, dx = st.dx, own = {}, g = {};
+  Object.keys(dx.sub).forEach((id) => dx.sub[id].forEach((c) => { own[c] = id; }));
+  const sc = dx.sub[dx.st][0], voters = Object.keys(dx.vt), hit = voters.filter((v) => dx.vt[v] === sc);
+  dx.ord.forEach((id) => { g[id] = { b: 0, x: 0 }; });
+  if (voters.length) {
+    if (!hit.length || hit.length === voters.length) dxLive().forEach((id) => { if (id !== dx.st) g[id].b = 2; });
+    else { g[dx.st].b = 3; hit.forEach((v) => { g[v].b = 3; }); }
+    voters.forEach((v) => { const o = own[dx.vt[v]]; if (o && o !== dx.st) g[o].x++; });
+  }
+  dx.ord.forEach((id) => { dx.pt[id] += g[id].b + g[id].x; });
+  dx.gain = g; dx.own = own; dx.sc = sc; dx.hit = hit; dx.rdy = {}; dx.bt = {};
+  st.ph = 'show'; st.dl = 0; st.dt0 = 0;
+  dx.ek++; dx.ev = { k: dx.ek, t: 'show' };
+}
+function dxCheckNext() { const st = HS; if (st.ph === 'show' && dxLive().filter((id) => hOn(id)).every((id) => st.dx.rdy[id])) dxAfter(); }
+/* 一輪完：夠目標分就完；否則每人補返夠手牌，唔夠牌補就完 */
+function dxAfter() {
+  const dx = HS.dx, live = dxLive();
+  if (Math.max(0, ...live.map((id) => dx.pt[id])) >= dx.tgt) { dxEnd('score'); return; }
+  const need = live.reduce((s, id) => s + Math.max(0, dx.hs - dx.hand[id].length), 0);
+  if (need > dx.deck.length) { dxEnd('deck'); return; }
+  live.forEach((id) => { while (dx.hand[id].length < dx.hs) dx.hand[id].push(dx.deck.pop()); });
+  dxRound(false);
+}
+function dxEnd(why) {
+  const st = HS, dx = st.dx, live = dxLive(), top = Math.max(0, ...live.map((id) => dx.pt[id]));
+  dx.win = why === 'few' && !top ? [] : live.filter((id) => dx.pt[id] === top);
+  dx.why = why; st.dt = {};
+  dx.win.forEach((id) => hAdd(id, 1));
+  dx.ek++; dx.ev = { k: dx.ek, t: 'end' };
+  st.ph = 'end'; st.dl = 0;
+}
+/* 電腦玩家（測試模式）：隔 1–3.5 秒先做嘢，似真人 */
+function dxBots(now, fn) {
+  const st = HS, dx = st.dx;
+  st.pl.filter((p) => p.bot && !p.gone).forEach((p) => {
+    if (!dx.bt[p.id]) { dx.bt[p.id] = now + (1000 + Math.random() * 2500) / SPEED; return; }
+    if (dx.bt[p.id] > 0 && now >= dx.bt[p.id]) { dx.bt[p.id] = -1; fn(p.id); }
+  });
+}
+const dxRand = (a, k) => shuffle(a).slice(0, k);
+function dxTick(now) {
+  const st = HS, dx = st.dx; if (!dx) return;
+  if (st.ph === 'tell') {
+    const p = st.pl.find((q) => q.id === dx.st);
+    if (!p || p.gone) { dxAfter(); return; }   // 說書人走咗：下一個
+    if (p.bot) dxBots(now, (id) => { if (id === dx.st && st.ph === 'tell') dxTell(dxRand(dx.hand[id], 1)[0]); });
+  } else if (st.ph === 'pick') {
+    dxBots(now, (id) => { if (st.ph === 'pick' && id !== dx.st && !dx.sub[id]) dxPick(id, dxRand(dx.hand[id], dx.per)); });
+    if (st.ph === 'pick' && st.dl && now >= st.dl) dxNeed().forEach((id) => { if (st.ph === 'pick' && !dx.sub[id]) dxPick(id, dxRand(dx.hand[id], dx.per)); });   // 時間到：幫未揀嘅人隨機揀
+    dxCheckPick();
+  } else if (st.ph === 'vote') {
+    dxBots(now, (id) => { if (st.ph === 'vote' && id !== dx.st && !dx.vt[id]) { const ok = dx.tb.filter((c) => dxCanVote(id, c)); if (ok.length) { dx.vt[id] = dxRand(ok, 1)[0]; dxCheckVote(); } } });
+    if (st.ph === 'vote' && st.dl && now >= st.dl) dxScore();   // 時間到：未投嘅當冇投
+    else dxCheckVote();
+  } else if (st.ph === 'show') {
+    dxBots(now, (id) => { dx.rdy[id] = 1; });
+    dxCheckNext();
+  }
+}
 /* 房主計時：準備完自動入發言、每人 30 秒、全部講完入判決、4 分鐘到就完 */
 setInterval(() => {
   if (!HS || !S.isHost || S.screen !== 'room') return;
   const st = HS, now = Date.now();
-  const sig = () => [st.ph, st.sp, st.ci, st.al ? st.al.length : 0, st.lk, st.win, st.hr, st.stolen, st.acc ? st.acc.length : 0, st.pr ? st.pr.k : 0, st.prr ? st.prr.k : 0, st.hx ? st.hx.evk + '.' + st.hx.ti + '.' + st.hx.lg : '', st.mx ? st.mx.ek + '.' + st.mx.tk + '.' + Object.keys(st.mx.vt).length : ''].join('|'), s0 = sig();
+  const sig = () => [st.ph, st.sp, st.ci, st.al ? st.al.length : 0, st.lk, st.win, st.hr, st.stolen, st.acc ? st.acc.length : 0, st.pr ? st.pr.k : 0, st.prr ? st.prr.k : 0, st.hx ? st.hx.evk + '.' + st.hx.ti + '.' + st.hx.lg : '', st.mx ? st.mx.ek + '.' + st.mx.tk + '.' + Object.keys(st.mx.vt).length : '', st.dx ? st.dx.ek + '.' + Object.keys(st.dx.vt).length + '.' + Object.keys(st.dx.rdy).length : ''].join('|'), s0 = sig();
   if (st.g === 'wd') wTick(now);
   else if (st.g === 'xs') { /* 心水數字冇計時 */ }
   else if (st.g === 'cd') { if (st.ph === 'role') cCheckRole(); }
   else if (st.g === 'tt') tTick(now);
   else if (st.g === 'cr') crTick(now);
   else if (st.g === 'mw') mwTick(now);
+  else if (st.g === 'dx') dxTick(now);
   else if (st.ph === 'role') hCheckRole();
   else if (st.ph === 'think' && now >= st.dl) hSpeak();
   else if (st.ph === 'speak') {
@@ -3167,6 +3410,8 @@ const CFG_OPTS = {
   b: [[0, '唔要'], [1, '要']],
   t: [[0, '唔限時'], [300, '5 分鐘'], [600, '10 分鐘']],
   u: [[300, '5 分鐘'], [600, '10 分鐘']],
+  k: [[0, '唔限時'], [60, '60 秒'], [90, '90 秒']],
+  z: [[20, '20 分'], [30, '30 分']],
 };
 
 async function enterRoom(code, host) {
@@ -3358,6 +3603,7 @@ const crabSvg = (c) => `<svg class="kr-crab" viewBox="0 0 40 28">${crabG(CR_COL[
 const PAILG = '<path d="M14 22h32l-4 30H18z" fill="#3b82f6" stroke="#1b1424" stroke-width="2" stroke-linejoin="round"/><path d="M12 19h36v6H12z" fill="#7dd3fc" stroke="#1b1424" stroke-width="2" stroke-linejoin="round"/><path d="M16 20c0-15 28-15 28 0" fill="none" stroke="#1b1424" stroke-width="2.4"/><path d="M21 31l1.5 15" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".45"/>';
 const GAMEART_CR = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gkS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#155e8c"/><stop offset="1" stop-color="#46b7da"/></linearGradient><linearGradient id="gkD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e3b4"/><stop offset="1" stop-color="#dcb46a"/></linearGradient></defs><rect width="400" height="150" fill="url(#gkS)"/><circle cx="330" cy="30" r="15" fill="#ffe27a"/><path d="M0 66 Q50 54 100 66 T200 66 T300 66 T400 66 V150 H0Z" fill="url(#gkD)"/><path d="M0 66 Q50 54 100 66 T200 66 T300 66 T400 66" fill="none" stroke="#fff" stroke-width="3" opacity=".75"/><g fill="#c99a4e" opacity=".35"><rect x="14" y="122" width="44" height="20" rx="6"/><rect x="64" y="122" width="44" height="20" rx="6"/><rect x="114" y="122" width="44" height="20" rx="6"/><rect x="214" y="122" width="44" height="20" rx="6"/><rect x="264" y="122" width="44" height="20" rx="6"/><rect x="314" y="122" width="44" height="20" rx="6"/></g><g transform="translate(352 60)"><rect width="3" height="58" fill="#5b4320"/><rect x="3" y="2" width="30" height="20" fill="#fff" stroke="#1b1424" stroke-width="1.5"/><g fill="#1b1424"><rect x="3" y="2" width="7.5" height="5"/><rect x="18" y="2" width="7.5" height="5"/><rect x="10.5" y="7" width="7.5" height="5"/><rect x="25.5" y="7" width="7.5" height="5"/><rect x="3" y="12" width="7.5" height="5"/><rect x="18" y="12" width="7.5" height="5"/><rect x="10.5" y="17" width="7.5" height="5"/><rect x="25.5" y="17" width="7.5" height="5"/></g></g><g transform="translate(26 58) scale(1.25)">${PAILG}</g><g transform="translate(150 90) scale(1.9)">${crabG(CR_COL.r)}</g><g transform="translate(150 70) scale(1.9)">${crabG(CR_COL.b)}</g><g transform="translate(150 50) scale(1.9)">${crabG(CR_COL.y)}</g><g transform="translate(262 92) scale(1.55)">${crabG(CR_COL.k, 1)}</g><g transform="translate(232 108) scale(.9)">${crabG(CR_COL.g)}</g></svg>`;
 const GAMEART_MW = `<svg class="gart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gmS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c2556"/><stop offset="1" stop-color="#0e0b1a"/></linearGradient><radialGradient id="gmM" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff6d8"/><stop offset=".45" stop-color="#f2dc9a" stop-opacity=".55"/><stop offset="1" stop-color="#f2dc9a" stop-opacity="0"/></radialGradient><radialGradient id="gmW" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd36a" stop-opacity=".6"/><stop offset="1" stop-color="#ffd36a" stop-opacity="0"/></radialGradient><linearGradient id="gmA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cc"/><stop offset=".5" stop-color="#e8bd62"/><stop offset="1" stop-color="#9a6a1c"/></linearGradient></defs><rect width="400" height="150" fill="url(#gmS)"/><circle cx="312" cy="38" r="52" fill="url(#gmM)"/><circle cx="312" cy="38" r="19" fill="#fbefc4"/><circle cx="305" cy="33" r="3.5" fill="#e8d496" opacity=".6"/><path d="M104 0l-16 36h12l-17 40 34-50H104l13-26z" fill="#fff8e0" opacity=".9"/><path d="M104 0l-16 36h12l-17 40 34-50H104l13-26z" fill="none" stroke="#bfe0ff" stroke-width="4" opacity=".3"/><g stroke="#c8d0ff" stroke-width="1.2" opacity=".3" stroke-linecap="round"><path d="M20 10l-4 18M60 30l-4 18M140 6l-4 18M180 40l-4 18M240 12l-4 18M270 60l-4 18M350 80l-4 18M380 20l-4 18M30 70l-4 18M120 90l-4 18M210 80l-4 18M330 120l-4 18"/></g><path d="M0 150V122q110-30 210-26t190 26v28z" fill="#0a0912"/><g fill="#100d1c"><path d="M118 118V86l18-18 18 18v32z"/><path d="M150 118V70l50-36 50 36v48z"/><path d="M248 118V64l10-10v-18l8-18 8 18v18l10 10v54z"/><rect x="168" y="38" width="8" height="22"/><path d="M196 36l4-16 4 16z"/></g><g fill="url(#gmW)"><circle cx="172" cy="80" r="15"/><circle cx="228" cy="96" r="15"/><circle cx="266" cy="74" r="13"/><circle cx="132" cy="96" r="12"/></g><g fill="#ffd36a"><rect x="168" y="74" width="8" height="12" rx="1.5"/><rect x="224" y="90" width="8" height="12" rx="1.5"/><rect x="263" y="68" width="6" height="11" rx="3"/><rect x="129" y="91" width="6" height="10" rx="1.5"/><rect x="195" y="102" width="10" height="16" rx="5"/></g><rect x="186" y="74" width="8" height="12" rx="1.5" fill="#1a1428"/><circle cx="188.6" cy="80" r="1.4" fill="#ff3b55"/><circle cx="192" cy="80" r="1.4" fill="#ff3b55"/><g transform="translate(56 92) rotate(-28)"><circle r="22" fill="#bfefff" fill-opacity=".18" stroke="url(#gmA)" stroke-width="6"/><path d="M-12 -10a16 16 0 0 1 10-7" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/><rect x="-5" y="24" width="10" height="34" rx="5" fill="#7a4e24"/></g><g transform="translate(348 104)"><rect x="-14" y="-18" width="28" height="36" rx="4" fill="#15122a" stroke="url(#gmA)" stroke-width="2.4"/><path d="M-6 -2a6 6 0 1 1 12 0c0 3-2 4-3 5v3h-6v-3c-1-1-3-2-3-5z" fill="url(#gmA)"/></g></svg>`;
+const GAMEART_DX = '<div class="gart dxga"><i class="dxgc" style="--a:var(--dx2);--r:-14deg;--x:-64%"></i><i class="dxgc" style="--a:var(--dx25);--r:13deg;--x:64%"></i><i class="dxgc" style="--a:var(--dx0);--r:0deg;--x:0%"></i></div>';   // 畫中有話縮圖：三張卡攤開（插畫喺開始時登記）
 const GAMES = {
   zdz: { name: '真定作', min: 3, art: GAMEART, cfg: { r: 1, d: 0 }, tags: ['3–10 人', '一局 15–30 分鐘', '派對・講大話'],
     desc: '冷門題目得一個人知真正意思，其他人作。判官估邊個講真話。' },
@@ -3373,6 +3619,8 @@ const GAMES = {
     desc: '五隻蟹疊住跑，黑白兩隻倒住行。押中邊隻贏，最多錢勝。' },
   mw: { name: '大宅目擊者', min: 3, max: 8, art: GAMEART_MW, cfg: { u: 300, s: 'AR' }, tags: ['3–8 人', '一局 10–15 分鐘', '推理・講大話'],
     desc: '暴風雨夜大宅有人被殺。傳卡、目擊、投票，將兇手關入地窖。' },
+  dx: { name: '畫中有話', min: 3, max: 8, art: GAMEART_DX, cfg: { k: 90, z: 30 }, tags: ['3–8 人', '一局 30 分鐘', '估畫・講故事'],
+    desc: '說書人揀一張夢幻插畫，口講一句提示。大家出最似嘅卡，再估邊張係佢嘅。' },
 };
 const CROWN = `<svg viewBox="0 0 84 60" class="crown"><defs><linearGradient id="crG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9e9b6"/><stop offset=".5" stop-color="#e0b65c"/><stop offset="1" stop-color="#b8862f"/></linearGradient></defs><path d="M6 50 L2 14 L24 30 L42 4 L60 30 L82 14 L78 50 Z" fill="url(#crG)" stroke="#8a5f1c" stroke-width="1.5" stroke-linejoin="round"/><rect x="6" y="48" width="72" height="9" rx="3" fill="#c3913a"/><circle cx="42" cy="34" r="5" fill="#ff7083"/><circle cx="22" cy="40" r="4" fill="#9cc2ff"/><circle cx="62" cy="40" r="4" fill="#5fd6a3"/></svg>`;
 
@@ -3398,6 +3646,8 @@ function render() {
     top = vTop(v) + '<div id="banner"></div>';
     h = '';
     if (v.ph === 'lobby') h += vLobby(v);
+    else if (v.g === 'dx' && v.dx && v.ph === 'end') h += vEndDx(v);
+    else if (v.g === 'dx' && v.dx && DX_PH.includes(v.ph)) h += vPlayDx(v);
     else if (v.g === 'mw' && v.mx && v.ph === 'end' && Date.now() < (S.mwHold || 0)) h += vPlayMw(v, 1);
     else if (v.g === 'mw' && v.mx && v.ph === 'end') h += vEndMw(v);
     else if (v.g === 'mw' && v.mx && MW_PH.includes(v.ph)) h += vPlayMw(v);
@@ -3437,6 +3687,7 @@ function render() {
   renderBanner();
   renderModal();
   mwHandSync();
+  dxZoom();
   tickCd();
   if (S.screen === 'room' && S.view && S.view.g === 'cr') crAnim(S.view);
 }
@@ -3505,7 +3756,12 @@ function vLobby(v) {
   const cdN = CD_ROLES[Math.min(8, Math.max(4, onN))];
   const mwS = String(v.cfg.s || ''), mwN = mwDeckN(onN, mwS);
   const MW_T2 = { A: '兇手嗰邊', L: '令一個人嘅票唔計', R: '一個人計兩票', D: '自己揀人關入地窖', B: '睇兩張冇用嘅卡', P: '想俾人關，自己一邊' };
-  const opts = v.g === 'mw'
+  const opts = v.g === 'dx'
+    ? `<div class="cl">揀卡同投票時限（說書人唔限時）</div>${seg('k', v.cfg.k, host)}
+      <div class="cl">目標分數（夠分或者冇牌補就完場）</div>${seg('z', v.cfg.z, host)}
+      <div class="cl">每輪流程</div><div class="flow"><span>說書人揀卡、口講提示</span><i>›</i><span>其他人揀最似嘅卡</span><i>›</i><span>洗牌投票</span><i>›</i><span>揭曉計分</span></div>
+      <div class="cl">${onN < 3 ? (v.test ? '測試模式：唔夠 3 人會加電腦玩家' : '要 3–8 人') : onN > 8 ? '最多 8 人' : `而家 ${onN} 人：每人 ${onN === 3 ? '7 張手牌，每次放 2 張' : '6 張手牌'}・共 84 張卡`}</div>`
+    : v.g === 'mw'
     ? `<div class="cl">討論時間</div>${seg('u', v.cfg.u, host)}
       <div class="cl">特別角色（兇手一定有，唔夠就補住客）</div><div class="mwsp">${MW_SP.map((t) => { const on = mwS.includes(t); return `<button class="mwspb${on ? ' on' : ''}${host ? '' : ' ro'}"${host ? ` data-act="mwr" data-x="${t}"` : ''}>${mwAv(t)}<span><b>${MW_ROLE[t]}</b><small>${MW_T2[t]}</small></span><i class="ck">${on ? ic('check') : ''}</i></button>`; }).join('')}</div>
       <div class="cl">${onN < 3 ? '要 3–8 人' : onN > 8 ? '最多 8 人' : mwFits(onN, mwS) ? `而家 ${onN} 人：${mwN} 張卡（兇手 1・特別 ${mwS.length}・住客 ${mwN - 1 - mwS.length}）${mwS.includes('B') ? '，其中 2 張冇用' : ''}` : `${onN} 人最多揀 ${onN + (mwS.includes('B') ? 2 : 0)} 個特別角色`}</div>
@@ -3742,6 +3998,21 @@ function fx(prevPh, had, v) {
         zdBurst(v, v.bu);
       }
     }
+  }
+  if (v.g === 'dx') {
+    const dx = v.dx; if (!dx) return;
+    const ev = dx.ev;
+    if (ev && !S.seen['dx' + v.gid + '-' + ev.k]) {
+      S.seen['dx' + v.gid + '-' + ev.k] = 1;
+      const sn = nameOf(v, dx.st), meSt = dx.st === ME.id;
+      if (ev.t === 'rd') { S.dxSel = []; S.dxZ = null; if (had) { if (meSt) { sweep('到你做說書人！', '揀卡・諗提示'); sfx('good'); } else sweep(dx.rd === 1 ? '畫中有話' : `第 ${dx.rd} 輪`, `${sn} 做說書人`); } }
+      else if (ev.t === 'tell') { S.dxZ = null; if (had) { sweep(meSt ? '講提示！' : '聽提示！', meSt ? '大家等緊你講' : `${sn} 講`); sfx('flick'); } }
+      else if (ev.t === 'sub') { if (had && ev.by !== ME.id) sfx('tick'); }
+      else if (ev.t === 'deal') { S.dxSel = []; S.dxZ = null; if (had) { sweep('投票！', '邊張係說書人嘅？', 'red'); dx.tb.forEach((_, i) => setTimeout(() => sfx('flick'), 700 + i * 140)); } }
+      else if (ev.t === 'show') { S.dxZ = null; if (had) { requestAnimationFrame(() => dxMoveFx(v)); const g = dx.gain && dx.gain[ME.id]; setTimeout(() => sfx(g && g.b + g.x ? 'coin' : 'good'), 450); } }
+      else if (ev.t === 'end') { S.dxZ = null; if (had && prevPh !== 'end') setTimeout(() => { confetti(); sfx('win'); }, 300); }
+    }
+    return;
   }
   if (v.g === 'mw') {
     const mx = v.mx; if (!mx) return;
@@ -4832,7 +5103,389 @@ ${rain(21, 40, '#c8d0ff', 0.3)}
   const H = gc(['#ffa898', '#c4443e', '#521414', '#200606'], ['#da444c', '#5a0e16'], ['#ff7070', '#a01828']);
   return { G: GY, U, H, K, A, L, R, D, B, P, BK, C, E };
 })();
-(() => { const rs = document.documentElement.style, put = (pre, A) => { for (const k in A) rs.setProperty(pre + k, "url('data:image/svg+xml;charset=utf-8," + encodeURIComponent(A[k]).replace(/'/g, '%27') + "')"); }; put('--cd', CD_ART); put('--zd', ZD_ART); put('--mw', MW_ART); })();
+/* 畫中有話插畫：84 張夢幻加香港元素（Bill 2026-11-25 揀），全部自己用 SVG 畫（GAME-27）
+ * 每張卡 200×300；用基本元件（天空、月、雲、海、山、城市、樹、人物剪影、動物、香港物件）砌出怪夢場景
+ * 用到先整（dxArt）；漸變 id 每張卡自己一套 */
+const DXA = (() => {
+  let R = Math.random, D = [], N = 0;
+  const mul = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const rn = (a, b) => a + R() * (b - a);
+  const f = (n) => Math.round(n * 10) / 10;
+  const sid = () => 'q' + (N++).toString(36);
+  const stp = (s) => s.map(([o, c, a]) => `<stop offset="${o}" stop-color="${c}"${a != null ? ` stop-opacity="${a}"` : ''}/>`).join('');
+  const lin = (s, x1 = 0, y1 = 0, x2 = 0, y2 = 1) => { const i = sid(); D.push(`<linearGradient id="${i}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stp(s)}</linearGradient>`); return `url(#${i})`; };
+  const rad = (s, cx = 0.5, cy = 0.5, r = 0.5) => { const i = sid(); D.push(`<radialGradient id="${i}" cx="${cx}" cy="${cy}" r="${r}">${stp(s)}</radialGradient>`); return `url(#${i})`; };
+  const G = (t, c, o) => `<g${t ? ` transform="${t}"` : ''}${o != null ? ` opacity="${o}"` : ''}>${c}</g>`;
+  const at = (x, y, s = 1, r = 0) => `translate(${f(x)} ${f(y)})${s !== 1 ? ` scale(${f(s * 100) / 100})` : ''}${r ? ` rotate(${r})` : ''}`;
+  const P = (d, fill, ex = '') => `<path d="${d}" fill="${fill}"${ex}/>`;
+  const C = (x, y, r, fill, ex = '') => `<circle cx="${f(x)}" cy="${f(y)}" r="${f(r)}" fill="${fill}"${ex}/>`;
+  const E = (x, y, rx, ry, fill, ex = '') => `<ellipse cx="${f(x)}" cy="${f(y)}" rx="${f(rx)}" ry="${f(ry)}" fill="${fill}"${ex}/>`;
+  const Rc = (x, y, w, h, fill, ex = '') => `<rect x="${f(x)}" y="${f(y)}" width="${f(w)}" height="${f(h)}" fill="${fill}"${ex}/>`;
+  const st = (c, w, ex = '') => ` stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"${ex}`;
+  /* 天空色盤：上、中、下、光 */
+  const PAL = {
+    night: ['#0a0f30', '#212d68', '#4b4f92', '#ffe9a8'],
+    dusk: ['#291a4d', '#88407a', '#f39062', '#ffd38a'],
+    dawn: ['#22305e', '#7b6fb3', '#f6bba3', '#fff0c8'],
+    teal: ['#03202d', '#0d4858', '#3e8d8a', '#d8fff2'],
+    rose: ['#381c3e', '#b05b7c', '#f4c3b1', '#fff1e4'],
+    gold: ['#3a2914', '#a8692b', '#f6c97c', '#fff2c2'],
+    day: ['#5fa6c4', '#a6d8d0', '#f4ecd0', '#ffffff'],
+    lav: ['#2b2451', '#6b60aa', '#c8b8e8', '#fff3ff'],
+    storm: ['#181d29', '#3a4555', '#6e7c88', '#dfe8ff'],
+    sea: ['#03131f', '#0a344e', '#1f6e86', '#bff6ff'],
+    aur: ['#040a1c', '#0a2236', '#163a4a', '#c8ffe8'],
+    fall: ['#2d1911', '#8b3b20', '#e8a45c', '#ffe1a8'],
+    snow: ['#293450', '#6e86a9', '#d9e3f0', '#ffffff'],
+    red: ['#290a13', '#7a1a2b', '#da573e', '#ffd38a'],
+    mint: ['#1d3b3a', '#4f8f7f', '#cfe9cf', '#fffbe0'],
+    peach: ['#4a2d4a', '#d5807a', '#fbd6a8', '#fff6dd'],
+  };
+  const sky = (k, glowY = 0.75) => {
+    const p = PAL[k] || PAL.night;
+    return Rc(0, 0, 200, 300, lin([[0, p[0]], [0.55, p[1]], [1, p[2]]])) + Rc(0, 0, 200, 300, rad([[0, p[3], 0.35], [1, p[3], 0]], 0.5, glowY, 0.6));
+  };
+  const glow = (x, y, r, c = '#ffe9a8', a = 0.55) => C(x, y, r, rad([[0, c, a], [0.45, c, a * 0.35], [1, c, 0]]));
+  const stars = (n, y0 = 0, y1 = 170, c = '#fff8e0') => {
+    let h = '';
+    for (let i = 0; i < n; i++) { const x = rn(4, 196), y = rn(y0, y1), r = R() < 0.12 ? rn(1, 1.6) : rn(0.35, 0.9); h += C(x, y, r, c, ` opacity="${f(rn(0.45, 1))}"`); }
+    for (let i = 0; i < Math.max(1, n / 18); i++) { const x = rn(15, 185), y = rn(y0, y1 * 0.8), s = rn(2.5, 4.5); h += P(`M${f(x)} ${f(y - s)}Q${f(x)} ${f(y)} ${f(x + s)} ${f(y)}Q${f(x)} ${f(y)} ${f(x)} ${f(y + s)}Q${f(x)} ${f(y)} ${f(x - s)} ${f(y)}Q${f(x)} ${f(y)} ${f(x)} ${f(y - s)}Z`, c, ' opacity=".9"'); }
+    return h;
+  };
+  const moon = (x, y, r, kind = 'full', c = '#fff3cf', bg = '#1d2552') => {
+    let h = glow(x, y, r * 3.2, c, 0.35) + C(x, y, r, rad([[0, '#fffbea'], [0.7, c], [1, '#e9cf8f']], 0.4, 0.38, 0.7));
+    if (kind === 'full') return h + C(x - r * 0.3, y - r * 0.15, r * 0.18, '#e8d39a', ' opacity=".55"') + C(x + r * 0.25, y + r * 0.3, r * 0.12, '#e8d39a', ' opacity=".5"') + C(x + r * 0.35, y - r * 0.35, r * 0.08, '#e8d39a', ' opacity=".45"');
+    // 彎月：用遮罩挖走一個圓（唔好用深色圓遮，同天空顏色唔夾）
+    const i = sid(); D.push(`<mask id="${i}" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="300"><rect width="200" height="300" fill="#fff"/><circle cx="${f(x + r * 0.45)}" cy="${f(y - r * 0.25)}" r="${f(r * 0.92)}" fill="#000"/></mask>`);
+    return glow(x, y, r * 3.2, c, 0.3) + `<g mask="url(#${i})">${C(x, y, r, rad([[0, '#fffbea'], [0.7, c], [1, '#e9cf8f']], 0.4, 0.38, 0.7))}</g>`;
+  };
+  const cloud = (x, y, s = 1, c = '#fdf3ff', sh = '#c9b6e6', a = 1) => G(at(x, y, s), P('M-38 6C-46 6-48-6-38-8C-38-20-22-24-14-16C-10-30 12-32 18-18C26-26 42-20 38-8C48-6 46 6 38 6Z', lin([[0, c], [1, sh]])) + P('M-38 6C-30 10 30 10 38 6C30 2-30 2-38 6Z', sh, ' opacity=".5"'), a);
+  const cloudSea = (y, c = '#f4e8ff', sh = '#a993d0') => {
+    let h = Rc(0, y + 8, 200, 300 - y, lin([[0, sh], [1, c]]));
+    for (let i = -1; i < 7; i++) h += C(i * 34 + rn(-6, 6), y + rn(4, 14), rn(18, 26), lin([[0, c], [1, sh]]));
+    return h;
+  };
+  const sea = (y, c1 = '#12305a', c2 = '#061226', shine = '#ffe9a8', sx = 100) => {
+    let h = Rc(0, y, 200, 300 - y, lin([[0, c1], [1, c2]]));
+    for (let i = 0; i < 9; i++) { const yy = y + 6 + i * i * 1.6 + rn(0, 2), w = 10 + i * 6; h += Rc(sx - w / 2 + rn(-4, 4), yy, w, 1.2 + i * 0.12, shine, ` opacity="${f(0.55 - i * 0.05)}" rx="1"`); }
+    for (let i = 0; i < 14; i++) { const yy = rn(y + 8, 300), x = rn(0, 200); h += P(`M${f(x)} ${f(yy)}q4-2 8 0`, 'none', st('#ffffff', 0.7, ' opacity=".18"')); }
+    return h;
+  };
+  const hills = (y, c1, c2, amp = 14, seed = 0) => {
+    const k = 0.04 + seed * 0.01;
+    let d = `M0 ${y}`;
+    for (let x = 0; x <= 200; x += 20) d += ` Q${x + 10} ${f(y - amp * Math.sin((x + seed * 37) * k) - amp * 0.5)} ${x + 20} ${f(y - amp * 0.3 * Math.cos((x + 20) * k * 1.7))}`;
+    return P(d + ' V300 H0Z', lin([[0, c1], [1, c2]]));
+  };
+  /* 香港式高樓：密密麻麻、窗口亮燈 */
+  const city = (y, c = '#151a3a', win = '#ffd98a', dens = 1, x0 = 0, x1 = 200) => {
+    let h = '', x = x0;
+    while (x < x1) {
+      const w = rn(12, 22), ht = rn(30, 95) * dens, top = y - ht;
+      h += Rc(x, top, w + 0.6, ht + 2, c);
+      if (R() < 0.3) h += Rc(x + w * 0.4, top - rn(4, 10), 1.2, 10, c);
+      for (let wy = top + 4; wy < y - 3; wy += 5) for (let wx = x + 2; wx < x + w - 2; wx += 4) if (R() < 0.34) h += Rc(wx, wy, 2, 2.4, win, ` opacity="${f(rn(0.5, 1))}"`);
+      x += w + rn(0, 2);
+    }
+    return h;
+  };
+  const vign = (a = 0.55) => Rc(0, 0, 200, 300, rad([[0.55, '#000', 0], [1, '#000', a]], 0.5, 0.5, 0.75));
+  const grain = () => { let h = ''; for (let i = 0; i < 70; i++) h += C(rn(0, 200), rn(0, 300), rn(0.3, 0.8), R() < 0.5 ? '#fff' : '#000', ` opacity="${f(rn(0.03, 0.08))}"`); return h; };
+  const motes = (n, c = '#ffe9a8', y0 = 0, y1 = 300) => { let h = ''; for (let i = 0; i < n; i++) { const x = rn(5, 195), y = rn(y0, y1), r = rn(0.8, 2); h += glow(x, y, r * 4, c, 0.5) + C(x, y, r * 0.6, '#fffdf0'); } return h; };
+  const birds = (n, x0, y0, s = 1, c = '#1b1b2e', spread = 50) => { let h = ''; for (let i = 0; i < n; i++) { const x = x0 + rn(-spread, spread), y = y0 + rn(-spread * 0.5, spread * 0.5), k = s * rn(0.6, 1.1); h += P(`M${f(x - 6 * k)} ${f(y)}q${f(3 * k)}-${f(3.4 * k)} ${f(6 * k)} 0q${f(3 * k)}-${f(3.4 * k)} ${f(6 * k)} 0`, 'none', st(c, 1.3 * k)); } return h; };
+  return { set: (c) => { R = mul(c * 7919 + 17); D = []; N = 0; }, defs: () => D.join(''), mul, rn, f, lin, rad, G, at, P, C, E, Rc, st, sky, glow, stars, moon, cloud, cloudSea, sea, hills, city, vign, grain, motes, birds, PAL, R: () => R() };
+})();
+/* 畫中有話插畫：物件、動物、人物（原點喺物件底部中間，用 G(at(x,y,s)) 擺位） */
+const DXO = (() => {
+  const { rn, f, lin, rad, G, at, P, C, E, Rc, st, glow } = DXA;
+  const O = {};
+  /* 香港電車（叮叮）：綠色雙層、奶油色腰線、亮燈窗 */
+  O.tram = (c = '#2f7d4f', win = '#ffe2a0') => {
+    let w = '';
+    for (let i = 0; i < 6; i++) w += Rc(-26 + i * 8.8, -37, 6.4, 7, win, ' rx="1"');
+    for (let i = 0; i < 5; i++) w += Rc(-24 + i * 10, -18, 7.4, 8, win, ' rx="1"');
+    return P('M-30-24V-40q0-4 4-4h52q4 0 4 4v16Z', lin([[0, '#3f9a62'], [1, c]])) + Rc(-31, -24, 62, 4, '#f3ead2') + P('M-30-20h60v16q0 2-2 2h-56q-2 0-2-2Z', lin([[0, c], [1, '#1d5233']]))
+      + w + Rc(-30, -27.5, 60, 3, '#c9473f', ' opacity=".85"') + P('M0-44L14-60', 'none', st('#2a2a2a', 1.2)) + C(14, -60, 1.4, '#2a2a2a') + C(-18, -1, 3, '#222') + C(18, -1, 3, '#222') + Rc(-4, -17, 6, 13, '#173d27');
+  };
+  /* 天星小輪：綠色船身、白色上層、兩排窗 */
+  O.ferry = () => P('M-38-12h76l-8 14h-60Z', lin([[0, '#2f7a4c'], [1, '#174a2c']])) + Rc(-32, -22, 64, 10, '#f6f1e4') + Rc(-24, -30, 48, 8, '#f6f1e4')
+    + Array.from({ length: 9 }, (_, i) => Rc(-29 + i * 6.6, -20, 4, 5, '#ffd98a')).join('') + Array.from({ length: 6 }, (_, i) => Rc(-21 + i * 7.4, -28.5, 4.4, 4, '#ffd98a')).join('')
+    + P('M0-30V-44', 'none', st('#ddd', 1)) + P('M0-44l8 3-8 3', '#c9473f') + Rc(-38, -12.5, 76, 1.5, '#f3c76a');
+  /* 紅帆船：棕色船身、三塊有骨嘅紅帆 */
+  O.junk = (sail = '#c8432f') => {
+    const s = (x, h, w) => { let b = ''; for (let i = 1; i < 6; i++) b += P(`M${x - w * 0.5 + i * 0.4} ${-14 - h * i / 6}h${w - i * 0.6}`, 'none', st('#5a1e14', 0.7, ' opacity=".6"')); return P(`M${x} -14V${-14 - h}`, 'none', st('#3a2414', 1.2)) + P(`M${x - w * 0.5} -16 Q${x - w * 0.7} ${-14 - h * 0.6} ${x - w * 0.2} ${-14 - h}H${x + w * 0.45}Q${x + w * 0.6} ${-14 - h * 0.5} ${x + w * 0.5} -16Z`, lin([[0, '#e0644a'], [1, sail]])) + b; };
+    return s(-18, 34, 24) + s(4, 46, 30) + s(24, 26, 18) + P('M-40-16Q-30-2 0-2Q32-2 42-20L36-14H-36Z', lin([[0, '#7a4a28'], [1, '#3e2312']]));
+  };
+  /* 蛋撻：花邊酥皮、亮黃蛋漿 */
+  O.tart = () => {
+    let fl = ''; for (let i = 0; i < 18; i++) { const a = (i / 18) * Math.PI * 2; fl += C(f(Math.cos(a) * 30), f(Math.sin(a) * 12 - 10), 4.2, '#d9953f'); }
+    return P('M-31-10L-24 6Q0 14 24 6L31-10Z', lin([[0, '#c98a3a'], [1, '#8a5420']])) + fl + E(0, -10, 30, 11.5, '#e6a54a') + E(0, -10.5, 25, 8.8, lin([[0, '#ffe27a'], [1, '#f4b93a']])) + E(-7, -13, 9, 3, '#fff6c0', ' opacity=".65"') + C(8, -9, 1.6, '#e08a2a', ' opacity=".5"');
+  };
+  /* 菠蘿包：圓頂、菠蘿格紋 */
+  O.bun = () => {
+    let g = ''; for (let i = -3; i <= 3; i++) g += P(`M${i * 9 - 14} -2L${i * 9 + 14} -30`, 'none', st('#b8742c', 1.1, ' opacity=".55"')) + P(`M${i * 9 + 14} -2L${i * 9 - 14} -30`, 'none', st('#b8742c', 1.1, ' opacity=".55"'));
+    return `<clipPath id="bunc"><path d="M-30 0Q-30-34 0-34Q30-34 30 0Z"/></clipPath>` + P('M-30 0Q-30-34 0-34Q30-34 30 0Z', lin([[0, '#f6c560'], [1, '#d4892e']])) + `<g clip-path="url(#bunc)">${g}</g>` + E(-8, -24, 9, 4, '#fff2c0', ' opacity=".45"') + Rc(-31, -2, 62, 4, '#e9b45a', ' rx="2"');
+  };
+  /* 蒸籠：竹圈加橫紋 */
+  O.steamer = (n = 3) => {
+    let h = '';
+    for (let i = 0; i < n; i++) { const y = -i * 16; h += Rc(-30, y - 16, 60, 16, lin([[0, '#e4c27c'], [1, '#b98a42']]), ' rx="3"') + P(`M-30 ${y - 8}h60`, 'none', st('#9a6c2c', 0.8, ' opacity=".6"')) + P(`M-30 ${y - 16}h60`, 'none', st('#8a5c22', 1)); }
+    return h + P(`M-32 ${-n * 16}Q0 ${-n * 16 - 14} 32 ${-n * 16}Z`, lin([[0, '#f0d498'], [1, '#c39a52']])) + C(0, -n * 16 - 8, 2.5, '#9a6c2c');
+  };
+  /* 麻雀牌：象牙面、綠背 */
+  O.tile = (k = 0) => {
+    const face = k === 0 ? `<text x="0" y="-9" font-size="20" font-weight="900" text-anchor="middle" fill="#c8302c" font-family="serif">中</text>` : k === 1 ? C(0, -22, 5, 'none', st('#2a6ab0', 2)) + C(0, -22, 1.5, '#c8302c') + C(0, -9, 5, 'none', st('#2a6ab0', 2)) + C(0, -9, 1.5, '#c8302c') : P('M-5-4V-30M5-4V-30', 'none', st('#2f7d4f', 3)) + P('M-5-17h2M5-17h-2', 'none', st('#1d4a2c', 2));
+    return Rc(-13, -36, 26, 36, '#2f7d4f', ' rx="4"') + Rc(-13, -38, 26, 34, lin([[0, '#fffdf2'], [1, '#e8e0c8']]), ' rx="4"') + face;
+  };
+  /* 霓虹招牌：直身，發光中文字 */
+  O.neon = (txt = '夢', c = '#ff5a8a', bg = '#1a1030') => {
+    const n = txt.length, h = n * 22 + 10;
+    return glow(0, -h / 2, h * 0.9, c, 0.35) + Rc(-14, -h, 28, h, bg, ` rx="3"${st(c, 1.6)}`) + Array.from(txt, (ch, i) => `<text x="0" y="${-h + 25 + i * 22}" font-size="19" font-weight="900" text-anchor="middle" fill="#fff" stroke="${c}" stroke-width="1.6" paint-order="stroke" font-family="serif">${ch}</text>`).join('');
+  };
+  /* 雀籠：圓頂、直枝、勾 */
+  O.cage = (c = '#d8b26a') => {
+    let b = ''; for (let i = -4; i <= 4; i++) b += P(`M${i * 6} 0V-38Q${i * 6} ${-52 + Math.abs(i) * 3} 0 -56`, 'none', st(c, 1.1));
+    return b + P('M-28 0h56', 'none', st(c, 3)) + P('M-26-8h52', 'none', st(c, 1)) + P('M0-56v-8a5 5 0 1 1 5 5', 'none', st(c, 1.6)) + E(0, 2, 30, 3, '#6b4a22');
+  };
+  /* 舊式紅色郵筒 */
+  O.mailbox = () => Rc(-12, -44, 24, 44, lin([[0, '#e0473a'], [0.6, '#b02a20'], [1, '#7a1a14']], 0, 0, 1, 0)) + P('M-14-44Q0-60 14-44Z', lin([[0, '#d33a2e'], [1, '#8a2018']])) + Rc(-8, -36, 16, 3, '#2a0a08', ' rx="1.5"') + Rc(-14, -4, 28, 5, '#5a1410', ' rx="1"') + Rc(-5, -26, 10, 8, '#f3d27a', ' rx="1" opacity=".85"');
+  /* 紅燈籠 */
+  O.lantern = (c = '#d8342c', g = true) => (g ? glow(0, -16, 34, '#ffb35a', 0.45) : '') + Rc(-6, -32, 12, 3, '#e8b84a') + E(0, -17, 14, 13, rad([[0, '#ff7a4a'], [0.7, c], [1, '#8a1a14']], 0.45, 0.4, 0.6)) + P('M-9-29Q-14-17-9-5M0-30V-4M9-29Q14-17 9-5', 'none', st('#8a1a14', 0.8, ' opacity=".6"')) + Rc(-6, -5, 12, 3, '#e8b84a') + P('M0-2V8', 'none', st('#e8b84a', 1.2)) + P('M-2 8h4l-1 6h-2Z', '#e8b84a');
+  /* 兔仔燈籠 */
+  O.rabbitLantern = () => glow(0, -14, 30, '#fff0c8', 0.5) + E(0, -14, 18, 12, rad([[0, '#ffffff'], [1, '#f1dcc8']])) + E(13, -22, 8, 7, '#fff8f0') + P('M10-27Q8-44 14-42Q16-36 14-27M15-27Q18-42 22-40Q22-33 18-26', '#fff8f0', st('#e8b8a8', 0.6)) + C(16, -22, 1.2, '#d8342c') + P('M-18-12q-6 2-4 6', 'none', st('#d8342c', 1.2)) + C(-6, 0, 2.5, '#d8342c') + C(8, 0, 2.5, '#d8342c') + P('M-2-26q4-6 8 0', 'none', st('#d8342c', 1, ' opacity=".6"'));
+  /* 茶記厚身杯 */
+  O.cup = (tea = '#a86a3a') => P('M-24-30L-20 0H20L24-30Z', lin([[0, '#ffffff'], [1, '#d8d4cc']], 0, 0, 1, 0)) + E(0, -30, 24, 6, '#f6f4ee') + E(0, -30, 20, 4.5, tea) + P('M24-24q12 0 10 10t-12 6', 'none', st('#e8e4dc', 4)) + E(0, 1, 26, 4, '#e8e4dc') + E(-6, -31, 6, 1.4, '#fff', ' opacity=".35"');
+  /* 燈塔：紅白間、燈光 */
+  O.lighthouse = (beam = true, dir = 1) => {
+    let h = beam ? P(`M0-62L${dir * 140} -92L${dir * 140} -36Z`, lin([[0, '#fff3c0', 0.75], [1, '#fff3c0', 0]], dir > 0 ? 0 : 1, 0, dir > 0 ? 1 : 0, 0)) : '';
+    h += P('M-11 0L-7-56H7L11 0Z', lin([[0, '#f4efe4'], [1, '#c9c2b2']], 0, 0, 1, 0));
+    for (let i = 0; i < 3; i++) h += P(`M${-10 + i * 1.3} ${-8 - i * 17}L${-9.3 + i * 1.3} ${-16 - i * 17}H${9.3 - i * 1.3}L${10 - i * 1.3} ${-8 - i * 17}Z`, '#c8402f');
+    return h + Rc(-9, -60, 18, 4, '#3a2a2a') + Rc(-6, -70, 12, 10, '#fff3c0') + glow(0, -65, 18, '#fff3c0', 0.8) + P('M-8-70L0-78L8-70Z', '#3a2a2a') + Rc(-2, -14, 4, 7, '#3a2a2a', ' rx="2"');
+  };
+  /* 門：可以開咗、入面發光 */
+  O.door = (open = true, lt = '#fff0c0', c = '#6a3f2a') => {
+    let h = Rc(-14, -46, 28, 46, lt) + glow(0, -23, 40, lt, 0.5);
+    h += open ? P('M14-46L26-42V-3L14 0Z', lin([[0, c], [1, '#3a2014']])) + C(23, -22, 1.2, '#e8b84a') : Rc(-14, -46, 28, 46, c) + C(9, -22, 1.4, '#e8b84a') + Rc(-10, -42, 20, 16, '#000', ' opacity=".12"') + Rc(-10, -22, 20, 18, '#000', ' opacity=".12"');
+    return h + P('M-16 0V-48H16V0', 'none', st('#2a1a10', 2.4));
+  };
+  /* 樓梯（浮喺半空） */
+  O.stairs = (n = 8, dx = 10, dy = 9, c = '#e9dcc0', sh = '#9a8a70') => { let h = ''; for (let i = 0; i < n; i++) h += P(`M${i * dx} ${-i * dy}h${dx + 2}v-${dy}h-${dx + 2}Z`, c) + P(`M${i * dx} ${-i * dy}h${dx + 2}l-3 4h-${dx - 1}Z`, sh); return h; };
+  O.ladder = (h = 80, c = '#c99a5a') => { let r = P(`M-8 0L-4-${h}M8 0L4-${h}`, 'none', st(c, 2)); for (let y = 8; y < h; y += 10) { const k = y / h; r += P(`M${f(-8 + 4 * k)} ${-y}H${f(8 - 4 * k)}`, 'none', st(c, 1.6)); } return r; };
+  /* 熱氣球 */
+  O.balloon = (c1 = '#e8543c', c2 = '#f6c25a') => {
+    let s = ''; for (let i = -2; i <= 2; i++) s += P(`M0-70Q${i * 13} -70 ${i * 9} -24`, 'none', st(i % 2 ? c2 : c1, 6, ' opacity=".55"'));
+    return P('M0-24Q-30-40-28-62Q-26-86 0-86Q26-86 28-62Q30-40 0-24Z', rad([[0, c2], [0.7, c1], [1, '#7a2014']], 0.4, 0.35, 0.7)) + s + P('M-6-24L-5-10M6-24L5-10', 'none', st('#5a3a1a', 0.8)) + Rc(-6, -10, 12, 9, '#8a5a2a', ' rx="1.5"') + E(-9, -70, 6, 9, '#fff', ' opacity=".25"');
+  };
+  /* 魚（向右） */
+  O.fish = (c1 = '#ff9a4a', c2 = '#e8543c') => P('M-30 0Q-14-16 10-12Q26-8 32 0Q26 8 10 12Q-14 16-30 0Z', lin([[0, c1], [1, c2]])) + P('M-28 0L-44-12Q-40 0-44 12Z', c2) + P('M0-12Q6-22 14-12', c2, ' opacity=".8"') + C(20, -3, 2.6, '#fff') + C(20.6, -3, 1.4, '#1a1a2a')
+    + P('M-6-8q4 8 0 16M2-9q4 9 0 18M-14-6q4 6 0 12', 'none', st('#fff', 0.8, ' opacity=".35"'));
+  /* 鯨魚（向右） */
+  O.whale = (c = '#2d4a7a', belly = '#c9d8e8') => P('M-70 0Q-60-30-10-30Q40-30 60-8Q66 0 58 6Q30 18-20 16Q-60 14-70 0Z', lin([[0, '#4a6aa0'], [1, c]])) + P('M-20 16Q20 16 58 6Q40 14 10 18Q-10 19-20 16Z', belly) + P('M-68 0L-92-18Q-86-4-96 6Q-80 4-68 4Z', c) + C(40, -6, 2.4, '#0e1a30') + P('M0 14q20 2 40-6M4 18q16 0 32-6', 'none', st('#8aa0c0', 0.8, ' opacity=".6"')) + P('M20-30q-2-10 4-14q-6 4-10 2', 'none', st('#bfe8ff', 1.4, ' opacity=".8"'));
+  O.jelly = (c = '#ff9ad8') => glow(0, -10, 36, c, 0.35) + P('M-18 0Q-18-26 0-26Q18-26 18 0Q12 3 6 0Q0 3-6 0Q-12 3-18 0Z', rad([[0, '#ffffff', 0.9], [0.6, c, 0.75], [1, c, 0.4]], 0.4, 0.3, 0.7)) + P('M-12 2q-4 14 2 26M-4 3q4 16-2 30M4 3q-4 14 2 28M12 2q4 12-2 22', 'none', st(c, 1.2, ' opacity=".7"'));
+  O.paperBoat = (c = '#fbf6ea') => P('M-26-8H26L16 4H-16Z', lin([[0, c], [1, '#d9d0bc']])) + P('M-10-8L0-30L10-8Z', '#efe6d2') + P('M0-30L10-8H2Z', '#d9cfb8');
+  O.plane = (c = '#fbf6ea') => P('M-20 0L22-8L-6 4Z', c) + P('M-6 4L22-8L-2 10Z', '#d9cfb8') + P('M-6 4L-2 10L-1 5Z', '#b8ae98');
+  O.kite = (c1 = '#e8543c', c2 = '#f6c25a', tail = 40) => P('M0-30L18-6L0 22L-18-6Z', lin([[0, c1], [1, c2]], 0, 0, 1, 1)) + P('M0-30V22M-18-6H18', 'none', st('#5a2a1a', 0.8)) + P(`M0 22q-8 ${tail * 0.3} 6 ${tail * 0.55}t-4 ${tail * 0.45}`, 'none', st('#5a2a1a', 0.8)) + P(`M-3 ${22 + tail * 0.35}l6-3v6z`, c1) + P(`M-3 ${22 + tail * 0.7}l6-3v6z`, c2);
+  O.umbrella = (c1 = '#e8543c', c2 = '#b02a20') => P('M-30 0Q-28-30 0-32Q28-30 30 0Q25-5 20 0Q15-5 10 0Q5-5 0 0Q-5-5-10 0Q-15-5-20 0Q-25-5-30 0Z', lin([[0, c1], [1, c2]])) + P('M0-32V30q0 6-6 6', 'none', st('#3a2a1a', 1.6)) + P('M0-32Q-10-14-10 0M0-32Q10-14 10 0', 'none', st(c2, 0.8, ' opacity=".6"'));
+  /* 人物剪影：k = 'man' 'kid' 'girl' 'sit' */
+  O.person = (k = 'man', c = '#141428') => {
+    if (k === 'kid') return C(0, -27, 5, c) + P('M-5-21Q0-23 5-21L6-8H-6Z', c) + P('M-3-8L-3 0M3-8L3 0', 'none', st(c, 2.6));
+    if (k === 'girl') return C(0, -36, 5, c) + P('M-4-40q4-6 8 0q2 6-2 6', c) + P('M-4-30Q0-32 4-30L10-10H-10Z', c) + P('M-3-10V0M3-10V0', 'none', st(c, 2)) + P('M-4-28l-6 10M4-28l6 10', 'none', st(c, 1.8));
+    if (k === 'sit') return C(0, -27, 5, c) + P('M-5-21Q0-23 5-21L6-6H-6Z', c) + P('M-5-6H8V2', 'none', st(c, 3));
+    return C(0, -44, 5.4, c) + P('M-6-37Q0-39 6-37L7-16H-7Z', c) + P('M-4-17L-4 0M4-17L4 0', 'none', st(c, 3.4)) + P('M-6-35L-9-18M6-35L9-18', 'none', st(c, 2.6));
+  };
+  O.cat = (k = 'sit', c = '#141428', eye = '#ffe07a') => k === 'sleep'
+    ? P('M-22 0Q-24-16 0-16Q20-16 22-4Q24 2 14 2H-18Q-24 2-22 0Z', c) + P('M14-12L18-22L22-12Z', c) + P('M20-14L24-22L26-10Z', c) + P('M-22-2Q-34-4-30 6Q-22 8-14 2', c) + P('M18-6q2 1 4 0', 'none', st(eye, 0.8))
+    : P('M-10 0Q-14-20-6-26Q0-30 6-26Q14-20 10 0Z', c) + C(0, -32, 8, c) + P('M-7-36L-6-46L-1-39ZM7-36L6-46L1-39Z', c) + P('M10-2Q24-4 20-18', 'none', st(c, 3)) + E(-3, -33, 1.4, 2, eye) + E(3, -33, 1.4, 2, eye);
+  O.fox = () => P('M-10 0Q-12-18-4-24Q4-26 10-18Q14-8 10 0Z', lin([[0, '#f08a3a'], [1, '#c85a1a']])) + P('M-6-24Q-8-36 0-38Q8-36 6-24Z', '#f08a3a') + P('M-7-33L-8-44L-2-36ZM7-33L8-44L2-36Z', '#f08a3a') + P('M-4-30Q0-24 4-30Q0-27-4-30Z', '#fff4e4') + C(-3, -33, 1, '#1a1a1a') + C(3, -33, 1, '#1a1a1a') + P('M10-2Q28 0 26-16Q22-8 12-8Z', '#f08a3a') + P('M26-16q2-4-2-6q-2 6 2 6', '#fff4e4');
+  O.deer = (c = '#141428') => P('M-18-14Q-16-24 0-24Q14-24 16-16L14-12H-16Z', c) + P('M-14-13L-15 6M-8-13L-8 6M8-13L8 6M13-13L14 6', 'none', st(c, 2.4)) + P('M10-22Q14-32 18-38L22-36Q20-30 16-22Z', c) + E(21, -39, 6, 4, c) + P('M18-42Q14-54 8-56M14-50L6-50M19-42Q22-56 30-58M24-52L32-50', 'none', st(c, 1.6));
+  O.owl = (c1 = '#8a6a4a', c2 = '#5a4030') => E(0, -16, 13, 17, lin([[0, c1], [1, c2]])) + P('M-11-28L-8-36L-3-30ZM11-28L8-36L3-30Z', c2) + C(-5, -22, 5, '#fff3d0') + C(5, -22, 5, '#fff3d0') + C(-5, -22, 2.4, '#1a1a1a') + C(5, -22, 2.4, '#1a1a1a') + P('M-2-17L0-13L2-17Z', '#e8a43a') + E(0, -8, 7, 7, '#e8d8b8', ' opacity=".5"');
+  O.rabbit = (c = '#fbf6ea') => E(0, -10, 12, 10, c) + C(9, -20, 7, c) + P('M6-24Q2-44 8-42Q12-36 10-24ZM11-25Q14-42 19-40Q20-32 14-24Z', c) + C(11, -21, 1, '#3a2a2a') + C(-11, -10, 3.4, c);
+  O.snail = (c = '#e8a45a') => P('M-24 0Q-26-6-18-8H20Q28-10 30-20L34-18Q32-4 22 0Z', '#d8c8a8') + P('M28-18L26-30M32-18L34-30', 'none', st('#d8c8a8', 1.4)) + C(0, -20, 16, lin([[0, c], [1, '#a85a2a']])) + P('M0-20m-11 0a11 11 0 1 0 11-11a8 8 0 1 0 6 12a4 4 0 1 0-6-4', 'none', st('#7a3a1a', 1.4));
+  O.turtle = () => P('M-40 0Q-36-26 0-28Q36-26 40 0Z', lin([[0, '#5a8a5a'], [1, '#2f5a3a']])) + P('M-20-6L-24-18M0-6V-26M20-6L24-18', 'none', st('#2a4a2a', 1.2, ' opacity=".6"')) + P('M40-6Q52-8 54-2Q52 4 40 2Z', '#6a9a6a') + C(48, -4, 1.2, '#1a1a1a') + P('M-30 0l-6 8h10ZM24 0l4 8h-10Z', '#6a9a6a');
+  O.dolphin = (c = '#f4a8b8') => P('M-30 6Q-20-14 6-14Q24-14 32-4Q34 0 30 0Q20-6 8-4Q-10 0-22 10Z', lin([[0, '#ffd0d8'], [1, c]])) + P('M-2-14L4-22L10-13Z', c) + P('M-26 8L-36 0L-34 12Z', c) + C(22, -8, 1.2, '#3a2a3a');
+  O.bird = (c = '#e8543c') => E(0, 0, 9, 6, c) + C(8, -4, 4.5, c) + P('M12-4l6 1-6 2Z', '#f6c25a') + C(9, -5, 0.9, '#1a1a1a') + P('M-2-2Q-8-14 4-6Z', '#fff', ' opacity=".35"') + P('M-8 0l-8-4 1 6Z', c);
+  O.butterfly = (c1 = '#9ad0ff', c2 = '#5a7ae8') => P('M0 0Q-16-20-18-6Q-18 4 0 0Q-12 12-6 14Q0 12 0 0Z', lin([[0, c1], [1, c2]])) + P('M0 0Q16-20 18-6Q18 4 0 0Q12 12 6 14Q0 12 0 0Z', lin([[0, c1], [1, c2]])) + P('M0-6V6', 'none', st('#1a1a2a', 1.4));
+  O.key = (c = '#e8b84a') => C(0, -30, 9, 'none', st(c, 3.4)) + P('M0-21V8M0 0h7M0 6h5', 'none', st(c, 3.4));
+  O.clock = (r = 22, c = '#f6efd8') => {
+    let t = ''; for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2; t += P(`M${f(Math.cos(a) * r * 0.78)} ${f(Math.sin(a) * r * 0.78)}L${f(Math.cos(a) * r * 0.9)} ${f(Math.sin(a) * r * 0.9)}`, 'none', st('#3a2a1a', 1.2)); }
+    return C(0, 0, r + 3, '#c8973e') + C(0, 0, r, lin([[0, '#ffffff'], [1, c]])) + t + P(`M0 0L${f(r * 0.45)} ${f(-r * 0.3)}M0 0L${f(-r * 0.1)} ${f(-r * 0.7)}`, 'none', st('#2a1a10', 1.8)) + C(0, 0, 1.8, '#2a1a10');
+  };
+  O.hourglass = (sand = '#f2c66a') => P('M-16-50H16M-16 0H16', 'none', st('#7a4a22', 4)) + P('M-13-48Q-13-30 0-25Q13-30 13-48ZM-13-2Q-13-20 0-25Q13-20 13-2Z', '#e8f4ff', ' opacity=".35"') + P('M-8-40Q0-34 8-40Q8-32 0-27Q-8-32-8-40Z', sand) + P('M-11-3Q0-14 11-3Z', sand) + P('M0-27V-6', 'none', st(sand, 0.8));
+  O.teacup = (c = '#f6f1e6', pat = '#5a7ac8') => E(0, 0, 34, 6, '#e8e2d4') + P('M-26-22Q-24 0 0 0Q24 0 26-22Z', lin([[0, '#ffffff'], [1, c]])) + E(0, -22, 26, 6, '#eae4d6') + P('M-18-12q6 3 12 0t12 0', 'none', st(pat, 1.2)) + P('M26-18q12-2 10 8q-2 6-12 4', 'none', st(c, 3.2));
+  O.teapot = (c = '#5a7ac8') => P('M-22-4Q-26-30 0-30Q26-30 22-4Q20 0 0 0Q-20 0-22-4Z', lin([[0, '#7a9ae0'], [1, c]])) + P('M22-20Q34-22 38-32', 'none', st(c, 4)) + P('M-22-22q-10 0-10 8t8 8', 'none', st(c, 3)) + E(0, -30, 10, 3, '#3a5aa0') + C(0, -34, 3, '#e8b84a') + P('M-12-16q12 6 24 0', 'none', st('#fff', 1, ' opacity=".45"'));
+  O.book = (c = '#f6efd8', cv = '#7a2a3a') => P('M-40 0L-38-6H38L40 0Z', cv) + P('M0-4Q-18-10-38-6V-36Q-18-40 0-34Z', lin([[0, c], [1, '#d8ccb0']], 1, 0, 0, 0)) + P('M0-4Q18-10 38-6V-36Q18-40 0-34Z', lin([[0, c], [1, '#d8ccb0']])) + P('M-32-28q14-3 26 0M-32-22q14-3 26 0M6-28q14-3 26 0M6-22q14-3 26 0', 'none', st('#b8a888', 0.8, ' opacity=".7"'));
+  O.crown = (c = '#e8b84a') => P('M-22 0L-26-26L-12-12L0-30L12-12L26-26L22 0Z', lin([[0, '#ffe08a'], [1, c]])) + C(0, -30, 3, '#e8543c') + C(-26, -26, 2.4, '#5aa0e8') + C(26, -26, 2.4, '#5aa0e8') + Rc(-22, -6, 44, 6, '#c8973e');
+  O.feather = (c = '#f6efe4') => P('M0 0Q-14-30 0-70Q14-30 0 0Z', lin([[0, c], [1, '#d8c8e8']])) + P('M0 6V-66', 'none', st('#b8a8c8', 1)) + P('M0-20l-8-6M0-34l-8-6M0-48l-6-6M0-26l8-6M0-40l8-6', 'none', st('#c8b8d8', 0.7));
+  O.shell = (c = '#f4c8b8') => P('M0 0Q-26-6-24-26Q-20-44 0-44Q18-42 20-26Q22-10 6-4Q-6 0-8-12Q-8-24 4-26Q12-26 12-18', 'none', st(c, 5)) + P('M0 0Q-26-6-24-26', 'none', st('#fff', 1.4, ' opacity=".4"'));
+  O.dandelion = (c = '#fff') => { let h = P('M0 0Q-4-30 0-50', 'none', st('#6a8a5a', 1.2)); for (let i = 0; i < 22; i++) { const a = (i / 22) * Math.PI * 2; h += P(`M0-50L${f(Math.cos(a) * 14)} ${f(-50 + Math.sin(a) * 14)}`, 'none', st(c, 0.6, ' opacity=".8"')) + C(Math.cos(a) * 14, -50 + Math.sin(a) * 14, 1.4, c); } return h; };
+  O.bench = (c = '#5a3a22') => P('M-22-10H22M-22-18H22', 'none', st(c, 2.4)) + P('M-18-10V0M18-10V0M-20-18V-10M20-18V-10', 'none', st(c, 1.6));
+  O.lamp = (c = '#2a2a3a', lt = '#ffe9a8') => glow(0, -60, 40, lt, 0.5) + P('M0 0V-58', 'none', st(c, 2.4)) + P('M-6-58H6L4-66H-4Z', c) + C(0, -61, 3, lt);
+  O.swing = (len = 70, c = '#d8c8a8') => P(`M-10-${len}V0M10-${len}V0`, 'none', st(c, 0.8)) + Rc(-13, -1, 26, 3, '#8a5a2a', ' rx="1"');
+  O.bottle = (c = '#bfe8e0') => P('M-6-60V-48Q-16-44-16-30V0H16V-30Q16-44 6-48V-60Z', c, ' opacity=".28"') + P('M-6-60V-48Q-16-44-16-30V0H16V-30Q16-44 6-48V-60Z', 'none', st('#e8fff8', 1.2, ' opacity=".7"')) + Rc(-6, -66, 12, 6, '#8a5a2a', ' rx="1"') + P('M-10-34V-6', 'none', st('#fff', 1.6, ' opacity=".35"'));
+  O.mask = (c = '#f6efe4') => P('M-26-6Q-28-30 0-30Q28-30 26-6Q22 10 0 14Q-22 10-26-6Z', lin([[0, '#fff'], [1, c]])) + E(-10, -12, 6, 4, '#1a1a2a') + E(10, -12, 6, 4, '#1a1a2a') + P('M-8 4q8 4 16 0', 'none', st('#c8402f', 1.6)) + P('M-20-18q4-4 8 0M12-18q4-4 8 0', 'none', st('#c8973e', 1.4));
+  O.eye = (iris = '#3a8ac8') => P('M-40 0Q0-30 40 0Q0 30-40 0Z', '#fbf8f0') + C(0, 0, 14, rad([[0, '#8ad0ff'], [0.7, iris], [1, '#1a3a5a']])) + C(0, 0, 6, '#0e1222') + C(4, -4, 2.6, '#fff') + P('M-40 0Q0-30 40 0', 'none', st('#2a1a2a', 2)) + P('M-30-10l-6-8M-16-16l-3-9M0-19V-28M16-16l3-9M30-10l6-8', 'none', st('#2a1a2a', 1.4));
+  O.hand = (c = '#f0c8a8') => { const fg = lin([[0, c], [1, '#c89878']]), fs = [[-13.5, 24], [-5.5, 29], [2.5, 27], [10, 21]]; return Rc(-14, -16, 28, 18, fg) + fs.map(([x, h]) => Rc(x, -30 - h + 8, 7, h + 12, fg, ' rx="3.5"')).join('') + Rc(-16, -34, 32, 30, fg, ' rx="11"') + G('translate(-14 -14) rotate(-42)', Rc(-3.5, -24, 7.5, 24, fg, ' rx="3.7"')) + P('M-6-30v-6M1.5-30v-8M9-30v-6', 'none', st('#b88868', 0.8, ' opacity=".6"')) + P('M-8-16q8 4 16 0', 'none', st('#b88868', 0.8, ' opacity=".5"')); };
+  /* 城堡棋子 */
+  O.rook = (c = '#f6efe4', lt = '#ffd98a') => P('M-18 0H18L14-8H-14Z', lin([[0, c], [1, '#c8bca8']], 0, 0, 1, 0)) + P('M-11-8L-9-46H9L11-8Z', lin([[0, c], [1, '#c8bca8']], 0, 0, 1, 0)) + P('M-14-46H14V-58H9V-53H4V-58H-4V-53H-9V-58H-14Z', c) + Rc(-3, -34, 6, 9, lt, ' rx="3"') + Rc(-3, -22, 6, 7, lt, ' rx="2" opacity=".7"');
+  /* 老虎（側面，向左行）剪影 */
+  O.tiger = (c = '#000') => E(0, -30, 40, 15, c) + C(-44, -40, 13, c) + P('M-54-50l2-10 7 6ZM-38-51l4-9 3 9Z', c) + E(-56, -35, 8, 6, c) + P('M-30-22v22M-18-22v22M22-22v22M32-24v24', 'none', st(c, 7)) + P('M38-34Q60-40 58-58Q56-66 50-62', 'none', st(c, 5));
+  /* 中國龍頭（向左） */
+  O.dragonHead = (c1 = '#ffd26a', c2 = '#e8a43a') => P('M10-18Q20-30 30-26M4-20Q8-36 24-38', 'none', st('#e8a43a', 3)) + Array.from({ length: 5 }, (_, i) => P(`M${2 + i * 4} -14l6-10 2 12Z`, '#d8342c')).join('') + P('M0 0Q-8-14-26-12Q-36-10-40-4Q-34-2-30 0Q-36 4-38 10Q-24 10-14 6Q-4 8 0 0Z', lin([[0, c1], [1, c2]])) + P('M-30 0Q-24 4-18 2', '#d8342c') + C(-16, -6, 3, '#fff') + C(-16.6, -6, 1.6, '#1a1a1a') + P('M-38-6Q-50-16-58-8M-36 8Q-48 14-56 8', 'none', st(c1, 1.2));
+  O.king = (c = '#f6efe4') => P('M-14 0H14L10-6H-10ZM-8-6Q-10-24-6-30H6Q10-24 8-6Z', lin([[0, c], [1, '#c8bca8']], 0, 0, 1, 0)) + E(0, -32, 10, 4, c) + P('M0-36V-48M-5-43H5', 'none', st(c, 2.4));
+  O.planet = (r = 16, c1 = '#f4a85a', c2 = '#c8543c', ring = '#f6e0b0') => P(`M${-r * 1.7} 0A${r * 1.7} ${r * 0.45} 0 0 1 ${r * 1.7} 0`, 'none', st(ring, 2, ' opacity=".8"')) + C(0, 0, r, rad([[0, c1], [1, c2]], 0.35, 0.35, 0.8)) + P(`M${-r * 1.7} 0A${r * 1.7} ${r * 0.45} 0 0 0 ${r * 1.7} 0`, 'none', st(ring, 2));
+  O.egg = (sun = '#ffb35a') => P('M-18 0Q-20-30 0-34Q20-30 18 0Q16 10 0 10Q-16 10-18 0Z', lin([[0, '#fffaf0'], [1, '#e8dcc8']])) + P('M-18-8L-12-14L-6-8L0-14L6-8L12-14L18-8', 'none', st('#c8b8a0', 1)) + glow(0, -14, 34, sun, 0.7) + C(0, -14, 7, '#ffd27a');
+  O.mirror = (c = '#c8973e') => E(0, -30, 18, 26, c) + E(0, -30, 14, 22, lin([[0, '#bfe8ff'], [1, '#6a8ab0']])) + P('M-6-46q-4 8 0 20', 'none', st('#fff', 2, ' opacity=".5"')) + P('M0-4V0', 'none', st(c, 4));
+  O.bike = (c = '#e8543c') => C(-16, 0, 9, 'none', st('#2a2a3a', 1.8)) + C(16, 0, 9, 'none', st('#2a2a3a', 1.8)) + P('M-16 0L-4-14H10L16 0M-4-14L0 0L10-14M10-14V-20H14M-6-16H0', 'none', st(c, 1.8));
+  O.wings = (c = '#fbf6ea', s = 1) => P('M0 0Q-20-30-50-26Q-34-20-40-12Q-26-14-30-4Q-14-8 0 0Z', lin([[0, c], [1, '#d8d0e8']]), s < 0 ? ' transform="scale(-1 1)"' : '');
+  O.tree = (c1 = '#4a8a5a', c2 = '#2a5a3a', tr = '#5a3a22') => P('M-3 0L-2-26H2L3 0Z', tr) + C(0, -36, 16, rad([[0, c1], [1, c2]], 0.35, 0.3, 0.8)) + C(-12, -28, 11, c2) + C(12, -28, 11, rad([[0, c1], [1, c2]]));
+  O.pine = (c = '#1e3a32') => P('M0-60L14-34H7L18-14H8L22 0H-22L-8-14H-18L-7-34H-14Z', c) + Rc(-2, 0, 4, 5, '#3a2a1a');
+  O.house = (c = '#e8d8c0', roof = '#a84a3a', lt = '#ffd98a') => P('M-16 0V-20H16V0Z', c) + P('M-20-18L0-34L20-18Z', roof) + Rc(-5, -14, 10, 9, lt) + glow(0, -10, 16, lt, 0.4) + Rc(8, -32, 4, 8, roof);
+  /* 唐樓：騎樓、露台、晾衫 */
+  O.tonglau = (c = '#d9b896', win = '#ffd98a', fl = 4) => {
+    let h = Rc(-24, -fl * 18 - 6, 48, fl * 18 + 6, lin([[0, c], [1, '#a88a6a']]));
+    for (let i = 0; i < fl; i++) { const y = -i * 18 - 16; h += Rc(-20, y, 10, 10, i % 2 ? win : '#3a2a2a') + Rc(-4, y, 8, 10, '#3a2a2a') + Rc(10, y, 10, 10, (i + 1) % 2 ? win : '#3a2a2a') + Rc(-24, y + 11, 48, 2, '#8a6a4a') + P(`M-22 ${y + 4}h44`, 'none', st('#8a8a8a', 0.4)); }
+    return h + Rc(-26, -fl * 18 - 8, 52, 4, '#8a6a4a');
+  };
+  O.stilt = (c = '#7a5a3a') => P('M-24-10V-28L0-40L24-28V-10Z', lin([[0, '#a07a52'], [1, c]])) + P('M-28-28L0-44L28-28', 'none', st('#4a3020', 3)) + Rc(-6, -26, 8, 8, '#ffd98a') + P('M-20-10V12M-8-10V12M8-10V12M20-10V12', 'none', st('#4a3020', 2));
+  O.pagoda = (c = '#c8402f', n = 4) => { let h = ''; for (let i = 0; i < n; i++) { const w = 26 - i * 4, y = -i * 16; h += Rc(-w * 0.6, y - 12, w * 1.2, 12, '#f0e0c0') + P(`M${-w} ${y - 10}Q0 ${y - 18} ${w} ${y - 10}L${w * 0.7} ${y - 16}H${-w * 0.7}Z`, c); } return h + P(`M0 ${-n * 16}V${-n * 16 - 14}`, 'none', st('#e8b84a', 2)); };
+  O.bauhinia = (c1 = '#e86a9a', c2 = '#a8285a') => { let h = ''; for (let i = 0; i < 5; i++) h += G(`rotate(${i * 72})`, P('M0 0Q-14-12-8-30Q0-36 6-28Q10-14 0 0Z', lin([[0, c1], [1, c2]])) + P('M0 0Q-2-14 0-26', 'none', st('#fff', 0.8, ' opacity=".6"'))); return h + C(0, 0, 3, '#ffe08a'); };
+  /* 獅子山（瞓低嘅獅子山形） */
+  O.lionRock = (c = '#2a2a4a') => P('M-100 0Q-80-10-60-14Q-40-16-30-30Q-24-46-8-48Q8-50 14-40Q18-30 30-28Q50-26 70-14Q86-6 100 0Z', c);
+  O.dragonBoat = (c = '#c8402f') => P('M-50-4Q0 6 46-4L50-14Q42-8 40-10L36-4H-46Z', lin([[0, '#e8543c'], [1, c]])) + P('M46-8Q56-18 52-28Q46-22 42-20Z', c) + C(50, -22, 1.4, '#ffe08a') + P('M-50-4L-58-14L-50-12Z', '#e8b84a') + Array.from({ length: 7 }, (_, i) => C(-36 + i * 11, -8, 2.6, '#1a1a2a') + P(`M${-36 + i * 11} -6l-6 8`, 'none', st('#8a5a2a', 1))).join('');
+  O.fortune = () => P('M-12 0L-14-34H14L12 0Z', lin([[0, '#d8402f'], [1, '#8a1a14']], 0, 0, 1, 0)) + P('M-14-34H14', 'none', st('#e8b84a', 2)) + Array.from({ length: 7 }, (_, i) => P(`M${-9 + i * 3} -34L${-12 + i * 4} ${-52 - (i % 3) * 4}`, 'none', st('#e8c890', 1.8))).join('');
+  O.t8 = () => P('M-14 0L0-26L14 0Z', 'none', st('#1a1a1a', 3)) + P('M0-26V8', 'none', st('#1a1a1a', 1.4)) + P('M-10-6h20', 'none', st('#1a1a1a', 3));
+  return O;
+})();
+/* 畫中有話插畫：84 個場景（0–23 香港元素，24–83 夢幻超現實；Bill 2026-11-25「夢幻加香港元素」） */
+const DX_SCN = (() => {
+  const { sky, stars, moon, cloud, cloudSea, sea, hills, city, glow, motes, birds, G, at, P, C, E, Rc, st, lin, rad, rn, f } = DXA;
+  const O = DXO, g = (x, y, s, c, r) => G(at(x, y, s, r), c);
+  const rays = (x, y, n, c = '#fff3c0', a = 0.12, len = 260) => { let h = ''; for (let i = 0; i < n; i++) { const t = -Math.PI / 2 + (i - (n - 1) / 2) * 0.22; h += P(`M${x} ${y}L${f(x + Math.cos(t - 0.05) * len)} ${f(y + Math.sin(t - 0.05) * len)}L${f(x + Math.cos(t + 0.05) * len)} ${f(y + Math.sin(t + 0.05) * len)}Z`, c, ` opacity="${a}"`); } return h; };
+  const rain = (n, c = '#cfe0ff', a = 0.35) => { let h = ''; for (let i = 0; i < n; i++) { const x = rn(-20, 200), y = rn(-10, 300); h += P(`M${f(x)} ${f(y)}l-4 12`, 'none', st(c, 0.8, ` opacity="${a}"`)); } return h; };
+  const snow = (n) => { let h = ''; for (let i = 0; i < n; i++) h += C(rn(0, 200), rn(0, 300), rn(0.6, 1.8), '#fff', ` opacity="${f(rn(0.4, 0.9))}"`); return h; };
+  const bubbles = (n, y0 = 0, y1 = 300) => { let h = ''; for (let i = 0; i < n; i++) { const r = rn(1.2, 4); h += C(rn(10, 190), rn(y0, y1), r, 'none', st('#dff8ff', 0.7, ' opacity=".55"')); } return h; };
+  const refl = (x, y, w, c = '#ffe9a8') => { let h = ''; for (let i = 0; i < 7; i++) h += Rc(x - w / 2 + rn(-3, 3) + i * 0.5, y + i * 6, w - i * 2, 1.4, c, ` opacity="${f(0.5 - i * 0.06)}" rx="1"`); return h; };
+  const dunes = (y, c1, c2) => P(`M0 ${y}Q50 ${y - 26} 100 ${y - 6}T200 ${y - 14}V300H0Z`, lin([[0, c1], [1, c2]])) + P(`M0 ${y + 30}Q70 ${y + 4} 130 ${y + 26}T200 ${y + 20}V300H0Z`, lin([[0, c2], [1, '#3a2414']]));
+  const S = [];
+  /* ---------- 香港元素 ---------- */
+  S.push(() => sky('night', 0.3) + stars(60) + moon(150, 56, 22) + cloudSea(196) + P('M-10 232Q60 200 210 186', 'none', st('#ffe9a8', 2.4, ' opacity=".7"')) + P('M-10 240Q60 208 210 194', 'none', st('#ffe9a8', 1.2, ' opacity=".45"')) + g(92, 214, 1.25, O.tram(), -9) + motes(10, '#ffe9a8', 160, 260));
+  S.push(() => sky('lav', 0.55) + stars(70, 0, 180) + city(190, '#1c1840', '#ffcf7a', 0.9) + Rc(0, 190, 200, 110, lin([[0, '#2a2458'], [1, '#0c0a22']])) + stars(60, 196, 300, '#fff6d8') + g(100, 236, 1.2, O.ferry()) + refl(100, 240, 70, '#fff3c0'));
+  S.push(() => sky('dusk', 0.6) + glow(100, 120, 90, '#ffd27a', 0.6) + g(100, 132, 1.5, O.tart()) + city(230, '#2a1838', '#ffcf7a', 1.1) + Rc(0, 228, 200, 72, '#1a0f26') + birds(5, 60, 70, 1, '#3a1a3a', 30));
+  S.push(() => sky('day', 0.2) + cloud(40, 70, 0.8) + cloud(170, 120, 0.6) + cloud(30, 230, 1.1, '#ffffff', '#cfe6ee') + g(100, 150, 1.6, O.bun()) + P('M-36 -2L-12 40M36 -2L12 40', 'none', st('#6a4a2a', 1)).replace(/M-36 -2/, 'M64 148').replace(/M36 -2L12 40/, 'M136 148L112 190').replace('L-12 40', 'L88 190') + Rc(86, 188, 28, 18, '#8a5a2a', ' rx="2"') + g(100, 190, 0.9, O.person('kid', '#3a2a2a')) + cloud(160, 250, 1.2, '#ffffff', '#d8eef0'));
+  S.push(() => sky('lav', 0.4) + stars(30, 0, 120) + cloud(40, 250, 1.3) + cloud(165, 240, 1.1) + g(100, 262, 1.25, O.steamer(5)) + g(100, 258, 0.55, O.door(true, '#fff3c0', '#9a6c2c')) + birds(6, 140, 60, 1, '#fff6e0', 36) + glow(100, 120, 60, '#fff0d0', 0.25));
+  S.push(() => sky('gold', 0.45) + glow(140, 90, 70, '#fff2c2', 0.6) + C(140, 90, 22, '#fff1c8') + cloudSea(190, '#ffe8c8', '#d8945a') + g(100, 210, 1.45, O.junk()) + birds(4, 50, 80, 1, '#5a3014', 26));
+  S.push(() => sky('night', 0.45) + stars(80, 0, 200) + moon(132, 66, 16, 'cres', '#fff3cf', '#18205a') + g(100, 236, 1, O.lionRock('#0f1230')) + city(262, '#151838', '#ffcf7a', 0.25) + Rc(0, 262, 200, 40, '#0b0d24') + g(118, 190, 1, O.ladder(110, '#e8c890'), 10) + g(122, 150, 0.7, O.person('man', '#0a0c22')));
+  S.push(() => sky('rose', 0.5) + g(70, 262, 1.6, O.mailbox()) + Array.from({ length: 6 }, (_, i) => g(90 + i * 16, 170 - i * 18, 0.9 + i * 0.05, i < 3 ? Rc(-8, -5, 16, 10, '#fbf6ea', ` rx="1"${st('#c8b8a0', 0.6)}`) + P('M-8-5L0 1L8-5', 'none', st('#c8b8a0', 0.6)) : O.bird('#fbf6ea'), -15 + i * 6)).join('') + hills(270, '#8a4a6a', '#3a1a3a', 6));
+  S.push(() => sky('dusk', 0.25) + cloud(150, 70, 1.1, '#ffe8f0', '#d89ab8') + g(150, 64, 0.55, O.door(true)) + Array.from({ length: 8 }, (_, i) => g(30 + i * 15, 270 - i * 24, 0.8, O.tile(i % 3), -6 + i)).join('') + motes(8, '#ffd38a'));
+  S.push(() => sky('night', 0.4) + stars(70) + g(100, 210, 2, O.cage('#e8c27a')) + moon(100, 152, 26) + g(160, 120, 1, O.bird('#f6c25a'), -10) + P('M114 130L128 120', 'none', st('#e8c27a', 1.6)) + hills(250, '#141838', '#060818', 8));
+  S.push(() => sky('teal', 0.6) + Array.from({ length: 6 }, (_, i) => g(18 + i * 34, 300, 1 + (i % 2) * 0.3, O.pine('#0a2a2a'))).join('') + Rc(0, 0, 200, 300, '#bff0e8', ' opacity=".08"') + g(48, 170, 1.2, O.neon('夢', '#ff5a8a')) + g(108, 130, 1.1, O.neon('冰室', '#5ad8ff')) + g(160, 196, 1, O.neon('茶', '#ffd25a')) + motes(10, '#bff0e8'));
+  S.push(() => sky('sea', 0.1) + rays(100, -20, 7, '#bff6ff', 0.07) + g(56, 140, 1.3, O.rabbitLantern()) + g(140, 92, 1.1, O.lantern()) + g(150, 220, 1, O.lantern('#e8a43a')) + g(60, 244, 0.9, O.lantern()) + bubbles(22) + P('M0 285Q100 270 200 288V300H0Z', '#061420'));
+  S.push(() => sky('lav', 0.5) + stars(40) + g(100, 236, 2.4, O.cup('#8a5a3a')) + G('', Array.from({ length: 5 }, (_, i) => E(100, 164, 40 - i * 8, 10 - i * 2, 'none', st(i % 2 ? '#f6e0b0' : '#fff', 1, ` opacity="${0.6 - i * 0.08}"`))).join('')) + g(116, 160, 0.5, O.paperBoat()) + stars(12, 150, 175, '#fff'));
+  S.push(() => sky('day', 0.3) + cloud(60, 60, 0.9) + g(100, 300, 2, O.tonglau('#d9b896', '#ffe2a0', 4)) + P('M10 142Q100 156 190 140', 'none', st('#4a3a2a', 0.8)) + Array.from({ length: 5 }, (_, i) => g(28 + i * 34, 148 + Math.sin(i) * 3, 1, i < 3 ? Rc(-7, 0, 14, 16, ['#e8543c', '#5a8ae8', '#f6c25a'][i], ' rx="2"') : cloud(0, 10, 0.3, '#fff', '#dde8f0'))).join('') + birds(5, 150, 90, 1, '#fff', 30));
+  S.push(() => sky('night', 0.2) + stars(80) + moon(150, 46, 24) + P('M10 300L150 70', 'none', st('#c8973e', 3)) + P('M20 300L160 70', 'none', st('#c8973e', 1.6)) + Array.from({ length: 12 }, (_, i) => P(`M${f(14 + i * 12)} ${f(290 - i * 19)}l12 2`, 'none', st('#8a6a3a', 1.4))).join('') + g(82, 186, 1, Rc(-18, -18, 36, 18, '#c8402f', ' rx="3"') + Rc(-14, -14, 8, 7, '#ffe2a0') + Rc(-3, -14, 8, 7, '#ffe2a0') + Rc(8, -14, 7, 7, '#ffe2a0'), -58) + city(300, '#151838', '#ffcf7a', 0.4));
+  S.push(() => sky('night', 0.5) + stars(40) + P('M96 300Q92 230 100 200', 'none', st('#4a3020', 10)) + C(100, 160, 56, rad([[0, '#3a6a4a'], [1, '#1a3a2a']])) + Array.from({ length: 14 }, () => { const x = rn(60, 140), y = rn(130, 200); return P(`M${f(x)} ${f(y)}v10`, 'none', st('#d8342c', 1.2)) + C(x, y + 12, 3, '#f6a83a'); }).join('') + Array.from({ length: 8 }, () => { const x = rn(30, 170), y = rn(20, 110); return glow(x, y, 10, '#ffe9a8', 0.6) + Rc(x - 3, y - 4, 6, 8, '#fff3c0', ' rx="1"'); }).join('') + hills(280, '#1a1a3a', '#0a0a1a', 4));
+  S.push(() => sky('rose', 0.6) + sea(220, '#b05b7c', '#3a1c3e', '#fff1e4') + glow(100, 150, 80, '#ffd0e0', 0.5) + g(100, 160, 2.2, O.bauhinia()) + g(130, 236, 0.9, O.paperBoat('#fff')) + birds(4, 50, 60, 1, '#fff', 26));
+  S.push(() => sky('dusk', 0.7) + stars(30, 0, 100) + moon(100, 150, 46, 'full', '#ffe6c0', '#88407a') + g(100, 120, 1.1, O.dolphin(), -18) + Rc(0, 220, 200, 80, lin([[0, '#5a2a4a'], [1, '#1a0a1a']])) + refl(100, 222, 60, '#ffd0a0') + g(50, 236, 1, O.stilt()) + g(150, 240, 0.8, O.stilt('#6a4a2a')));
+  S.push(() => sky('aur', 0.4) + P('M-20 190Q80 90 220 40', 'none', st('#8affd0', 26, ' opacity=".12"')) + P('M-20 200Q90 100 220 70', 'none', st('#c89aff', 18, ' opacity=".12"')) + stars(120, 0, 260) + P('M-20 150Q90 120 220 60', 'none', st('#ffffff', 30, ' opacity=".06"')) + g(100, 132, 1.3, O.dragonBoat(), -14) + hills(286, '#0a1a24', '#02060c', 5));
+  S.push(() => sky('storm', 0.3) + rain(50) + sea(220, '#2a3a4a', '#0a121a', '#dfe8ff', 60) + g(60, 230, 1.6, O.fortune()) + P('M60 148L200 118V180Z', lin([[0, '#fff3c0', 0.6], [1, '#fff3c0', 0]], 0, 0, 1, 0)) + glow(60, 150, 26, '#fff3c0', 0.7) + g(150, 236, 0.7, O.junk('#8a2a20')));
+  S.push(() => sky('storm', 0.25) + rain(40) + cloud(50, 50, 1.2, '#8a96a8', '#4a5666') + cloud(160, 80, 1, '#8a96a8', '#4a5666') + g(124, 120, 1.5, P('M0-30L18-6L0 22L-18-6Z', '#f6c25a') + O.t8(), 15) + P('M124 150Q90 200 60 250', 'none', st('#2a2a2a', 0.8)) + hills(262, '#2a3a2a', '#0a140a', 8) + g(60, 262, 1, O.person('kid', '#0a0a0a')));
+  S.push(() => Rc(0, 0, 200, 300, '#3a2a22') + Rc(18, 30, 164, 190, lin([[0, '#1a2a5a'], [1, '#5a6aa8']])) + stars(30, 34, 120) + city(214, '#121a3a', '#ffcf7a', 0.6, 18, 182) + g(110, 110, 0.9, O.whale()) + P('M100 30V220M18 125H182', 'none', st('#5a3a22', 5)) + Rc(18, 30, 164, 190, 'none', st('#6a4a2a', 6)) + Rc(0, 230, 200, 70, lin([[0, '#7a4a2a'], [1, '#3a2014']])) + g(150, 262, 0.9, O.cup()) + g(56, 256, 0.6, O.tart()));
+  S.push(() => sky('red', 0.5) + motes(14, '#ffd38a') + P('M30 150Q60 230 100 190T176 120', 'none', st('#e8b84a', 1.2, ' opacity=".6"')) + Array.from({ length: 9 }, (_, i) => { const t = i / 8, x = 30 + t * 146, y = 150 + Math.sin(t * Math.PI * 1.6) * 40 - t * 30; return g(x, y + 16, 0.62, O.lantern(i % 2 ? '#d8342c' : '#e8543c', false)); }).join('') + g(164, 118, 1.1, O.dragonHead(), -10) + city(300, '#2a0a12', '#ffb35a', 0.5));
+  S.push(() => sky('sea', 0.2) + rays(60, -10, 6, '#bff6ff', 0.07) + g(56, 70, 1, O.fish('#ffcf5a', '#e8843a')) + g(150, 120, 0.8, O.fish('#9ad0ff', '#5a7ae8'), 0) + bubbles(20) + P('M0 250Q60 230 110 246T200 238V300H0Z', '#0a2a3a') + g(104, 262, 1.6, O.tram('#2f7d4f', '#bff6ff')) + glow(104, 230, 50, '#bff6ff', 0.25));
+  /* ---------- 夢幻超現實 ---------- */
+  S.push(() => sky('dawn', 0.6) + C(100, 196, 50, '#fff0c8', ' opacity=".15"') + sea(200, '#4a5a90', '#141c3a', '#fff0c8') + g(100, 222, 1.7, O.door(true)) + refl(100, 224, 34, '#fff3c0') + birds(4, 50, 80, 1, '#fff', 24));
+  S.push(() => sky('night', 0.2) + stars(80) + moon(130, 46, 20, 'cres', '#fff3cf', '#1c2558') + Array.from({ length: 16 }, (_, i) => { const a = i * 0.7, y = 280 - i * 13, x = 100 + Math.cos(a) * 30; return Rc(x - 10, y, 20, 5, Math.sin(a) > 0 ? '#e9dcc0' : '#b8a888', ' rx="1.5"'); }).join('') + g(118, 98, 0.7, O.person('man', '#0a0c22')));
+  S.push(() => sky('dusk', 0.6) + g(110, 110, 1.15, O.whale('#3a3a6a', '#d8c8e8')) + Array.from({ length: 6 }, (_, i) => g(18 + i * 34, 272 - (i % 2) * 6, 0.9, O.house('#e8d8c0', ['#a84a3a', '#4a6a8a', '#6a4a7a'][i % 3]))).join('') + hills(280, '#3a2048', '#1a0e24', 4) + birds(5, 60, 170, 0.8, '#2a1a3a', 30));
+  S.push(() => sky('teal', 0.3) + stars(40) + g(100, 90, 1.6, O.fish('#ffb06a', '#e8543c')) + sea(240, '#0e3a48', '#02141a', '#d8fff2') + g(150, 250, 1, O.lighthouse(true, -1)));
+  S.push(() => sky('lav', 0.3) + stars(40, 0, 150) + cloud(160, 220, 1.1) + g(100, 80, 1.5, O.planet()) + P('M100 104Q96 170 92 214', 'none', st('#fff', 0.8, ' opacity=".8"')) + hills(268, '#4a3a7a', '#1a1438', 6) + g(92, 262, 1.4, O.person('girl', '#120e2a')));
+  S.push(() => dunes(220, '#e8a85a', '#a8642a') + Rc(0, 0, 200, 220, lin([[0, '#5a3a6a'], [1, '#f6c27a']])) + glow(150, 180, 40, '#fff2c2', 0.7) + dunes(220, '#e8a85a', '#a8642a') + g(100, 246, 2.4, O.hourglass('#fff0c8')) + Rc(84, 222, 32, 2, '#3a8ab0', ' opacity=".7"') + P('M100 232l4-8l4 8', '#2a6a3a'));
+  S.push(() => sky('day', 0.3) + sea(150, '#3a8ab0', '#0e3a5a', '#ffffff') + C(70, 210, 38, '#f0dcb0') + C(70, 210, 34, lin([[0, '#8ac06a'], [1, '#4a8a4a']])) + C(70, 210, 16, '#2f7aa8') + C(70, 210, 18, 'none', st('#f0dcb0', 3)) + Rc(100, 202, 76, 16, '#f0dcb0', ' rx="5"') + Rc(102, 204, 72, 12, lin([[0, '#8ac06a'], [1, '#4a8a4a']]), ' rx="4"') + Rc(150, 214, 10, 16, '#4a8a4a') + Rc(164, 214, 8, 11, '#4a8a4a') + g(66, 178, 0.7, O.house()) + g(84, 186, 0.55, O.tree()) + g(122, 214, 0.5, O.tree()) + cloud(50, 60, 0.8) + birds(3, 140, 80, 1, '#fff', 20));
+  S.push(() => sky('dawn', 0.5) + g(100, 150, 2.4, O.clock()) + g(100, 92, 1.2, P('M-20 0Q0 10 20 0Q14-8 0-8Q-14-8-20 0Z', '#8a5a2a') + C(-6, -6, 3.5, '#bfe0ff') + C(2, -7, 3.5, '#bfe0ff') + C(9, -5, 3.5, '#bfe0ff')) + g(124, 84, 0.9, O.bird('#e8543c')) + cloud(40, 250, 1) + cloud(170, 270, 1.2));
+  S.push(() => sky('day', 0.4) + cloud(40, 60, 0.9) + cloud(170, 90, 0.7) + cloudSea(240, '#ffffff', '#cfe6ee') + g(100, 232, 2.6, O.teacup()) + E(100, 175, 64, 14, lin([[0, '#5ab0d0'], [1, '#2a6a9a']])) + g(110, 172, 0.7, P('M-14 0H14L10 5H-10Z', '#fbf6ea') + P('M0 0V-22L12-4Z', '#fff') + P('M-2 0V-18L-12-4Z', '#e8e0d0')) + P('M60 178q8-3 16 0M120 180q8-3 16 0', 'none', st('#fff', 0.8, ' opacity=".6"')));
+  S.push(() => sky('night', 0.5) + stars(40) + P('M96 300Q92 240 100 200', 'none', st('#2a1a10', 10)) + P('M100 200L70 150M100 200L136 140M100 210L150 190M100 215L50 200', 'none', st('#2a1a10', 3)) + [[70, 150], [136, 140], [150, 190], [50, 200], [90, 130], [120, 165], [64, 176], [110, 120]].map(([x, y]) => g(x, y + 14, 0.55, O.lantern())).join('') + hills(286, '#141838', '#060818', 4) + g(140, 286, 0.9, O.fox()));
+  S.push(() => sky('sea', 0.3) + sea(200, '#1a5a7a', '#06202e', '#bff6ff') + g(100, 212, 1.4, O.turtle()) + g(94, 178, 1, O.house('#f0e0c8', '#c8543c')) + g(116, 180, 0.6, O.tree()) + moon(150, 60, 16, 'cres', '#fff3cf', '#0a344e') + stars(30, 0, 150));
+  S.push(() => sky('day', 0.6) + C(160, 60, 16, '#fff1c8') + glow(160, 60, 50, '#fff8d8', 0.6) + cloud(40, 70, 0.8) + hills(276, '#8ac06a', '#4a8a4a', 6) + g(100, 200, 2.2, O.umbrella('#5a8ae8', '#2a4a9a')).replace(/V30q0 6-6 6/, 'V18') + cloud(100, 218, 0.34, '#9aa8b8', '#6a7888') + Array.from({ length: 9 }, () => P(`M${f(rn(90, 110))} ${f(rn(222, 236))}l-1 5`, 'none', st('#5a8ae8', 0.8))).join('') + g(100, 292, 1.15, O.person('girl', '#2a2a3a')));
+  S.push(() => sky('night', 0.2) + stars(50, 0, 140) + city(180, '#121838', '#ffcf7a', 0.8) + Rc(0, 180, 200, 120, '#0e0e1c') + E(100, 238, 78, 26, lin([[0, '#1a2a5a'], [1, '#0a1230']])) + stars(30, 216, 258) + moon(130, 230, 6, 'full') + g(86, 244, 0.8, O.paperBoat()));
+  S.push(() => sky('day', 0.3) + cloud(150, 230, 1.3) + cloud(40, 250, 1) + g(130, 80, 1.1, O.kite('#e8543c', '#f6c25a', 30), 12) + P('M134 116Q120 170 60 196', 'none', st('#5a2a1a', 0.8)) + g(60, 196, 1, O.fish('#ffb06a', '#e8843a'), 150));
+  S.push(() => sky('lav', 0.35) + stars(30, 0, 110) + g(100, 250, 2.2, O.book()) + city(240, '#2a2458', '#ffe2a0', 0.9, 40, 160) + birds(6, 100, 90, 1, '#fff', 40));
+  S.push(() => sky('night', 0.3) + stars(80) + moon(130, 70, 34, 'cres', '#fff3cf', '#1c2558') + hills(270, '#141838', '#060818', 16) + g(90, 262, 1, O.ladder(160, '#e8c890'), 14) + g(110, 150, 0.7, O.person('man', '#0a0c22')));
+  S.push(() => sky('night', 0.5) + stars(60, 0, 180) + sea(200, '#141c40', '#060818', '#fff3c0', 140) + P('M40 172L200 160V184Z', lin([[0, '#fff3c0', 0.7], [1, '#fff3c0', 0.15]], 0, 0, 1, 0)) + g(40, 210, 1, O.lighthouse(false)) + g(150, 168, 0.6, O.person('man', '#0a0c22')));
+  S.push(() => sky('night', 0.3) + stars(90) + moon(96, 130, 58, 'cres') + g(104, 172, 1.05, O.cat('sleep', '#1a1a2e'), -28) + cloud(150, 260, 1, '#4a4a8a', '#2a2a5a', 0.7));
+  S.push(() => sky('snow', 0.5) + snow(60) + Array.from({ length: 7 }, (_, i) => g(10 + i * 32, 260 + (i % 2) * 10, 1.1 + (i % 3) * 0.2, O.pine('#2a3a4a'))).join('') + Rc(0, 262, 200, 40, '#eef3fa') + g(104, 276, 1.4, O.fox()) + g(124, 252, 0.6, O.lantern('#e8a43a')) + P('M114 258L124 232', 'none', st('#3a2a1a', 1)));
+  S.push(() => sky('dusk', 0.6) + hills(240, '#5a2a4a', '#2a1028', 10) + g(100, 262, 1.8, O.snail()) + g(100, 214, 0.9, O.pagoda('#c8402f', 3)) + motes(8, '#ffd38a', 80, 200));
+  S.push(() => sky('night', 0.2) + stars(50) + city(300, '#121838', '#ffcf7a', 1.2) + g(110, 150, 2, O.jelly('#ffb0e0')) + g(110, 216, 0.9, O.person('kid', '#0a0c22')));
+  S.push(() => sky('dawn', 0.5) + sea(200, '#4a5a90', '#141c3a', '#fff0c8') + E(46, 214, 34, 8, '#2a3a5a') + E(156, 218, 30, 7, '#2a3a5a') + g(46, 208, 1, O.person('man', '#141428')) + g(156, 212, 1, O.person('girl', '#141428')) + P('M50 182Q100 130 150 186', 'none', st('#e8343c', 1.2)) + birds(3, 100, 80, 1, '#fff', 20));
+  S.push(() => sky('mint', 0.4) + Array.from({ length: 7 }, (_, i) => g(30 + i * 23, 126 - Math.abs(i - 3) * 6, 0.9, O.tree('#5aa06a', '#2a6a4a'))).join('') + g(100, 190, 2.3, O.mask()) + motes(8, '#fffbe0') + hills(290, '#3a6a5a', '#1a3a2a', 4));
+  S.push(() => sky('storm', 0.4) + cloud(30, 70, 1.3, '#8a96a8', '#4a5666') + cloud(170, 60, 1.2, '#8a96a8', '#4a5666') + g(100, 100, 1.6, O.eye('#d8a83a')) + glow(100, 100, 70, '#ffe9a8', 0.2) + hills(270, '#2a3240', '#0a0e14', 6) + g(100, 264, 0.8, O.person('man', '#0a0a10')) + rays(100, 120, 3, '#fff3c0', 0.08, 160).replace(/M100 120/g, 'M100 120'));
+  S.push(() => sky('rose', 0.5) + g(66, 286, 2.1, O.hand(), 18) + Array.from({ length: 6 }, (_, i) => g(94 + i * 16, 190 - i * 24, 0.9 + i * 0.1, O.plane(), -20 + i * 4)).join('') + cloud(160, 250, 1, '#ffe8f0', '#d89ab8'));
+  S.push(() => sky('dusk', 0.7) + moon(160, 80, 18) + P('M-10 260Q60 140 140 150', 'none', st('#c8a888', 10)) + P('M-10 268Q60 148 140 158', 'none', st('#7a5a4a', 2)) + Array.from({ length: 8 }, (_, i) => P(`M${f(2 + i * 17)} ${f(240 - i * 12 + (i > 3 ? (i - 3) * 2 : 0))}v14`, 'none', st('#7a5a4a', 1.4))).join('') + g(136, 150, 0.8, O.person('man', '#2a1428')) + hills(286, '#2a1028', '#140818', 4));
+  S.push(() => sky('storm', 0.5) + rain(80) + g(100, 200, 2.6, O.umbrella('#f6a8c8', '#c85a8a')) + Array.from({ length: 6 }, (_, i) => C(70 + i * 12, 126 + Math.sin(i) * 4, 4, ['#fff', '#ffe08a', '#ffb0d0'][i % 3])).join('') + g(100, 286, 1.6, O.person('girl', '#1a1a2a')) + E(100, 288, 50, 6, '#5a6a8a', ' opacity=".4"'));
+  S.push(() => sky('night', 0.3) + stars(90, 0, 200) + cloudSea(220, '#3a3a7a', '#1a1a4a') + g(60, 226, 1, O.person('sit', '#0a0c22')) + P('M66 202Q110 150 140 150', 'none', st('#8a6a3a', 1.4)) + P('M140 150V200', 'none', st('#fff', 0.5, ' opacity=".7"')) + glow(140, 204, 14, '#fff3c0', 0.9) + P('M140 196l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6Z', '#fff3c0'));
+  S.push(() => sky('night', 0.3) + stars(70) + moon(160, 50, 18, 'cres', '#fff3cf', '#1c2558') + P('M40 280Q70 200 100 150', 'none', st('#fff', 10, ' opacity=".12"')) + Array.from({ length: 8 }, (_, i) => cloud(40 + i * 8, 270 - i * 16, 0.2 + i * 0.03, '#fff', '#dde', 0.5)).join('') + g(104, 140, 1.6, O.teapot(), 35) + glow(78, 172, 18, '#ffb35a', 0.8));
+  S.push(() => sky('day', 0.5) + P('M-10 270A110 110 0 0 1 210 270', 'none', st('#e8543c', 8, ' opacity=".8"')) + P('M-2 270A102 102 0 0 1 202 270', 'none', st('#f6c25a', 8, ' opacity=".8"')) + P('M6 270A94 94 0 0 1 194 270', 'none', st('#5ac06a', 8, ' opacity=".8"')) + P('M14 270A86 86 0 0 1 186 270', 'none', st('#5a8ae8', 8, ' opacity=".8"')) + g(100, 158, 0.95, O.tram('#3a6ac8', '#fff6d0')) + cloud(30, 280, 1) + cloud(180, 284, 1));
+  S.push(() => sky('peach', 0.4) + cloud(40, 230, 1.2) + cloud(170, 200, 0.9) + g(100, 168, 1.8, P('M-30 0Q-16-20 10-16Q26-12 32 0Q26 12 10 16Q-16 20-30 0Z', lin([[0, '#ffb06a'], [1, '#e8543c']])) + P('M-28 0L-42-12Q-38 0-42 12Z', '#e8543c') + C(20, -3, 2.2, '#fff') + C(20.4, -3, 1.2, '#1a1a1a'), -90) + P('M92 206L95 222M108 206L105 222', 'none', st('#5a3a1a', 0.8)) + Rc(92, 222, 16, 11, '#8a5a2a', ' rx="2"') + birds(4, 150, 80, 1, '#5a2a4a', 20));
+  S.push(() => sky('night', 0.3) + stars(70) + g(110, 150, 2, O.feather(), 30) + Array.from({ length: 6 }, (_, i) => g(18 + i * 34, 270 + (i % 2) * 4, 0.9, O.house('#3a3a5a', '#1a1a3a', i % 3 ? '#3a3a5a' : '#ffd98a'))).join('') + hills(280, '#141838', '#060818', 4));
+  S.push(() => sky('fall', 0.5) + hills(240, '#8a4a20', '#3a1a0a', 12) + g(100, 236, 2.4, O.rook()) + glow(100, 160, 26, '#ffd98a', 0.5) + birds(6, 100, 70, 1, '#3a1a0a', 40) + Array.from({ length: 12 }, () => P(`M${f(rn(0, 200))} ${f(rn(0, 300))}q3-3 6 0q-3 3-6 0Z`, '#e8843a', ' opacity=".7"')).join(''));
+  S.push(() => sky('aur', 0.3) + P('M-20 120Q100 60 220 110', 'none', st('#8affd0', 20, ' opacity=".14"')) + stars(80) + moon(70, 90, 24) + C(140, 150, 30, rad([[0, '#d8c8ff'], [1, '#7a6ab8']])) + g(140, 168, 0.7, O.door(true, '#fff3c0', '#3a2a5a')) + hills(276, '#0a1a24', '#02060c', 6));
+  S.push(() => sky('storm', 0.4) + sea(230, '#2a3a4a', '#0a121a', '#dfe8ff') + g(100, 236, 2.4, O.bottle()) + P('M68 200Q84 194 100 200T132 200V232H68Z', lin([[0, '#3a7aa0'], [1, '#1a4a6a']]), ' opacity=".9"') + g(100, 200, 0.55, O.junk('#e8e0d0')) + cloud(100, 120, 0.4, '#6a7888', '#3a4656'));
+  S.push(() => sky('night', 0.3) + stars(90, 0, 200) + dunes(230, '#5a4a7a', '#2a2048') + g(100, 236, 1.2, Rc(-18, -20, 36, 20, '#6a5a7a', ' rx="2"') + E(0, -20, 18, 5, '#0a0a22') + P('M-20 -20V-46H20V-20M-22-46H22', 'none', st('#4a3a2a', 2))) + Array.from({ length: 14 }, (_, i) => { const x = 100 + rn(-14, 14), y = 210 - i * 11; return glow(x, y, 6, '#fff3c0', 0.6) + C(x, y, 1.2, '#fff'); }).join(''));
+  S.push(() => sky('snow', 0.3) + snow(70) + Rc(0, 240, 200, 60, '#eef3fa') + g(70, 252, 1.6, O.lamp()) + g(108, 252, 1.4, O.bench()) + Array.from({ length: 9 }, (_, i) => E(130 + i * 6, 246 - i * 22, 2.4, 1.4, '#c8d4e4')).join(''));
+  S.push(() => sky('dusk', 0.6) + sea(190, '#5a2a4a', '#1a0a1a', '#ffd38a') + g(100, 200, 1.6, O.crown()) + refl(100, 206, 40, '#ffe08a') + birds(3, 60, 80, 1, '#2a1a2a', 20));
+  S.push(() => sky('dawn', 0.6) + sea(210, '#4a5a90', '#141c3a', '#fff0c8') + Array.from({ length: 40 }, (_, i) => { const t = (i / 40) * Math.PI * 2, x = 100 + 16 * Math.pow(Math.sin(t), 3) * 3.4, y = 110 - (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) * 3.4; return P(`M${f(x - 3)} ${f(y)}q1.5-2 3 0q1.5-2 3 0`, 'none', st('#2a2040', 1)); }).join(''));
+  S.push(() => sky('snow', 0.4) + snow(40) + hills(250, '#eef3fa', '#c8d4e4', 10) + g(100, 250, 2.6, P('M0 0V-4', 'none', st('#c8973e', 4)) + E(0, -30, 18, 26, '#c8973e') + E(0, -30, 14, 22, lin([[0, '#9ae0a0'], [1, '#3a8a5a']])) + C(-4, -38, 3, '#ffb0d0') + C(5, -30, 2.4, '#fff') + C(-2, -22, 2.6, '#ffe08a')) + g(150, 262, 0.8, O.pine('#4a5a6a')));
+  S.push(() => sky('night', 0.3) + stars(60) + moon(150, 60, 16) + P('M0 230Q100 200 200 214', 'none', st('#2a1a10', 6)) + g(90, 214, 2, O.owl('#5a4a8a', '#2a2a5a')) + Array.from({ length: 10 }, () => C(rn(70, 110), rn(178, 210), 0.8, '#fff6c0')).join(''));
+  S.push(() => sky('dawn', 0.7) + glow(110, 110, 80, '#fff0c8', 0.35) + stars(14, 0, 90, '#fff') + P('M0 236Q30 212 52 214Q66 214 72 222L82 168Q86 160 92 168L100 214Q108 210 114 216Q120 224 112 230Q124 230 128 236Q132 252 152 246Q176 240 200 250V300H0Z', lin([[0, '#7a6aaa'], [1, '#2a2048']])) + P('M44 222q8 5 16 0M46 224l-2 4M52 225v4M58 223l2 4', 'none', st('#2a2048', 1.4)) + g(87, 166, 0.42, O.house()) + g(160, 246, 0.5, O.tree('#4a6a8a', '#2a3a5a')) + g(182, 248, 0.45, O.tree('#4a6a8a', '#2a3a5a')) + birds(4, 140, 80, 1, '#fff', 30));
+  S.push(() => sky('mint', 0.4) + g(100, 260, 2.2, O.book('#fffbe8', '#2a6a4a')) + Array.from({ length: 7 }, (_, i) => g(60 + i * 14 + rn(-6, 6), 200 - i * 20, 0.8 + rn(0, 0.4), O.butterfly(['#ffd27a', '#9ad0ff', '#ffb0d0'][i % 3], ['#e8843a', '#5a7ae8', '#c85a8a'][i % 3]), rn(-20, 20))).join(''));
+  S.push(() => sky('day', 0.6) + sea(190, '#3a8ab0', '#0e3a5a') + Rc(0, 238, 200, 62, lin([[0, '#f0dcb0'], [1, '#c8a878']])) + C(100, 196, 46, lin([[0, '#f6c8b0'], [1, '#c8785a']])) + P('M100 196m-32 0a32 32 0 1 0 32-32a24 24 0 1 0 18 34a12 12 0 1 0-18-12', 'none', st('#a8584a', 2.4)) + P('M64 240Q100 226 136 240', '#c8785a') + Rc(92, 222, 14, 18, '#6a3a22', ' rx="7"') + C(122, 190, 5, '#ffd98a') + Rc(126, 146, 6, 14, '#a8584a') + cloud(40, 60, 0.8) + birds(3, 150, 70, 1, '#fff', 16));
+  S.push(() => sky('day', 0.4) + cloud(160, 250, 1.2) + g(56, 290, 2.4, O.dandelion()) + Array.from({ length: 6 }, (_, i) => { const x = 90 + i * 18, y = 180 - i * 22; return P(`M${f(x)} ${f(y)}l-5-8M${f(x)} ${f(y)}l5-8M${f(x)} ${f(y)}v-9`, 'none', st('#fff', 0.6)) + g(x, y + 9, 0.32, O.person('kid', '#3a3a5a')); }).join(''));
+  S.push(() => sky('dawn', 0.5) + cloud(40, 250, 1) + g(100, 150, 1.6, P('M-40 0H40Q30 30 0 40Q-30 30-40 0Z', lin([[0, '#7a5a4a'], [1, '#3a2a2a']])) + P('M-44 0Q0-10 44 0Q30 4 0 4Q-30 4-44 0Z', '#5a9a5a')) + g(84, 148, 0.7, O.tree()) + g(112, 148, 0.6, O.house()) + P('M128 152Q132 230 128 300', 'none', st('#bfe8ff', 6, ' opacity=".6"')) + P('M126 156Q128 230 122 300', 'none', st('#fff', 1.4, ' opacity=".6"')));
+  S.push(() => sky('night', 0.3) + stars(60) + cloudSea(240, '#3a3a7a', '#1a1a4a') + g(100, 250, 2.2, P('M-28 0V-60Q-28-70-18-70H18Q28-70 28-60V0Z', '#dff8ff', ' opacity=".18"') + P('M-28 0V-60Q-28-70-18-70H18Q28-70 28-60V0Z', 'none', st('#dff8ff', 1.2, ' opacity=".6"')) + Rc(-30, -76, 60, 8, '#8a5a2a', ' rx="2"')) + g(100, 248, 1.3, O.lighthouse(true, 1)) + sea(240, '#141c40', '#060818'));
+  S.push(() => sky('snow', 0.5) + snow(40) + Array.from({ length: 6 }, (_, i) => g(14 + i * 36, 274, 1, O.pine('#4a5a6a'))).join('') + Rc(0, 272, 200, 30, '#eef3fa') + g(100, 272, 2.4, O.deer('#2a2a3a')) + Array.from({ length: 5 }, (_, i) => g(110 + rn(-30, 40), 120 + rn(-20, 20), 0.6, O.bird(['#e8543c', '#f6c25a', '#5a8ae8'][i % 3]))).join(''));
+  S.push(() => sky('mint', 0.5) + Array.from({ length: 5 }, (_, i) => P(`M${i * 44 - 8} 300V0`, 'none', st('#2a4a3a', 18, ' opacity=".5"'))).join('') + P('M60 300Q58 160 70 0H130Q142 160 140 300Z', lin([[0, '#6a4a2a'], [1, '#3a2414']], 0, 0, 1, 0)) + g(100, 246, 1.6, O.door(true, '#fff6c0', '#4a2a14')) + motes(12, '#fffbe0'));
+  S.push(() => sky('dusk', 0.6) + g(100, 300, 1.6, Rc(-24, -150, 48, 150, lin([[0, '#5a3a5a'], [1, '#2a1a2a']])) + P('M-28-150L0-180L28-150Z', '#3a2a3a') + C(0, -126, 18, '#f6efd8') + C(0, -126, 20, 'none', st('#c8973e', 3))) + birds(10, 100, 60, 1, '#2a1a2a', 60));
+  S.push(() => sky('night', 0.4) + stars(80) + moon(100, 40, 26, 'cres', '#fff3cf', '#1c2558') + P('M88 50V180M112 50V180', 'none', st('#e8d8b8', 0.8)) + g(100, 182, 1.2, Rc(-13, -1, 26, 3, '#8a5a2a') + O.person('girl', '#0a0c22')) + city(300, '#121838', '#ffcf7a', 0.5));
+  S.push(() => sky('night', 0.2) + stars(60) + Rc(0, 200, 200, 100, '#1a1a2e') + P('M60 300L92 200H108L140 300Z', '#2a2a40') + g(34, 260, 1.2, O.lamp()) + g(166, 250, 1, O.lamp()) + g(100, 262, 1.5, P('M-12 0Q-12-8-4-8H4Q8-8 8-4V0Z', '#c8402f') + P('M4 0Q4-6 10-6H16Q20-6 20-2V2H4Z', '#c8402f')));
+  S.push(() => sky('day', 0.3) + cloud(40, 60, 0.9) + cloud(160, 230, 1.2) + P('M80 80h16q0-10 8-10t8 10h16v16q10 0 10 8t-10 8v16h-16q0 10-8 10t-8-10h-16v-16q-10 0-10-8t10-8Z', lin([[0, '#0a1030'], [1, '#2a2458']])) + stars(10, 80, 130).replace(/cx="(\d+)/g, (m, x) => `cx="${80 + (+x % 48)}`) + g(140, 260, 1.2, O.person('kid', '#2a3a5a')));
+  S.push(() => sky('night', 0.2) + stars(40) + moon(100, 50, 18) + city(300, '#0e1230', '#ffcf7a', 1) + Rc(20, 90, 26, 210, '#161a3a') + Rc(154, 110, 26, 190, '#161a3a') + P('M46 104Q100 116 154 112', 'none', st('#e8d8b8', 0.8)) + g(100, 112, 0.8, O.person('man', '#0a0c22') + P('M-16-28H16', 'none', st('#e8d8b8', 1))));
+  S.push(() => sky('lav', 0.4) + Array.from({ length: 9 }, (_, i) => { const x = 20 + i * 20, y = 60 + (i % 3) * 30; return P(`M${x} 0V${y}`, 'none', st('#e8d8b8', 0.5)) + g(x, y + 34, 0.7, O.key(['#e8b84a', '#c8c8d8', '#c87a3a'][i % 3])); }).join('') + hills(280, '#4a3a7a', '#1a1438', 4) + g(100, 276, 1.2, O.door(false, '#fff3c0', '#6a4a8a')));
+  S.push(() => sky('dawn', 0.5) + cloudSea(220, '#fff0e8', '#c8a8d0') + g(100, 306, 2.4, O.hand('#f0c8a8')) + city(222, '#3a3a6a', '#ffe2a0', 0.45, 66, 134));
+  S.push(() => sky('storm', 0.4) + Array.from({ length: 16 }, (_, i) => { const t = i / 15, x = 160 - t * 150, y = 70 + Math.sin(t * Math.PI * 2) * 30 + t * 40, r = 16 - t * 11; return C(x, y + 3, r, '#8a96a8') + C(x, y, r, lin([[0, '#f4f6fa'], [1, '#b8c2d0']])); }).join('') + g(176, 74, 1, O.dragonHead('#eef2f8', '#b8c2d0'), 0).replace(/#d8342c/g, '#9aa8b8') + sea(230, '#2a3a4a', '#0a121a', '#dfe8ff') + g(60, 240, 0.8, O.junk('#8a2a20')));
+  S.push(() => sky('dawn', 0.75) + sea(200, '#4a5a90', '#141c3a', '#fff0c8') + g(100, 212, 2, O.egg()));
+  S.push(() => sky('day', 0.4) + sea(220, '#3a8ab0', '#0e3a5a') + g(100, 160, 1.8, O.bike() + G('translate(-2 -16)', O.wings('#fbf6ea', 1) + O.wings('#fbf6ea', -1)) + g(0, -10, 0.6, O.person('man', '#2a2a3a'))) + cloud(40, 70, 0.8) + birds(4, 150, 80, 1, '#fff', 20));
+  S.push(() => sky('fall', 0.4) + Rc(0, 220, 200, 80, '#5a2a1a') + Rc(0, 200, 200, 22, '#8a4a2a') + g(136, 200, 1.25, O.tiger('#1a0a04'), 0).replace(/^/, '<g opacity=".45">') + '</g>' + P('M118 172l6 14M132 168l4 16M146 170l2 14', 'none', st('#5a2a1a', 3, ' opacity=".35"')) + g(80, 200, 1, O.cat('sit', '#1a1010', '#ffe07a')) + glow(30, 60, 40, '#ffe1a8', 0.5));
+  return S;
+})();
+function dxSvg(c) {
+  DXA.set(c);
+  const body = DX_SCN[c % DX_SCN.length]();
+  const tail = DXA.vign(0.5) + DXA.grain();
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><defs>${DXA.defs()}</defs>${body}${tail}</svg>`;
+}
+/* 畫中有話：卡背、完場插畫 */
+const DX_ART = (() => {
+  const { lin, rad, P, C, E, Rc, st, glow, stars, moon, G, f } = DXA;
+  const wrap = (c, fn) => { DXA.set(c); const b = fn(); return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><defs>${DXA.defs()}</defs>${b}</svg>`; };
+  const frame = (x, y, w, h) => Rc(x - 4, y - 4, w + 8, h + 8, lin([[0, '#f9e9b6'], [0.45, '#e0b65c'], [0.6, '#b8862f'], [1, '#f2d892']], 0, 0, 1, 1), ' rx="5"') + Rc(x - 1.5, y - 1.5, w + 3, h + 3, '#7a5420', ' rx="3"');
+  const BK = wrap(997, () => {
+    let h = Rc(0, 0, 200, 300, rad([[0, '#2e2468'], [1, '#110d2a']], 0.5, 0.45, 0.75)) + stars(46, 0, 300, '#f2d892');
+    h += Rc(9, 9, 182, 282, 'none', st('#e0b65c', 2.2, ' rx="10"')) + Rc(15, 15, 170, 270, 'none', st('#e0b65c', 0.8, ' rx="7" opacity=".7"'));
+    [[15, 15], [185, 15], [15, 285], [185, 285]].forEach(([x, y]) => { h += P(`M${x} ${y - 7}L${x + 7} ${y}L${x} ${y + 7}L${x - 7} ${y}Z`, '#e0b65c'); });
+    h += glow(100, 128, 80, '#ffe9a8', 0.25) + frame(66, 84, 68, 86) + Rc(66, 84, 68, 86, lin([[0, '#1d2a66'], [1, '#5a4a9a']]));
+    h += moon(112, 108, 12, 'cres') + P('M66 160Q84 140 100 150Q116 138 134 156V170H66Z', '#241a4a') + P('M80 152l-3 6h6Z', '#ffe2a0') + C(90, 120, 1.2, '#fff') + C(78, 102, 0.9, '#fff');
+    h += P('M58 196H142L136 206L142 216H58L64 206Z', lin([[0, '#f2d892'], [1, '#b8862f']])) + `<text x="100" y="211" font-size="13" font-weight="900" text-anchor="middle" fill="#3a2408" font-family="serif" letter-spacing="3">畫中有話</text>`;
+    h += P('M92 234q8-8 16 0q-8 8-16 0Z', 'none', st('#e0b65c', 1.2)) + C(100, 234, 2.2, '#e0b65c');
+    return h;
+  });
+  const W = wrap(998, () => {
+    let h = Rc(0, 0, 200, 300, rad([[0, '#6a4ab8'], [1, '#1a1236']], 0.5, 0.4, 0.8)) + stars(40, 0, 300, '#ffe9a8') + glow(100, 140, 110, '#ffe9a8', 0.45);
+    for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2; h += P(`M100 140L${f(100 + Math.cos(a - 0.08) * 170)} ${f(140 + Math.sin(a - 0.08) * 170)}L${f(100 + Math.cos(a + 0.08) * 170)} ${f(140 + Math.sin(a + 0.08) * 170)}Z`, '#ffe9a8', ' opacity=".1"'); }
+    h += G('rotate(-6 100 140)', frame(58, 86, 84, 104) + Rc(58, 86, 84, 104, lin([[0, '#1d2a66'], [1, '#f39062']])) + moon(120, 114, 14, 'cres') + P('M58 176Q80 150 100 164Q120 150 142 170V190H58Z', '#3a2458') + P('M76 168l-4 8h8Z', '#ffe2a0'));
+    for (let i = 0; i < 18; i++) h += Rc(DXA.rn(10, 190), DXA.rn(20, 280), 3, 6, ['#ffe08a', '#ff8ab0', '#8ad0ff', '#8ff0c4'][i % 4], ` transform="rotate(${Math.round(DXA.rn(0, 180))} ${f(DXA.rn(10, 190))} ${f(DXA.rn(20, 280))})" opacity=".85"`);
+    return h;
+  });
+  return { BK, W };
+})();
+(() => { const rs = document.documentElement.style, put = (pre, A) => { for (const k in A) rs.setProperty(pre + k, "url('data:image/svg+xml;charset=utf-8," + encodeURIComponent(A[k]).replace(/'/g, '%27') + "')"); }; put('--cd', CD_ART); put('--zd', ZD_ART); put('--mw', MW_ART); put('--dx', DX_ART); })();
 function wireCard(t, cls = '', attrs = '') {
   if (!t) return `<span class="wcd ${cls}" ${attrs}><span class="f3 bk"></span></span>`;
   return `<span class="wcd face ${t} ${cls}" ${attrs}><span class="f3 fr"><b class="wl">${WIRE[t][0]}</b></span><span class="f3 bk"></span></span>`;
@@ -5253,6 +5906,24 @@ function vEndMw(v) {
     ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
     <button class="btn ghost" data-act="leave">離開房間</button>`;
 }
+const RULES_DX = `<div class="rules">
+  <h4>玩法</h4><p>每人有 6 張插畫手牌（3 人時 7 張）。大家輪流做<b>說書人</b>。</p>
+  <ol>
+    <li>說書人揀一張手牌，諗一句提示（一句說話、一個字、一句歌詞、一個聲都得），<b>口講</b>俾大家聽，再放低張卡（其他人睇唔到）。</li>
+    <li>其他人喺自己手牌揀一張最似提示嘅卡放落枱（3 人時每人放 2 張）。</li>
+    <li>App 洗勻枱面啲卡，翻開排好。說書人以外嘅人投票，估邊張係說書人嘅（唔可以投自己張）。</li>
+    <li>揭曉計分，每人補返夠手牌，下一個人做說書人。</li>
+  </ol>
+  <h4>計分</h4><ul>
+    <li>全部人估中，或者冇人估中：說書人 0 分，其他人每人 +2。</li>
+    <li>有人估中、有人估唔中：說書人同估中嘅人每人 +3。</li>
+    <li>說書人以外：每有一個人投你張卡，你 +1。</li>
+  </ul>
+  <h4>提示點樣講</h4><p>講得太白，全部人估中，你冇分；講得太難，冇人估中，你都冇分。要一部分人估中先最好。</p>
+  <h4>完場</h4><p>有人夠目標分（房主揀 20 或 30 分），或者冇牌補（84 張抽晒）就完。最高分嘅人贏，房間分數 +1。</p>
+  <h4>時限</h4><p>房主揀揀卡同投票時限（唔限時／60 秒／90 秒）。時間到未揀卡就幫你隨機揀；未投票就當冇投。說書人揀卡唔限時。</p>
+  <h4>撳卡放大</h4><p>撳任何一張卡會放大，左右掃睇其他卡。揀卡同投票都喺放大畫面撳掣。</p>
+</div>`;
 const RULES_MW = `<div class="rules">
   <h4>故事</h4><p>暴風雨夜，半山大宅嘅主人俾人殺咗。兇手就喺客人入面。每人守住大宅一間房，大家要搵出兇手，將佢關入地窖。</p>
   <h4>卡</h4><p>卡數 ＝ 人數 + 1：一定有<b>兇手</b>，其他係房主揀嘅特別角色，唔夠就補<b>住客</b>（黃、藍、紅輪流，第 4 張再嚟黃）。今局有咩卡全部人都睇到，但唔知喺邊個手上。房主揀咗<b>管家</b>就再多 2 張卡，開局抽走唔用（兇手一定用）。</p>
@@ -5279,6 +5950,186 @@ const RULES_MW = `<div class="rules">
     <li>贏嘅每人 +1 分，一局一局累計。</li></ul>
 </div>`;
 /* 放卡飛行（2026-11-23）：張卡（背面寫住邊個放）由放卡嘅人（或者自己拖到嘅位）呈弧線飛入目標房，半空轉一圈，落地閃光 */
+/* ============================================================
+ * 畫中有話：畫面（卡、手牌、枱面、投票、揭曉、分數路、撳卡放大）；class 全部用 dx 開頭（WEB-44）
+ * ============================================================ */
+const DX_STEPS = [['tell', '說書人'], ['pick', '揀卡'], ['vote', '投票'], ['show', '揭曉']];
+const DX_ON = {};
+/* 插畫用到先整（WEB-32）：第 c 張卡嘅 SVG 變 data URI，放喺 :root 嘅 --dx{c} */
+function dxArt(c) {
+  if (!DX_ON[c]) { DX_ON[c] = 1; document.documentElement.style.setProperty('--dx' + c, "url('data:image/svg+xml;charset=utf-8," + encodeURIComponent(dxSvg(c)).replace(/'/g, '%27') + "')"); }
+  return `var(--dx${c})`;
+}
+/* 一張卡：卡背（dxbk）喺底，正面（dxfr）喺面；c 係 null 就淨係卡背 */
+function dxCard(c, cls = '') {
+  return `<span class="dxcd${c == null ? ' dxback' : ''} ${cls}"><span class="dxbk"></span>${c == null ? '' : `<span class="dxfr" style="background-image:${dxArt(c)}"></span>`}</span>`;
+}
+const dxLiveV = (v) => v.dx.ord.filter((id) => { const p = pOf(v, id); return p && !p.gone; });
+const dxNeedV = (v) => dxLiveV(v).filter((id) => { const p = pOf(v, id); return id !== v.dx.st && p && p.on; });
+/* 手牌：撳卡放大；揀緊卡（3 人揀兩張）用 S.dxSel 記住 */
+function dxHand(v, mode) {
+  const dx = v.dx, h = dx.hand[ME.id] || [], sel = S.dxSel || [];
+  const a = an('dxh' + v.gid + '-' + dx.rd, 1300);
+  return `<div class="dxhd${h.length > 6 ? ' dx7' : ''}${mode ? ' dxcan' : ''}">` + h.map((c, i) => {
+    const on = sel.includes(c);
+    return `<button class="dxhc${on ? ' dxsel' : ''}${a ? ' dxdeal' : ''}" data-act="dxz" data-x="h${i}" style="--i:${i}${a ? ';' + a : ''}">${dxCard(c)}${on ? `<i class="dxck">${ic('check')}</i>` : ''}</button>`;
+  }).join('') + '</div>';
+}
+/* 揀卡時枱面：已放落嘅卡背疊住 */
+function dxPile(v) {
+  const dx = v.dx, n = Object.values(dx.sub).reduce((s, x) => s + x.length, 0), tot = 1 + dxNeedV(v).length * dx.per;
+  const backs = Array.from({ length: n }, (_, i) => { const a = an('dxp' + v.gid + '-' + dx.rd + '-' + i, 700); return `<span class="dxpc${a ? ' dxin' : ''}" style="--i:${i};--r:${((i * 37) % 15) - 7}deg;--x:${((i * 53) % 21) - 10}px${a ? ';' + a : ''}">${dxCard(null, 'dxsm')}</span>`; }).join('');
+  return `<div class="dxtbl"><div class="dxpile">${backs || '<span class="dxpe"></span>'}</div><div class="dxpn"><b>${n}</b>／${Math.max(n, tot)} 張</div></div>`;
+}
+/* 投票、揭曉：枱面每張卡有號碼；揭曉時寫埋邊個嘅卡、邊個投 */
+function dxTable(v, mode) {
+  const dx = v.dx, me = ME.id, mine = dx.sub[me] || [], myV = dx.vt[me];
+  const a = an('dxt' + v.gid + '-' + dx.rd + '-' + mode, mode === 'vote' ? 2200 : 2600);
+  return `<div class="dxtb${dx.tb.length > 4 ? ' dx3c' : ''}">` + dx.tb.map((c, i) => {
+    const isSc = mode === 'show' && c === dx.sc;
+    let lab = '';
+    if (mode === 'show') {
+      const own = dx.own[c], vs = Object.keys(dx.vt).filter((q) => dx.vt[q] === c);
+      lab = (isSc ? '<span class="dxstr">說書人</span>' : '') + `<span class="dxow${isSc ? ' dxsto' : ''}">${av(pOf(v, own), 'xs')}<em>${esc(nameOf(v, own))}</em></span>`
+        + (vs.length ? `<span class="dxvs">${vs.map((q, j) => `<i style="--j:${j}">${av(pOf(v, q), 'xs')}</i>`).join('')}</span>` : '');
+    } else {
+      if (mine.includes(c)) lab += '<span class="dxmine">你嘅</span>';
+      if (myV === c) lab += `<span class="dxmyv">${ic('check')}</span>`;
+    }
+    return `<button class="dxtc${isSc ? ' dxsc' : ''}${myV === c && mode === 'vote' ? ' dxmy' : ''}${a ? (mode === 'vote' ? ' dxdl' : ' dxrv') : ''}" data-act="dxz" data-x="t${i}" style="--i:${i}${a ? ';' + a : ''}"><span class="dxno">${i + 1}</span>${dxCard(c)}${lab}</button>`;
+  }).join('') + '</div>';
+}
+/* 分數路：0 至目標分嘅石仔，每行 11 粒，蛇形；每人一粒棋（頭像色） */
+function dxTrack(v) {
+  const dx = v.dx, T = dx.tgt, per = 11, at = {};
+  dx.ord.forEach((id) => { const s = Math.min(T, dx.pt[id]); (at[s] = at[s] || []).push(id); });
+  let h = '';
+  for (let s = 0; s <= T; s++) {
+    const r = Math.floor(s / per), k = s % per, col = r % 2 ? per - 1 - k : k, tk = at[s] || [];
+    h += `<span class="dxstn${s % 5 === 0 ? ' dxm5' : ''}${s === T ? ' dxgoal' : ''}" data-s="${s}" style="grid-row:${r + 1};grid-column:${col + 1}">${s % 5 === 0 || s === T ? `<small>${s}</small>` : ''}${tk.map((id, j) => { const p = pOf(v, id); return `<i class="dxtk${id === ME.id ? ' dxme' : ''}" data-id="${id}" style="--c:${COLORS[(p && p.c) % COLORS.length]};--j:${j};--n:${tk.length}">${esc(first(p && p.n))}</i>`; }).join('')}</span>`;
+  }
+  return `<div class="dxtr" style="--rows:${Math.ceil((T + 1) / per)}">${h}</div>`;
+}
+/* 分數表：揭曉時寫每人今輪加幾多 */
+function dxScores(v, gain) {
+  const dx = v.dx, ids = dx.ord.slice().sort((x, y) => dx.pt[y] - dx.pt[x]);
+  return '<div class="plist">' + ids.map((id) => {
+    const p = pOf(v, id), g = gain && dx.gain ? dx.gain[id] : null;
+    return `<div class="pr${id === ME.id ? ' me' : ''}${p && p.gone ? ' off' : ''}">${av(p)}<span class="nm">${esc(p ? p.n : '?')}${id === dx.st ? '<small class="outs">說書人</small>' : ''}</span>${g && g.b ? `<span class="dl p">+${g.b}</span>` : ''}${g && g.x ? `<span class="dl p dxx">+${g.x} 票</span>` : ''}<span class="sc">${dx.pt[id]} 分</span></div>`;
+  }).join('') + '</div>';
+}
+function vPlayDx(v) {
+  const dx = v.dx, me = ME.id, inG = dx.ord.includes(me), isSt = dx.st === me, sp = pOf(v, dx.st), host = v.host === me, ph = v.ph;
+  const sn = esc(sp ? sp.n : '?');
+  let h = `<div class="rh"><div class="rn">第 <b>${dx.rd}</b> 輪</div><div class="ichip">${dx.ord.length} 人・剩 ${dx.deck.length} 張</div></div>${stepsHtml(DX_STEPS, ph)}`;
+  const timer = (t1, t2) => `<div class="tmr">${v.dl ? ring('dl', v.dt0 || 1) : `<span class="dxsav">${av(sp)}</span>`}<div style="flex:1;min-width:0"><div class="tl">${t1}</div><div class="ts">${t2}</div></div></div>`;
+  if (ph === 'tell') {
+    const pulse = anA('dxs' + v.gid + '-' + dx.rd, 700, 'pulse');
+    h += `<div class="holdbar dxsb${isSt ? ' me' : ''}${pulse.c}"${pulse.s}><span class="sc2">${isSt ? ic('eye') : av(sp)}</span><div><div class="t1">${isSt ? '你係說書人！' : `${sn} 係說書人`}</div><div class="t2">${isSt ? '揀一張卡，諗一句提示，口講俾大家聽' : '佢揀緊卡，諗緊提示'}</div></div></div>`;
+    if (isSt) h += '<div class="tip">撳卡放大，揀一張放低</div>' + dxHand(v, 'tell');
+    else if (inG) h += '<div class="sh"><span>你嘅手牌</span><small>聽提示之前可以睇吓</small></div>' + dxHand(v, '');
+    else h += '<div class="wait">觀戰中・下一局加入</div>';
+    if (host && sp && !sp.on && !sp.bot) h += '<button class="btn ghost" data-act="dxsk">說書人離線，跳過佢</button>';
+  } else if (ph === 'pick') {
+    const done = !!dx.sub[me], need = dxNeedV(v), two = dx.per === 2;
+    h += timer(isSt ? '講出你嘅提示！' : done ? '已放卡' : `聽 ${sn} 講提示`, isSt ? '大家揀緊最似你提示嘅卡' : done ? '等其他人放卡' : two ? '揀兩張最似提示嘅卡' : '揀一張最似提示嘅卡');
+    h += dxPile(v);
+    if (inG && !isSt && !done) {
+      const sel = (S.dxSel || []).filter((c) => (dx.hand[me] || []).includes(c));
+      h += dxHand(v, 'pick');
+      if (two) h += `<button class="btn gold big" data-act="dxpk2" ${sel.length === 2 ? '' : 'disabled'}>${sel.length === 2 ? '放呢兩張落枱' : `撳卡揀兩張（${sel.length}／2）`}</button>`;
+    }
+    h += `<div class="sh"><span>已放卡</span><small>${need.filter((id) => dx.sub[id]).length}／${need.length}</small></div><div class="okl">${okChips(v, need, dx.sub)}</div>`;
+    if (inG && (isSt || done)) h += '<div class="sh"><span>你嘅手牌</span></div>' + dxHand(v, '');
+    if (host && !v.dl && need.some((id) => !dx.sub[id])) h += '<button class="btn ghost" data-act="dxsk">唔等，幫未揀嘅人隨機揀</button>';
+  } else if (ph === 'vote') {
+    const voters = dxNeedV(v), can = inG && !isSt && !dx.vt[me];
+    h += timer(isSt ? '大家投緊票' : dx.vt[me] ? '已投票' : `邊張係 ${sn} 嘅？`, isSt ? '你唔使投，睇住就得' : dx.vt[me] ? '等其他人投' : '撳卡放大再投；唔可以投自己張');
+    h += dxTable(v, 'vote');
+    h += `<div class="sh"><span>已投票</span><small>${voters.filter((id) => dx.vt[id]).length}／${voters.length}</small></div><div class="okl">${okChips(v, voters, dx.vt)}</div>`;
+    if (host && !v.dl && voters.some((id) => !dx.vt[id])) h += '<button class="btn ghost" data-act="dxsk">唔等，即刻開票</button>';
+    if (!can && inG) h += '<div class="sh"><span>你嘅手牌</span></div>' + dxHand(v, '');
+  } else if (ph === 'show') {
+    const nv = Object.keys(dx.vt).length, n = dx.hit.length;
+    const msg = !nv ? '冇人投票' : !n ? '冇人估中！' : n === nv ? '全部人估中！' : `${n} 個人估中`;
+    const sub = !nv ? '呢輪冇人加分' : !n || n === nv ? `說書人 0 分，其他人 +2` : '說書人同估中嘅人 +3';
+    const q = anA('dxm' + v.gid + '-' + dx.rd, 1600, 'dxpop');
+    h += `<div class="dxres${q.c}"${q.s}><b>${msg}</b><small>${sub}・其他人每得一票 +1</small></div>`;
+    h += dxTable(v, 'show');
+    h += `<div class="sh"><span>分數路</span><small>${dx.tgt} 分完場</small></div>` + dxTrack(v) + dxScores(v, true);
+    const live = dxLiveV(v).filter((id) => { const p = pOf(v, id); return p && p.on; }), ok = live.filter((id) => dx.rdy[id]);
+    if (inG && !dx.rdy[me]) h += '<button class="btn gold big" data-act="dxnx">下一輪</button>';
+    else h += `<div class="wait">等其他人（${ok.length}／${live.length}）<span class="ld"><i></i><i></i><i></i></span></div>`;
+    if (host && live.some((id) => !dx.rdy[id])) h += '<button class="btn ghost" data-act="dxgo">唔等，直接下一輪</button>';
+    return h;
+  }
+  h += `<div class="sh"><span>分數路</span><small>${dx.tgt} 分完場</small></div>` + dxTrack(v);
+  return h;
+}
+function vEndDx(v) {
+  const dx = v.dx, host = v.host === ME.id, wn = dx.win.map((id) => esc(nameOf(v, id))).join('、');
+  const why = dx.why === 'score' ? `夠 ${dx.tgt} 分` : dx.why === 'deck' ? '冇牌補，遊戲完' : dx.why === 'few' ? '人數唔夠 3 個' : '';
+  const head = dx.win.length ? `<div class="cdwin dx"><i class="rays"></i><i class="cdart dxwart"></i><div class="wt"><div class="big">${wn} 贏！</div><div class="tip">${why}・${dx.pt[dx.win[0]]} 分</div></div></div>` : `<div class="res"><div class="big" style="font-size:36px">提早完場</div><div class="tip">${why}</div></div>`;
+  return `${head}<div class="sh"><span>分數路</span><small>${dx.tgt} 分完場</small></div>${dxTrack(v)}${dxScores(v, false)}
+    ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
+    <button class="btn ghost" data-act="leave">離開房間</button>`;
+}
+/* 撳卡放大（#dxz，放喺 #app 外面，重畫唔會冇咗）：左右掃或者撳箭咀睇下一張；下面嘅掣按階段變 */
+function dxZList(v) {
+  if (!v || v.g !== 'dx' || !v.dx || !S.dxZ) return null;
+  return S.dxZ.k === 'h' ? (v.dx.hand[ME.id] || []) : v.dx.tb;
+}
+function dxZoom() {
+  let el = $('#dxz');
+  const v = S.view, L = dxZList(v);
+  if (!L || !L.length || !DX_PH.includes(v.ph) || (S.dxZ.k === 't' && v.ph !== 'vote' && v.ph !== 'show')) { S.dxZ = null; if (el) el.classList.remove('dxon'); return; }
+  if (!el) { el = document.createElement('div'); el.id = 'dxz'; document.body.appendChild(el); dxZoomSwipe(el); }
+  const dx = v.dx, me = ME.id, i = Math.max(0, Math.min(L.length - 1, S.dxZ.i)), c = L[i];
+  S.dxZ.i = i;
+  let btn = '';
+  if (S.dxZ.k === 'h') {
+    if (v.ph === 'tell' && dx.st === me) btn = `<button class="btn gold big" data-act="dxtell" data-x="${c}">揀呢張，放低</button>`;
+    else if (v.ph === 'pick' && dx.st !== me && dx.ord.includes(me) && !dx.sub[me]) btn = dx.per === 2 ? `<button class="btn gold big" data-act="dxsel" data-x="${c}">${(S.dxSel || []).includes(c) ? '唔揀呢張' : `揀呢張（${(S.dxSel || []).length}／2）`}</button>` : `<button class="btn gold big" data-act="dxpk" data-x="${c}">揀呢張，放落枱</button>`;
+  } else if (v.ph === 'vote' && dx.st !== me && dx.ord.includes(me) && !dx.vt[me]) {
+    btn = (dx.sub[me] || []).includes(c) ? '<button class="btn gold big" disabled>呢張係你嘅</button>' : `<button class="btn gold big" data-act="dxvt" data-x="${c}">投 ${i + 1} 號</button>`;
+  }
+  const lab = S.dxZ.k === 't' ? `第 ${i + 1} 張` : `手牌 ${i + 1}／${L.length}`;
+  const own = v.ph === 'show' && S.dxZ.k === 't' ? `<div class="dxzo">${c === dx.sc ? '<b>說書人張卡</b>・' : ''}${esc(nameOf(v, dx.own[c]))} 嘅卡</div>` : '';
+  const k = S.dxZ.k + ':' + c + ':' + btn + own;
+  if (el.dataset.k === k && el.classList.contains('dxon')) return;
+  const first = !el.classList.contains('dxon');
+  el.dataset.k = k;
+  el.innerHTML = `<div class="dxzbg" data-act="dxzc"></div><div class="dxzw"><div class="dxzh"><span>${lab}</span><button class="ib icon" data-act="dxzc" aria-label="關">${ic('x')}</button></div>
+    <div class="dxzc${first ? '' : ' dxsw'}">${dxCard(c, 'dxbig')}</div>${own}
+    <div class="dxzn"><button class="ib icon" data-act="dxzn" data-x="-1" aria-label="上一張" ${i ? '' : 'disabled'}>${ic('back')}</button><span class="dxdots">${L.map((_, j) => `<i class="${j === i ? 'dxon' : ''}"></i>`).join('')}</span><button class="ib icon dxnxt" data-act="dxzn" data-x="1" aria-label="下一張" ${i < L.length - 1 ? '' : 'disabled'}>${ic('back')}</button></div>
+    ${btn}</div>`;
+  el.classList.add('dxon');
+}
+function dxZoomSwipe(el) {
+  let x0 = null;
+  el.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+  el.addEventListener('pointerup', (e) => {
+    if (x0 == null || !S.dxZ) return; const d = e.clientX - x0; x0 = null;
+    if (Math.abs(d) > 50) { S.dxZ.i += d < 0 ? 1 : -1; dxZoom(); }
+  });
+}
+/* 揭曉：分數路棋子由舊分數跳去新分數（量位置之前先完咗入場動畫，WEB-46） */
+function dxMoveFx(v) {
+  mwSettle();
+  const dx = v.dx; if (!dx || !dx.gain) return;
+  dx.ord.forEach((id, j) => {
+    const g = dx.gain[id], d = g ? g.b + g.x : 0; if (!d) return;
+    const tk = $(`.dxtr .dxtk[data-id="${id}"]`), from = $(`.dxtr .dxstn[data-s="${Math.max(0, Math.min(dx.tgt, dx.pt[id] - d))}"]`), to = tk && tk.parentElement;
+    if (!tk || !from || !to) return;
+    const a = from.getBoundingClientRect(), b = to.getBoundingClientRect(), x = a.left - b.left, y = a.top - b.top, end = getComputedStyle(tk).transform;
+    const t0 = end === 'none' ? '' : end;
+    tk.animate([
+      { transform: `translate3d(${x}px,${y}px,0) ${t0}`, easing: 'cubic-bezier(.3,0,.3,1)' },
+      { transform: `translate3d(${x / 2}px,${y / 2 - 26}px,0) ${t0} scale(1.25)`, offset: 0.5, easing: 'cubic-bezier(.4,0,.6,1.4)' },
+      { transform: t0 || 'none' }
+    ], { duration: 700, delay: 1500 + j * 160, fill: 'backwards' });
+  });
+}
 /* 特效量房位置之前先完咗畫面入場動畫：轉畫面頭 0.5 秒 .stage.enter 將內容向右移 48px、斜 8 度，即刻量會歪（Bill 2026-11-25 截圖偵探紅框、射燈向右歪咗） */
 function mwSettle() { const st = $('.stage.enter'); if (st) st.classList.remove('enter'); }
 function mwFly(v, ev) {
@@ -5630,7 +6481,7 @@ const RULES_TT = `<div class="rules">
   <h4>人數同身份</h4><p>4 至 8 人：1 個<b>偷撻賊</b>，其餘係<b>夜更伙記</b>。5–6 人時賊會揀 1 個<b>共犯</b>，7–8 人揀 2 個。</p>
   <h4>夜晚</h4><ol>
     <li>每人暗中擲一粒骰，點數就係你凌晨幾點醒（1–6 點）。</li>
-    <li>主持（App）由凌晨 1 點叫到 6 點。到你嘅鐘數你就醒，見到同你一齊醒嘅人。</li>
+    <li>主持（App）由凌晨 1 點叫到 6 點。到你嘅鐘數你就醒，見到同你一齊醒嘅人。冇人醒嘅鐘都會等一段隨機時間（5–12 秒）先叫下一個鐘，聽唔出邊個鐘冇人。</li>
     <li>偷撻賊醒嗰陣一定要偷蛋撻；同佢一齊醒嘅人會見到佢偷。</li>
     <li>伙記如果得自己一個醒，可以偷睇一個人粒骰。</li>
     <li>6 點之後（5 人以上），偷撻賊揀共犯；共犯會知道邊個係賊。</li></ol>
@@ -5858,7 +6709,7 @@ function renderModal() {
   const el = $('#modal'), m = S.modal;
   if (!m) { el.classList.remove('show', 'clr'); el.innerHTML = ''; el.dataset.mt = ''; S.mh = ''; if (S.mwGhost && !S.mwGhost.ok) setTimeout(() => { if (S.mwGhost && !S.mwGhost.ok && !S.modal) mwGhostBack(); }, 0); return; }
   let h = '';
-  if (m.type === 'rules') h = m.g === 'mw' ? `<h3>大宅目擊者・玩法</h3>${RULES_MW}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cr' ? `<h3>蟹仔大賽・玩法</h3>${RULES_CR}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
+  if (m.type === 'rules') h = m.g === 'dx' ? `<h3>畫中有話・玩法</h3>${RULES_DX}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'mw' ? `<h3>大宅目擊者・玩法</h3>${RULES_MW}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cr' ? `<h3>蟹仔大賽・玩法</h3>${RULES_CR}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'tt' ? `<h3>邊個偷咗蛋撻・玩法</h3>${RULES_TT}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'cd' ? `<h3>拆彈危機・玩法</h3>${RULES_CD}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'xs' ? `<h3>心水數字・玩法</h3>${RULES_XS}<button class="btn gold" data-act="mclose">知道</button>` : m.g === 'wd' ? `<h3>誰是臥底・玩法</h3>${RULES_WD}<button class="btn gold" data-act="mclose">知道</button>` : `<h3>真定作・玩法</h3>${RULES}<button class="btn gold" data-act="mclose">知道</button>`;
   else if (m.type === 'confirm') h = `<div class="cfm">${m.text}</div><div class="row"><button class="btn ghost" data-act="mclose">取消</button><button class="btn ${m.bad ? 'red' : 'gold'}" data-act="mok">${m.ok}</button></div>`;
   else if (m.type === 'join') {
     const c = S.kp;
@@ -5896,11 +6747,11 @@ function renderModal() {
     const rows = ranked(v).map(({ p, rank }) => `<div class="pr${p.id === ME.id ? ' me' : ''}${p.on ? '' : ' off'}"><span class="rk${rank <= 3 ? ' r' + rank : ''}">${rank}</span>${av(p)}<span class="nm">${esc(p.n)}</span>${p.id === v.jd ? '<span class="tag jd">判官</span>' : ''}${p.gone ? '<span class="tag">走咗</span>' : !p.on ? '<span class="tag">離線</span>' : ''}<span class="sc">${v.g === 'cr' ? '$' + p.sc : p.sc + ' 分'}</span></div>`).join('');
     const wt = v.wt.length ? `<div class="sh"><span>等緊下一局</span><small>${v.wt.length} 人</small></div><div class="plist">${v.wt.map((p) => `<div class="pr">${av(p)}<span class="nm">${esc(p.n)}</span></div>`).join('')}</div>` : '';
     let hb = '';
-    const wd = v.g === 'wd', xs = v.g === 'xs', cd = v.g === 'cd', tt = v.g === 'tt', cr = v.g === 'cr', mw = v.g === 'mw';
+    const wd = v.g === 'wd', xs = v.g === 'xs', cd = v.g === 'cd', tt = v.g === 'tt', cr = v.g === 'cr', mw = v.g === 'mw', dxg = v.g === 'dx';
     if (host && v.ph === 'role') hb += `<button class="btn ghost" data-act="force">${tt ? '唔等，即刻天黑' : cd ? '唔等，即刻開始' : wd ? '唔等，即刻開始描述' : '唔等，即刻出題'}</button>`;
-    if (host && (mw ? MW_PH : cr ? CR_PH : tt ? TT_PH : cd ? CD_PH : xs ? XS_PH : wd ? WD_PH : PLAY_PH).includes(v.ph)) hb += `<button class="btn ghost" data-act="redeal">${mw ? '重新開始呢局（重新傳卡）' : cr ? '重新開始呢場（全部人返 $3）' : tt ? '重新開始呢局（重新派身份同骰）' : cd ? '重新開始呢局（重新派身份同線）' : xs ? '重新派呢關（換數字同題目）' : wd ? '重新派詞語（呢局重新開始）' : '重新派呢輪（換題同身份）'}</button>`;
+    if (host && (dxg ? DX_PH : mw ? MW_PH : cr ? CR_PH : tt ? TT_PH : cd ? CD_PH : xs ? XS_PH : wd ? WD_PH : PLAY_PH).includes(v.ph)) hb += `<button class="btn ghost" data-act="redeal">${dxg ? '重新開始呢局（重新派牌、分數歸零）' : mw ? '重新開始呢局（重新傳卡）' : cr ? '重新開始呢場（全部人返 $3）' : tt ? '重新開始呢局（重新派身份同骰）' : cd ? '重新開始呢局（重新派身份同線）' : xs ? '重新派呢關（換數字同題目）' : wd ? '重新派詞語（呢局重新開始）' : '重新派呢輪（換題同身份）'}</button>`;
     if (host && v.ph !== 'lobby' && v.ph !== 'end') hb += '<button class="btn ghost" data-act="endgame">即刻完場</button>';
-    h = `<h3>${v.g === 'mw' ? '大宅目擊者・分數' : v.g === 'cr' ? `蟹仔大賽・第 ${v.hx ? v.hx.lg : 1} 段` : v.g === 'tt' ? '邊個偷咗蛋撻・分數' : v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
+    h = `<h3>${dxg ? `畫中有話・第 ${v.dx ? v.dx.rd : 1} 輪` : v.g === 'mw' ? '大宅目擊者・分數' : v.g === 'cr' ? `蟹仔大賽・第 ${v.hx ? v.hx.lg : 1} 段` : v.g === 'tt' ? '邊個偷咗蛋撻・分數' : v.g === 'cd' ? `拆彈危機・第 ${v.cr || 1} 輪` : v.g === 'xs' ? `心水數字・第 ${v.lv || 1} 關` : v.g === 'wd' ? `累計分數・第 ${v.rr || 1} 輪` : `分數・第 ${Math.min(v.rd + 1, v.tot)}／${v.tot} 輪`}</h3><div class="plist">${rows}</div>${wt}
 ${hb}<button class="btn gold" data-act="mclose">返去</button>`;
   } else if (m.type === 'mwmk' && S.view && S.view.g === 'mw' && S.view.mx && MW_PH.includes(S.view.ph) && (m.id === 'E' || S.view.mx.rm[m.id] != null)) {
     const v = S.view, id = m.id, p = id === 'E' ? null : pOf(v, id), L = (mwMarks(v)[id] || []).map((x) => x[0]);
@@ -5923,6 +6774,18 @@ document.addEventListener('click', (e) => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   const a = b.dataset.act, x = b.dataset.x, v = S.view;
   switch (a) {
+    // 畫中有話：撳卡放大，喺放大畫面揀卡、投票
+    case 'dxz': if (v && v.dx && x) { S.dxZ = { k: x[0], i: +x.slice(1) }; dxZoom(); sfx('tick'); } break;
+    case 'dxzn': if (S.dxZ) { S.dxZ.i += +x; dxZoom(); } break;
+    case 'dxzc': S.dxZ = null; dxZoom(); break;
+    case 'dxtell': S.dxZ = null; dxZoom(); act('dtell', +x); break;
+    case 'dxpk': S.dxZ = null; dxZoom(); act('dpick', [+x]); break;
+    case 'dxsel': if (v && v.dx) { const c = +x, h = v.dx.hand[ME.id] || [], sl = (S.dxSel || []).filter((q) => h.includes(q)); S.dxSel = sl.includes(c) ? sl.filter((q) => q !== c) : sl.length < 2 ? [...sl, c] : sl; sfx('tick'); if (S.dxSel.length === 2) S.dxZ = null; render(); } break;
+    case 'dxpk2': if (v && v.dx && S.dxSel && S.dxSel.length === 2) { act('dpick', S.dxSel.slice()); S.dxSel = []; } break;
+    case 'dxvt': S.dxZ = null; dxZoom(); act('dvote', +x); break;
+    case 'dxnx': act('dnext', 0); break;
+    case 'dxgo': confirmBox('唔等其他人，直接下一輪？', '下一輪', () => act('dnext', 1)); break;
+    case 'dxsk': if (v) confirmBox(v.ph === 'tell' ? '跳過呢個說書人？<small>由下一個人做說書人。</small>' : v.ph === 'pick' ? '唔等，幫未揀卡嘅人隨機揀？' : '唔等，即刻開票？<small>未投嘅人當冇投。</small>', '確定', () => act('dskip')); break;
     case 'create': createRoom(x); break;
     case 'joinpad': S.kp = ''; openModal({ type: 'join' }); break;
     case 'kp':
@@ -6164,6 +7027,7 @@ function tryReload() {
  * 12. 開始
  * ============================================================ */
 fixView();
+[0, 2, 25].forEach(dxArt);   // 畫中有話縮圖用嘅三張插畫
 (async () => {
   const q = new URLSearchParams(location.search);
   const code = q.get('room');
