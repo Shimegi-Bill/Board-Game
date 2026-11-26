@@ -4,7 +4,7 @@ const { chromium } = require('playwright'); const fs = require('fs');
 const out = process.argv[2] || 'raw', W = +(process.argv[3] || 900);
 (async () => {
   fs.mkdirSync(out, { recursive: true });
-  const code = ['art1.js', 'art2.js', 'art5.js', 'svg.js', 'art6.js'].map((x) => fs.readFileSync(__dirname + '/' + x, 'utf8')).join('\n');
+  const code = ['art1.js', 'art2.js', 'art7.js', 'art5.js', 'svg.js', 'art6.js', 'art8.js'].map((x) => fs.readFileSync(__dirname + '/' + x, 'utf8')).join('\n');
   const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: W, height: Math.round(W * 1.5) } });
   const errs = []; p.on('pageerror', (e) => errs.push(e.message));
   await p.setContent(`<html><body style="margin:0;background:#000"><script>${code}</script><div id="h"></div></body></html>`);

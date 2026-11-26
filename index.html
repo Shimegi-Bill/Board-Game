@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-26-01';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-26-02';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -3237,17 +3237,17 @@ function mwTick(now) {
   else if (st.ph === 'vote') { const vs = mwVoters(); if (now >= st.dl || (vs.length && vs.every((id) => mx.vt[id]))) mwTally(); }
 }
 /* ============================================================
- * 4h. 畫中有話（房主計算；妙語說書人（Dixit）玩法，名同 168 張油畫插畫自己整，GAME-27）
+ * 4h. 畫中有話（房主計算；妙語說書人（Dixit）玩法，名同 208 張油畫插畫自己整，GAME-27）
  *    Bill 2026-11-25 定：名「畫中有話」；說書人只係口講提示；插畫夢幻加香港元素；房主揀時限同目標分
  *    tell 說書人揀一張卡（唔限時）→ pick 其他人揀卡（3 人每人 2 張）→ vote 投票（唔可以投自己）
  *    → show 揭曉計分（全部人撳「下一輪」）→ 下一個說書人
  *    計分：全部人或者冇人估中說書人張卡：說書人 0，其他人 +2；否則說書人同估中嘅人 +3（3 人得一個人估中 +4）；
  *          唔係說書人：自己張卡每得 1 票 +1
- *    完場：有人夠目標分；168 張卡（Bill 2026-11-26「再增加卡片加到可以夠分」），萬一抽晒就將用過嘅卡洗返再派；最高分嘅人房間分數 +1
+ *    完場：有人夠目標分；208 張卡（Bill 2026-11-26「再增加卡片加到可以夠分」168 張，再加冒險、童話、公主、劍與魔法 40 張），萬一抽晒就將用過嘅卡洗返再派；最高分嘅人房間分數 +1
  *    3 人：得一個人估中，說書人同佢 +4（Bill 2026-11-26「有+4」）；7–8 人都係每人一票（Bill「唔可以投兩票」）
  *    測試模式唔夠 3 人：加電腦玩家（隨機揀卡、投票）
  * ============================================================ */
-const DX_N = 168;
+const DX_N = 208;
 const DX_PH = ['tell', 'pick', 'vote', 'show'];
 const dxHandN = (n) => (n === 3 ? 7 : 6);
 const dxPerN = (n) => (n === 3 ? 2 : 1);
@@ -3766,7 +3766,7 @@ function vLobby(v) {
     ? `<div class="cl">揀卡同投票時限（說書人唔限時）</div>${seg('k', v.cfg.k, host)}
       <div class="cl">目標分數（夠分就完場）</div>${seg('z', v.cfg.z, host)}
       <div class="cl">每輪流程</div><div class="flow"><span>說書人揀卡、口講提示</span><i>›</i><span>其他人揀最似嘅卡</span><i>›</i><span>洗牌投票</span><i>›</i><span>揭曉計分</span></div>
-      <div class="cl">${onN < 3 ? (v.test ? '測試模式：唔夠 3 人會加電腦玩家' : '要 3–8 人') : onN > 8 ? '最多 8 人' : `而家 ${onN} 人：每人 ${onN === 3 ? '7 張手牌，每次放 2 張' : '6 張手牌'}・共 168 張卡`}</div>`
+      <div class="cl">${onN < 3 ? (v.test ? '測試模式：唔夠 3 人會加電腦玩家' : '要 3–8 人') : onN > 8 ? '最多 8 人' : `而家 ${onN} 人：每人 ${onN === 3 ? '7 張手牌，每次放 2 張' : '6 張手牌'}・共 208 張卡`}</div>`
     : v.g === 'mw'
     ? `<div class="cl">討論時間</div>${seg('u', v.cfg.u, host)}
       <div class="cl">特別角色（兇手一定有，唔夠就補住客）</div><div class="mwsp">${MW_SP.map((t) => { const on = mwS.includes(t); return `<button class="mwspb${on ? ' on' : ''}${host ? '' : ' ro'}"${host ? ` data-act="mwr" data-x="${t}"` : ''}>${mwAv(t)}<span><b>${MW_ROLE[t]}</b><small>${MW_T2[t]}</small></span><i class="ck">${on ? ic('check') : ''}</i></button>`; }).join('')}</div>
@@ -5110,7 +5110,7 @@ ${rain(21, 40, '#c8d0ff', 0.3)}
   return { G: GY, U, H, K, A, L, R, D, B, P, BK, C, E };
 })();
 /* 畫中有話：卡背同完場插畫用嘅 SVG 小工具（DXA）
- * 168 張卡面係油畫圖片檔 dx/c000.webp–c167.webp（Bill 2026-11-26「精美仔細…好似畫作…加入油畫元素」）：
+ * 208 張卡面係油畫圖片檔 dx/c000.webp–c207.webp（Bill 2026-11-26「精美仔細…好似畫作…加入油畫元素」；168–207 係冒險、童話、公主、劍與魔法）：
  * 自己用 SVG 砌場景（GAME-27），再用程式一筆一筆畫成油畫；整圖工具喺 tools/dxart/ */
 const DXA = (() => {
   let R = Math.random, D = [], N = 0;
@@ -5660,7 +5660,7 @@ const RULES_DX = `<div class="rules">
     <li>說書人以外：每有一個人投你張卡，你 +1。</li>
   </ul>
   <h4>提示點樣講</h4><p>講得太白，全部人估中，你冇分；講得太難，冇人估中，你都冇分。要一部分人估中先最好。</p>
-  <h4>完場</h4><p>有人夠目標分（房主揀 20 或 30 分）就完。總共 168 張卡，萬一抽晒會將用過嘅卡洗返再派。最高分嘅人贏，房間分數 +1。</p>
+  <h4>完場</h4><p>有人夠目標分（房主揀 20 或 30 分）就完。總共 208 張卡，萬一抽晒會將用過嘅卡洗返再派。最高分嘅人贏，房間分數 +1。</p>
   <h4>時限</h4><p>房主揀揀卡同投票時限（唔限時／60 秒／90 秒）。時間到未揀卡就幫你隨機揀；未投票就當冇投。說書人揀卡唔限時。</p>
   <h4>撳卡放大</h4><p>撳任何一張卡會放大，左右掃睇其他卡。揀卡同投票都喺放大畫面撳掣。</p>
 </div>`;
@@ -6446,7 +6446,8 @@ const RULES = `<div class="rules">
 </div>`;
 function openModal(m) { S.modal = m; renderModal(); }
 function closeModal() { S.modal = null; renderModal(); }
-function confirmBox(text, ok, fn, opts = {}) { openModal({ type: 'confirm', text, ok, fn, bad: !!opts.bad, clr: !!opts.clr, ph: S.view ? S.view.ph : null }); }
+/* 確認框：預設轉咗階段就收埋（例如「揀呢張」過咗時）；keep：同階段無關嘅（完場、重新開始、請出房、離開）唔收，其他人出卡時房主個框唔會突然冇咗 */
+function confirmBox(text, ok, fn, opts = {}) { openModal({ type: 'confirm', text, ok, fn, bad: !!opts.bad, clr: !!opts.clr, ph: opts.keep || !S.view ? null : S.view.ph }); }
 function renderModal() {
   const el = $('#modal'), m = S.modal;
   if (!m) { el.classList.remove('show', 'clr'); el.innerHTML = ''; el.dataset.mt = ''; S.mh = ''; if (S.mwGhost && !S.mwGhost.ok) setTimeout(() => { if (S.mwGhost && !S.mwGhost.ok && !S.modal) mwGhostBack(); }, 0); return; }
@@ -6541,13 +6542,13 @@ document.addEventListener('click', (e) => {
     case 'cancel': leaveRoom(); break;
     case 'leave':
       if (!v) { leaveRoom(); break; }
-      if (S.isHost) confirmBox('你係房主，離開會解散成個房間。', '解散房間', leaveNow, { bad: true });
-      else confirmBox(v.ph === 'lobby' || v.ph === 'end' ? '離開房間？' : '遊戲進行緊，確定離開？', '離開', leaveNow, { bad: true });
+      if (S.isHost) confirmBox('你係房主，離開會解散成個房間。', '解散房間', leaveNow, { bad: true, keep: true });
+      else confirmBox(v.ph === 'lobby' || v.ph === 'end' ? '離開房間？' : '遊戲進行緊，確定離開？', '離開', leaveNow, { bad: true, keep: true });
       break;
     case 'share': shareLink(); break;
     case 'copy': copyText(S.code, '已複製房號'); break;
     case 'cfg': act('cfg', [b.dataset.k, +b.dataset.v]); break;
-    case 'kick': if (v) confirmBox(`請 ${esc(nameOf(v, x))} 出房？<small>佢之後入唔返呢間房。</small>`, '請出房', () => act('kick', x), { bad: true }); break;
+    case 'kick': if (v) confirmBox(`請 ${esc(nameOf(v, x))} 出房？<small>佢之後入唔返呢間房。</small>`, '請出房', () => act('kick', x), { bad: true, keep: true }); break;
     case 'start': act('start'); break;
     case 'game': act('game', x); break;
     case 'xplay': { const mine = v && v.hd ? v.hd[ME.id] : null; if (mine && mine.length) confirmBox(`出 ${S.xsHide ? '最細嗰張' : mine[0]}？`, '出牌', () => act('xplay')); break; }
@@ -6606,8 +6607,8 @@ document.addEventListener('click', (e) => {
     case 'pick': if (v) confirmBox(`確定 ${esc(nameOf(v, x))} 係老實人？`, '確定', () => act('pick', x)); break;
     case 'next': act('next'); break;
     case 'again': act('again'); break;
-    case 'redeal': closeModal(); if (v && v.g === 'mw') confirmBox('重新開始呢局？<small>會重新洗牌，由頭傳卡。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'cr') confirmBox('重新開始呢場？<small>全部人返 $3，重新排蟹。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'tt') confirmBox('重新開始呢局？<small>會重新派身份同骰。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'cd') confirmBox('重新開始呢局？<small>會重新派身份同線。</small>', '重新開始', () => act('redeal')); else if (v && v.g === 'xs') confirmBox('重新派呢關？<small>會換過數字同題目，命唔變。</small>', '重新派', () => act('redeal')); else if (v && v.g === 'wd') confirmBox('重新派詞語？<small>呢局重新開始，會換過詞語同身份。</small>', '重新派', () => act('redeal')); else confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal')); break;
-    case 'endgame': closeModal(); confirmBox('即刻完場？<small>會用而家嘅分數排名。</small>', '完場', () => act('end'), { bad: true }); break;
+    case 'redeal': closeModal(); if (v && v.g === 'dx') confirmBox('重新開始呢局？<small>會重新洗牌派牌，分數歸零。</small>', '重新開始', () => act('redeal'), { keep: true }); else if (v && v.g === 'mw') confirmBox('重新開始呢局？<small>會重新洗牌，由頭傳卡。</small>', '重新開始', () => act('redeal'), { keep: true }); else if (v && v.g === 'cr') confirmBox('重新開始呢場？<small>全部人返 $3，重新排蟹。</small>', '重新開始', () => act('redeal'), { keep: true }); else if (v && v.g === 'tt') confirmBox('重新開始呢局？<small>會重新派身份同骰。</small>', '重新開始', () => act('redeal'), { keep: true }); else if (v && v.g === 'cd') confirmBox('重新開始呢局？<small>會重新派身份同線。</small>', '重新開始', () => act('redeal'), { keep: true }); else if (v && v.g === 'xs') confirmBox('重新派呢關？<small>會換過數字同題目，命唔變。</small>', '重新派', () => act('redeal'), { keep: true }); else if (v && v.g === 'wd') confirmBox('重新派詞語？<small>呢局重新開始，會換過詞語同身份。</small>', '重新派', () => act('redeal'), { keep: true }); else confirmBox('重新派呢輪？<small>會換過題目同身份，呢輪嘅分數取消。</small>', '重新派', () => act('redeal'), { keep: true }); break;
+    case 'endgame': closeModal(); confirmBox('即刻完場？<small>會用而家嘅分數排名。</small>', '完場', () => act('end'), { bad: true, keep: true }); break;
     case 'snd': SND.on = x == null ? !SND.on : x === '1'; LS.set('bgr_snd', SND.on); if (!SND.on) closeAudio(); renderModal(); break;
     case 'settings': openModal({ type: 'settings' }); break;
     case 'gpick': if (v && v.host === ME.id && v.ph === 'lobby') openModal({ type: 'gpick' }); break;
