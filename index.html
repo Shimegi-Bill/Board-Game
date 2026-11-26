@@ -3237,16 +3237,17 @@ function mwTick(now) {
   else if (st.ph === 'vote') { const vs = mwVoters(); if (now >= st.dl || (vs.length && vs.every((id) => mx.vt[id]))) mwTally(); }
 }
 /* ============================================================
- * 4h. 畫中有話（房主計算；妙語說書人（Dixit）玩法，名同 84 張插畫自己整，GAME-27）
+ * 4h. 畫中有話（房主計算；妙語說書人（Dixit）玩法，名同 168 張油畫插畫自己整，GAME-27）
  *    Bill 2026-11-25 定：名「畫中有話」；說書人只係口講提示；插畫夢幻加香港元素；房主揀時限同目標分
  *    tell 說書人揀一張卡（唔限時）→ pick 其他人揀卡（3 人每人 2 張）→ vote 投票（唔可以投自己）
  *    → show 揭曉計分（全部人撳「下一輪」）→ 下一個說書人
  *    計分：全部人或者冇人估中說書人張卡：說書人 0，其他人 +2；否則說書人同估中嘅人 +3；
  *          唔係說書人：自己張卡每得 1 票 +1
- *    完場：有人夠目標分，或者冇牌補（84 張抽晒）；最高分嘅人房間分數 +1
+ *    完場：有人夠目標分；168 張卡（Bill 2026-11-26「再增加卡片加到可以夠分」），萬一抽晒就將用過嘅卡洗返再派；最高分嘅人房間分數 +1
+ *    3 人：得一個人估中，說書人同佢 +4（Bill 2026-11-26「有+4」）；7–8 人都係每人一票（Bill「唔可以投兩票」）
  *    測試模式唔夠 3 人：加電腦玩家（隨機揀卡、投票）
  * ============================================================ */
-const DX_N = 84;
+const DX_N = 168;
 const DX_PH = ['tell', 'pick', 'vote', 'show'];
 const dxHandN = (n) => (n === 3 ? 7 : 6);
 const dxPerN = (n) => (n === 3 ? 2 : 1);
@@ -3319,7 +3320,7 @@ function dxScore() {
   dx.ord.forEach((id) => { g[id] = { b: 0, x: 0 }; });
   if (voters.length) {
     if (!hit.length || hit.length === voters.length) dxLive().forEach((id) => { if (id !== dx.st) g[id].b = 2; });
-    else { g[dx.st].b = 3; hit.forEach((v) => { g[v].b = 3; }); }
+    else { const b = dx.ord.length === 3 && hit.length === 1 ? 4 : 3; g[dx.st].b = b; hit.forEach((v) => { g[v].b = b; }); }   // 3 人得一個人估中 +4
     voters.forEach((v) => { const o = own[dx.vt[v]]; if (o && o !== dx.st) g[o].x++; });
   }
   dx.ord.forEach((id) => { dx.pt[id] += g[id].b + g[id].x; });
@@ -3333,6 +3334,10 @@ function dxAfter() {
   const dx = HS.dx, live = dxLive();
   if (Math.max(0, ...live.map((id) => dx.pt[id])) >= dx.tgt) { dxEnd('score'); return; }
   const need = live.reduce((s, id) => s + Math.max(0, dx.hs - dx.hand[id].length), 0);
+  if (need > dx.deck.length) {   // 萬一抽晒：用過嘅卡洗返再派（唔使因為冇牌完場）
+    const keep = new Set([...Object.values(dx.hand).flat(), ...dx.deck]);
+    dx.deck = shuffle(Array.from({ length: DX_N }, (_, i) => i).filter((c) => !keep.has(c))).concat(dx.deck); dx.rs = (dx.rs || 0) + 1;
+  }
   if (need > dx.deck.length) { dxEnd('deck'); return; }
   live.forEach((id) => { while (dx.hand[id].length < dx.hs) dx.hand[id].push(dx.deck.pop()); });
   dxRound(false);
@@ -3759,9 +3764,9 @@ function vLobby(v) {
   const MW_T2 = { A: '兇手嗰邊', L: '令一個人嘅票唔計', R: '一個人計兩票', D: '自己揀人關入地窖', B: '睇兩張冇用嘅卡', P: '想俾人關，自己一邊' };
   const opts = v.g === 'dx'
     ? `<div class="cl">揀卡同投票時限（說書人唔限時）</div>${seg('k', v.cfg.k, host)}
-      <div class="cl">目標分數（夠分或者冇牌補就完場）</div>${seg('z', v.cfg.z, host)}
+      <div class="cl">目標分數（夠分就完場）</div>${seg('z', v.cfg.z, host)}
       <div class="cl">每輪流程</div><div class="flow"><span>說書人揀卡、口講提示</span><i>›</i><span>其他人揀最似嘅卡</span><i>›</i><span>洗牌投票</span><i>›</i><span>揭曉計分</span></div>
-      <div class="cl">${onN < 3 ? (v.test ? '測試模式：唔夠 3 人會加電腦玩家' : '要 3–8 人') : onN > 8 ? '最多 8 人' : `而家 ${onN} 人：每人 ${onN === 3 ? '7 張手牌，每次放 2 張' : '6 張手牌'}・共 84 張卡`}</div>`
+      <div class="cl">${onN < 3 ? (v.test ? '測試模式：唔夠 3 人會加電腦玩家' : '要 3–8 人') : onN > 8 ? '最多 8 人' : `而家 ${onN} 人：每人 ${onN === 3 ? '7 張手牌，每次放 2 張' : '6 張手牌'}・共 168 張卡`}</div>`
     : v.g === 'mw'
     ? `<div class="cl">討論時間</div>${seg('u', v.cfg.u, host)}
       <div class="cl">特別角色（兇手一定有，唔夠就補住客）</div><div class="mwsp">${MW_SP.map((t) => { const on = mwS.includes(t); return `<button class="mwspb${on ? ' on' : ''}${host ? '' : ' ro'}"${host ? ` data-act="mwr" data-x="${t}"` : ''}>${mwAv(t)}<span><b>${MW_ROLE[t]}</b><small>${MW_T2[t]}</small></span><i class="ck">${on ? ic('check') : ''}</i></button>`; }).join('')}</div>
@@ -5917,11 +5922,11 @@ const RULES_DX = `<div class="rules">
   </ol>
   <h4>計分</h4><ul>
     <li>全部人估中，或者冇人估中：說書人 0 分，其他人每人 +2。</li>
-    <li>有人估中、有人估唔中：說書人同估中嘅人每人 +3。</li>
+    <li>有人估中、有人估唔中：說書人同估中嘅人每人 +3（3 人時得一個人估中：說書人同佢每人 +4）。</li>
     <li>說書人以外：每有一個人投你張卡，你 +1。</li>
   </ul>
   <h4>提示點樣講</h4><p>講得太白，全部人估中，你冇分；講得太難，冇人估中，你都冇分。要一部分人估中先最好。</p>
-  <h4>完場</h4><p>有人夠目標分（房主揀 20 或 30 分），或者冇牌補（84 張抽晒）就完。最高分嘅人贏，房間分數 +1。</p>
+  <h4>完場</h4><p>有人夠目標分（房主揀 20 或 30 分）就完。總共 168 張卡，萬一抽晒會將用過嘅卡洗返再派。最高分嘅人贏，房間分數 +1。</p>
   <h4>時限</h4><p>房主揀揀卡同投票時限（唔限時／60 秒／90 秒）。時間到未揀卡就幫你隨機揀；未投票就當冇投。說書人揀卡唔限時。</p>
   <h4>撳卡放大</h4><p>撳任何一張卡會放大，左右掃睇其他卡。揀卡同投票都喺放大畫面撳掣。</p>
 </div>`;
