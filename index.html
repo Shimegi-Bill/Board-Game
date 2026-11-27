@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-27-01';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-27-02';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -1388,7 +1388,14 @@ html[data-theme="cream"] #banner{background:rgba(210,59,85,.1);color:#9b1f37}
 #fkpad .fkmy{margin:0}
 #fkpad .fkpb{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 #fkpad .fkpb .fkbd{width:min(100%,calc(100dvh - 250px));margin:0}
-#fkpad .row .btn{margin:0}
+#fkpad .fkgo{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(20,14,30,.35);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+#fkpad .fkgo .btn{width:auto;min-width:180px;margin:0}
+#fkpad .fkgo small{font-size:13px;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+#fkpad .fkpst{text-align:center;font-size:15px;font-weight:800;color:var(--tx2);min-height:22px}
+#fkpad.fkgoon .fkpx{visibility:hidden}
+.fkbd .fklive{stroke-width:11}
+.fkbd .fkpen{fill:#fff;stroke-width:6}
+.fkbd.fklv .fkem{display:none}
 html[data-theme="cream"] #fkpad{background:rgba(250,243,228,.97)}
 .cdwin.fk{background:radial-gradient(120% 120% at 75% 10%,#e8744a,#3a1430 72%);box-shadow:inset 0 0 0 1.5px rgba(242,216,146,.8),0 16px 36px rgba(0,0,0,.3)}
 .cdwin.fk .big{color:#ffe9a8}
@@ -3578,7 +3585,7 @@ function fkTurn() {
 }
 /* 一筆：0–1000 嘅整數座標，x,y,x,y…，最多 300 點 */
 const fkLineOk = (p) => Array.isArray(p) && p.length >= 4 && p.length <= 600 && p.length % 2 === 0 && p.every((n) => Number.isInteger(n) && n >= 0 && n <= 1000);
-function fkLine(id, p) { const fx = HS.fx; fx.ln.push({ id, p }); fx.ti++; fkTurn(); }
+function fkLine(id, p) { const fx = HS.fx; fx.ln.push({ id, p, t: fx.ti }); fx.ti++; fkTurn(); }
 function fkSkip() { HS.fx.ti++; fkTurn(); }
 function fkVote() { const st = HS, fx = st.fx; st.ph = 'fv'; fx.cur = null; fx.vt = {}; fx.bt = {}; st.dl = 0; st.dt0 = 0; fx.ek++; fx.ev = { k: fx.ek, t: 'vote' }; fkCheckVote(); }
 function fkCheckVote() { const st = HS, fx = st.fx; if (st.ph === 'fv' && fkArt().filter(hOn).every((id) => fx.vt[id])) fkTally(); }
@@ -3622,6 +3629,7 @@ function fkBots(now, fn) {
     if (fx.bt[p.id] > 0 && now >= fx.bt[p.id]) { fx.bt[p.id] = -1; fn(p.id); }
   });
 }
+let FK_BD = null;   // 電腦玩家畫緊嗰筆（測試模式）
 /* 電腦畫一筆：隨意彎彎曲曲 */
 function fkBotLine() {
   let x = 250 + Math.random() * 500, y = 250 + Math.random() * 500, a = Math.random() * 6.28;
@@ -3641,8 +3649,15 @@ function fkTick(now) {
     fkCheckSeen();
   } else if (st.ph === 'fd') {
     if (!fkIn(fx.cur)) { fkTurn(); return; }
-    const p = st.pl.find((q) => q.id === fx.cur);
-    if (p.bot) fkBots(now, (id) => { if (st.ph === 'fd' && id === fx.cur) fkLine(id, fkBotLine()); });
+    const p = st.pl.find((q) => q.id === fx.cur), key = st.gid + '-' + fx.rd + '-' + fx.ti;
+    if (p.bot) {
+      fkBots(now, (id) => { if (st.ph === 'fd' && id === fx.cur) FK_BD = { key, id, p: fkBotLine(), t0: now }; });
+      if (FK_BD && FK_BD.key === key) {   // 電腦玩家用 1.6 秒（測試加速都最少 0.9 秒）畫完，經即時頻道一點一點送出去（房主自己部機直接畫）
+        const k = Math.min(1, (now - FK_BD.t0) / Math.max(900, 1600 / SPEED)), part = FK_BD.p.slice(0, Math.max(2, Math.ceil((k * FK_BD.p.length) / 2) * 2));
+        fkLivePub(key, part); S.fkLive = { key, p: part }; (S.fkLvSeen = S.fkLvSeen || {})[key] = 1; fkLiveApply();
+        if (k >= 1) { const b = FK_BD; FK_BD = null; fkLivePub(null); fkLine(b.id, b.p); return; }
+      }
+    }
     if (st.ph === 'fd' && st.dl && now >= st.dl) fkSkip();   // 時間到：跳過呢一筆
   } else if (st.ph === 'fv') {
     fkBots(now, (id) => { if (st.ph === 'fv' && fx.art.includes(id) && !fx.vt[id]) { const ok = fkArt().filter((q) => q !== id); if (ok.length) fx.vt[id] = ok[Math.floor(Math.random() * ok.length)]; } });
@@ -3706,6 +3721,8 @@ async function enterRoom(code, host) {
   if (S.offPeers) S.offPeers();
   S.offPeers = room.onPeers((peers) => (S.isHost ? hOnPeers(peers) : gOnPeers(peers)));
   if (!host) room.presence({ k: 'p', id: ME.id, n: ME.name, a: null });
+  if (S.offLive) S.offLive();
+  S.lroom = hub.join('r' + code + 'v'); S.offLive = S.lroom.onPeers(fkLivePeers);   // 冒牌畫家即時畫畫頻道（細細份，唔使成個房間狀態重傳）
   LS.set('bgr_sess', { code, host, t: Date.now() });
   wakeOn();
 }
@@ -3752,6 +3769,8 @@ function leaveRoom() {
   if (S.offPeers) { S.offPeers(); S.offPeers = null; }
   if (S.offConn) { S.offConn(); S.offConn = null; }
   if (S.room) { try { S.room.leave(); } catch (e) { /* 略過 */ } }
+  if (S.offLive) { S.offLive(); S.offLive = null; }
+  if (S.lroom) { try { S.lroom.leave(); } catch (e) { /* 略過 */ } S.lroom = null; }
   if (S.isHost) LS.del('bgr_hs');
   LS.del('bgr_sess');
   S.room = null; S.view = null; S.rev = -1; S.code = null; S.creating = false; S.pend = 0; S.hold = false;
@@ -3908,8 +3927,8 @@ const RULES_FK = `<div class="rules">
   </ul>
   <h4>每局流程</h4><ol>
     <li>睇題目：撳住張卡睇。真畫家見到類別同題目；冒牌畫家淨係見到類別。</li>
-    <li>畫畫：照次序每人畫一筆（手指一路唔離開畫紙），畫兩轉。畫得太白，冒牌畫家會估到題目；畫得太亂，大家會當你係冒牌畫家。</li>
-    <li>投票：全部畫家一齊投邊個係冒牌畫家，唔可以投自己。</li>
+    <li>畫畫：照次序每人畫一筆，畫兩轉。輪到你撳「開始畫」先落得筆；每筆得一次機會，手指離開畫紙就自動交，冇得擦。其他人即時見到你畫緊。畫得太白，冒牌畫家會估到題目；畫得太亂，大家會當你係冒牌畫家。</li>
+    <li>投票：全部畫家一齊投邊個係冒牌畫家，唔可以投自己。投票同揭曉時可以撳「重播」，照次序睇返每一筆係邊個畫。</li>
     <li>最多票嘅人得一個，而且真係冒牌畫家，先算捉到；平票或者投錯人，冒牌畫家走甩。</li>
     <li>捉到之後：冒牌畫家口講估題目，其他真畫家投「估中」或者「估錯」，一半或以上話估中就算估中。</li>
   </ol>
@@ -4009,6 +4028,7 @@ function render() {
   mwHandSync();
   dxZoom();
   fkPadSync();
+  fkLiveApply();
   tickCd();
   if (S.screen === 'room' && S.view && S.view.g === 'cr') crAnim(S.view);
 }
@@ -6174,12 +6194,18 @@ function fkBoard(v, anim = true, rp = null) {
   const fx = v.fx, n = fx.ln.length;
   const ps = fx.ln.map((l, i) => {
     if (rp != null) return `<path d="${fkPath(l.p)}" stroke="${fkInk(v, l.id)}" pathLength="1" class="fkrpd" style="animation-delay:${i * FK_RP - rp}ms"/>`;
-    const a = anim && i === n - 1 ? an('fkl' + v.gid + '-' + fx.rd + '-' + i, 1400) : '';
+    const a = anim && i === n - 1 && !(S.fkLvSeen && S.fkLvSeen[v.gid + '-' + fx.rd + '-' + l.t]) ? an('fkl' + v.gid + '-' + fx.rd + '-' + i, 1400) : '';   // 即時睇過嗰筆唔使再播
     return `<path d="${fkPath(l.p)}" stroke="${fkInk(v, l.id)}"${a ? ` pathLength="1" class="fkdraw" style="${a}"` : ''}/>`;
   }).join('');
   const cl = (z) => Math.max(34, Math.min(966, z));
   const nums = rp == null ? '' : fx.ln.map((l, i) => `<g class="fkrpn" style="animation-delay:${i * FK_RP - rp}ms"><circle cx="${cl(l.p[0])}" cy="${cl(l.p[1])}" r="32" fill="${fkInk(v, l.id)}"/><text x="${cl(l.p[0])}" y="${cl(l.p[1]) + 12}">${i + 1}</text></g>`).join('');
-  return `<div class="fkbd"><svg viewBox="0 0 1000 1000">${ps}${nums}</svg>${n ? '' : '<div class="fkem">畫紙仲係白嘅</div>'}</div>`;
+  const live = v.ph === 'fd' && rp == null ? '<path class="fklive" d=""/><circle class="fkpen" r="0" cx="0" cy="0"/>' : '';
+  return `<div class="fkbd"><svg viewBox="0 0 1000 1000">${ps}${live}${nums}</svg>${n ? '' : '<div class="fkem">畫紙仲係白嘅</div>'}</div>`;
+}
+/* 重播掣同畫板（投票、估題目、揭曉都用；Bill 2026-11-27「投票畫面先可以重播」） */
+function fkRpBlock(v) {
+  const fx = v.fx, rp = S.fkRp && S.fkRp.k === v.gid + '-' + fx.rd ? Date.now() - S.fkRp.t : null;
+  return fkBoard(v, false, rp) + (rp != null ? fkReplayCap(v, rp) : '') + (fx.ln.length ? `<button class="btn ghost fkrpb" data-act="fkrp">${rp != null ? '再重播一次' : '重播：睇大家下筆次序'}</button>` : '');
 }
 /* 重播字幕：而家畫緊第幾筆、邊個、第幾轉（每句只喺佢嗰筆嘅時間出；最後一句留低） */
 function fkReplayCap(v, rp) {
@@ -6256,7 +6282,7 @@ function vPlayFk(v) {
     const voters = fx.art.filter((id) => fkOnV(v, id)), vd = Object.fromEntries(Object.keys(fx.vt).map((q) => [q, 1])), can = inA && !fx.vt[me];
     h += `<div class="holdbar fksb${can ? ' me' : ''}"><span class="sc2">${ic('eye')}</span><div><div class="t1">${can ? '邊個係冒牌畫家？' : inA ? '已投票' : '大家投緊票'}</div><div class="t2">${can ? '睇清楚張畫，撳一個人投佢' : isQ ? '出題者唔使投' : '等其他人投'}</div></div></div>`;
     if (can) h += `<div class="fkvs">${fx.art.filter((id) => id !== me).map((id) => { const p = pOf(v, id); return `<button class="fkv" data-act="fkv" data-x="${id}"${p && p.gone ? ' disabled' : ''}>${av(p)}<span>${nm(p)}</span><i style="background:${fkInk(v, id)}"></i></button>`; }).join('')}</div>`;
-    h += fkBoard(v, false) + fkLegend(v);
+    h += fkRpBlock(v) + fkLegend(v);
     h += `<div class="sh"><span>已投票</span><small>${voters.filter((id) => vd[id]).length}／${voters.length}</small></div><div class="okl">${okChips(v, voters, vd)}</div>`;
     if (host && voters.some((id) => !vd[id])) h += '<button class="btn ghost" data-act="fksk">唔等，即刻開票</button>';
   } else if (ph === 'fg') {
@@ -6268,7 +6294,7 @@ function vPlayFk(v) {
     else h += `<div class="wait">${inA && !isF ? '已判斷，等其他人' : `等真畫家判斷 ${nm(fp)} 估中未`}<span class="ld"><i></i><i></i><i></i></span></div>`;
     h += `<div class="sh"><span>已判斷</span><small>${judges.filter((id) => gd[id]).length}／${judges.length}</small></div><div class="okl">${okChips(v, judges, gd)}</div>`;
     if (host && judges.some((id) => !gd[id])) h += '<button class="btn ghost" data-act="fksk">唔等，即刻計</button>';
-    h += fkBoard(v, false) + fkLegend(v) + fkVotes(v);
+    h += fkRpBlock(v) + fkLegend(v) + fkVotes(v);
   } else if (ph === 'fr') {
     const how = fx.how, good = how === 'caught';
     const t1 = how === 'esc' ? '冒牌畫家走甩！' : how === 'guess' ? '冒牌畫家估中題目！' : how === 'caught' ? '真畫家贏！' : '呢局唔計';
@@ -6277,8 +6303,7 @@ function vPlayFk(v) {
     const q = anA('fkr' + v.gid + '-' + fx.rd, 900, 'fkpop');
     h += `<div class="fkres ${good ? 'good' : 'bad'}${q.c}"${q.s}>${av(fp)}<div><b>${t1}</b><small>${t2}・${pts}</small></div></div>`;
     h += `<div class="fkans"><div><small>題目</small><b>${esc(fx.cat)}・${esc(fx.wd)}</b></div><div><small>冒牌畫家</small><b>${nm(fp)}</b></div></div>`;
-    const rp = S.fkRp && S.fkRp.k === v.gid + '-' + fx.rd ? Date.now() - S.fkRp.t : null;   // Bill 2026-11-27：最後撳重播睇大家下筆次序
-    h += fkBoard(v, false, rp) + (rp != null ? fkReplayCap(v, rp) : '') + (fx.ln.length ? `<button class="btn ghost fkrpb" data-act="fkrp">${rp != null ? '再重播一次' : '重播：睇大家下筆次序'}</button>` : '') + fkLegend(v) + fkVotes(v);
+    h += fkRpBlock(v) + fkLegend(v) + fkVotes(v);   // Bill 2026-11-27：撳重播睇大家下筆次序
     h += `<div class="sh"><span>分數</span><small>${fx.tgt} 分完場</small></div>` + fkScores(v, true);
     const last = Math.max(0, ...fx.ord.map((id) => fx.pt[id])) >= fx.tgt;
     h += host ? `<button class="btn gold big" data-act="fknx">${last ? '睇最後結果' : '下一局'}</button>` : '<div class="wait">等房主開下一局<span class="ld"><i></i><i></i><i></i></span></div>';
@@ -6295,27 +6320,38 @@ function vEndFk(v) {
     ${host ? '<div class="row"><button class="btn ghost" data-act="tolobby">返房間</button><button class="btn gold" data-act="again">再嚟一局</button></div>' : '<div class="wait">等房主開新一局<span class="ld"><i></i><i></i><i></i></span></div>'}
     <button class="btn ghost" data-act="leave">離開房間</button>`;
 }
-/* 畫板（#fkpad，放喺 #app 外面：其他人郁、畫面重畫都唔會洗走畫緊嗰筆）；輪到自己先出，可以收埋再開 */
+/* 畫板（#fkpad，放喺 #app 外面：其他人郁、畫面重畫都唔會洗走畫緊嗰筆）；輪到自己先出
+ * Bill 2026-11-27「即時睇到其他人畫，每次落筆得一次機會，確定開始後先開始畫」：撳「開始畫」先落得筆；手指離開就自動交（冇得擦）；
+ * 畫緊每 0.09 秒經即時頻道送一次（fkLivePub），其他人即刻見到 */
 const fkPadKey = (v) => v.gid + '-' + v.fx.rd + '-' + v.fx.ti;
 function fkPadSync() {
   const v = S.view; let el = $('#fkpad');
   const on = !!(v && S.screen === 'room' && v.g === 'fk' && v.fx && v.ph === 'fd' && v.fx.cur === ME.id);
   const key = on ? fkPadKey(v) : '';
-  if (!on) S.fkPad = null;
-  if (!on || S.fkHide === key) { if (el) el.classList.remove('fkon'); return; }
+  if (S.fkPad && S.fkPad.key !== key) { if (S.fkPad.go) fkLivePub(null); S.fkPad = null; }
+  if (!on || (S.fkHide === key && !(S.fkPad && S.fkPad.go))) { if (el) el.classList.remove('fkon'); return; }
   if (!el) { el = document.createElement('div'); el.id = 'fkpad'; document.body.appendChild(el); }
-  if (!S.fkPad || S.fkPad.key !== key) {
+  if (!S.fkPad) {
     const fx = v.fx, f = fx.fk === ME.id, lap = Math.floor(fx.ti / fx.seq.length) + 1;
-    S.fkPad = { key, pts: [], done: false, sent: false, dn: false, col: fkInk(v, ME.id) };
-    el.innerHTML = `<div class="fkph"><div class="fkpt">${v.dl ? ring('dl', v.dt0 || 1) : ''}<div><b>到你畫！</b><small>第 ${lap}／${FK_LAPS} 轉・一筆過，手指離開就完</small></div></div><button class="fkpx" data-act="fkhide">收埋</button></div>
+    S.fkPad = { key, pts: [], go: false, done: false, sent: false, dn: false, lt: 0, col: fkInk(v, ME.id) };
+    el.classList.remove('fkgoon');   // 上一轉撳過「開始畫」：新一轉由頭
+    el.innerHTML = `<div class="fkph"><div class="fkpt">${v.dl ? ring('dl', v.dt0 || 1) : ''}<div><b>到你畫！</b><small>第 ${lap}／${FK_LAPS} 轉・每筆得一次機會</small></div></div><button class="fkpx" data-act="fkhide">收埋</button></div>
       <div class="fkmy" data-hold><span class="fkh">${ic('eye')}撳住睇自己張卡</span><span class="fks">${f ? `你係<b>冒牌畫家</b>・類別：${esc(fx.cat)}` : `${esc(fx.cat)}・<b>${esc(fx.wd)}</b>`}</span></div>
-      <div class="fkpb"><div class="fkbd"><svg viewBox="0 0 1000 1000">${fx.ln.map((l) => `<path d="${fkPath(l.p)}" stroke="${fkInk(v, l.id)}"/>`).join('')}</svg><canvas></canvas></div></div>
-      <div class="row"><button class="btn ghost" data-act="fkclr" disabled>擦咗重畫</button><button class="btn gold big" data-act="fksend" disabled>喺畫紙畫一筆</button></div>`;
+      <div class="fkpb"><div class="fkbd"><svg viewBox="0 0 1000 1000">${fx.ln.map((l) => `<path d="${fkPath(l.p)}" stroke="${fkInk(v, l.id)}"/>`).join('')}</svg><canvas></canvas><div class="fkgo"><button class="btn gold big" data-act="fkgo">開始畫</button><small>撳咗先落得筆・手指離開畫紙就交，冇得擦</small></div></div></div>
+      <div class="fkpst">準備好就撳「開始畫」</div>`;
     fkPadInit(el);
   }
   el.classList.add('fkon');
   requestAnimationFrame(fkPadFit);
 }
+function fkPadGo() {
+  const P = S.fkPad, el = $('#fkpad'); if (!P || P.go || !el) return;
+  P.go = true; el.classList.add('fkgoon');
+  const g = el.querySelector('.fkgo'); if (g) g.remove();
+  fkPadStat('落筆啦！手指離開畫紙就自動交'); sfx('tick');
+  fkLivePub(P.key, []);
+}
+function fkPadStat(t) { const el = $('#fkpad .fkpst'); if (el) el.textContent = t; }
 function fkPadFit() {
   const el = $('#fkpad'); if (!el || !S.fkPad) return;
   const cv = el.querySelector('canvas'); if (!cv) return;
@@ -6335,22 +6371,17 @@ function fkPadPaint() {
   else { for (let i = 2; i < p.length - 2; i += 2) c.quadraticCurveTo(p[i] * k, p[i + 1] * k, ((p[i] + p[i + 2]) / 2) * k, ((p[i + 1] + p[i + 3]) / 2) * k); c.lineTo(p[p.length - 2] * k, p[p.length - 1] * k); }
   c.stroke();
 }
+/* 一路畫一路送：每 90 毫秒送一次（減咗點數） */
+function fkPadLive(force) { const P = S.fkPad, now = Date.now(); if (!P || (!force && now - P.lt < 90)) return; P.lt = now; fkLivePub(P.key, fkSimp(P.pts, 1.5)); }
 function fkPadInit(el) {
   const cv = el.querySelector('canvas');
   const pos = (e) => { const r = cv.getBoundingClientRect(); return [Math.round(Math.max(0, Math.min(1000, ((e.clientX - r.left) / r.width) * 1000))), Math.round(Math.max(0, Math.min(1000, ((e.clientY - r.top) / r.height) * 1000)))]; };
-  cv.addEventListener('pointerdown', (e) => { const P = S.fkPad; if (!P || P.done || P.sent) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { /* 略過 */ } P.dn = true; P.pts = pos(e); fkPadFit(); });
-  cv.addEventListener('pointermove', (e) => { const P = S.fkPad; if (!P || !P.dn) return; const [x, y] = pos(e), n = P.pts.length; if (n >= 1200 || Math.hypot(x - P.pts[n - 2], y - P.pts[n - 1]) < 4) return; P.pts.push(x, y); fkPadPaint(); });
-  const up = () => { const P = S.fkPad; if (!P || !P.dn) return; P.dn = false; if (P.pts.length === 2) P.pts.push(P.pts[0], P.pts[1]); P.done = true; fkPadPaint(); fkPadBtns(); };
+  cv.addEventListener('pointerdown', (e) => { const P = S.fkPad; if (!P || !P.go || P.done || P.sent || P.dn) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { /* 略過 */ } P.dn = true; P.pts = pos(e); fkPadFit(); fkPadLive(true); fkPadStat('畫緊…手指離開就交'); });
+  cv.addEventListener('pointermove', (e) => { const P = S.fkPad; if (!P || !P.dn) return; const [x, y] = pos(e), n = P.pts.length; if (n >= 1200 || Math.hypot(x - P.pts[n - 2], y - P.pts[n - 1]) < 4) return; P.pts.push(x, y); fkPadPaint(); fkPadLive(false); });
+  const up = () => { const P = S.fkPad; if (!P || !P.dn) return; P.dn = false; if (P.pts.length === 2) P.pts.push(P.pts[0], P.pts[1]); P.done = true; fkPadPaint(); fkPadLive(true); fkPadSend(); };
   cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
   cv.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });   // iPhone 唔好碌畫面、唔好出放大鏡（WEB-26）
 }
-function fkPadBtns() {
-  const el = $('#fkpad'), P = S.fkPad; if (!el || !P) return;
-  const s = el.querySelector('[data-act=fksend]'), c = el.querySelector('[data-act=fkclr]');
-  if (s) { s.disabled = !P.done || P.sent; s.textContent = P.sent ? '交緊…' : P.done ? '交呢一筆' : '喺畫紙畫一筆'; }
-  if (c) c.disabled = !P.done || P.sent;
-}
-function fkPadClear() { const P = S.fkPad; if (!P || P.sent) return; P.pts = []; P.done = false; fkPadPaint(); fkPadBtns(); }
 /* 交之前減少點數（Ramer–Douglas–Peucker），最多 300 點 */
 function fkSimp(p, eps) {
   const q = []; for (let i = 0; i < p.length; i += 2) q.push([p[i], p[i + 1]]);
@@ -6370,10 +6401,28 @@ function fkPadSend() {
   let e = 1.5, p = fkSimp(P.pts, e);
   while (p.length > 600) { e *= 1.6; p = fkSimp(P.pts, e); }
   if (p.length < 4) p = [P.pts[0], P.pts[1], P.pts[0], P.pts[1]];
-  P.sent = true; fkPadBtns(); sfx('flick');
+  P.sent = true; fkPadStat('交緊…'); sfx('flick');
   const k = P.key;
-  setTimeout(() => { if (S.fkPad && S.fkPad.key === k && S.fkPad.sent) { S.fkPad.sent = false; fkPadBtns(); } }, 6000);   // 房主收唔到：可以再交
+  setTimeout(() => { if (S.fkPad && S.fkPad.key === k && S.fkPad.sent) { S.fkPad.sent = false; fkPadSend(); } }, 5000);   // 房主收唔到：自動再交（冇得重畫）
   act('fln', p);
+}
+/* 即時頻道：送自己（或者房主幫電腦玩家）畫緊嗰筆；key 係第幾局第幾筆 */
+function fkLivePub(key, pts) { if (S.lroom) S.lroom.presence({ lv: key ? [key, pts] : null }); }
+const fkLiveOk = (p) => Array.isArray(p) && p.length >= 2 && p.length <= 1200 && p.length % 2 === 0 && p.every((n) => Number.isInteger(n) && n >= 0 && n <= 1000);
+function fkLivePeers(peers) {
+  const v = S.view; if (!v || v.g !== 'fk' || !v.fx || v.ph !== 'fd') return;
+  const key = fkPadKey(v);
+  for (const q of peers) { if (q.isMe) continue; const lv = q.presence && q.presence.lv; if (Array.isArray(lv) && lv[0] === key && fkLiveOk(lv[1])) { S.fkLive = { key, p: lv[1] }; (S.fkLvSeen = S.fkLvSeen || {})[key] = 1; fkLiveApply(); return; } }
+}
+/* 喺畫板畫出人哋畫緊嗰筆（直接改 SVG，唔使成個畫面重畫）；render 之後都會再叫 */
+function fkLiveApply() {
+  const v = S.view, L = S.fkLive, el = $('#app .fklive'), pen = $('#app .fkpen'); if (!el) return;
+  const on = !!(v && v.g === 'fk' && v.fx && v.ph === 'fd' && L && L.key === fkPadKey(v) && v.fx.cur !== ME.id && L.p.length >= 2);
+  const bd = el.closest('.fkbd'); if (bd) bd.classList.toggle('fklv', on);   // 有人畫緊：收埋「畫紙仲係白嘅」
+  if (!on) { el.setAttribute('d', ''); if (pen) pen.setAttribute('r', '0'); return; }
+  const p = L.p.length === 2 ? [L.p[0], L.p[1], L.p[0], L.p[1]] : L.p, col = fkInk(v, v.fx.cur);
+  el.setAttribute('d', fkPath(p)); el.setAttribute('stroke', col);
+  if (pen) { pen.setAttribute('cx', p[p.length - 2]); pen.setAttribute('cy', p[p.length - 1]); pen.setAttribute('r', '16'); pen.setAttribute('stroke', col); }
 }
 window.addEventListener('resize', () => { if (S.fkPad) requestAnimationFrame(fkPadFit); });
 /* 有時限：時間就快到，畫咗嘢未交就自動交（唔使白畫） */
@@ -7102,9 +7151,8 @@ document.addEventListener('click', (e) => {
     case 'fksk': if (v && v.fx) act('fsk'); break;
     case 'fkhide': if (S.fkPad) { S.fkHide = S.fkPad.key; fkPadSync(); } break;
     case 'fkopen': S.fkHide = null; fkPadSync(); break;
-    case 'fkclr': fkPadClear(); break;
-    case 'fksend': fkPadSend(); break;
-    case 'fkrp': if (v && v.fx && v.ph === 'fr') { S.fkRp = { k: v.gid + '-' + v.fx.rd, t: Date.now() }; sfx('tick'); render(); } break;
+    case 'fkgo': fkPadGo(); break;
+    case 'fkrp': if (v && v.fx && ['fv', 'fg', 'fr'].includes(v.ph)) { S.fkRp = { k: v.gid + '-' + v.fx.rd, t: Date.now() }; sfx('tick'); render(); } break;
     case 'dxnx': act('dnext', 0); break;
     case 'dxgo': confirmBox('唔等其他人，直接下一輪？', '下一輪', () => act('dnext', 1)); break;
     case 'dxsk': if (v) confirmBox(v.ph === 'tell' ? '跳過呢個說書人？<small>由下一個人做說書人。</small>' : v.ph === 'pick' ? '唔等，幫未揀卡嘅人隨機揀？' : '唔等，即刻開票？<small>未投嘅人當冇投。</small>', '確定', () => act('dskip')); break;
