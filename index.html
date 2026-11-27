@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&display=swap">
 <title>桌遊房</title>
 <script>try{if(JSON.parse(localStorage.getItem('bgr_theme'))!=='dark')document.documentElement.dataset.theme='cream'}catch(e){document.documentElement.dataset.theme='cream'}</script>
-<script>window.__BGR_VER='2026-11-26-03';/* 上載前一定要改版本號（日期-次數） */</script>
+<script>window.__BGR_VER='2026-11-27-01';/* 上載前一定要改版本號（日期-次數） */</script>
 <style>
 :root{
   --bg:#0b0a12;--bg2:#13121d;--s1:#161523;--s2:#1f1d2f;--s3:#2a2740;
@@ -1316,6 +1316,17 @@ html[data-theme="cream"] #banner{background:rgba(210,59,85,.1);color:#9b1f37}
 .fkbd path{fill:none;stroke-width:11;stroke-linecap:round;stroke-linejoin:round}
 .fkbd canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
 .fkdraw{stroke-dasharray:1;stroke-dashoffset:0;animation:fkDraw 1.3s ease-in-out backwards;animation-delay:var(--et,0ms)}
+/* 重播（Bill 2026-11-27）：逐筆畫（每筆 900ms，同 JS 嘅 FK_RP 一樣）、起點出編號、下面字幕講邊個畫 */
+.fkrpd{stroke-dasharray:1;stroke-dashoffset:0;animation:fkDraw .8s ease-in-out backwards}
+.fkrpn{opacity:0;transform-box:fill-box;transform-origin:center;animation:fkNum .35s cubic-bezier(.2,1.4,.4,1) forwards}
+.fkrpn circle{stroke:#fff;stroke-width:5}
+.fkrpn text{font-size:36px;font-weight:900;fill:#fff;text-anchor:middle;font-family:inherit}
+@keyframes fkNum{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+.fkrpc{position:relative;height:36px;margin:-2px 0 8px}
+.fkrpc>span{position:absolute;left:0;right:0;top:0;height:36px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:15px;font-weight:700;color:var(--tx);opacity:0;animation:fkCap 900ms linear}
+.fkrpc b{font-weight:900;color:var(--g1)}
+@keyframes fkCap{0%,100%{opacity:1}}
+.fkrpb{margin-top:0}
 @keyframes fkDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 .fkem{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:rgba(120,90,40,.45)}
 .fkcat{text-align:center;font-size:15px;font-weight:700;color:var(--tx2);margin:0 0 8px}
@@ -3471,24 +3482,42 @@ function dxTick(now) {
 const FK_PH = ['fq', 'fw', 'fd', 'fv', 'fg', 'fr'];
 const FK_TGT = 5, FK_LAPS = 2;
 const FK_BOT = ['電腦甲', '電腦乙', '電腦丙'];
-/* 題目庫：香港人識、唔難、畫得出（Bill 2026-11-26） */
+/* 題目庫：香港人識、唔難、畫得出（Bill 2026-11-26）；2026-11-27 加 500 個（Bill「加入500條香港人識的題目」），共 762 個、34 類 */
 const FK_W = Object.fromEntries(Object.entries({
-  動物: '貓 狗 大象 長頸鹿 熊貓 兔仔 企鵝 獅子 猴子 蛇 金魚 烏龜 青蛙 馬 豬 雞 蝴蝶 螃蟹 八爪魚 鯨魚 袋鼠 鱷魚 蝸牛 貓頭鷹',
-  食物: '蛋撻 菠蘿包 雞蛋仔 燒賣 叉燒包 魚蛋 西瓜 香蕉 蘋果 雪糕 漢堡包 薯條 壽司 薄餅 熱狗 生日蛋糕 月餅 粽 粟米 菠蘿 士多啤梨 葡萄 煎蛋 即食麵',
-  交通工具: '巴士 的士 電車 天星小輪 港鐵 單車 飛機 火車 直升機 帆船 救護車 消防車 私家車 電單車 熱氣球 纜車 火箭 潛水艇 貨櫃車 滑板',
-  香港地方: '太平山頂 維多利亞港 獅子山 海洋公園 迪士尼樂園 天壇大佛 青馬大橋 尖沙咀鐘樓 機場 長洲 大澳 摩天輪 廟街 茶餐廳 街市 屋邨',
-  職業: '警察 消防員 醫生 護士 廚師 老師 郵差 司機 魔術師 太空人 農夫 漁夫 畫家 歌手 理髮師 救生員 偵探 小丑 機師 建築工人',
-  運動: '足球 籃球 游泳 跑步 乒乓波 羽毛球 網球 行山 滑雪 拳擊 跳繩 保齡球 高爾夫球 踩單車 瑜伽 衝浪 射箭 釣魚',
-  屋企物件: '雪櫃 電視 梳化 床 枱燈 風扇 冷氣機 牙刷 雨遮 時鐘 電話 眼鏡 鎖匙 剪刀 杯 碗 筷子 鏡 洗衣機 電飯煲 衣架 枕頭',
-  大自然: '太陽 月亮 星星 彩虹 雲 雨 雪人 閃電 火山 山 海 樹 花 瀑布 沙灘 仙人掌 椰樹 颱風',
-  節日: '聖誕樹 聖誕老人 利是 燈籠 煙花 南瓜燈 龍舟 舞獅 揮春 禮物 生日蠟燭 復活蛋 糖果 年糕',
-  衣物: '帽 T恤 裙 褲 襪 波鞋 手套 頸巾 領呔 背囊 手袋 泳衣 雨褸 拖鞋 西裝 圍裙',
-  樂器: '結他 鋼琴 鼓 小提琴 笛子 喇叭 豎琴 口琴 三角鐵 咪高峰',
-  身體部位: '眼 鼻 耳仔 手 腳 牙 頭髮 嘴唇 手指 心 骨頭 鬍鬚',
-  學校: '書包 鉛筆 間尺 擦膠 黑板 課本 地球儀 校巴 顯微鏡 獎盃 計數機 時間表',
-  玩具: '風箏 波波 積木 公仔 陀螺 搖搖 汽球 遙控車 扭計骰 波子 滑梯 鞦韆',
-  建築: '屋 學校 醫院 燈塔 城堡 橋 金字塔 摩天大廈 帳篷 風車 鐘樓 涼亭',
-  電器科技: '電腦 手機 相機 耳筒 遙控 機械人 打印機 收音機 電燈膽 叉電器 手錶 遊戲機',
+  動物: '貓 狗 大象 長頸鹿 熊貓 兔仔 企鵝 獅子 猴子 蛇 金魚 烏龜 青蛙 馬 豬 雞 蝴蝶 螃蟹 八爪魚 鯨魚 袋鼠 鱷魚 蝸牛 貓頭鷹 老虎 狼 狐狸 熊 北極熊 斑馬 犀牛 河馬 駱駝 樹熊 刺蝟 松鼠 老鼠 倉鼠 牛 羊 恐龍 鹿 蝙蝠 蜥蜴',
+  食物: '蛋撻 菠蘿包 雞蛋仔 燒賣 叉燒包 魚蛋 西瓜 香蕉 蘋果 雪糕 漢堡包 薯條 壽司 薄餅 熱狗 生日蛋糕 月餅 粽 粟米 菠蘿 士多啤梨 葡萄 煎蛋 即食麵 公仔麵 叉燒飯 雲吞麵 燒鵝 乳豬 蝦餃 鳳爪 糯米雞 蘿蔔糕 春卷 煎餃 炒飯 白粥 油炸鬼 湯圓 車仔麵 雞髀 炸雞 火鍋 三文治 麵包 芝士',
+  交通工具: '巴士 的士 電車 天星小輪 港鐵 單車 飛機 火車 直升機 帆船 救護車 消防車 私家車 電單車 熱氣球 纜車 火箭 潛水艇 貨櫃車 滑板 小巴 雙層巴士 渡輪 遊艇 獨木舟 雪橇 馬車 三輪車 嬰兒車 警車 貨車 拖拉機 坦克 戰鬥機',
+  香港地方: '太平山頂 維多利亞港 獅子山 海洋公園 迪士尼樂園 天壇大佛 青馬大橋 尖沙咀鐘樓 機場 長洲 大澳 摩天輪 廟街 茶餐廳 街市 屋邨 中環 旺角 銅鑼灣 赤柱 西貢 南丫島 太空館 星光大道 跑馬地馬場 昂坪纜車 天星碼頭 中銀大廈 金紫荊廣場 黃大仙廟 維園 女人街 金魚街 花墟',
+  職業: '警察 消防員 醫生 護士 廚師 老師 郵差 司機 魔術師 太空人 農夫 漁夫 畫家 歌手 理髮師 救生員 偵探 小丑 機師 建築工人 律師 法官 記者 攝影師 設計師 工程師 保安 清潔工 外賣員 送貨員 收銀員 侍應 空姐 船長 牙醫 獸醫 藥劑師 科學家 運動員 演員 導演',
+  運動: '足球 籃球 游泳 跑步 乒乓波 羽毛球 網球 行山 滑雪 拳擊 跳繩 保齡球 高爾夫球 踩單車 瑜伽 衝浪 射箭 釣魚 排球 欖球 棒球 冰球 劍擊 柔道 空手道 跆拳道 體操 跳水 划艇 溜冰 攀石 跳高',
+  屋企物件: '雪櫃 電視 梳化 床 枱燈 風扇 冷氣機 牙刷 雨遮 時鐘 電話 眼鏡 鎖匙 剪刀 杯 碗 筷子 鏡 洗衣機 電飯煲 衣架 枕頭 熨斗 吸塵機 晾衫架 掃把 垃圾鏟 地拖 門鐘 窗簾 地氈 鬧鐘 相架 花樽 蠟燭 火柴',
+  大自然: '太陽 月亮 星星 彩虹 雲 雨 雪人 閃電 火山 山 海 樹 花 瀑布 沙灘 仙人掌 椰樹 颱風 雪花 冰山 沙漠 河 湖 島 洞穴 森林 草地 石頭 葉 樹枝 貝殼 珊瑚 日出 日落 海浪 向日葵 龍捲風 霧 冰雹 竹林',
+  節日: '聖誕樹 聖誕老人 利是 燈籠 煙花 南瓜燈 龍舟 舞獅 揮春 禮物 生日蠟燭 復活蛋 糖果 年糕 聖誕襪 鞭炮 桃花 年花 盆桔 情人節 萬聖節 女巫 骷髏 鬼 復活節兔仔 中秋節 舞龍 拜年 全盒',
+  衣物: '帽 T恤 裙 褲 襪 波鞋 手套 頸巾 領呔 背囊 手袋 泳衣 雨褸 拖鞋 西裝 圍裙 外套 毛衣 恤衫 短褲 牛仔褲 校服 睡衣 皮帶 太陽眼鏡 頸鏈 戒指 手鐲 耳環 高踭鞋',
+  樂器: '結他 鋼琴 鼓 小提琴 笛子 喇叭 豎琴 口琴 三角鐵 咪高峰 大提琴 色士風 木琴 手風琴 鈴鼓 鑼 二胡',
+  身體部位: '眼 鼻 耳仔 手 腳 牙 頭髮 嘴唇 手指 心 骨頭 鬍鬚 眉毛 膊頭 膝頭 肚臍 腳趾 指甲 舌頭',
+  學校: '書包 鉛筆 間尺 擦膠 黑板 課本 地球儀 校巴 顯微鏡 獎盃 計數機 時間表 粉筆 課室 書枱 校服領呔 體育堂 小息 考試 成績表',
+  玩具: '風箏 波波 積木 公仔 陀螺 搖搖 汽球 遙控車 扭計骰 波子 滑梯 鞦韆 過山車 旋轉木馬 碰碰車 跳彈床 沙池 氹氹轉 木馬 魔術帽 撲克牌 骰仔 象棋 波子棋 拼圖 泡泡 水槍',
+  建築: '屋 學校 醫院 燈塔 城堡 橋 金字塔 摩天大廈 帳篷 風車 鐘樓 涼亭 廟 教堂 唐樓 公屋 茶樓 酒店 商場 戲院 圖書館 博物館 警署 消防局 郵局 銀行 超級市場',
+  電器科技: '電腦 手機 相機 耳筒 遙控 機械人 打印機 收音機 電燈膽 叉電器 手錶 遊戲機 平板電腦 無人機 自拍棍 充電寶 滑鼠 鍵盤 螢幕 電熱水壺 投影機 對講機 計時器',
+  水果: '橙 檸檬 芒果 西柚 車厘子 奇異果 椰子 榴槤 荔枝 龍眼 柿 梨 桃 布冧 藍莓 火龍果 木瓜 楊桃',
+  蔬菜: '番茄 薯仔 紅蘿蔔 西蘭花 椰菜 白菜 菜心 洋蔥 蒜頭 薑 辣椒 青椒 茄子 青瓜 冬瓜 南瓜 蘑菇 豆芽',
+  港式小食: '碗仔翅 牛雜 煎釀三寶 格仔餅 砵仔糕 臭豆腐 咖喱魚蛋 炸大腸 菠蘿油 雞尾包 西多士 豬扒包 腸粉 糖葱餅 雞蛋糕 夾餅 豆腐花 楊枝甘露',
+  茶餐廳飲品: '奶茶 檸檬茶 咖啡 鴛鴦 好立克 阿華田 豆漿 可樂 汽水 珍珠奶茶 啤酒 紅酒 椰青 鮮奶 菊花茶 涼茶 熱朱古力',
+  甜品: '蛋糕 朱古力 曲奇 冬甩 布甸 啫喱 棉花糖 雪條 窩夫 馬卡龍 芝士蛋糕 班戟 波板糖 蛋卷 雞仔餅',
+  廚房用品: '鑊 煲 菜刀 砧板 鑊鏟 湯匙 叉 碟 茶壺 水壺 微波爐 焗爐 多士爐 飯盒 洗碗盆 開罐器 打蛋器',
+  浴室用品: '牙膏 毛巾 番梘 沐浴露 洗頭水 風筒 浴缸 花灑 廁所 廁紙 梳 剃鬚刨 漱口杯 浴帽',
+  文具: '原子筆 箱頭筆 顏色筆 蠟筆 筆袋 釘書機 萬字夾 膠紙 漿糊 圓規 地圖 筆記簿 文件夾 白板 信封',
+  昆蟲: '螞蟻 蜜蜂 蚊 蒼蠅 甲蟲 瓢蟲 蜻蜓 蟬 曱甴 蟋蟀 螢火蟲 毛蟲 蜘蛛',
+  海洋生物: '鯊魚 海龜 海星 海馬 水母 龍蝦 蝦 蜆 生蠔 魷魚 海豹 小丑魚 河豚 鮑魚',
+  雀鳥: '鸚鵡 孔雀 天鵝 鴨仔 白鴿 麻雀 老鷹 鴕鳥 火烈鳥 啄木鳥 燕子',
+  街道設施: '紅綠燈 斑馬線 巴士站 的士站 天橋 隧道 油站 停車場 路牌 欄杆 郵筒 電話亭 垃圾桶 消防喉 街燈 長櫈 噴水池',
+  醫療用品: '針筒 溫度計 口罩 藥丸 膠布 繃帶 輪椅 拐杖 聽筒 病床',
+  太空: '外星人 飛碟 衛星 月球車 星球 土星 地球 流星 黑洞 望遠鏡 銀河',
+  形狀符號: '三角形 正方形 圓形 星形 心形 箭咀 十字 螺旋 波浪 剔號 問號',
+  動作: '跳舞 瞓覺 食飯 唱歌 影相 睇書 打機 煮飯 洗碗 掃地 放風箏 吹蠟燭 刷牙 喊 笑 發夢 打邊爐 行街 揸車',
+  港式生活: '八達通 晾衫竹 鐵閘 信箱 紅白藍膠袋 雞公碗 霓虹招牌 涼茶舖 士多 冰室 大牌檔 麻雀枱 飲茶',
+  童話故事: '美人魚 小紅帽 三隻小豬 龜兔賽跑 孫悟空 豬八戒 哪吒 嫦娥奔月 后羿射日 灰姑娘 白雪公主 傑克與魔豆',
 }).map(([c, s]) => [c, s.split(' ')]));
 /* 抽題：唔重複（用晒先再由頭）；k 個嘅話盡量唔同類別 */
 function fkDraw(fx, k) {
@@ -6138,14 +6167,24 @@ function fkPath(p) {
   for (let i = 2; i < p.length - 2; i += 2) d += `Q${p[i]} ${p[i + 1]} ${(p[i] + p[i + 2]) / 2} ${(p[i + 1] + p[i + 3]) / 2}`;
   return d + `L${p[p.length - 2]} ${p[p.length - 1]}`;
 }
-/* 畫板：最新嗰筆播一次畫線動畫（an 記住開始時間，重畫唔會重播，GAME-19） */
-function fkBoard(v, anim = true) {
+/* 畫板：最新嗰筆播一次畫線動畫（an 記住開始時間，重畫唔會重播，GAME-19）
+ * rp：重播開始咗幾耐（毫秒）：逐筆照次序畫（每筆 FK_RP 毫秒），起點出編號；用負 animation-delay 接住，重畫唔會由頭播 */
+const FK_RP = 900;   // 同 CSS .fkrpc span 嘅 900ms 一樣
+function fkBoard(v, anim = true, rp = null) {
   const fx = v.fx, n = fx.ln.length;
   const ps = fx.ln.map((l, i) => {
+    if (rp != null) return `<path d="${fkPath(l.p)}" stroke="${fkInk(v, l.id)}" pathLength="1" class="fkrpd" style="animation-delay:${i * FK_RP - rp}ms"/>`;
     const a = anim && i === n - 1 ? an('fkl' + v.gid + '-' + fx.rd + '-' + i, 1400) : '';
     return `<path d="${fkPath(l.p)}" stroke="${fkInk(v, l.id)}"${a ? ` pathLength="1" class="fkdraw" style="${a}"` : ''}/>`;
   }).join('');
-  return `<div class="fkbd"><svg viewBox="0 0 1000 1000">${ps}</svg>${n ? '' : '<div class="fkem">畫紙仲係白嘅</div>'}</div>`;
+  const cl = (z) => Math.max(34, Math.min(966, z));
+  const nums = rp == null ? '' : fx.ln.map((l, i) => `<g class="fkrpn" style="animation-delay:${i * FK_RP - rp}ms"><circle cx="${cl(l.p[0])}" cy="${cl(l.p[1])}" r="32" fill="${fkInk(v, l.id)}"/><text x="${cl(l.p[0])}" y="${cl(l.p[1]) + 12}">${i + 1}</text></g>`).join('');
+  return `<div class="fkbd"><svg viewBox="0 0 1000 1000">${ps}${nums}</svg>${n ? '' : '<div class="fkem">畫紙仲係白嘅</div>'}</div>`;
+}
+/* 重播字幕：而家畫緊第幾筆、邊個、第幾轉（每句只喺佢嗰筆嘅時間出；最後一句留低） */
+function fkReplayCap(v, rp) {
+  const fx = v.fx, cnt = {}, n = fx.ln.length;
+  return `<div class="fkrpc">${fx.ln.map((l, i) => { cnt[l.id] = (cnt[l.id] || 0) + 1; const p = pOf(v, l.id); return `<span style="animation-delay:${i * FK_RP - rp}ms${i === n - 1 ? ';animation-fill-mode:forwards' : ''}">${av(p, 'xs')}<b>第 ${i + 1} 筆</b>${esc(p ? p.n : '?')}・第 ${cnt[l.id]} 轉</span>`; }).join('')}</div>`;
 }
 const fkLegend = (v) => `<div class="fklg">${v.fx.seq.map((id) => `<span><i style="background:${fkInk(v, id)}"></i>${esc(nameOf(v, id))}</span>`).join('')}</div>`;
 function fkOrder(v) {
@@ -6238,7 +6277,8 @@ function vPlayFk(v) {
     const q = anA('fkr' + v.gid + '-' + fx.rd, 900, 'fkpop');
     h += `<div class="fkres ${good ? 'good' : 'bad'}${q.c}"${q.s}>${av(fp)}<div><b>${t1}</b><small>${t2}・${pts}</small></div></div>`;
     h += `<div class="fkans"><div><small>題目</small><b>${esc(fx.cat)}・${esc(fx.wd)}</b></div><div><small>冒牌畫家</small><b>${nm(fp)}</b></div></div>`;
-    h += fkBoard(v, false) + fkLegend(v) + fkVotes(v);
+    const rp = S.fkRp && S.fkRp.k === v.gid + '-' + fx.rd ? Date.now() - S.fkRp.t : null;   // Bill 2026-11-27：最後撳重播睇大家下筆次序
+    h += fkBoard(v, false, rp) + (rp != null ? fkReplayCap(v, rp) : '') + (fx.ln.length ? `<button class="btn ghost fkrpb" data-act="fkrp">${rp != null ? '再重播一次' : '重播：睇大家下筆次序'}</button>` : '') + fkLegend(v) + fkVotes(v);
     h += `<div class="sh"><span>分數</span><small>${fx.tgt} 分完場</small></div>` + fkScores(v, true);
     const last = Math.max(0, ...fx.ord.map((id) => fx.pt[id])) >= fx.tgt;
     h += host ? `<button class="btn gold big" data-act="fknx">${last ? '睇最後結果' : '下一局'}</button>` : '<div class="wait">等房主開下一局<span class="ld"><i></i><i></i><i></i></span></div>';
@@ -7064,6 +7104,7 @@ document.addEventListener('click', (e) => {
     case 'fkopen': S.fkHide = null; fkPadSync(); break;
     case 'fkclr': fkPadClear(); break;
     case 'fksend': fkPadSend(); break;
+    case 'fkrp': if (v && v.fx && v.ph === 'fr') { S.fkRp = { k: v.gid + '-' + v.fx.rd, t: Date.now() }; sfx('tick'); render(); } break;
     case 'dxnx': act('dnext', 0); break;
     case 'dxgo': confirmBox('唔等其他人，直接下一輪？', '下一輪', () => act('dnext', 1)); break;
     case 'dxsk': if (v) confirmBox(v.ph === 'tell' ? '跳過呢個說書人？<small>由下一個人做說書人。</small>' : v.ph === 'pick' ? '唔等，幫未揀卡嘅人隨機揀？' : '唔等，即刻開票？<small>未投嘅人當冇投。</small>', '確定', () => act('dskip')); break;
